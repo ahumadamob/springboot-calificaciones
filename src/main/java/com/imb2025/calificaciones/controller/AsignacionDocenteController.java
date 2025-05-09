@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/asignacion-docente")
+@RequestMapping("api/v1/asignacion-docente")
 public class AsignacionDocenteController {
 
     @Autowired
