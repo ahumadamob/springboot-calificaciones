@@ -1,7 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 import com.imb2025.calificaciones.entity.AsignacionDocente;
-import com.imb2025.calificaciones.service.AsignacionDocenteService;
+import com.imb2025.calificaciones.service.AsignacionDocenteServiceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.util.List;
 public class AsignacionDocenteController {
 
     @Autowired
-    private AsignacionDocenteService service;
+    private AsignacionDocenteServiceImp service;
 
     @GetMapping
     public ResponseEntity<List<AsignacionDocente>> getAll() {
