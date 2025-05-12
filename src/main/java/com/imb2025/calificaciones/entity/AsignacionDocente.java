@@ -16,17 +16,6 @@ public class AsignacionDocente {
     private Long comisionId;
     private Long periodoLectivoId;
 
-    public AsignacionDocente() {
-    }
-
-    public AsignacionDocente(Long id, Long docenteId, Long materiaId, Long comisionId, Long periodoLectivoId) {
-        this.id = id;
-        this.docenteId = docenteId;
-        this.materiaId = materiaId;
-        this.comisionId = comisionId;
-        this.periodoLectivoId = periodoLectivoId;
-    }
-
     public Long getId() {
         return id;
     }
