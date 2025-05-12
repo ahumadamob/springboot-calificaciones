@@ -2,7 +2,8 @@ package com.imb2025.calificaciones.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.imb2025.calificaciones.model.AsignacionDocente;
+
+import com.imb2025.calificaciones.entity.AsignacionDocente;
 
 @Repository
 public interface AsignacionDocenteRepository extends JpaRepository<AsignacionDocente, Long> {

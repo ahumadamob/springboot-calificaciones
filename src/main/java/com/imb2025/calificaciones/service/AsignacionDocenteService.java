@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.model.AsignacionDocente;
+import com.imb2025.calificaciones.entity.AsignacionDocente;
 import com.imb2025.calificaciones.repository.AsignacionDocenteRepository;
 
 import java.util.List;

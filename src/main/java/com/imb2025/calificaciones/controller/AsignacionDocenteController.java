@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.controller;
 
-import com.imb2025.calificaciones.model.AsignacionDocente;
+import com.imb2025.calificaciones.entity.AsignacionDocente;
 import com.imb2025.calificaciones.service.AsignacionDocenteService;
 
 import org.springframework.beans.factory.annotation.Autowired;

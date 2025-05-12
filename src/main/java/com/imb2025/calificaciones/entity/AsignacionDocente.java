@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.model;
+package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
