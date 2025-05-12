@@ -1,0 +1,42 @@
+package com.imb2025.calificaciones.condicionfinal.controller;
+
+import com.imb2025.calificaciones.condicionfinal.entity.CondicionFinal;
+import com.imb2025.calificaciones.condicionfinal.service.CondicionFinalService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/condicion-final")
+public class CondicionFinalController {
+
+    @Autowired
+    private CondicionFinalService service;
+
+    @GetMapping
+    public List<CondicionFinal> getAll() {
+        return service.getAll();
+    }
+
+    @PostMapping
+    public CondicionFinal create(@RequestBody CondicionFinal cf) {
+        return service.save(cf);    
+    }
+
+    @GetMapping("/{id}")
+    public CondicionFinal getById(@PathVariable Long id) {
+        return service.getById(id);
+    }
+
+    @PutMapping("/{id}")
+    public CondicionFinal update(@PathVariable Long id, @RequestBody CondicionFinal cf) {
+        cf.setId(id);
+        return service.save(cf);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
+    }
+}
