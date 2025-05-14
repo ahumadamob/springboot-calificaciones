@@ -8,6 +8,6 @@ public interface EvaluacionService {
 	Evaluacion findById(int id); //Encontrar una Evaluacion por id GET ID
 	Evaluacion save(Evaluacion evaluacion); //Crear y guardar Evaluacion POST
 	Evaluacion update(int id, Evaluacion evaluacion); //Actualizar Evaluacion PUT
-	void delete(int id);  //Eliminar Evaluacion
+	void deleteById(int id);  //Eliminar Evaluacion
 	
 }

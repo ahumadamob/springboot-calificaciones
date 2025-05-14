@@ -19,4 +19,18 @@ public class EvaluacionServiceImp {
 	public Evaluacion findById(int id) {
 		return evaluacionRepository.findById(id).orElse(null);
 	}
+	
+	public Evaluacion save(Evaluacion evalucion) {
+		return evaluacionRepository.save(evalucion);
+	}
+	
+	public Evaluacion update(int id, Evaluacion evaluacion) {
+		evaluacion.setId(id);
+		return evaluacionRepository.save(evaluacion);
+	
+	}
+	
+	public void deleteById(int id) {
+		evaluacionRepository.deleteById(id);
+	}
 }
