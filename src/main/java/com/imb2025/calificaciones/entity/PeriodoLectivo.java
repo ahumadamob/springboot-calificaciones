@@ -1,7 +1,6 @@
 package com.imb2025.calificaciones.entity;
 
-import java.time.LocalTime;
-
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,10 +14,10 @@ public class PeriodoLectivo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nombre;
-	private LocalTime fechaInicio;
-	private LocalTime fechaFin;
+	private LocalDate fechaInicio;
+	private LocalDate fechaFin;
 	
-	public PeriodoLectivo(Long id, String nombre, LocalTime fechaInicio, LocalTime fechaFin) {
+	public PeriodoLectivo(Long id, String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -42,19 +41,19 @@ public class PeriodoLectivo {
 		this.nombre = nombre;
 	}
 
-	public LocalTime getFechaInicio() {
+	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
 
-	public void setFechaInicio(LocalTime fechaInicio) {
+	public void setFechaInicio(LocalDate fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public LocalTime getFechaFin() {
+	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
 
-	public void setFechaFin(LocalTime fechaFin) {
+	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 	
