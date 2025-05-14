@@ -17,6 +17,10 @@ public class PeriodoLectivo {
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
 	
+	public PeriodoLectivo() {
+		
+	}
+	
 	public PeriodoLectivo(Long id, String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
 		super();
 		this.id = id;
