@@ -8,6 +8,7 @@ public class CalificacionesApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CalificacionesApplication.class, args);
+		
 	}
 
 }
