@@ -1,10 +1,14 @@
-package com.imb2025.calificaciones;
+package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.imb2025.calificaciones.entity.Horario;
+import com.imb2025.calificaciones.repository.HorarioRepository;
+import com.imb2025.calificaciones.service.HorarioServices;
 
 @Service
 public class HorarioServiceImpl implements HorarioServices{

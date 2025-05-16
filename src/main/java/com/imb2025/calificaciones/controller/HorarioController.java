@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones;
+package com.imb2025.calificaciones.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.imb2025.calificaciones.entity.Horario;
+import com.imb2025.calificaciones.service.HorarioServices;
 
 @RestController
 @RequestMapping("/api/horario")
