@@ -29,7 +29,7 @@ public class EvaluacionController {
 	private EvaluacionServiceImp evaluacionServiceImp;
 	
 	 
-	@GetMapping("/all")
+	@GetMapping
 	public ResponseEntity<List<Evaluacion>> getAll(){
 		List<Evaluacion> evaluaciones = evaluacionServiceImp.findAll();
 		return ResponseEntity.ok(evaluaciones);
