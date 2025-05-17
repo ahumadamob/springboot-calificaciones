@@ -4,7 +4,7 @@ import com.imb2025.calificaciones.condicionfinal.entity.CondicionFinal;
 
 import java.util.List;
 
-public interface CondicionFinalService {
+public interface ICondicionFinalService {
     List<CondicionFinal> getAll();
     CondicionFinal getById(Long id);
     CondicionFinal save(CondicionFinal cf);

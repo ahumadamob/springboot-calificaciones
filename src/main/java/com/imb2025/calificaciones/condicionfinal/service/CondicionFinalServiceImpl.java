@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CondicionFinalServiceImpl implements CondicionFinalService {
+public class CondicionFinalServiceImpl implements ICondicionFinalService {
 
     @Autowired
     private CondicionFinalRepository repository;
