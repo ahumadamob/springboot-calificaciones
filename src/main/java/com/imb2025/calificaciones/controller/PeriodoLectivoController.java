@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
-import com.imb2025.calificaciones.service.PeriodoLectivoService;
+import com.imb2025.calificaciones.service.IPeriodoLectivoService;
 
 @RestController
-@RequestMapping("/periodo-lectivo")
+@RequestMapping("api/periodo-lectivo")
 public class PeriodoLectivoController {
 	
 	@Autowired
-	private PeriodoLectivoService service;
+	private IPeriodoLectivoService service;
 	
 	@GetMapping
 	public ResponseEntity<List<PeriodoLectivo>> getAll() {

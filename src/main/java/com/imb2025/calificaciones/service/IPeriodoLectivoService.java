@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 
-public interface PeriodoLectivoService {
+public interface IPeriodoLectivoService {
 	List<PeriodoLectivo> findAll();
 	PeriodoLectivo findById(Long id);
 	PeriodoLectivo save(PeriodoLectivo periodoLectivo);

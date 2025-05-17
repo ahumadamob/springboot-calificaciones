@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.service.impl;
+package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
 
@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.repository.PeriodoLectivoRepository;
-import com.imb2025.calificaciones.service.PeriodoLectivoService;
+import com.imb2025.calificaciones.service.IPeriodoLectivoService;
 
 @Service
-public class PeriodoLectivoServiceImpl implements PeriodoLectivoService{
+public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 	
 	@Autowired
 	private PeriodoLectivoRepository repository;
