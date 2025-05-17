@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
-import com.imb2025.calificaciones.service.ObservacionAlumnoService;
+import com.imb2025.calificaciones.service.IObservacionAlumnoService;
 
 @RestController
 @RequestMapping("/api/v1/observacionAlumno")
 public class ObservacionAlumnoController {
 	
 	@Autowired
-	private ObservacionAlumnoService observacionAlumnoService;
+	private IObservacionAlumnoService observacionAlumnoService;
 	
 	@GetMapping
 	public ResponseEntity<List<ObservacionAlumno>> getAll(){

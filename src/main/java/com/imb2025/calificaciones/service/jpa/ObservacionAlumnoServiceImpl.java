@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.service;
+package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
 import com.imb2025.calificaciones.repository.ObservacionAlumnoRepository;
+import com.imb2025.calificaciones.service.IObservacionAlumnoService;
 
 @Service
-public class ObservacionAlumnoServiceImpl implements ObservacionAlumnoService{
+public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 	
 	@Autowired
 	private ObservacionAlumnoRepository observacionAlumnoRepository;

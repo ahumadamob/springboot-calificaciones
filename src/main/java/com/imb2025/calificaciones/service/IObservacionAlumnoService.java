@@ -6,7 +6,7 @@ import java.util.Optional;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
 
  
-public interface ObservacionAlumnoService {
+public interface IObservacionAlumnoService {
 	
 	Optional<ObservacionAlumno> findById(Long id);
 	List<ObservacionAlumno> findAll();
