@@ -1,5 +1,7 @@
-package com.imb2025.calificaciones;
+package com.imb2025.calificaciones.controller;
 
+import com.imb2025.calificaciones.service.IAlumnoServices;
+import com.imb2025.calificaciones.entity.Alumno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,31 +12,31 @@ import java.util.Optional;
 public class AlumnoController {
 
    @Autowired
-   AlumnoServices alumnoServices;
+   IAlumnoServices IAlumnoServices;
 
 
 
     @GetMapping("/entidad")
     public List<Alumno> obtenerTodos(){
-        return alumnoServices.getAll();
+        return IAlumnoServices.getAll();
     }
     @GetMapping("/entidad/{id}")
-    public Optional<Alumno> obtenerPorId(@PathVariable Long id){
-     return alumnoServices.findById(id);
+    public Alumno obtenerPorId(@PathVariable Long id){
+     return IAlumnoServices.findById(id);
     }
     @PostMapping("/entidad")
     public Alumno crear(@RequestBody Alumno nuevoAlumno) {
-        return alumnoServices.save(nuevoAlumno);
+        return IAlumnoServices.save(nuevoAlumno);
     }
 
     @PutMapping("/entidad/{id}")
     public Alumno actualizar(@PathVariable Long id, @RequestBody Alumno datosActualizados) {
-        return alumnoServices.update(id, datosActualizados);
+        return IAlumnoServices.update(id, datosActualizados);
     }
 
     @DeleteMapping("/entidad/{id}")
     public void eliminar(@PathVariable Long id) {
-        alumnoServices.delete(id);
+        IAlumnoServices.delete(id);
     }
 
 }

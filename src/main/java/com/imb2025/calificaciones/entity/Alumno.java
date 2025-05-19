@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones;
+package com.imb2025.calificaciones.entity;
 
 
 import jakarta.persistence.*;
