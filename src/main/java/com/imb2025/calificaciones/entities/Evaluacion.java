@@ -29,14 +29,6 @@ public class Evaluacion {
 		super();
 	}
 
-	public Evaluacion(int id, Date fechaEvaluacion, int tipoEvaluacionId, int materiaId, int comisionId) {
-		super();
-		this.id = id;
-		this.fechaEvaluacion = fechaEvaluacion;
-		this.tipoEvaluacionId = tipoEvaluacionId;
-		this.materiaId = materiaId;
-		this.comisionId = comisionId;
-	}
 
 	public int getId() {
 		return id;
