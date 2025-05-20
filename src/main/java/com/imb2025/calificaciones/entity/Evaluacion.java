@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.entities;
+package com.imb2025.calificaciones.entity;
 
 import java.util.Date;
 

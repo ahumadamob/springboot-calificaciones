@@ -1,9 +1,9 @@
-package com.imb2025.calificaciones.repositories;
+package com.imb2025.calificaciones.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.imb2025.calificaciones.entities.Evaluacion;
+import com.imb2025.calificaciones.entity.Evaluacion;
 
 
 @Repository

@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.controllers;
+package com.imb2025.calificaciones.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.entities.Evaluacion;
-import com.imb2025.calificaciones.services.EvaluacionServiceImp;
+import com.imb2025.calificaciones.entity.Evaluacion;
+import com.imb2025.calificaciones.service.jpa.EvaluacionServiceImp;
 
 import jakarta.persistence.EntityNotFoundException;
 
