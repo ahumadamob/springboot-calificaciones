@@ -24,7 +24,6 @@ public class Evaluacion {
 	private int comisionId;
 
 	
-	
 	public Evaluacion() {
 		super();
 	}
