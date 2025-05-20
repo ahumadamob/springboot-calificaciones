@@ -1,10 +1,10 @@
-package com.imb2025.calificaciones.services;
+package com.imb2025.calificaciones.service;
 
 import java.util.List;
 
-import com.imb2025.calificaciones.entities.Evaluacion;
+import com.imb2025.calificaciones.entity.Evaluacion;
 
-public interface EvaluacionService {
+public interface IEvaluacionService {
 
 	List<Evaluacion> findAll(); //Todos las evaluaciones GET ALL
 	Evaluacion findById(int id); //Encontrar una Evaluacion por id GET ID
