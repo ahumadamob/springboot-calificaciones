@@ -1,15 +1,16 @@
-package com.imb2025.calificaciones.services;
+package com.imb2025.calificaciones.service.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.entities.Evaluacion;
-import com.imb2025.calificaciones.repositories.EvaluacionRepository;
+import com.imb2025.calificaciones.entity.Evaluacion;
+import com.imb2025.calificaciones.repository.EvaluacionRepository;
+import com.imb2025.calificaciones.service.IEvaluacionService;
 
 import java.util.List;
 
 @Service
-public class EvaluacionServiceImp implements EvaluacionService{
+public class EvaluacionServiceImp implements IEvaluacionService{
 	
 	@Autowired
 	private EvaluacionRepository evaluacionRepository;
