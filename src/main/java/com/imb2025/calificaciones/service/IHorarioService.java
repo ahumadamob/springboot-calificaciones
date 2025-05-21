@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.imb2025.calificaciones.entity.Horario;
 
-public interface HorarioServices {
+public interface IHorarioService {
 
 	public List<Horario> getAll();
 
