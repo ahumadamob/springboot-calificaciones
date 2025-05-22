@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Comisión {
+public class Comision {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

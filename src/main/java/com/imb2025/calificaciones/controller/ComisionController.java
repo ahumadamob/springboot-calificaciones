@@ -13,45 +13,45 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.entity.Comisión;
-import com.imb2025.calificaciones.service.IComisiónService;
+import com.imb2025.calificaciones.entity.Comision;
+import com.imb2025.calificaciones.service.IComisionService;
 
 @RestController
-@RequestMapping("api/v1/Comisión")
-public class ComisiónController {
+@RequestMapping("api/v1/Comision")
+public class ComisionController {
 
 	@Autowired
-	private IComisiónService ComisiónService;
+	private IComisionService ComisionService;
 	
 	
 	 @GetMapping
-	    public ResponseEntity<List<Comisión>> getAll() {
-	        List<Comisión> Comisiones = ComisiónService.findAll();
+	    public ResponseEntity<List<Comision>> getAll() {
+	        List<Comision> Comisiones = ComisionService.findAll();
 	        return ResponseEntity.ok(Comisiones);
 	    }
 
 	    @GetMapping("/{id}")
-	    public ResponseEntity<Comisión> getById(@PathVariable Long id) {
-	    	Comisión comisión = ComisiónService.findById(id);
-	        return ResponseEntity.ok(comisión);
+	    public ResponseEntity<Comision> getById(@PathVariable Long id) {
+	    	Comision comision = ComisionService.findById(id);
+	        return ResponseEntity.ok(comision);
 	    }
 
 	    @PostMapping
-	    public ResponseEntity<Comisión> create(@RequestBody Comisión comisión) {
-	    	Comisión createdComisión = ComisiónService.save(comisión);
-	        return ResponseEntity.ok(createdComisión);
+	    public ResponseEntity<Comision> create(@RequestBody Comision comision) {
+	    	Comision createdComision = ComisionService.save(comision);
+	        return ResponseEntity.ok(createdComision);
 	    }
 
 	    @PutMapping("/{id}")
-	    public ResponseEntity<Comisión> update(@PathVariable Long id,
-	            @RequestBody Comisión comisión) {
-	    	Comisión updatedComisión = ComisiónService.update(id, comisión);
-	        return ResponseEntity.ok(updatedComisión);
+	    public ResponseEntity<Comision> update(@PathVariable Long id,
+	            @RequestBody Comision comision) {
+	    	Comision updatedComision = ComisionService.update(id, comision);
+	        return ResponseEntity.ok(updatedComision);
 	    }
 
 	    @DeleteMapping("/{id}")
 	    public ResponseEntity<Void> delete(@PathVariable Long id) {
-	    	ComisiónService.deleteById(id);
+	    	ComisionService.deleteById(id);
 	        return ResponseEntity.noContent().build();
 	    }
 }
