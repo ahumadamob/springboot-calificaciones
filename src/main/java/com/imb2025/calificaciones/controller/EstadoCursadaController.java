@@ -1,7 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 import com.imb2025.calificaciones.entity.EstadoCursada;
-import com.imb2025.calificaciones.service.EstadoCursadaServiceImp;
+import com.imb2025.calificaciones.service.jpa.EstadoCursadaServiceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

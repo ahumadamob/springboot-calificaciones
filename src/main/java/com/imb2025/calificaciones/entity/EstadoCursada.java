@@ -12,14 +12,6 @@ public class EstadoCursada {
     private String nombre;
     private String descripcion;
 
-    public EstadoCursada() {
-    }
-
-    public EstadoCursada(String nombre, String descripcion) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-    }
-
     // Getters y Setters
     public Long getId() {
         return id;

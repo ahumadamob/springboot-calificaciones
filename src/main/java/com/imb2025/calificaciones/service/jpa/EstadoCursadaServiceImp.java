@@ -1,7 +1,8 @@
-package com.imb2025.calificaciones.service;
+package com.imb2025.calificaciones.service.jpa;
 
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.repository.EstadoCursadaRepository;
+import com.imb2025.calificaciones.service.EstadoCursadaService;
 
 import java.util.List;
 
