@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.Repository;
+package com.imb2025.calificaciones.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

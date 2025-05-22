@@ -4,8 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.Repository.MateriaRepository;
 import com.imb2025.calificaciones.entity.Materia;
+import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.service.IMateriaService;
 
 
