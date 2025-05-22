@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.service;
+package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.entity.TipoNota;
 import com.imb2025.calificaciones.repository.TipoNotaRepository;
+import com.imb2025.calificaciones.service.TipoNotaService;
 
 @Service
 public class TipoNotaServiceImpl implements TipoNotaService {
@@ -21,9 +22,11 @@ public class TipoNotaServiceImpl implements TipoNotaService {
     }
 
     @Override
-    public Optional<TipoNota> findById(Long id) {
-        return tipoNotaRepository.findById(id);
+    public TipoNota findById(Long id) {
+        return tipoNotaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("TipoNota no encontrada con id: " + id));
     }
+
 
     @Override
     public TipoNota save(TipoNota tipoNota) {

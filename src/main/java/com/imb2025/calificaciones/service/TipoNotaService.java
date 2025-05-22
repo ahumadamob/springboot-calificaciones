@@ -9,7 +9,7 @@ public interface TipoNotaService {
 
 	List<TipoNota> findAll();		//Devuelve una lista con todas las entidades TipoNota.
 	
-	Optional<TipoNota> findById(Long id);		//Busca un TipoNota por su ID. Devuelve un Optional.
+	TipoNota findById(Long id);		//Busca un TipoNota por su ID.
 	
 	TipoNota save(TipoNota tipoNota);		//Guarda una nueva entidad.
 

@@ -26,13 +26,14 @@ public class TipoNotaController {
     // GET /tiponota/{id} - buscar por id
     @GetMapping("/{id}")
     public ResponseEntity<TipoNota> getById(@PathVariable Long id) {
-        Optional<TipoNota> tipoNota = tipoNotaService.findById(id);
-        if (tipoNota.isPresent()) {
-            return ResponseEntity.ok(tipoNota.get());
-        } else {
+        try {
+            TipoNota tipoNota = tipoNotaService.findById(id);
+            return ResponseEntity.ok(tipoNota);
+        } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     // POST /tiponota - crear nuevo
     @PostMapping
