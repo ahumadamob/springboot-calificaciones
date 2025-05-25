@@ -29,11 +29,7 @@ public class EstadoCursadaServiceImp implements EstadoCursadaService {
     public EstadoCursada save(EstadoCursada estadoCursada) {
         return repository.save(estadoCursada);
     }
-    @Override
-    public EstadoCursada update(Long id, EstadoCursada estadoCursada) {
-    	estadoCursada.setId(id);
-        return repository.save(estadoCursada);
-    }
+
     @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
