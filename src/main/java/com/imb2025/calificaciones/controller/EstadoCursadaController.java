@@ -34,13 +34,7 @@ public class EstadoCursadaController {
         return ResponseEntity.ok(createdEstadoCursada);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<EstadoCursada> update(@PathVariable Long id,
-            @RequestBody EstadoCursada estadoCursada) {
-    	EstadoCursada updatedEstadoCursada = service.update(id, estadoCursada);
-        return ResponseEntity.ok(updatedEstadoCursada);
-    }
-
+   
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleteById(id);
