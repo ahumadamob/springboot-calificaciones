@@ -1,7 +1,8 @@
-package com.imb2025.calificaciones.service;
+package com.imb2025.calificaciones.service.jpa;
 
 import com.imb2025.calificaciones.entity.AsignacionDocente;
 import com.imb2025.calificaciones.repository.AsignacionDocenteRepository;
+import com.imb2025.calificaciones.service.IAsignacionDocenteService;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AsignacionDocenteServiceImp implements AsignacionDocenteService {
+public class AsignacionDocenteServiceImp implements IAsignacionDocenteService {
 
     @Autowired
     private AsignacionDocenteRepository repository;

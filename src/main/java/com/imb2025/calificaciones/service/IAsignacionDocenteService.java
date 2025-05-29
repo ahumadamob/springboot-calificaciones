@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.imb2025.calificaciones.entity.AsignacionDocente;
 
-public interface AsignacionDocenteService {
+public interface IAsignacionDocenteService {
 
     AsignacionDocente findById(Long id);
 

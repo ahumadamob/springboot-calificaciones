@@ -1,7 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 import com.imb2025.calificaciones.entity.AsignacionDocente;
-import com.imb2025.calificaciones.service.AsignacionDocenteServiceImp;
+import com.imb2025.calificaciones.service.jpa.AsignacionDocenteServiceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
