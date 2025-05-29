@@ -3,7 +3,7 @@ package com.imb2025.calificaciones.service;
 import java.util.List;
 import com.imb2025.calificaciones.entity.Turno;
 
-public interface TurnoService {
+public interface ITurnoService {
 	
 	List<Turno> findAll();
 	

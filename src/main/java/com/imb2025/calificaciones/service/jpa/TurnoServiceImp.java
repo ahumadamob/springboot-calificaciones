@@ -1,17 +1,15 @@
-package com.imb2025.calificaciones.service;
+package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.entity.Turno;
 import com.imb2025.calificaciones.repository.TurnoRepository;
+import com.imb2025.calificaciones.service.ITurnoService;
 
 @Service
-public class TurnoServiceImp implements TurnoService {
+public class TurnoServiceImp implements ITurnoService {
 	
 	@Autowired
 	private TurnoRepository turnoRepository;

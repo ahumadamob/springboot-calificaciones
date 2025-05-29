@@ -20,16 +20,6 @@ public class Turno {
 	
 	private LocalTime horaFin;
 	
-	public Turno() {}
-
-	public Turno(Long id, String nombre, LocalTime horaInicio, LocalTime horaFin) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.horaInicio = horaInicio;
-		this.horaFin = horaFin;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -61,9 +51,5 @@ public class Turno {
 	public void setHoraFin(LocalTime horaFin) {
 		this.horaFin = horaFin;
 	}
-	
-	
-	
-	
 
 }

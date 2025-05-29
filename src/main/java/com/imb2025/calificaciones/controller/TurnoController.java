@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.entity.Turno;
-import com.imb2025.calificaciones.service.TurnoService;
+import com.imb2025.calificaciones.service.ITurnoService;
 
 @RestController
 @RequestMapping("/api/turno")
 public class TurnoController {
 	
 	@Autowired
-	private TurnoService turnoService;
+	private ITurnoService turnoService;
 	
 	@GetMapping
 	public ResponseEntity<List<Turno>> getAll (){
