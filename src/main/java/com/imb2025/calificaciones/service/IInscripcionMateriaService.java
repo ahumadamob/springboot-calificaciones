@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.imb2025.calificaciones.entity.InscripcionMateria;
 
-public interface InscripcionMateriaService {
+public interface IInscripcionMateriaService {
     InscripcionMateria findById(Long id);
     List<InscripcionMateria> findAll();
     InscripcionMateria save(InscripcionMateria inscripcionMateria);

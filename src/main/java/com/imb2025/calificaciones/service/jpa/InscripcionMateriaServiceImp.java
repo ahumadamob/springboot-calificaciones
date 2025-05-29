@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.service;
+package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
 
@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.entity.InscripcionMateria;
 import com.imb2025.calificaciones.repository.InscripcionMateriaRepository;
+import com.imb2025.calificaciones.service.IInscripcionMateriaService;
 
 @Service
-public class InscripcionMateriaServiceImp implements InscripcionMateriaService{
+public class InscripcionMateriaServiceImp implements IInscripcionMateriaService{
 
     @Autowired
     private InscripcionMateriaRepository repository;

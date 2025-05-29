@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.imb2025.calificaciones.entity.InscripcionMateria;
-import com.imb2025.calificaciones.service.InscripcionMateriaServiceImp;
+import com.imb2025.calificaciones.service.jpa.InscripcionMateriaServiceImp;
 
 @RestController
 @RequestMapping("api/v1/inscripcion-materia")
