@@ -1,7 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 import com.imb2025.calificaciones.entity.TipoNota;
-import com.imb2025.calificaciones.service.TipoNotaService;
+import com.imb2025.calificaciones.service.ITipoNotaService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class TipoNotaController {
 
     @Autowired
-    private TipoNotaService tipoNotaService;
+    private ITipoNotaService tipoNotaService;
 
     // GET /tiponota - lista todos
     @GetMapping

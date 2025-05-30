@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.imb2025.calificaciones.entity.TipoNota;
 
-public interface TipoNotaService {
+public interface ITipoNotaService {
 
 	List<TipoNota> findAll();		//Devuelve una lista con todas las entidades TipoNota.
 	

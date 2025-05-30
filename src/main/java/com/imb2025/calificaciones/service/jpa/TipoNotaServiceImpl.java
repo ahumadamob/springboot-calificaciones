@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.entity.TipoNota;
 import com.imb2025.calificaciones.repository.TipoNotaRepository;
-import com.imb2025.calificaciones.service.TipoNotaService;
+import com.imb2025.calificaciones.service.ITipoNotaService;
 
 @Service
-public class TipoNotaServiceImpl implements TipoNotaService {
+public class TipoNotaServiceImpl implements ITipoNotaService {
 
     @Autowired
     private TipoNotaRepository tipoNotaRepository;
