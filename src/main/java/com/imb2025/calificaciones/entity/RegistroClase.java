@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.Entity;
+package com.imb2025.calificaciones.entity;
 
 import java.time.LocalDate;
 

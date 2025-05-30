@@ -1,20 +1,21 @@
-package com.imb2025.calificaciones.Services;
+package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.Entity.RegistroClase;
-import com.imb2025.calificaciones.Repository.RegistroClaseRepository;
+import com.imb2025.calificaciones.entity.RegistroClase;
+import com.imb2025.calificaciones.repository.RegistroClaseRepository;
+import com.imb2025.calificaciones.service.IRegistroClaseService;
 
 @Service
-public class ImpRegistroClase implements IRegistroClaseService {
+public class RegistroClaseServiceImpl implements IRegistroClaseService {
 	
 	private final  RegistroClaseRepository registroClaseRepository;
 	
 	
 
-	public ImpRegistroClase(RegistroClaseRepository registroClaseRepository) {
+	public RegistroClaseServiceImpl(RegistroClaseRepository registroClaseRepository) {
 		
 		this.registroClaseRepository = registroClaseRepository;
 	}

@@ -1,8 +1,8 @@
-package com.imb2025.calificaciones.Services;
+package com.imb2025.calificaciones.service;
 
 import java.util.List;
 
-import com.imb2025.calificaciones.Entity.RegistroClase;
+import com.imb2025.calificaciones.entity.RegistroClase;
 
 public interface IRegistroClaseService {
 	

@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.Controllers;
+package com.imb2025.calificaciones.controller;
 
 
 import java.util.List;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.Entity.RegistroClase;
-import com.imb2025.calificaciones.Services.IRegistroClaseService;
+import com.imb2025.calificaciones.entity.RegistroClase;
+import com.imb2025.calificaciones.service.IRegistroClaseService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
