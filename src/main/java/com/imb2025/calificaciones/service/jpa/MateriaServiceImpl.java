@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.serviceJpa;
+package com.imb2025.calificaciones.service.jpa;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

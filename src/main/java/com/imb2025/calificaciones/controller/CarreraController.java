@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.entity.Carrera;
-import com.imb2025.calificaciones.services.ICarreraService;
+import com.imb2025.calificaciones.service.ICarreraService;
 
 @RestController
 @RequestMapping("/api/carrera")

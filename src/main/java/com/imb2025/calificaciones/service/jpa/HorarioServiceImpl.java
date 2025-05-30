@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.entity.Horario;
 import com.imb2025.calificaciones.repository.HorarioRepository;
-import com.imb2025.calificaciones.service.HorarioServices;
+import com.imb2025.calificaciones.service.IHorarioService;
 
 @Service
-public class HorarioServiceImpl implements HorarioServices{
+public class HorarioServiceImpl implements IHorarioService{
 
 	@Autowired
 	private HorarioRepository horarioRepository;
