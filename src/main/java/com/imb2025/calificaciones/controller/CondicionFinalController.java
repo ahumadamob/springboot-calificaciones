@@ -1,7 +1,8 @@
-package com.imb2025.calificaciones.condicionfinal.controller;
+package com.imb2025.calificaciones.controller;
 
-import com.imb2025.calificaciones.condicionfinal.entity.CondicionFinal;
-import com.imb2025.calificaciones.condicionfinal.service.CondicionFinalService;
+import com.imb2025.calificaciones.entity.CondicionFinal;
+import com.imb2025.calificaciones.service.ICondicionFinalService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class CondicionFinalController {
 
     @Autowired
-    private CondicionFinalService service;
+    private ICondicionFinalService service;
 
     @GetMapping
     public List<CondicionFinal> getAll() {

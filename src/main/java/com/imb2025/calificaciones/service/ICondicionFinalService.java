@@ -1,8 +1,8 @@
-package com.imb2025.calificaciones.condicionfinal.service;
-
-import com.imb2025.calificaciones.condicionfinal.entity.CondicionFinal;
+package com.imb2025.calificaciones.service;
 
 import java.util.List;
+
+import com.imb2025.calificaciones.entity.CondicionFinal;
 
 public interface ICondicionFinalService {
     List<CondicionFinal> getAll();

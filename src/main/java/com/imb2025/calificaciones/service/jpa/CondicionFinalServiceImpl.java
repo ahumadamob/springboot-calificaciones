@@ -1,7 +1,9 @@
-package com.imb2025.calificaciones.condicionfinal.service.jpa;
+package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.condicionfinal.entity.CondicionFinal;
-import com.imb2025.calificaciones.condicionfinal.repository.CondicionFinalRepository;
+import com.imb2025.calificaciones.entity.CondicionFinal;
+import com.imb2025.calificaciones.repository.CondicionFinalRepository;
+import com.imb2025.calificaciones.service.ICondicionFinalService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
