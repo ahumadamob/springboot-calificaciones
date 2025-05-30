@@ -2,7 +2,7 @@ package com.imb2025.calificaciones.service.jpa;
 
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.repository.EstadoCursadaRepository;
-import com.imb2025.calificaciones.service.EstadoCursadaService;
+import com.imb2025.calificaciones.service.IEstadoCursadaService;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EstadoCursadaServiceImp implements EstadoCursadaService {
+public class EstadoCursadaServiceImp implements IEstadoCursadaService {
 
     @Autowired
     private EstadoCursadaRepository repository;
