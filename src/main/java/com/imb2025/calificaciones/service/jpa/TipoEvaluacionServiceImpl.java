@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.service.jps;
+package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
 import java.util.Optional;

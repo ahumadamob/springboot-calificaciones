@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.services;
+package com.imb2025.calificaciones.service;
 
 import java.util.List;
 
