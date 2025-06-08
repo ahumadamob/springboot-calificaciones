@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.entity.Horario;
-import com.imb2025.calificaciones.service.HorarioServices;
+import com.imb2025.calificaciones.service.IHorarioService;
 
 @RestController
 @RequestMapping("/api/horario")
 public class HorarioController {
 	
 	@Autowired
-	private HorarioServices horarioService;
+	private IHorarioService horarioService;
 	@GetMapping ("/entidad")
     public List<Horario> obtenerTodos() {
         return horarioService.getAll();
