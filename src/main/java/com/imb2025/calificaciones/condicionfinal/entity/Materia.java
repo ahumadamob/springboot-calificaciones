@@ -1,19 +1,17 @@
-package com.imb2025.calificaciones.entity;
+package com.imb2025.calificaciones.condicionfinal.entity;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "condicion_final")
-public class CondicionFinal {
+public class Materia {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
 
-    // Getters y Setters
+    // Getters y setters
     public Long getId() {
         return id;
     }
