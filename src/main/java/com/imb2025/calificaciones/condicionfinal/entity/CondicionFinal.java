@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.condicionfinal.entity;
 
-
 import jakarta.persistence.*;
 
 @Entity

@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.condicionfinal.controller;
 
+import com.imb2025.calificaciones.condicionfinal.dto.CondicionFinalRequestDTO;
 import com.imb2025.calificaciones.condicionfinal.entity.CondicionFinal;
 import com.imb2025.calificaciones.condicionfinal.service.CondicionFinalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +20,19 @@ public class CondicionFinalController {
         return service.getAll();
     }
 
-    @PostMapping
-    public CondicionFinal create(@RequestBody CondicionFinal cf) {
-        return service.save(cf);    
-    }
-
     @GetMapping("/{id}")
     public CondicionFinal getById(@PathVariable Long id) {
         return service.getById(id);
     }
 
+    @PostMapping
+    public CondicionFinal create(@RequestBody CondicionFinalRequestDTO dto) {
+        return service.create(dto);
+    }
+
     @PutMapping("/{id}")
-    public CondicionFinal update(@PathVariable Long id, @RequestBody CondicionFinal cf) {
-        cf.setId(id);
-        return service.save(cf);
+    public CondicionFinal update(@PathVariable Long id, @RequestBody CondicionFinalRequestDTO dto) {
+        return service.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
