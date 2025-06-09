@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/asignacion-docente")
@@ -26,10 +28,13 @@ public class AsignacionDocenteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AsignacionDocente> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable Long id) {
         AsignacionDocente asignacionDocente = service.findById(id);
         if (asignacionDocente == null) {
-            return ResponseEntity.notFound().build();
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", "Asignación docente no encontrada");
+            response.put("error", "Not Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
         return ResponseEntity.ok(asignacionDocente);
     }
@@ -40,7 +45,10 @@ public class AsignacionDocenteController {
             AsignacionDocente createdAsignacionDocente = service.save(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdAsignacionDocente);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", e.getMessage());
+            response.put("error", "Bad Request");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
@@ -49,11 +57,17 @@ public class AsignacionDocenteController {
         try {
             AsignacionDocente updatedAsignacionDocente = service.update(id, dto);
             if (updatedAsignacionDocente == null) {
-                return ResponseEntity.notFound().build();
+                Map<String, Object> response = new HashMap<>();
+                response.put("mensaje", "Asignación docente no encontrada");
+                response.put("error", "Not Found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
             return ResponseEntity.ok(updatedAsignacionDocente);
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", e.getMessage());
+            response.put("error", "Bad Request");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
@@ -63,7 +77,10 @@ public class AsignacionDocenteController {
             service.deleteById(id);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", e.getMessage());
+            response.put("error", "Bad Request");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 }
