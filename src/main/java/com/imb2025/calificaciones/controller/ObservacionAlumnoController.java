@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
 import com.imb2025.calificaciones.service.IObservacionAlumnoService;
 
@@ -38,15 +39,33 @@ public class ObservacionAlumnoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ObservacionAlumno> save(@RequestBody ObservacionAlumno nueva) {
-		ObservacionAlumno observacionAlumno = observacionAlumnoService.save(nueva);
-		return new ResponseEntity<>(observacionAlumno, HttpStatus.CREATED);
+	public ResponseEntity<?> save(@RequestBody ObservacionAlumnoRequestDTO dto) {
+		try {	
+			ObservacionAlumno observacionAlumno = observacionAlumnoService.save(dto);
+			return new ResponseEntity<>(observacionAlumno, HttpStatus.CREATED);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}	
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ObservacionAlumno> update(@RequestBody ObservacionAlumno editar, @PathVariable Long id) {
-		ObservacionAlumno observacionAlumno = observacionAlumnoService.update(id, editar);
-		return ResponseEntity.ok(observacionAlumno);
+	public ResponseEntity<?> update(@RequestBody ObservacionAlumnoRequestDTO dto, @PathVariable Long id) {
+		try {	
+			ObservacionAlumno observacionAlumno = observacionAlumnoService.update(id, dto);
+			
+			if (observacionAlumno == null) {
+				return ResponseEntity
+			            .status(HttpStatus.NOT_FOUND)
+			            .body("Observación con ID " + id + " no encontrada.");	
+			}
+			
+			return ResponseEntity.ok(observacionAlumno);
+			
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());// TODO: handle exception
+		}
+		
 	}
 	
 	@DeleteMapping("/{id}")
