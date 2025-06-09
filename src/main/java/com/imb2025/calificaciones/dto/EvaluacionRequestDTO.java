@@ -1,36 +1,19 @@
-package com.imb2025.calificaciones.entity;
+package com.imb2025.calificaciones.dto;
 
-import jakarta.persistence.ManyToOne;
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+public class EvaluacionRequestDTO {
 
-@Entity
-public class Evaluacion {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private Date fechaEvaluacion;
 
-	@ManyToOne
 	private Long tipoEvaluacionId;
 
-	@ManyToOne
 	private Long materiaId;
 
-	@ManyToOne
 	private Long comisionId;
 
-	
-	public Evaluacion() {
-		super();
-	}
 
 	public Long getId() {
 		return id;
