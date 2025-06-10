@@ -2,9 +2,11 @@ package com.imb2025.calificaciones.controller;
 
 import java.util.List;
 
+import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDTO;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,17 +41,32 @@ public class CalendarioMateriaController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<CalendarioMateria> create(@RequestBody CalendarioMateria calendarioMateria){		
-		CalendarioMateria createCalMat = calMatSer.save(calendarioMateria);
-		return ResponseEntity.status(HttpStatus.CREATED).body(createCalMat);
+	public ResponseEntity<?> create(@RequestBody CalendarioMateriaRequestDTO calendarioMateriaDto){
+
+		try {
+			CalendarioMateria createCalMat = calMatSer.save(calendarioMateriaDto);
+			return ResponseEntity.status(HttpStatus.CREATED).body(createCalMat);
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		} catch (IllegalArgumentException e){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
+
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<CalendarioMateria> update(@PathVariable Long id, @RequestBody CalendarioMateria calendarioMateria){
-		
-		CalendarioMateria updateCalMat = calMatSer.update(id, calendarioMateria);
-		
-		return ResponseEntity.ok(updateCalMat);
+	public ResponseEntity<?> update(@PathVariable Long id,
+													@RequestBody CalendarioMateriaRequestDTO calendarioMateriaDto){
+
+		try {
+			CalendarioMateria updateCalMat = calMatSer.update(id, calendarioMateriaDto);
+			return ResponseEntity.status(HttpStatus.OK).body(updateCalMat);
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		} catch (IllegalArgumentException e){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
+
 	}
 	
 	@DeleteMapping("/{id}")
