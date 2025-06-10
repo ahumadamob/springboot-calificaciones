@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.service;
 
+import com.imb2025.calificaciones.DTO.AlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.Alumno;
 
 import java.util.List;
@@ -7,14 +8,16 @@ import java.util.Optional;
 
 
 public interface IAlumnoServices {
+    Alumno saveFromDTO(AlumnoRequestDTO dto);
 
-    public List<Alumno> getAll();
+    Alumno updateFromDTO(Long id, AlumnoRequestDTO dto);
 
-    public Alumno save(Alumno nuevoAlumno);
+    Alumno findById(Long id);
 
-    public Alumno update(Long id, Alumno datosActualizados);
+    void delete(Long id);
 
-    public void delete(Long id);
+    List<Alumno> getAll();
 
-    public Alumno findById(Long id);
+
+    
 }

@@ -1,42 +1,57 @@
 package com.imb2025.calificaciones.controller;
 
-import com.imb2025.calificaciones.service.IAlumnoServices;
+import com.imb2025.calificaciones.DTO.AlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.Alumno;
+import com.imb2025.calificaciones.service.IAlumnoServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
+@RequestMapping("/alumnos")
 public class AlumnoController {
 
-   @Autowired
-   IAlumnoServices IAlumnoServices;
+    @Autowired
+    private IAlumnoServices alumnoServices;
 
-
-
-    @GetMapping("/entidad")
-    public List<Alumno> obtenerTodos(){
-        return IAlumnoServices.getAll();
-    }
-    @GetMapping("/entidad/{id}")
-    public Alumno obtenerPorId(@PathVariable Long id){
-     return IAlumnoServices.findById(id);
-    }
-    @PostMapping("/entidad")
-    public Alumno crear(@RequestBody Alumno nuevoAlumno) {
-        return IAlumnoServices.save(nuevoAlumno);
+    @GetMapping
+    public List<Alumno> obtenerTodos() {
+        return alumnoServices.getAll();
     }
 
-    @PutMapping("/entidad/{id}")
-    public Alumno actualizar(@PathVariable Long id, @RequestBody Alumno datosActualizados) {
-        return IAlumnoServices.update(id, datosActualizados);
+    @GetMapping("/{id}")
+    public ResponseEntity<Alumno> obtenerPorId(@PathVariable Long id) {
+        Alumno alumno = alumnoServices.findById(id);
+        if (alumno == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(alumno);
     }
 
-    @DeleteMapping("/entidad/{id}")
-    public void eliminar(@PathVariable Long id) {
-        IAlumnoServices.delete(id);
+    @PostMapping
+    public ResponseEntity<Alumno> crear(@RequestBody AlumnoRequestDTO dto) {
+        Alumno creado = alumnoServices.saveFromDTO(dto);
+        return ResponseEntity.ok(creado);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Alumno> actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDTO dto) {
+        Alumno actualizado = alumnoServices.updateFromDTO(id, dto);
+        if (actualizado == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(actualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        Alumno alumno = alumnoServices.findById(id);
+        if (alumno == null) {
+            return ResponseEntity.notFound().build();
+        }
+        alumnoServices.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
