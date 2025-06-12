@@ -39,9 +39,9 @@ public class ObservacionAlumnoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> save(@RequestBody ObservacionAlumnoRequestDTO dto) {
+	public ResponseEntity<?> create(@RequestBody ObservacionAlumnoRequestDTO dto) {
 		try {	
-			ObservacionAlumno observacionAlumno = observacionAlumnoService.save(dto);
+			ObservacionAlumno observacionAlumno = observacionAlumnoService.create(observacionAlumnoService.fromDTO(dto));
 			return new ResponseEntity<>(observacionAlumno, HttpStatus.CREATED);
 			
 		} catch (Exception e) {
@@ -52,20 +52,13 @@ public class ObservacionAlumnoController {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@RequestBody ObservacionAlumnoRequestDTO dto, @PathVariable Long id) {
 		try {	
-			ObservacionAlumno observacionAlumno = observacionAlumnoService.update(id, dto);
-			
-			if (observacionAlumno == null) {
-				return ResponseEntity
-			            .status(HttpStatus.NOT_FOUND)
-			            .body("Observación con ID " + id + " no encontrada.");	
-			}
+			ObservacionAlumno observacionAlumno = observacionAlumnoService.update(id, observacionAlumnoService.fromDTO(dto));
 			
 			return ResponseEntity.ok(observacionAlumno);
 			
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());// TODO: handle exception
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); 
 		}
-		
 	}
 	
 	@DeleteMapping("/{id}")
