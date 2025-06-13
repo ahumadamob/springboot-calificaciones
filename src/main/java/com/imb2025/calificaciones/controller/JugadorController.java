@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imb2025.calificaciones.dto.JugadorRequestDTO;
 import com.imb2025.calificaciones.entity.Jugador;
 import com.imb2025.calificaciones.service.IJugadorService;
 
@@ -25,23 +26,37 @@ public class JugadorController {
 		return jugadorService.findAll();
 	}
 	
-	@GetMapping("/api/jugador/{idalumno}")
-	public Jugador getJugadorById(@PathVariable("idalumno") Long id){
+	@GetMapping("/api/jugador/{idjugador}")
+	public Jugador getJugadorById(@PathVariable("idjugador") Long id){
 		return jugadorService.findById(id);
 	}
 	
 	@PostMapping("/api/jugador")
-	public Jugador createJugador(@RequestBody Jugador jugador){
-		return jugadorService.save(jugador);
+	public Jugador createJugador(@RequestBody JugadorRequestDTO jugadorRequestDto){
+		Jugador jugador = new Jugador();
+		try {
+			jugador = jugadorService.mapFromDto(jugadorRequestDto);
+			jugador = jugadorService.create(jugador);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jugador;
 	}
 	
-	@PutMapping("/api/jugador")
-	public Jugador updateJugador(@RequestBody Jugador jugador){
-		return jugadorService.save(jugador);
+	@PutMapping("/api/jugador/{idjugador}")
+	public Jugador updateJugador(@RequestBody JugadorRequestDTO jugadorRequestDto, @PathVariable("idjugador") Long id){
+		Jugador jugador = new Jugador();
+		try {
+			jugador = jugadorService.mapFromDto(jugadorRequestDto);
+			jugador = jugadorService.update(jugador, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return jugador;
 	}
 	
-	@DeleteMapping("/api/jugador/{idalumno}")
-	public void deleteJugador(@PathVariable("idalumno") Long id){
+	@DeleteMapping("/api/jugador/{idjugador}")
+	public void deleteJugador(@PathVariable("idjugador") Long id){
 		jugadorService.deleteById(id);
 		
 	}
