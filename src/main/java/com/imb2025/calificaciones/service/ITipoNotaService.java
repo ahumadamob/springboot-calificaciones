@@ -1,8 +1,6 @@
 package com.imb2025.calificaciones.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import com.imb2025.calificaciones.entity.TipoNota;
 
 public interface ITipoNotaService {
