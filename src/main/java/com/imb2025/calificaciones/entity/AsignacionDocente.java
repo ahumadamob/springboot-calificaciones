@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class AsignacionDocente {
@@ -11,10 +13,25 @@ public class AsignacionDocente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long docenteId;
-    private Long materiaId;
-    private Long comisionId;
-    private Long periodoLectivoId;
+
+    @ManyToOne
+    @JoinColumn(name = "docente_id", nullable = false)
+    private Docente docente;
+
+    @ManyToOne
+    @JoinColumn(name = "materia_id", nullable = false)
+    private Materia materia;
+
+    @ManyToOne
+    @JoinColumn(name = "comision_id", nullable = false)
+    private Comision comision;
+
+    @ManyToOne
+    @JoinColumn(name = "periodo_lectivo_id", nullable = false)
+    private PeriodoLectivo periodoLectivo;
+
+    public AsignacionDocente() {
+    }
 
     public Long getId() {
         return id;
@@ -24,36 +41,35 @@ public class AsignacionDocente {
         this.id = id;
     }
 
-    public Long getDocenteId() {
-        return docenteId;
+    public Docente getDocente() {
+        return docente;
     }
 
-    public void setDocenteId(Long docenteId) {
-        this.docenteId = docenteId;
+    public void setDocente(Docente docente) {
+        this.docente = docente;
     }
 
-    public Long getMateriaId() {
-        return materiaId;
+    public Materia getMateria() {
+        return materia;
     }
 
-    public void setMateriaId(Long materiaId) {
-        this.materiaId = materiaId;
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 
-    public Long getComisionId() {
-        return comisionId;
+    public Comision getComision() {
+        return comision;
     }
 
-    public void setComisionId(Long comisionId) {
-        this.comisionId = comisionId;
+    public void setComision(Comision comision) {
+        this.comision = comision;
     }
 
-    public Long getPeriodoLectivoId() {
-        return periodoLectivoId;
+    public PeriodoLectivo getPeriodoLectivo() {
+        return periodoLectivo;
     }
 
-    public void setPeriodoLectivoId(Long periodoLectivoId) {
-        this.periodoLectivoId = periodoLectivoId;
+    public void setPeriodoLectivo(PeriodoLectivo periodoLectivo) {
+        this.periodoLectivo = periodoLectivo;
     }
-
 }

@@ -3,6 +3,7 @@ package com.imb2025.calificaciones.service;
 import java.util.List;
 
 import com.imb2025.calificaciones.entity.AsignacionDocente;
+import com.imb2025.calificaciones.dto.AsignacionDocenteRequestDTO;
 
 public interface IAsignacionDocenteService {
 
@@ -10,9 +11,9 @@ public interface IAsignacionDocenteService {
 
     List<AsignacionDocente> findAll();
 
-    AsignacionDocente save(AsignacionDocente asignacionDocente);
+    AsignacionDocente save(AsignacionDocenteRequestDTO dto);
 
-    AsignacionDocente update(Long id, AsignacionDocente asignacionDocente);
+    AsignacionDocente update(Long id, AsignacionDocenteRequestDTO dto);
 
     void deleteById(Long id);
 
