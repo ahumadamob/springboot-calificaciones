@@ -2,6 +2,7 @@ package com.imb2025.calificaciones.service;
 
 import java.util.List;
 
+import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDTO;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 
 public interface IPeriodoLectivoService {
@@ -10,4 +11,5 @@ public interface IPeriodoLectivoService {
 	PeriodoLectivo save(PeriodoLectivo periodoLectivo);
 	PeriodoLectivo update(Long id, PeriodoLectivo periodoLectivo);
 	void deleteById(Long id);
+	PeriodoLectivo RequestDTOToEntity(PeriodoLectivoRequestDTO requestDTO);
 }
