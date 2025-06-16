@@ -4,20 +4,17 @@ public class AlumnoRequestDTO{
     private String nombre;
     private String apellido;
     private String email;
-
     private int dni;
-    private String password;
     private String fechaNacimiento;
 
     public AlumnoRequestDTO() {
     }
 
-    public AlumnoRequestDTO(String nombre, String apellido, String email, int dni, String password, String fechaNacimiento) {
+    public AlumnoRequestDTO(String nombre, String apellido, String email, int dni,  String fechaNacimiento) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.dni = dni;
-        this.password = password;
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -43,14 +40,6 @@ public class AlumnoRequestDTO{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 

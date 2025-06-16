@@ -4,7 +4,6 @@ import com.imb2025.calificaciones.DTO.AlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.service.IAlumnoServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,36 +21,41 @@ public class AlumnoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Alumno> obtenerPorId(@PathVariable Long id) {
-        Alumno alumno = alumnoServices.findById(id);
-        if (alumno == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(alumno);
+    public Alumno obtenerPorId(@PathVariable Long id) {
+        return alumnoServices.findById(id);
+        
     }
 
     @PostMapping
-    public ResponseEntity<Alumno> crear(@RequestBody AlumnoRequestDTO dto) {
-        Alumno creado = alumnoServices.saveFromDTO(dto);
-        return ResponseEntity.ok(creado);
+    public Alumno crear(@RequestBody AlumnoRequestDTO alumnoDto) {
+        Alumno alumno= new Alumno();
+        try {
+            alumno = alumnoServices.mapFromDTO(alumnoDto);
+            alumno = alumnoServices.create(alumno);   
+        } catch (Exception e) {
+            throw new RuntimeException("Error al mapear el DTO: " + e.getMessage());
+        }
+        return alumno;
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Alumno> actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDTO dto) {
-        Alumno actualizado = alumnoServices.updateFromDTO(id, dto);
-        if (actualizado == null) {
-            return ResponseEntity.notFound().build();
+    public Alumno actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDTO alumnoDto) throws Exception {
+        Alumno alumno = new Alumno();
+        try {
+            alumno = alumnoServices.mapFromDTO(alumnoDto);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al mapear el DTO: " + e.getMessage());
         }
-        return ResponseEntity.ok(actualizado);
+        try{
+            alumno= alumnoServices.update(id, alumno);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al actualizar el alumno: " + e.getMessage());
+        }
+        return alumno;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-        Alumno alumno = alumnoServices.findById(id);
-        if (alumno == null) {
-            return ResponseEntity.notFound().build();
-        }
-        alumnoServices.delete(id);
-        return ResponseEntity.noContent().build();
+    public void eliminar(@PathVariable Long id) {
+        alumnoServices.deleteById(id);
     }
 }

@@ -4,20 +4,18 @@ import com.imb2025.calificaciones.DTO.AlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.Alumno;
 
 import java.util.List;
-import java.util.Optional;
-
 
 public interface IAlumnoServices {
-    Alumno saveFromDTO(AlumnoRequestDTO dto);
+    Alumno create(Alumno alumno);
 
-    Alumno updateFromDTO(Long id, AlumnoRequestDTO dto);
+    Alumno update(Long id, Alumno alumno) throws Exception;
 
     Alumno findById(Long id);
 
-    void delete(Long id);
+    void deleteById(Long id);
 
     List<Alumno> getAll();
 
-
+    public Alumno mapFromDTO(AlumnoRequestDTO alumnoDto);
     
 }
