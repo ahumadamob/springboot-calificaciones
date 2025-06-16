@@ -3,19 +3,11 @@ package com.imb2025.calificaciones.dto;
 import java.time.LocalDate;
 
 public class CalendarioMateriaRequestDTO {
-    private Long id;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private Long materiaId;
     private Long comisionId;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public LocalDate getFechaInicio() {
         return fechaInicio;

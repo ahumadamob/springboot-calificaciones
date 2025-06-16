@@ -44,28 +44,29 @@ public class CalendarioMateriaController {
 	public ResponseEntity<?> create(@RequestBody CalendarioMateriaRequestDTO calendarioMateriaDto){
 
 		try {
-			CalendarioMateria createCalMat = calMatSer.save(calendarioMateriaDto);
-			return ResponseEntity.status(HttpStatus.CREATED).body(createCalMat);
-		} catch (EntityNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-		} catch (IllegalArgumentException e){
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-		}
+			CalendarioMateria calendarioMateria;
+			calendarioMateria = calMatSer.mapFromDto(calendarioMateriaDto);
+			calendarioMateria = calMatSer.create(calendarioMateria);
 
+			return ResponseEntity.status(HttpStatus.CREATED).body(calendarioMateria);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable Long id,
 													@RequestBody CalendarioMateriaRequestDTO calendarioMateriaDto){
-
 		try {
-			CalendarioMateria updateCalMat = calMatSer.update(id, calendarioMateriaDto);
-			return ResponseEntity.status(HttpStatus.OK).body(updateCalMat);
-		} catch (EntityNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-		} catch (IllegalArgumentException e){
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+			CalendarioMateria calendarioMateria;
+			calendarioMateria = calMatSer.mapFromDto(calendarioMateriaDto);
+			calendarioMateria = calMatSer.update(id, calendarioMateria);
+
+			return ResponseEntity.status(HttpStatus.OK).body(calendarioMateria);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
+
 
 	}
 	

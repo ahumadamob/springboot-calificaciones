@@ -9,8 +9,10 @@ public interface ICalendarioMateriaService {
 	
 	List<CalendarioMateria> findAll();
 	CalendarioMateria findByID(Long id);
-	CalendarioMateria save(CalendarioMateriaRequestDTO calendarioMateriaDto);
-	CalendarioMateria update(Long id, CalendarioMateriaRequestDTO calendarioMateriaDto);
+	CalendarioMateria create(CalendarioMateria calendarioMateria);
+	CalendarioMateria update(Long id, CalendarioMateria calendarioMateria) throws Exception;
 	void delete(Long id);
-	
+	CalendarioMateria mapFromDto(CalendarioMateriaRequestDTO calMatDto)throws Exception;
+
+
 }

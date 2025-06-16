@@ -40,66 +40,18 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService{
 	}
 
 	@Override
-	@Transactional
-	public CalendarioMateria save(CalendarioMateriaRequestDTO calendarioMateriaDto) {
-
-		try {
-			CalendarioMateria calendarioMateria = new CalendarioMateria();
-
-			Materia materia = materiaRepository.findById(calendarioMateriaDto.getMateriaId())
-					.orElseThrow(() -> new EntityNotFoundException
-							("Materia no encontrada con el id: " + calendarioMateriaDto.getMateriaId()));
-
-
-			Comision comision = comisionRepository.findById(calendarioMateriaDto.getComisionId())
-					.orElseThrow(() -> new EntityNotFoundException
-							("Comision no encontrada con el id: " + calendarioMateriaDto.getComisionId()));
-
-			if (calendarioMateriaDto.getFechaInicio().isAfter(calendarioMateriaDto.getFechaFin())){
-				throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha de fin");
-			}
-
-			calendarioMateria.setMateria(materia);
-			calendarioMateria.setComision(comision);
-			calendarioMateria.setFechaInicio(calendarioMateriaDto.getFechaInicio());
-			calendarioMateria.setFechaFin(calendarioMateriaDto.getFechaFin());
-			return calMatRepo.save(calendarioMateria);
-		} catch (EntityNotFoundException e) {
-			throw e;
-		}
-
+	public CalendarioMateria create(CalendarioMateria calendarioMateria) {
+		return calMatRepo.save(calendarioMateria);
 	}
-	
+
 	@Override
-	@Transactional
-	public CalendarioMateria update(Long id, CalendarioMateriaRequestDTO calendarioMateriaDto) {
+	public CalendarioMateria update(Long id, CalendarioMateria calendarioMateria) throws Exception {
 
-		try {
-			CalendarioMateria existing = calMatRepo.findById(id)
-					.orElseThrow(() -> new EntityNotFoundException
-							("Calendario Materia no encontrado con el id: "+ id));
-
-			Materia materia = materiaRepository.findById(calendarioMateriaDto.getMateriaId())
-					.orElseThrow(() -> new EntityNotFoundException
-							("Materia no encontrada con el id: " + calendarioMateriaDto.getMateriaId()));
-
-			Comision comision = comisionRepository.findById(calendarioMateriaDto.getComisionId())
-					.orElseThrow(() -> new EntityNotFoundException
-							("Comision no encontrada con el id: " + calendarioMateriaDto.getComisionId()));
-
-
-			if (calendarioMateriaDto.getFechaInicio().isAfter(calendarioMateriaDto.getFechaFin())){
-				throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha de fin");
-			}
-
-			existing.setFechaInicio(calendarioMateriaDto.getFechaInicio());
-			existing.setFechaFin(calendarioMateriaDto.getFechaFin());
-			existing.setMateria(materia);
-			existing.setComision(comision);
-
-			return calMatRepo.save(existing);
-		} catch (EntityNotFoundException e) {
-			throw e;
+		if (calMatRepo.existsById(id)){
+			calendarioMateria.setId(id);
+			return calMatRepo.save(calendarioMateria);
+		} else {
+			throw new Exception ("No se encontro calendario materia con el id: "+ id);
 		}
 	}
 
@@ -110,9 +62,30 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService{
 		if (calMatRepo.existsById(id)){
 			calMatRepo.deleteById(id);
 		}
-	
+
 	}
 
+	@Override
+	public CalendarioMateria mapFromDto(CalendarioMateriaRequestDTO calMatDto) throws Exception {
+
+		CalendarioMateria calendarioMateria = new CalendarioMateria();
+
+		if (calMatDto.getFechaInicio().isAfter(calMatDto.getFechaFin())){
+			throw new Exception("La fecha de inicio no puede ser posterior a la fecha de fin");
+		}
+		Materia materia = materiaRepository.findById(calMatDto.getMateriaId())
+				.orElseThrow(() -> new Exception ("Materia no encontrada con el id: " + calMatDto.getMateriaId()));
+
+		Comision comision = comisionRepository.findById(calMatDto.getComisionId())
+				.orElseThrow(() -> new Exception ("Comision no encontrada con el id: " + calMatDto.getComisionId()));
+
+		calendarioMateria.setFechaInicio(calMatDto.getFechaInicio());
+		calendarioMateria.setFechaFin(calMatDto.getFechaFin());
+		calendarioMateria.setMateria(materia);
+		calendarioMateria.setComision(comision);
+
+		return calendarioMateria;
+	}
 
 
 }
