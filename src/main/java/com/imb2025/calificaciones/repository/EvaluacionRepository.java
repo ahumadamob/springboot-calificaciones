@@ -7,7 +7,7 @@ import com.imb2025.calificaciones.entity.Evaluacion;
 
 
 @Repository
-public interface EvaluacionRepository extends JpaRepository<Evaluacion, Integer> {
+public interface EvaluacionRepository extends JpaRepository<Evaluacion, Long> {
 
 	
 }
