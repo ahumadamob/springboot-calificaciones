@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imb2025.calificaciones.dto.TurnoRequestDTO;
 import com.imb2025.calificaciones.entity.Turno;
 import com.imb2025.calificaciones.service.ITurnoService;
 
@@ -40,19 +41,29 @@ public class TurnoController {
 	}
 	
 	 @PostMapping
-	  public Turno createTurno(@RequestBody Turno turno) {
-	        return turnoService.save(turno);
+	  public Turno createTurno(@RequestBody TurnoRequestDTO turnoRequestDTO) {
+		 Turno turno = new Turno();
+		 try {
+			 turno = turnoService.mapFromDTO(turnoRequestDTO);
+			 turno = turnoService.create(turno);
+		 }catch (Exception e) {
+			 e.printStackTrace();
+		 }
+		 return turnoService.create(turno);
 	    }
 	 
 	 @PutMapping("/{id}")
-	    public ResponseEntity<Turno> updateTurno(@PathVariable Long id, @RequestBody Turno turno) {
-	        Turno updated = turnoService.update(id, turno);
-	        if (updated != null) {
-	            return ResponseEntity.ok(updated);
-	        } else {
-	            return ResponseEntity.notFound().build();
-	        }
-	    }
+	    public Turno updateTurno(@RequestBody TurnoRequestDTO turnoRequestDTO, @PathVariable Long id) {
+		 Turno turno = new Turno();
+		 try {
+			 turno = turnoService.mapFromDTO(turnoRequestDTO);
+			 turno = turnoService.update(id, turno);
+		 }catch (Exception e) {
+			 e.printStackTrace();
+		 }
+	
+		 return turno;
+	 }
 	
 	 
 	 @DeleteMapping("/{id}")
