@@ -1,5 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.dto.JugadorRequestDTO;
+import com.imb2025.calificaciones.dto.ResponseDTO;
 import com.imb2025.calificaciones.entity.Jugador;
 import com.imb2025.calificaciones.service.IJugadorService;
 
@@ -22,8 +25,13 @@ public class JugadorController {
 	private IJugadorService jugadorService;
 	
 	@GetMapping("/api/jugador")
-	public List<Jugador>getAllJugadores(){
-		return jugadorService.findAll();
+	public ResponseDTO<List<Jugador>> getAllJugadores(){
+		ResponseDTO res = new ResponseDTO();
+		res.setStatusCode(200);
+		res.setMessage("Listados de jugadores");
+		res.setData(jugadorService.findAll());
+		res.setDate(LocalDateTime.now());
+		return res;
 	}
 	
 	@GetMapping("/api/jugador/{idjugador}")
