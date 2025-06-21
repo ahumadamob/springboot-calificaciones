@@ -32,7 +32,7 @@ public class MateriaController {
 	}
 	
 	@GetMapping("/api/materia/{id}")
-	public Materia getMateriaById(@PathVariable("id") Long id) {
+	public Materia getMateriaById(@PathVariable("idalumno") Long id) {
 	    return materiaService.findById(id);
 	}
 
@@ -48,11 +48,10 @@ public class MateriaController {
 		return materiaService.save(materia);
 		
 	}
+	@DeleteMapping("/api/materia/{idalumno}")
+	public void deleteMateria(@PathVariable("idalumno") Long id) {
+	    materiaService.deleteById(id); 
+
 	
-	@DeleteMapping("/api/materia/{id}")
-	public void deleteMateria(@PathVariable("id") Long id) {
-	    materiaService.deleteById(id);
 	}
-
-
 }
