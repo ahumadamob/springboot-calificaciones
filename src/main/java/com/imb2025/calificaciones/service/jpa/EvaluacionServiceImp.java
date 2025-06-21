@@ -123,5 +123,4 @@ public class EvaluacionServiceImp implements IEvaluacionService {
 	public void deleteById(Long id) {
 		evaluacionRepository.deleteById(id);
 	}
-
 }
