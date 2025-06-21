@@ -19,13 +19,13 @@ public class Evaluacion {
 	private Date fechaEvaluacion;
 
 	@ManyToOne
-	private Long tipoEvaluacionId;
+	private TipoEvaluacion tipoEvaluacion;
 
 	@ManyToOne
-	private Long materiaId;
+	private Materia materia;
 
 	@ManyToOne
-	private Long comisionId;
+	private Comision comision;
 
 	
 	public Evaluacion() {
@@ -48,27 +48,27 @@ public class Evaluacion {
 		this.fechaEvaluacion = fechaEvaluacion;
 	}
 
-	public Long getTipoEvaluacionId() {
-		return tipoEvaluacionId;
+	public TipoEvaluacion getTipoEvaluacion() {
+		return tipoEvaluacion;
 	}
 
-	public void setTipoEvaluacionId(Long tipoEvaluacionId) {
-		this.tipoEvaluacionId = tipoEvaluacionId;
+	public void setTipoEvaluacion(TipoEvaluacion tipoEvaluacion) {
+		this.tipoEvaluacion = tipoEvaluacion;
 	}
 
-	public Long getMateriaId() {
-		return materiaId;
+	public Materia getMateria() {
+		return materia;
 	}
 
-	public void setMateriaId(Long materiaId) {
-		this.materiaId = materiaId;
+	public void setMateria(Materia materia) {
+		this.materia = materia;
 	}
 
-	public Long getComisionId() {
-		return comisionId;
+	public Comision getComision() {
+		return comision;
 	}
 
-	public void setComisionId(Long comisionId) {
-		this.comisionId = comisionId;
+	public void setComision(Comision comision) {
+		this.comision = comision;
 	}
 }

@@ -1,6 +1,9 @@
 package com.imb2025.calificaciones.controller;
 
 import com.imb2025.calificaciones.dto.EvaluacionRequestDTO;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,27 +44,33 @@ public class EvaluacionController {
 	public ResponseEntity<Evaluacion> gitById(@PathVariable Long id){
 		Evaluacion evaluacion=evaluacionServiceImp.findById(id);
 		return ResponseEntity.ok(evaluacion);
-		
+
 	}
 	
 	@PostMapping
-	public ResponseEntity<Evaluacion> create(@RequestBody EvaluacionRequestDTO evaluacionRequestDTO){
+	public ResponseEntity<?> create(@RequestBody EvaluacionRequestDTO evaluacionRequestDTO){
 		try {
 			Evaluacion evaluacion=evaluacionServiceImp.save(evaluacionRequestDTO);
-			return ResponseEntity.ok(evaluacion);
-		}catch (EntityNotFoundException entityNotFound){
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.CREATED).body(evaluacion);
+		}catch (RuntimeException e){
+			Map<String, Object> message=new HashMap<>();
+			message.put("mensaje",e.getMessage());
+			message.put("error", "Bad request");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
 		}
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Evaluacion> update(@PathVariable Long id,
+	public ResponseEntity<?> update(@PathVariable Long id,
 			@RequestBody EvaluacionRequestDTO newEvaluacionDTO){
 		try {
 			Evaluacion evaluacion=evaluacionServiceImp.update(id, newEvaluacionDTO);
-			return ResponseEntity.ok(evaluacion);
-		}catch (EntityNotFoundException entityNotFound) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.OK).body(evaluacion);
+		}catch (RuntimeException e) {
+			Map<String, Object> message=new HashMap<>();
+			message.put("mensaje",e.getMessage());
+			message.put("error", "Bad request");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
 		}
 	}
 	
