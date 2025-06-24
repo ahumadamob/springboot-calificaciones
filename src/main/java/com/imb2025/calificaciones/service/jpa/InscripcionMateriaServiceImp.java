@@ -5,7 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDTO;
 import com.imb2025.calificaciones.entity.InscripcionMateria;
+import com.imb2025.calificaciones.entity.Materia;
+import com.imb2025.calificaciones.entity.PeriodoLectivo;
+import com.imb2025.calificaciones.entity.Alumno;
+import com.imb2025.calificaciones.repository.AlumnoRepository;
+import com.imb2025.calificaciones.repository.MateriaRepository;
+import com.imb2025.calificaciones.repository.PeriodoLectivoRepository;
 import com.imb2025.calificaciones.repository.InscripcionMateriaRepository;
 import com.imb2025.calificaciones.service.IInscripcionMateriaService;
 
@@ -14,6 +21,15 @@ public class InscripcionMateriaServiceImp implements IInscripcionMateriaService{
 
     @Autowired
     private InscripcionMateriaRepository repository;
+
+    @Autowired 
+    private AlumnoRepository alumnoRepository;
+
+    @Autowired
+    private MateriaRepository materiaRepository;
+
+    @Autowired 
+    private PeriodoLectivoRepository periodoLectivoRepository;
 
     public List<InscripcionMateria> findAll() {
         return repository.findAll();
@@ -24,17 +40,39 @@ public class InscripcionMateriaServiceImp implements IInscripcionMateriaService{
         return repository.findById(id).orElse(null);
     }
    
-    public InscripcionMateria save(InscripcionMateria inscripcionMateria) {
+    public InscripcionMateria create(InscripcionMateria inscripcionMateria) {
         return repository.save(inscripcionMateria);
     }
 
    
-    public InscripcionMateria update(Long id, InscripcionMateria inscripcionMateria) {
-        inscripcionMateria.setId(id);
-    return repository.save(inscripcionMateria);
-    }
+    public InscripcionMateria update(Long id, InscripcionMateria inscripcionMateria) throws Exception {
+        if (repository.existsById(id)) {
+            inscripcionMateria.setId(id);
+            return repository.save(inscripcionMateria);
+        } else {
+            throw new Exception("No se encontró Inscripcion con el id "+id);
+        }
+    
+    } 
     
     public void deleteById(Long id) {
         repository.deleteById(id);
+    }
+
+
+    @Override
+    public InscripcionMateria mapFromDto(InscripcionMateriaRequestDTO inscripcionMateriaDTO) throws Exception {
+        InscripcionMateria inscripcionMateria = new InscripcionMateria();
+        Alumno alumno = alumnoRepository.findById(inscripcionMateriaDTO.getIdAlumno()).orElseThrow(
+            () -> new Exception("Alumno no encontrado"));
+        inscripcionMateria.setAlumno(alumno);
+        Materia materia = materiaRepository.findById(inscripcionMateriaDTO.getIdMateria()).orElseThrow(
+            () -> new Exception("Materia no encontrada"));
+        inscripcionMateria.setMateria(materia);
+        
+        PeriodoLectivo periodoLectivo = periodoLectivoRepository.findById(inscripcionMateriaDTO.getIdPeriodoLectivo()).orElseThrow(
+            () -> new Exception("Periodo Lectivo no encontrado"));
+        inscripcionMateria.setPeriodoLectivo(periodoLectivo);
+        return inscripcionMateria;
     }
 }
