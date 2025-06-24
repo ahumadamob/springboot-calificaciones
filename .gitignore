@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+.theia/settings.json
+src/main/resources/application.properties
+src/main/resources/application.properties
