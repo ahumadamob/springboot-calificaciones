@@ -23,7 +23,7 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService{
 	@Override
 	public TipoEvaluacion findById(Long id) {
 		
-		Optional optional;
+		Optional<TipoEvaluacion> optional;
 		optional = repo.findById(id);
 		if(optional.isPresent()) {
 			return (TipoEvaluacion) optional.get();
