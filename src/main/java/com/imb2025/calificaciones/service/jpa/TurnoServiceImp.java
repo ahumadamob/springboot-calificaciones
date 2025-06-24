@@ -22,8 +22,11 @@ public class TurnoServiceImp implements ITurnoService {
 
 	@Override
 	public Turno findById(Long id) {
-		return turnoRepository.findById(id).orElse(null);
-
+		return turnoRepository.findById(id).orElseThrow(() -> new RuntimeException("Turno no encontrado"));
+	}
+	
+	public boolean existsById(Long id) {
+		return turnoRepository.existsById(id);
 	}
 
 	@Override
@@ -38,14 +41,17 @@ public class TurnoServiceImp implements ITurnoService {
 			turno.setId(id);
 			return turnoRepository.save(turno);
 		}else {
-			
 			throw new Exception("No se encontro Turno con id: " + id);
 		}
 	}
 
 	@Override
-	public void deleteById(Long id) {
-		turnoRepository.deleteById(id);
+	public void deleteById(Long id) throws Exception  {
+		if (turnoRepository.existsById(id)) {
+			turnoRepository.deleteById(id);
+		} else {
+			throw new Exception("Turno no encontrado");
+		}
 	}
 
 	@Override
