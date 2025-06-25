@@ -23,7 +23,12 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 
 	@Override
 	public PeriodoLectivo findById(Long id) {
-		return repository.findById(id).orElseThrow();
+		return repository.findById(id).orElse(null);
+	}
+	
+	@Override
+	public Boolean existsById(Long id) {
+		return repository.existsById(id);
 	}
 
 	@Override
@@ -32,10 +37,10 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 	}
 
 	@Override
-	public PeriodoLectivo update(Long id, PeriodoLectivo periodoLectivo) {
-		if (repository.findById(id).isEmpty()) {
-			throw new NullPointerException();
-		}
+	public PeriodoLectivo update(Long id, PeriodoLectivo periodoLectivo) throws Exception {
+		repository.findById(id).orElseThrow(
+				() -> new Exception("Periodo no encontrado")
+		);
 		periodoLectivo.setId(id);
 		return repository.save(periodoLectivo);
 	}
@@ -46,13 +51,15 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 	}
 
 	@Override
-	public PeriodoLectivo RequestDTOToEntity(PeriodoLectivoRequestDTO requestDTO) {
-		return new PeriodoLectivo(
-					requestDTO.getId(),
-					requestDTO.getNombre(),
-					requestDTO.getFechaInicio(),
-					requestDTO.getFechaFin()
-				);
+	public PeriodoLectivo mapFromDTO(PeriodoLectivoRequestDTO requestDTO) {
+		PeriodoLectivo periodoLectivo = new PeriodoLectivo();
+		
+		periodoLectivo.setNombre(requestDTO.getNombre());
+		periodoLectivo.setFechaInicio(requestDTO.getFechaInicio());
+		periodoLectivo.setFechaFin(requestDTO.getFechaFin());
+		
+		return periodoLectivo;
 	}
+
 
 }
