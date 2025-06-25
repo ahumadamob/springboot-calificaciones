@@ -1,19 +1,23 @@
 package com.imb2025.calificaciones.service;
 
+import com.imb2025.calificaciones.dto.AlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.Alumno;
 
 import java.util.List;
 
-
 public interface IAlumnoServices {
 
-    public List<Alumno> getAll();
+    public Alumno update(Long id, AlumnoRequestDTO datosActualizados) throws Exception;
 
-    public Alumno save(Alumno nuevoAlumno);
+    public List<Alumno> findAll();
 
-    public Alumno update(Long id, Alumno datosActualizados);
-
-    public void delete(Long id);
+    public boolean existsById(Long id);
 
     public Alumno findById(Long id);
+
+    public Alumno create(AlumnoRequestDTO nuevoAlumno) throws Exception;
+
+    public void deleteById(Long id);
+    
+    public Alumno mapFromDTO(AlumnoRequestDTO alumnoDto);
 }
