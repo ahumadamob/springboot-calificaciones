@@ -1,0 +1,259 @@
+* [33m06276a9[m[33m ([m[1;32mtp02-sosa-tomas[m[33m)[m Subo avances del TP03 - Condición Final
+[31m|[m * [33mac8aeab[m[33m ([m[1;31morigin/tp02-carrizo-andres[m[33m)[m TP02 - Relaciones y DTO implementados
+[31m|[m * [33m8daaab6[m[33m ([m[1;31morigin/tp01-carrizo-andres[m[33m)[m Se agrega entidad Docente
+[31m|[m [32m|[m * [33m397ae7a[m[33m ([m[1;31morigin/tp03-quevedo-alejo[m[33m)[m Correcion en service - delete excepcion
+[31m|[m [32m|[m * [33m0a39917[m TP03 : HTTP y errores
+[31m|[m [32m|[m [33m|[m * [33m16a638f[m[33m ([m[1;31morigin/tp03-martino-tomas[m[33m)[m incorporar DtO
+[31m|[m [32m|[m [33m|[m * [33m1deb856[m Realizacion de Tp03-Martino-Tomas
+[31m|[m [32m|[m [33m|[m[33m/[m  
+[31m|[m [32m|[m [33m|[m * [33m853db42[m[33m ([m[1;31morigin/tp03-garcia-cecilia[m[33m)[m TP03: HTTP y errores
+[31m|[m [32m|[m [33m|[m * [33m8c1d082[m[33m ([m[1;31morigin/tp02-garcia-cecilia[m[33m)[m TP02- DTO IMPLEMENTADO
+[31m|[m [32m|[m [33m|[m [35m|[m * [33m6378185[m[33m ([m[1;31morigin/tp03-romero-joaquin[m[33m)[m tp02-03-joaquin-romero
+[31m|[m [32m|[m [33m|[m [35m|[m[33m/[m  
+[31m|[m [32m|[m [33m|[m[33m/[m[35m|[m   
+[31m|[m [32m|[m [33m|[m [35m|[m * [33ma4ee99b[m[33m ([m[1;31morigin/tp02-nievas-victor[m[33m)[m Validaciones de errores
+[31m|[m [32m|[m [33m|[m [35m|[m *   [33m39fe38c[m Merge branch 'develop' into tp02-nievas-victor
+[31m|[m [32m|[m [33m|[m [35m|[m [1;32m|[m[33m\[m  
+[31m|[m [32m|[m [33m|[m [35m|[m[33m_[m[1;32m|[m[33m/[m  
+[31m|[m [32m|[m [33m|[m[33m/[m[35m|[m [1;32m|[m   
+[31m|[m [32m|[m * [35m|[m [1;32m|[m [33ma4e4bfa[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mtp03-sosa-tomas[m[33m, [m[1;31morigin/tp03-sosa-tomas[m[33m, [m[1;31morigin/develop[m[33m)[m TP02 - Relaciones y DTO implementados (#46)
+[31m|[m [32m|[m [35m|[m[35m/[m [1;32m/[m  
+[31m|[m [32m|[m [35m|[m * [33m62ee3b0[m TP02
+[31m|[m [32m|[m [35m|[m [1;33m|[m * [33m89afab6[m[33m ([m[1;31morigin/tp2-Prado-agustin[m[33m)[m todos los acambios agregados
+[31m|[m [32m|[m [35m|[m [1;33m|[m * [33m24fd423[m TP02 - Relaciones y DTO implementados
+[31m|[m [32m|[m [35m|[m [1;33m|[m[35m/[m  
+[31m|[m [32m|[m [35m|[m[35m/[m[1;33m|[m   
+[31m|[m [32m|[m [35m|[m [1;33m|[m * [33m6ca49e2[m[33m ([m[1;31morigin/tp02-oliva-hernan[m[33m)[m TP02 - Relaciones y DTO implementados
+[31m|[m [32m|[m [35m|[m [1;33m|[m[35m/[m  
+[31m|[m [32m|[m [35m|[m[35m/[m[1;33m|[m   
+[31m|[m [32m|[m [35m|[m [1;33m|[m * [33m47bba3f[m[33m ([m[1;31morigin/develop-nuevos-dto[m[33m)[m Responses DTO globales por el profesor
+[31m|[m [32m|[m [35m|[m [1;33m|[m[35m/[m  
+[31m|[m [32m|[m [35m|[m[35m/[m[1;33m|[m   
+[31m|[m [32m|[m [35m|[m [1;33m|[m * [33m694f12f[m[33m ([m[1;31morigin/tp03-ahumada-mario[m[33m)[m Ejercicio del Profesor
+[31m|[m [32m|[m [35m|[m [1;33m|[m * [33m35da7d9[m[33m ([m[1;31morigin/tp02-ahumada-mario[m[33m)[m Demo del TP02
+[31m|[m [32m|[m [35m|[m [1;33m|[m * [33ma8699a8[m[33m ([m[1;31morigin/tp01-ahumada-mario[m[33m)[m Este es un ejemplo, no lo llevemos a Master
+[31m|[m [32m|[m [35m|[m[32m_[m[1;33m|[m[32m/[m  
+[31m|[m [32m|[m[32m/[m[35m|[m [1;33m|[m   
+[31m|[m [32m|[m [35m|[m [1;33m|[m * [33m200211a[m[33m ([m[1;31morigin/tp02-marconi-agustina[m[33m)[m TP02 - Evaluacion: Relaciones y DTO implementados
+[31m|[m [32m|[m [35m|[m [1;33m|[m * [33m914cc11[m M-	Operación PO-	Operación POSTSTerge branch 'tp02' into tp2_merge
+[31m|[m [32m|[m [35m|[m [1;33m|[m[35m/[m[34m|[m 
+[31m|[m [32m|[m [35m|[m[35m/[m[1;33m|[m [34m|[m 
+[31m|[m [32m|[m [35m|[m [1;33m|[m * [33m19841f0[m feat(evaluacion): add DTO evaluation
+[31m|[m [32m|[m [35m|[m [1;33m|[m * [33m885bfb8[m fix|feat: fixed int to Long and added DTO
+[31m|[m [32m|[m [35m|[m [1;33m|[m [34m|[m * [33m7f8695b[m[33m ([m[1;31morigin/tp02-vicencio-pablo[m[33m)[m  Se crea el DTO de TipoEvaluacion y se realizan cambios en controller, service
+[31m|[m [32m|[m [35m|[m [1;33m|[m[35m_[m[34m|[m[35m/[m  
+[31m|[m [32m|[m [35m|[m[35m/[m[1;33m|[m [34m|[m   
+[31m|[m [32m|[m * [1;33m|[m [34m|[m [33m9827ce3[m TP02 - Relaciones y DTO implementados (#29)
+[31m|[m [32m|[m [1;33m|[m[1;33m/[m [34m/[m  
+[31m|[m [32m|[m * [34m|[m [33m69ac391[m Correcciones del profesor (#39)
+[31m|[m [32m|[m [35m|[m [34m|[m * [33m46dd556[m[33m ([m[1;31morigin/tp02-vargas-francisco[m[33m)[m tp02-v1
+[31m|[m [32m|[m [35m|[m [34m|[m * [33m4636593[m[33m ([m[1;31morigin/tp01-vargas-francisco[m[33m)[m Correcciones del profesor
+[31m|[m [32m|[m [35m|[m [34m|[m * [33mc8cf376[m TP01 - EstadoCursada-v4.1
+[31m|[m [32m|[m [35m|[m [34m|[m * [33m060013a[m TP01 - EstadoCursada-v4
+[31m|[m [32m|[m [35m|[m [34m|[m * [33m37fca24[m TP01 - EstadoCursada-v3
+[31m|[m [32m|[m [35m|[m [34m|[m * [33mbd1e4f4[m TP01 - EstadoCursada-v2
+[31m|[m [32m|[m [35m|[m [34m|[m * [33md3a5cd8[m TP01 - EstadoCursada
+[31m|[m [32m|[m [35m|[m[32m_[m[34m|[m[32m/[m  
+[31m|[m [32m|[m[32m/[m[35m|[m [34m|[m   
+[31m|[m [32m|[m [35m|[m [34m|[m * [33m763d3fe[m[33m ([m[1;31morigin/tp02-infante-gonzalo[m[33m)[m Relaciones y DTO
+[31m|[m [32m|[m [35m|[m [34m|[m * [33m78e4dd0[m TP02 - Relaciones y DTO implementados
+[31m|[m [32m|[m [35m|[m [34m|[m[34m/[m  
+[31m|[m [32m|[m [35m|[m [34m|[m * [33m9eaa1eb[m[33m ([m[1;31morigin/tp02-martino-tomas[m[33m)[m TP02 - Relaciones y DTO implementados
+[31m|[m [32m|[m [35m|[m [34m|[m * [33m7b1db04[m TP02 - Relaciones y DTO implementados
+[31m|[m [32m|[m [35m|[m [34m|[m [1;32m|[m * [33m77a40e7[m[33m ([m[1;31morigin/develop-fix-tp01-01[m[33m)[m Correcciones del profesor
+[31m|[m [32m|[m [35m|[m [34m|[m[35m_[m[1;32m|[m[35m/[m  
+[31m|[m [32m|[m [35m|[m[35m/[m[34m|[m [1;32m|[m   
+[31m|[m [32m|[m * [34m|[m [1;32m|[m [33m8b0d863[m Tp01 lucentini fabrizio (#32)
+[31m|[m [32m|[m [1;32m|[m [34m|[m[1;32m/[m  
+[31m|[m [32m|[m [1;32m|[m[1;32m/[m[34m|[m   
+[31m|[m [32m|[m * [34m|[m   [33me9a459e[m Merge pull request #33 from ahumadamob/tp02-sosa-tomas
+[31m|[m [32m|[m [34m|[m[1;35m\[m [34m\[m  
+[31m|[m [32m|[m [34m|[m [1;35m|[m[34m/[m  
+[31m|[m [32m|[m [34m|[m[34m/[m[1;35m|[m   
+[31m|[m [32m|[m [34m|[m [1;35m|[m * [33m9be6148[m[33m ([m[1;31morigin/tp02-romero-joaquin[m[33m)[m TP02 - Relaciones y DTO implementados
+[31m|[m [32m|[m [34m|[m [1;35m|[m * [33mb0b5ef3[m[33m ([m[1;31morigin/tp02-lucentini-agustin[m[33m)[m Enhance error handling in AsignacionDocenteController
+[31m|[m [32m|[m [34m|[m [1;35m|[m * [33m2df91b9[m feat/Asignacion Docente DTO
+[31m|[m [32m|[m [34m|[m [1;35m|[m[34m/[m  
+[31m|[m [32m|[m [34m|[m[34m/[m[1;35m|[m   
+[31m|[m [32m|[m [34m|[m [1;35m|[m * [33m1ecfbf0[m[33m ([m[1;31morigin/tp02-zamora-emanuel[m[33m)[m TP02 - Relaciones y DTO Implementados - fixed
+[31m|[m [32m|[m [34m|[m [1;35m|[m * [33m264dc39[m DTO agregado
+[31m|[m [32m|[m [34m|[m [1;35m|[m * [33m05a6719[m TP02 - Relaciones y DTO implementados
+[31m|[m [32m|[m [34m|[m [1;35m|[m[34m/[m  
+[31m|[m [32m|[m [34m|[m[34m/[m[1;35m|[m   
+[31m|[m [32m|[m [34m|[m [1;35m|[m * [33m8ceeb75[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #35 from ahumadamob/tp02-sosa-tomas
+[31m|[m [32m|[m [34m|[m[32m_[m[1;35m|[m[32m/[m[31m|[m 
+[31m|[m [32m|[m[32m/[m[34m|[m [1;35m|[m[31m/[m  
+[31m|[m [32m|[m[31m_[m[34m|[m[31m/[m[1;35m|[m   
+[31m|[m[31m/[m[32m|[m [34m|[m [1;35m|[m   
+* [32m|[m [34m|[m [1;35m|[m [33m43f852f[m[33m ([m[1;31morigin/tp02-sosa-tomas[m[33m)[m Actualización de estructura y lógica de CondicionFinal
+[1;35m|[m [32m|[m[1;35m_[m[34m|[m[1;35m/[m  
+[1;35m|[m[1;35m/[m[32m|[m [34m|[m   
+* [32m|[m [34m|[m [33m37f0786[m TP02 - DTO, validaciones y control de errores implementados
+* [32m|[m [34m|[m   [33m7aa455a[m[33m ([m[1;32mtp01-sosa-tomas[m[33m)[m Merge branch 'develop' into tp01-sosa-tomas Merge branch 'develop' into tp01-sosa-tomas
+[34m|[m[34m\[m [32m\[m [34m\[m  
+[34m|[m [34m|[m [32m|[m[34m/[m  
+[34m|[m [34m|[m[34m/[m[32m|[m   
+[34m|[m [34m|[m [32m|[m * [33m8717727[m[33m ([m[1;31morigin/tp01-lucentini-fabrizio[m[33m)[m TP01 - Estado Evaluación
+[34m|[m [34m|[m [32m|[m * [33m99dcac0[m TP01 - EstadoEvaluacion
+[34m|[m [34m|[m [32m|[m[34m/[m  
+[34m|[m [34m|[m[34m/[m[32m|[m   
+[34m|[m [34m|[m [32m|[m * [33m45ea336[m[33m ([m[1;31morigin/tp01-lucero-rodrigo[m[33m)[m Esta es mi version 1.0 de Calificaciones-Sede
+[34m|[m [34m|[m [32m|[m[32m/[m  
+[34m|[m [34m|[m [32m|[m * [33m3997daf[m[33m ([m[1;31morigin/tp01-ortega-katia[m[33m)[m TP01 -Entidad horario
+[34m|[m [34m|[m [32m|[m * [33m1469f10[m TP01 - Entidad desarrollada
+[34m|[m [34m|[m [32m|[m * [33mc9e4f26[m TP01 - Entidad Horario desarrollada
+[34m|[m [34m|[m [32m|[m * [33m4974374[m TP01 - Entidad Horario desarrollada
+[34m|[m [34m|[m [32m|[m[32m/[m  
+[34m|[m [34m|[m [32m|[m * [33me69ded8[m[33m ([m[1;31morigin/tp01-grosso-micaela[m[33m)[m tp01-grosso-micaela-PlanEstudio
+[34m|[m [34m|[m [32m|[m[34m/[m  
+[34m|[m [34m|[m[34m/[m[32m|[m   
+[34m|[m * [32m|[m [33m455fdb7[m[33m ([m[1;32mdevelop[m[33m)[m Correcciones en DEVELOP del profesor (#28)
+[34m|[m [1;33m|[m [32m|[m * [33m9703a77[m[33m ([m[1;31morigin/tp02-quevedo-alejo[m[33m)[m TP02 - Relaciones y DTO implementados
+[34m|[m [1;33m|[m [32m|[m [1;34m|[m * [33m069886e[m[33m ([m[1;31morigin/develop-fix-tp01[m[33m)[m Correcciones en DEVELOP del profesor
+[34m|[m [1;33m|[m [32m|[m[1;33m_[m[1;34m|[m[1;33m/[m  
+[34m|[m [1;33m|[m[1;33m/[m[32m|[m [1;34m|[m   
+[34m|[m * [32m|[m [1;34m|[m [33me8a284c[m TP01 Sosa Tomás (#3)
+[34m|[m [1;35m|[m [32m|[m [1;34m|[m *   [33md19d9aa[m[33m ([m[1;31morigin/tp01-sosa-tomas[m[33m)[m Merge branch 'develop' into tp01-sosa-tomas
+[34m|[m [1;35m|[m [32m|[m [1;34m|[m [1;36m|[m[1;35m\[m  
+[34m|[m [1;35m|[m [32m|[m[1;35m_[m[1;34m|[m[1;35m_[m[1;36m|[m[1;35m/[m  
+[34m|[m [1;35m|[m[1;35m/[m[32m|[m [1;34m|[m [1;36m|[m   
+[34m|[m * [32m|[m [1;34m|[m [1;36m|[m [33m1c35942[m TP01 - Entidad desarrollada (#5)
+[34m|[m * [32m|[m [1;34m|[m [1;36m|[m [33md2b1c15[m TP01-"TipoNota" a Develop (#12)
+[34m|[m [31m|[m [32m|[m [1;34m|[m * [33m4c30aaf[m Correcciones del profesor
+[34m|[m [31m|[m[34m_[m[32m|[m[34m_[m[1;34m|[m[34m/[m  
+[34m|[m[34m/[m[31m|[m [32m|[m [1;34m|[m   
+* [31m|[m [32m|[m [1;34m|[m [33m9fd1eb5[m Renombrada interfaz y movida implementación al paquete service.jpa
+* [31m|[m [32m|[m [1;34m|[m [33m58532d9[m Renombrada interfaz CondicionFinalService a ICondicionFinalService y referencias actualizadas
+* [31m|[m [32m|[m [1;34m|[m [33m1bba283[m Remove application.properties from commit
+* [31m|[m [32m|[m [1;34m|[m [33ma66444f[m [200~
+[32m|[m [31m|[m[32m/[m [1;34m/[m  
+[32m|[m[32m/[m[31m|[m [1;34m|[m   
+[32m|[m [31m|[m [1;34m|[m *   [33mf482e06[m[33m ([m[1;31morigin/tp01-mejias-stefano[m[33m)[m Merge branch 'develop' into tp01-mejias-stefano
+[32m|[m [31m|[m [1;34m|[m [32m|[m[31m\[m  
+[32m|[m [31m|[m [1;34m|[m[31m_[m[32m|[m[31m/[m  
+[32m|[m [31m|[m[31m/[m[1;34m|[m [32m|[m   
+[32m|[m * [1;34m|[m [32m|[m [33m226bc41[m TP01 - Entidad desarrollada (#15)
+[32m|[m * [1;34m|[m [32m|[m [33m20a2c51[m Tp01 vargas francisco (#16)
+[32m|[m * [1;34m|[m [32m|[m [33m58b2dd8[m Tp01 Agustin Lucentini (#2)
+[32m|[m * [1;34m|[m [32m|[m [33m591e275[m TP01 - Entidad desarrollada (#17)
+[32m|[m * [1;34m|[m [32m|[m [33m3b83bc4[m tp 01 programacion (#20)
+[32m|[m * [1;34m|[m [32m|[m [33m3455ecc[m TP01 - Asistencia (#26)
+[32m|[m * [1;34m|[m [32m|[m [33mbaad0e5[m Este es mi trabajo practico (#27)
+[32m|[m [1;34m|[m[1;34m/[m [32m/[m  
+[32m|[m * [32m|[m [33m4bf79af[m TP01 - Entidad Horario desarrollada (#14)
+[32m|[m * [32m|[m [33m72f3f5d[m tp01-prado-agustin-entidad materia (#18)
+[32m|[m [33m|[m * [33mf40cbd9[m Correcciones del profesor
+[32m|[m [33m|[m * [33m0e8ed07[m TP01 Arreglo errores
+[32m|[m [33m|[m * [33m158d5b9[m TP01-"TipoNota"
+[32m|[m [33m|[m[32m/[m  
+[32m|[m[32m/[m[33m|[m   
+[32m|[m [33m|[m * [33m513ba52[m[33m ([m[1;31morigin/tp01-joaquin-romero[m[33m)[m Correcciones del profesor
+[32m|[m [33m|[m * [33m4262746[m TP01 - Entidad desarrollada
+[32m|[m [33m|[m[32m/[m  
+[32m|[m[32m/[m[33m|[m   
+[32m|[m [33m|[m * [33mb585301[m[33m ([m[1;31morigin/tp01-agustin-lucentini[m[33m)[m Correcciones del profesor
+[32m|[m [33m|[m * [33m4db16c4[m Implement AsignacionDocenteServiceImp class to handle AsignacionDocente operations
+[32m|[m [33m|[m * [33m8f3ebc0[m Refactor AsignacionDocenteService to an interface and remove implementation details
+[32m|[m [33m|[m * [33me797eea[m use AsignacionDocenteServiceImp
+[32m|[m [33m|[m * [33mb534e44[m remove unused constructor
+[32m|[m [33m|[m * [33m9344084[m Refactor change AsignacionDocente package and it's import statements
+[32m|[m [33m|[m * [33mdce36b2[m Update request mapping for AsignacionDocenteController to include API versioning
+[32m|[m [33m|[m * [33mc61c74b[m Add AsignacionDocenteController for managing AsignacionDocente API endpoints
+[32m|[m [33m|[m * [33m61e3949[m Add AsignacionDocenteService class for managing AsignacionDocente entities
+[32m|[m [33m|[m * [33m0f1359e[m Add AsignacionDocenteRepository interface for JPA data access
+[32m|[m [33m|[m * [33m57aa2c7[m Add AsignacionDocente entity class with JPA annotations
+[32m|[m [33m|[m[32m/[m  
+[32m|[m[32m/[m[33m|[m   
+[32m|[m [33m|[m * [33m3083e6d[m[33m ([m[1;31morigin/tp01-nievas-victor[m[33m)[m Correcciones del profesor
+[32m|[m [33m|[m * [33m4ef65ca[m TP01 - Entidad desarrollada
+[32m|[m [33m|[m[32m/[m  
+[32m|[m[32m/[m[33m|[m   
+[32m|[m [33m|[m * [33m8ac4bee[m[33m ([m[1;31morigin/tp01-gimenez-melisa[m[33m)[m Correcciones del profesor
+[32m|[m [33m|[m * [33m822fc52[m TP01 - Asistencia
+[32m|[m [33m|[m[32m/[m  
+[32m|[m[32m/[m[33m|[m   
+[32m|[m [33m|[m * [33m2469001[m[33m ([m[1;31morigin/tp01-garcia-damara[m[33m)[m Correcciones del profesor
+[32m|[m [33m|[m * [33mbce0aea[m Este es mi trabajo practico
+[32m|[m [33m|[m[32m/[m  
+[32m|[m[32m/[m[33m|[m   
+[32m|[m [33m|[m * [33m797ee28[m[33m ([m[1;31morigin/tp01-ordenes-federico[m[33m)[m cambien la o con acento sin asento
+[32m|[m [33m|[m * [33m8135eac[m tp 01 programacion
+[32m|[m [33m|[m[32m/[m  
+[32m|[m[32m/[m[33m|[m   
+[32m|[m [33m|[m *   [33m6067695[m[33m ([m[1;31morigin/tp01-prado-agustin[m[33m)[m Merge branch 'develop' into tp01-prado-agustin
+[32m|[m [33m|[m [1;34m|[m[33m\[m  
+[32m|[m [33m|[m [1;34m|[m[33m/[m  
+[32m|[m [33m|[m[33m/[m[1;34m|[m   
+[32m|[m * [1;34m|[m [33m43bddd7[m Tp01 marconi agustina (#13)
+[32m|[m * [1;34m|[m [33m84a6a63[m Entidad Asignada para tp1-oliva-hernan
+[32m|[m * [1;34m|[m [33mc542587[m Se agrega entidad Docente
+[32m|[m * [1;34m|[m [33mf617ddb[m Se agrego Entidad Cursada
+[32m|[m * [1;34m|[m [33mdc0ca94[m TP01 Gonzalo Infante (#4)
+[32m|[m * [1;34m|[m [33m9f56c09[m TP01 - ObservacionAlumno (#7)
+[32m|[m * [1;34m|[m   [33m6c3666e[m Merge pull request #6 from ahumadamob/tp01-quevedo-alejo
+[32m|[m [1;36m|[m[31m\[m [1;34m\[m  
+[32m|[m [1;36m|[m * [1;34m|[m [33m8c20f54[m[33m ([m[1;31morigin/tp01-quevedo-alejo[m[33m)[m tp01 - Entidad sin constructores
+[32m|[m [1;36m|[m * [1;34m|[m [33me6ac89a[m tp01 - arreglos pedidos
+[32m|[m [1;36m|[m * [1;34m|[m [33m2623862[m TP01 - Constructor por defecto añadido
+[32m|[m [1;36m|[m * [1;34m|[m [33m6e9c143[m TP 01 - errores en la entidad solucionados
+[32m|[m [1;36m|[m * [1;34m|[m [33m1fcc527[m TP01 - Entidad desarrollada
+[32m|[m [1;36m|[m[32m/[m [1;34m/[m  
+[32m|[m[32m/[m[1;36m|[m [1;34m|[m   
+[32m|[m * [1;34m|[m [33mfab17f6[m Merge pull request #19 from ahumadamob/tp01-vicencio-pablo
+[32m|[m[32m/[m[33m|[m [1;34m|[m 
+[32m|[m * [1;34m|[m [33m9e9970a[m[33m ([m[1;31morigin/tp01-vicencio-pablo[m[33m)[m agrego tipo de avaluacion pablo vicencio
+[32m|[m[32m/[m [1;34m/[m  
+[32m|[m * [33m8b122e8[m cambio nombre repository
+[32m|[m * [33m8e69051[m tp01-prado-agustin-entidad materia
+[32m|[m[32m/[m  
+[32m|[m * [33meb0ce0f[m[33m ([m[1;31morigin/tp01-marconi-agustina[m[33m)[m TP01 - Entidad Evaluacion(corregida)
+[32m|[m * [33m73b53af[m Fixed: rename and fix packages controller, service, entity
+[32m|[m * [33m9126271[m Fixed: new name IEvaluacionService
+[32m|[m * [33m7f955be[m Fixed: added package service/jpa
+[32m|[m * [33m836cdca[m Fixed: main back to the original version (no modify)
+[32m|[m * [33m2329e44[m Fixed: deleted constructor with params
+[32m|[m * [33m55a65b5[m Fixed .gitignore: back to the original version
+[32m|[m * [33med318ec[m TP01 - Evaluacion
+[32m|[m * [33m352cbe5[m arreglando @overrides
+[32m|[m * [33mefb8c08[m archivos eliminados por equivocacion en carpetas
+[32m|[m * [33ma2e519d[m areglando URL en restcontroller
+[32m|[m * [33m46ce73d[m arreglando controllers, entities, repositories, services
+[32m|[m * [33m6999e3e[m Fix: fixed methods save, update and delete in ServiceImp
+[32m|[m * [33m4e400b3[m Feature: create and config Evaluacion Controller
+[32m|[m * [33m5fdf067[m Feature: create and config Evaluacion Service and ServiceImpl
+[32m|[m * [33mf217feb[m Fix: create setters and getters from Evaluacion
+[32m|[m * [33m71fa3fa[m Feature: create methods abstract JPA
+[32m|[m * [33m18a0fe3[m Eliminar pom.xml del control de versiones
+[32m|[m * [33m9a5f32a[m Add: pom.xml add .gitignore
+[32m|[m * [33m0fb191f[m Add: add pom.xml to .gitignore
+[32m|[m *   [33m8d262eb[m Merge branch 'develop' into tp01-marconi-agustina
+[32m|[m [35m|[m[36m\[m  
+[32m|[m [35m|[m * [33md615955[m Add: add application.properties to .gitignore
+[32m|[m [35m|[m[32m/[m  
+[32m|[m[32m/[m[35m|[m   
+[32m|[m * [33medd4943[m Creating method findAll
+[32m|[m * [33m6072c65[m Fixed: repositories and entoties package (rename)
+[32m|[m * [33m6cf2946[m Fixed: rename 'repositories' package
+[32m|[m * [33m4fade32[m Create and configure EvaluacionRepository
+[32m|[m * [33m34ca774[m Create and configure EvaluacionService
+[32m|[m * [33md596e82[m Create and configure EvaluacionEntity
+[32m|[m * [33m1c61314[m Create and configure EvaluacionController
+[32m|[m[32m/[m  
+[32m|[m * [33m8cef103[m[33m ([m[1;31morigin/tp01-martino-tomas[m[33m)[m Corriguiendo errores
+[32m|[m * [33mc75ab94[m TP01 - Entidad desarrollada
+[32m|[m[32m/[m  
+[32m|[m * [33m43970e7[m[33m ([m[1;31morigin/tp01-oliva-hernan[m[33m)[m Entidad Asignada para tp1-oliva-hernan
+[32m|[m[32m/[m  
+[32m|[m * [33m491fec2[m[33m ([m[1;31morigin/tp01-zamora-emanuel[m[33m)[m service fixed
+[32m|[m * [33m88d668b[m TP01 - ObservacionAlumno
+[32m|[m[32m/[m  
+[32m|[m * [33m531934b[m[33m ([m[1;31morigin/tp01-infante-gonzalo[m[33m)[m Renombrado CalendarioMateriaServiceImpl y moviendolo a package service. Eliminacion de transactional en findAll.
+[32m|[m * [33m66ed901[m TP01 - Desarrollo de Calendario Materia
+[32m|[m[32m/[m  
+[32m|[m * [33m7e67867[m[33m ([m[1;31morigin/tp01-portal-franco[m[33m)[m Se agrego Entidad Cursada
+[32m|[m[32m/[m  
+[32m|[m * [33m7eb6e7a[m[33m ([m[1;31morigin/feat_readme_dotenv[m[33m)[m Add README with setup instructions for application setup
+[32m|[m * [33m0c85ffe[m Add configuration properties for datasource and JPA settings
+[32m|[m * [33m60724d0[m Add .env to .gitignore for environment variable exclusion
+[32m|[m[32m/[m  
+* [33mef4e92c[m[33m ([m[1;32mmaster[m[33m)[m Primer commit (master)
