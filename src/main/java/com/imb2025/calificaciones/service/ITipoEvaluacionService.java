@@ -9,7 +9,7 @@ public interface ITipoEvaluacionService {
 
 	List<TipoEvaluacion> findAll();
 	TipoEvaluacion findById(Long id);
-	TipoEvaluacion save(TipoEvaluacion tipoevaluacion);
+	TipoEvaluacion create(TipoEvaluacion tipoevaluacion);
 	void deleteById(Long id);
 	TipoEvaluacion update(Long id, TipoEvaluacionRequestDTO dto);
 

@@ -35,7 +35,7 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService{
 	}
 
 	@Override
-	public TipoEvaluacion save(TipoEvaluacion tipoevaluacion) {
+	public TipoEvaluacion create(TipoEvaluacion tipoevaluacion) {
 		return repo.save(tipoevaluacion);
 	}
 

@@ -36,12 +36,12 @@ public class TipoEvaluacionController {
 	
 	@PostMapping ("/createTipoEvaluacion")
 	public TipoEvaluacion createTipoEvaluacion(@RequestBody TipoEvaluacion tipoEvaluacion) {
-		return tipoEvaluacionService.save(tipoEvaluacion);
+		return tipoEvaluacionService.create(tipoEvaluacion);
 	}
 	
 	@PutMapping ("/updateTipoEvaluacion")
 	public TipoEvaluacion updateTipoEvaluacion(@RequestBody TipoEvaluacion tipoEvaluacion) {
-		return tipoEvaluacionService.save(tipoEvaluacion);
+		return tipoEvaluacionService.create(tipoEvaluacion);
 	}
 	
 	@DeleteMapping ("/deleteTipoEvaluacion/{idtipoevaluacion}")
