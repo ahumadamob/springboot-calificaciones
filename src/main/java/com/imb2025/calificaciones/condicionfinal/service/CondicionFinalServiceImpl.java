@@ -6,6 +6,7 @@ import com.imb2025.calificaciones.condicionfinal.entity.Materia;
 import com.imb2025.calificaciones.condicionfinal.exception.EntidadNoEncontradaException;
 import com.imb2025.calificaciones.condicionfinal.repository.CondicionFinalRepository;
 import com.imb2025.calificaciones.condicionfinal.repository.MateriaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,29 +14,27 @@ import java.util.List;
 @Service
 public class CondicionFinalServiceImpl implements CondicionFinalService {
 
-    private final CondicionFinalRepository condicionFinalRepository;
-    private final MateriaRepository materiaRepository;
+    @Autowired
+    private CondicionFinalRepository cfRepo;
 
-    public CondicionFinalServiceImpl(CondicionFinalRepository condicionFinalRepository, MateriaRepository materiaRepository) {
-        this.condicionFinalRepository = condicionFinalRepository;
-        this.materiaRepository = materiaRepository;
-    }
+    @Autowired
+    private MateriaRepository materiaRepo;
 
     @Override
     public List<CondicionFinal> getAll() {
-        return condicionFinalRepository.findAll();
+        return cfRepo.findAll();
     }
 
     @Override
     public CondicionFinal getById(Long id) {
-        return condicionFinalRepository.findById(id)
-                .orElseThrow(() -> new EntidadNoEncontradaException("Condición Final con ID " + id + " no encontrada."));
+        return cfRepo.findById(id)
+                .orElseThrow(() -> new EntidadNoEncontradaException("Condición final no encontrada con ID: " + id));
     }
 
     @Override
     public CondicionFinal create(CondicionFinalRequestDTO dto) {
-        Materia materia = materiaRepository.findById(dto.getMateriaId())
-                .orElseThrow(() -> new EntidadNoEncontradaException("La materia con ID " + dto.getMateriaId() + " no existe."));
+        Materia materia = materiaRepo.findById(dto.getMateriaId())
+                .orElseThrow(() -> new EntidadNoEncontradaException("Materia no encontrada con ID: " + dto.getMateriaId()));
 
         CondicionFinal cf = new CondicionFinal();
         cf.setNombre(dto.getNombre());
@@ -43,30 +42,33 @@ public class CondicionFinalServiceImpl implements CondicionFinalService {
         cf.setDni(dto.getDni());
         cf.setMateria(materia);
 
-        return condicionFinalRepository.save(cf);
+        return cfRepo.save(cf);
     }
 
     @Override
     public CondicionFinal update(Long id, CondicionFinalRequestDTO dto) {
-        CondicionFinal cf = condicionFinalRepository.findById(id)
-                .orElseThrow(() -> new EntidadNoEncontradaException("Condición Final con ID " + id + " no encontrada."));
+        if (!cfRepo.existsById(id)) {
+            throw new EntidadNoEncontradaException("Condición final no encontrada con ID: " + id);
+        }
 
-        Materia materia = materiaRepository.findById(dto.getMateriaId())
-                .orElseThrow(() -> new EntidadNoEncontradaException("La materia con ID " + dto.getMateriaId() + " no existe."));
+        Materia materia = materiaRepo.findById(dto.getMateriaId())
+                .orElseThrow(() -> new EntidadNoEncontradaException("Materia no encontrada con ID: " + dto.getMateriaId()));
 
+        CondicionFinal cf = new CondicionFinal();
+        cf.setId(id);
         cf.setNombre(dto.getNombre());
         cf.setApellido(dto.getApellido());
         cf.setDni(dto.getDni());
         cf.setMateria(materia);
 
-        return condicionFinalRepository.save(cf);
+        return cfRepo.save(cf);
     }
 
     @Override
     public void delete(Long id) {
-        if (!condicionFinalRepository.existsById(id)) {
-            throw new EntidadNoEncontradaException("Condición Final con ID " + id + " no encontrada.");
+        if (!cfRepo.existsById(id)) {
+            throw new EntidadNoEncontradaException("Condición final no encontrada con ID: " + id);
         }
-        condicionFinalRepository.deleteById(id);
+        cfRepo.deleteById(id);
     }
 }

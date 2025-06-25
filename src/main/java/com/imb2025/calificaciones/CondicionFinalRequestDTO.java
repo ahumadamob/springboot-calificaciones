@@ -1,12 +1,23 @@
 package com.imb2025.calificaciones.condicionfinal.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class CondicionFinalRequestDTO {
+
+    @NotBlank
     private String nombre;
+
+    @NotBlank
     private String apellido;
+
+    @NotBlank
     private String dni;
+
+    @NotNull
     private Long materiaId;
 
-    // Getters y setters
+    // Getters y Setters
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 
