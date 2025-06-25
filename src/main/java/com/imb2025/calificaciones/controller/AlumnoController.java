@@ -1,6 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 import com.imb2025.calificaciones.service.IAlumnoServices;
+import com.imb2025.calificaciones.dto.AlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.Alumno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class AlumnoController {
 
     @GetMapping("/entidad")
     public ResponseEntity<List<Alumno>> obtenerTodos() {
-        List<Alumno> alumnos = IAlumnoServices.findAll();
+        List<Alumno> alumnos = IAlumnoServices.findAll();   
         return alumnos.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(alumnos);
@@ -30,12 +31,12 @@ public class AlumnoController {
     }
 
     @PostMapping("/entidad")
-    public ResponseEntity<Alumno> crear(@RequestBody Alumno nuevoAlumno) throws Exception {
+    public ResponseEntity<Alumno> crear(@RequestBody AlumnoRequestDTO nuevoAlumno) throws Exception {
         return ResponseEntity.ok(IAlumnoServices.create(nuevoAlumno));
     }
 
     @PutMapping("/entidad/{id}")
-    public ResponseEntity<Alumno> actualizar(@PathVariable Long id, @RequestBody Alumno datosActualizados) throws Exception {
+    public ResponseEntity<Alumno> actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDTO datosActualizados) throws Exception {
         return ResponseEntity.ok(IAlumnoServices.update(id, datosActualizados));
     }
 
