@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.entity;
 
+import jakarta.persistence.ManyToOne;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -12,27 +13,29 @@ public class Evaluacion {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	
 	private Date fechaEvaluacion;
-	
-	private int tipoEvaluacionId;
-	
-	private int materiaId;
-	
-	private int comisionId;
+
+	@ManyToOne
+	private TipoEvaluacion tipoEvaluacion;
+
+	@ManyToOne
+	private Materia materia;
+
+	@ManyToOne
+	private Comision comision;
 
 	
 	public Evaluacion() {
 		super();
 	}
 
-
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -44,30 +47,27 @@ public class Evaluacion {
 		this.fechaEvaluacion = fechaEvaluacion;
 	}
 
-	public int getTipoEvaluacionId() {
-		return tipoEvaluacionId;
+	public TipoEvaluacion getTipoEvaluacion() {
+		return tipoEvaluacion;
 	}
 
-	public void setTipoEvaluacionId(int tipoEvaluacionId) {
-		this.tipoEvaluacionId = tipoEvaluacionId;
+	public void setTipoEvaluacion(TipoEvaluacion tipoEvaluacion) {
+		this.tipoEvaluacion = tipoEvaluacion;
 	}
 
-	public int getMateriaId() {
-		return materiaId;
+	public Materia getMateria() {
+		return materia;
 	}
 
-	public void setMateriaId(int materiaId) {
-		this.materiaId = materiaId;
+	public void setMateria(Materia materia) {
+		this.materia = materia;
 	}
 
-	public int getComisionId() {
-		return comisionId;
+	public Comision getComision() {
+		return comision;
 	}
 
-	public void setComisionId(int comisionId) {
-		this.comisionId = comisionId;
+	public void setComision(Comision comision) {
+		this.comision = comision;
 	}
-	
-	
-	
 }
