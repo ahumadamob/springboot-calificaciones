@@ -1,0 +1,73 @@
+package com.imb2025.calificaciones.entity;
+
+import jakarta.persistence.ManyToOne;
+import java.util.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
+public class Evaluacion {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	private Date fechaEvaluacion;
+
+	@ManyToOne
+	private TipoEvaluacion tipoEvaluacion;
+
+	@ManyToOne
+	private Materia materia;
+
+	@ManyToOne
+	private Comision comision;
+
+	
+	public Evaluacion() {
+		super();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Date getFechaEvaluacion() {
+		return fechaEvaluacion;
+	}
+
+	public void setFechaEvaluacion(Date fechaEvaluacion) {
+		this.fechaEvaluacion = fechaEvaluacion;
+	}
+
+	public TipoEvaluacion getTipoEvaluacion() {
+		return tipoEvaluacion;
+	}
+
+	public void setTipoEvaluacion(TipoEvaluacion tipoEvaluacion) {
+		this.tipoEvaluacion = tipoEvaluacion;
+	}
+
+	public Materia getMateria() {
+		return materia;
+	}
+
+	public void setMateria(Materia materia) {
+		this.materia = materia;
+	}
+
+	public Comision getComision() {
+		return comision;
+	}
+
+	public void setComision(Comision comision) {
+		this.comision = comision;
+	}
+}
