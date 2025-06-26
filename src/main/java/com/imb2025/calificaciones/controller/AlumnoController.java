@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.controller;
 
-import com.imb2025.calificaciones.DTO.AlumnoRequestDTO;
+import com.imb2025.calificaciones.dto.AlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.service.IAlumnoServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +23,14 @@ public class AlumnoController {
     @GetMapping("/{id}")
     public Alumno obtenerPorId(@PathVariable Long id) {
         return alumnoServices.findById(id);
-        
     }
 
     @PostMapping
     public Alumno crear(@RequestBody AlumnoRequestDTO alumnoDto) {
-        Alumno alumno= new Alumno();
+        Alumno alumno = new Alumno();
         try {
             alumno = alumnoServices.mapFromDTO(alumnoDto);
-            alumno = alumnoServices.create(alumno);   
+            alumno = alumnoServices.create(alumno);
         } catch (Exception e) {
             throw new RuntimeException("Error al mapear el DTO: " + e.getMessage());
         }
@@ -46,8 +45,8 @@ public class AlumnoController {
         } catch (Exception e) {
             throw new RuntimeException("Error al mapear el DTO: " + e.getMessage());
         }
-        try{
-            alumno= alumnoServices.update(id, alumno);
+        try {
+            alumno = alumnoServices.update(id, alumno);
         } catch (Exception e) {
             throw new RuntimeException("Error al actualizar el alumno: " + e.getMessage());
         }

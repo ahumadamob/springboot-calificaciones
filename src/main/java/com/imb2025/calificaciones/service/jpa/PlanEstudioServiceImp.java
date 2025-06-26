@@ -48,11 +48,4 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
         repository.deleteById(id);
     }
 
-	@Override
-	public Optional<PlanEstudio> findById(int id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
-
-    
 }

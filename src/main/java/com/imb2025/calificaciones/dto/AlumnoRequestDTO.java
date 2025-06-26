@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.DTO;
+package com.imb2025.calificaciones.dto;
 
 public class AlumnoRequestDTO{
     private String nombre;

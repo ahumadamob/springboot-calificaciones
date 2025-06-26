@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.DTO.AlumnoRequestDTO;
+import com.imb2025.calificaciones.dto.AlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.service.IAlumnoServices;
@@ -25,15 +25,14 @@ public class AlumnoServicesImpl implements IAlumnoServices {
     @Override
     public Alumno create(Alumno alumno) {
         return alumnoRepository.save(alumno);
-    
     }
 
     @Override
     public Alumno update(Long id, Alumno alumno) throws Exception {
-        if(alumnoRepository.existsById(id)){
+        if (alumnoRepository.existsById(id)) {
             alumno.setId(id);
             return alumnoRepository.save(alumno);
-        }else {
+        } else {
             throw new Exception("Alumno con ID " + id + " no encontrado.");
         }
 
