@@ -11,7 +11,8 @@ public interface ITipoEvaluacionService {
 	TipoEvaluacion findById(Long id);
 	TipoEvaluacion create(TipoEvaluacion tipoevaluacion);
 	void deleteById(Long id);
-	TipoEvaluacion update(Long id, TipoEvaluacionRequestDTO dto);
+	TipoEvaluacion update(Long id, TipoEvaluacion tipoEvaluacion);
+	boolean existsById(Long id);
 
 }
  
