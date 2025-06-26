@@ -1,6 +1,9 @@
 package com.imb2025.calificaciones.controller;
 
+
+import com.imb2025.calificaciones.dto.EstadoCursadaRequestDTO;
 import com.imb2025.calificaciones.entity.EstadoCursada;
+import com.imb2025.calificaciones.service.IEstadoCursadaService;
 import com.imb2025.calificaciones.service.jpa.EstadoCursadaServiceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,28 +19,45 @@ public class EstadoCursadaController {
     @Autowired
     private EstadoCursadaServiceImp service;
 
+
     @GetMapping
     public ResponseEntity<List<EstadoCursada>> getAll() {
         List<EstadoCursada> asignaciones = service.findAll();
         return ResponseEntity.ok(asignaciones);
     }
-
+  
     @GetMapping("/{id}")
-    public ResponseEntity<EstadoCursada> getById(@PathVariable Long id) {
-    	EstadoCursada estadoCursada = service.findById(id);
-        return ResponseEntity.ok(estadoCursada);
+    public EstadoCursada getEstadoCursadabyId(@PathVariable Long id) {
+    	return service.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity<EstadoCursada> create(@RequestBody EstadoCursada estadoCursada) {
-    	EstadoCursada createdEstadoCursada = service.save(estadoCursada);
-        return ResponseEntity.ok(createdEstadoCursada);
+    public EstadoCursada create(@RequestBody EstadoCursadaRequestDTO dto) {
+        EstadoCursada estadoCursada = new EstadoCursada();
+        try {
+        	estadoCursada = service.mapFromDto(dto);
+            estadoCursada= service.create(estadoCursada);
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
+        return estadoCursada;
     }
+    
+    @PutMapping("/{id}")
+    public EstadoCursada update(@RequestBody EstadoCursadaRequestDTO estadoCursadaRequestDTO, @PathVariable Long id) {
+        EstadoCursada estadoCursada = new EstadoCursada();
+        try {
+        	estadoCursada = service.mapFromDto(estadoCursadaRequestDTO);
+        	estadoCursada = service.update(estadoCursada, id);
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
+        return estadoCursada;
+    }
+    
 
-   
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public void deleteEstadoCursada(@PathVariable Long id) {
         service.deleteById(id);
-        return ResponseEntity.noContent().build();
     }
 }

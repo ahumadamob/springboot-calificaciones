@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.imb2025.calificaciones.dto.MateriaRequestDTO;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.service.IMateriaService;
@@ -31,14 +32,37 @@ public class MateriaServiceImpl implements IMateriaService{
 	}
 
 	@Override
-	public Materia save(Materia materia) {
+	public Materia create (Materia materia) {
 		
 		return repo.save(materia);
 	}
-
+	
+	@Override
+	public Materia update(Materia materia, Long id) throws Exception {
+		if(repo.existsById(id)) {
+			materia.setId(id);
+			return repo.save(materia);
+		}else {
+			throw new Exception("No se encontró materia con id" + id);
+		}
+		
+	}
+	
+	
 	@Override
 	public void deleteById(long id) {
 		repo.deleteById(id);
 		
+	}
+
+	@Override
+	public Materia mapFromDto(MateriaRequestDTO materiaRequestDto) throws Exception {
+		Materia materia = new Materia();
+		materia.setNombre(materiaRequestDto.getNombre());
+		materia.setCargaHoraria(materiaRequestDto.getCargaHoraria());
+		materia.setCodigo(materiaRequestDto.getCodigo());
+		materia.setNivel(materiaRequestDto.getNivel());
+		
+		return materia;
 	}
 }
