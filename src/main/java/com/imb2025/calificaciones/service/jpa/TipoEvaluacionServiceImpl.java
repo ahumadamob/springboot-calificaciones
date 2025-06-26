@@ -1,0 +1,66 @@
+package com.imb2025.calificaciones.service.jpa;
+
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.imb2025.calificaciones.dto.TipoEvaluacionRequestDTO;
+import com.imb2025.calificaciones.entity.TipoEvaluacion;
+import com.imb2025.calificaciones.repository.TipoEvaluacionRepository;
+import com.imb2025.calificaciones.service.ITipoEvaluacionService;
+
+@Service
+public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService{
+
+	@Autowired
+	private TipoEvaluacionRepository repo;
+		
+	
+	@Override
+		public List<TipoEvaluacion> findAll() {
+		return repo.findAll();
+	}
+
+	@Override
+	public TipoEvaluacion findById(Long id) {
+		
+		Optional<TipoEvaluacion> optional;
+		optional = repo.findById(id);
+		if(optional.isPresent()) {
+			return (TipoEvaluacion) optional.get();
+		}else {
+			return null;
+		}
+	}
+
+	@Override
+	public TipoEvaluacion create(TipoEvaluacion tipoevaluacion) {
+		return repo.save(tipoevaluacion);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		repo.deleteById(id);
+	}
+	
+	@Override
+	public TipoEvaluacion update(Long id, TipoEvaluacionRequestDTO dto) {
+		
+	    try {
+	        TipoEvaluacion tipo = repo.findById(id)
+	                .orElseThrow(() -> new RuntimeException("El Tipo Evaluacion con ID " + id + " no existe"));
+
+	        tipo.setNombre(dto.getNombre());
+	        tipo.setDescripcion(dto.getDescripcion());
+	        return repo.save(tipo);
+	    
+	    } catch (Exception e) {
+	        throw new RuntimeException("No se actualiza el Tipo de Evaluacion: " + e.getMessage());
+	    }
+	}
+	
+	
+	
+
+}
