@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imb2025.calificaciones.dto.ComisionRequestDTO;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.service.IComisionService;
 
@@ -37,16 +38,29 @@ public class ComisionController {
 	    }
 
 	    @PostMapping
-	    public ResponseEntity<Comision> create(@RequestBody Comision comision) {
-	    	Comision createdComision = ComisionService.save(comision);
-	        return ResponseEntity.ok(createdComision);
+	    public Comision create(@RequestBody ComisionRequestDTO comisionRequestDTO) {
+	    	Comision createComision = new Comision();
+	    	try{ 
+	    		createComision = ComisionService.mapFromDto(comisionRequestDTO);
+	    		createComision = ComisionService.create(createComision);
+	    	} catch (Exception e) {
+	    		
+	    		e.printStackTrace();
+	    	}
+	        return createComision;
 	    }
 
+	    
 	    @PutMapping("/{id}")
-	    public ResponseEntity<Comision> update(@PathVariable Long id,
-	            @RequestBody Comision comision) {
-	    	Comision updatedComision = ComisionService.update(id, comision);
-	        return ResponseEntity.ok(updatedComision);
+	    public Comision updateComision(@RequestBody ComisionRequestDTO comisionRequestDTO, @PathVariable Long id){
+	        Comision comision = new Comision();
+	        try {
+	            comision = ComisionService.mapFromDto(comisionRequestDTO);
+	            comision = ComisionService.update(id, comision);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return comision;
 	    }
 
 	    @DeleteMapping("/{id}")

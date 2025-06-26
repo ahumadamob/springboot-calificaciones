@@ -7,4 +7,5 @@ import com.imb2025.calificaciones.entity.Comision;
 public interface ComisionRepository extends JpaRepository<Comision
 , Long>{
 
+
 }
