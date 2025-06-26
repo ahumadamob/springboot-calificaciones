@@ -42,37 +42,8 @@ public class EvaluacionServiceImp implements IEvaluacionService {
 
 	@Override
 	@Transactional
-	public Evaluacion save(EvaluacionRequestDTO evaluacionRequestDTO) {
+	public Evaluacion save(Evaluacion evaluacion) {
 		try {
-			Evaluacion evaluacion = new Evaluacion();
-
-			if (evaluacionRequestDTO.getTipoEvaluacionId() != null) {
-				Optional<TipoEvaluacion> tipoEvaluacion = tipoEvaluacionRepository
-						.findById(evaluacionRequestDTO.getTipoEvaluacionId());
-				if (!tipoEvaluacion.isPresent()) {
-					throw new RuntimeException("Tipo de evaluacion no encontrado");
-				}
-				evaluacion.setTipoEvaluacion(tipoEvaluacion.get());
-			}
-
-			if (evaluacionRequestDTO.getMateriaId() != null) {
-				Optional<Materia> materia = materiaRepository.findById(evaluacionRequestDTO.getMateriaId());
-				if (!materia.isPresent()) {
-					throw new RuntimeException("Materia no encontrada");
-				}
-				evaluacion.setMateria(materia.get());
-			}
-
-			if (evaluacionRequestDTO.getComisionId() != null) {
-				Optional<Comision> comision = comisionRepository.findById(evaluacionRequestDTO.getComisionId());
-				if (!comision.isPresent()) {
-					throw new RuntimeException("Comision no encontrada");
-				}
-				evaluacion.setComision(comision.get());
-			}
-
-			evaluacion.setFechaEvaluacion(evaluacionRequestDTO.getFechaEvaluacion());
-
 			return evaluacionRepository.save(evaluacion);
 
 		} catch (Exception e) {
@@ -82,45 +53,73 @@ public class EvaluacionServiceImp implements IEvaluacionService {
 
 	@Override
 	@Transactional
-	public Evaluacion update(Long id, EvaluacionRequestDTO newEvaluacionDTO) {
+	public Evaluacion update(Long id, Evaluacion newEvaluacion) {
 		try {
+			if (id == null) {
+				throw new RuntimeException("No se pudo identificar el id");
+			}
+
 			Evaluacion evaluacion = evaluacionRepository.findById(id)
 					.orElseThrow(() -> new RuntimeException("Evaluación no encontrada"));
 
-			if (newEvaluacionDTO.getTipoEvaluacionId() != null) {
-				Optional<TipoEvaluacion> tipoEvaluacion = tipoEvaluacionRepository
-						.findById(newEvaluacionDTO.getTipoEvaluacionId());
-				if (!tipoEvaluacion.isPresent()) {
+			
+			evaluacion.setComision(newEvaluacion.getComision());
+			evaluacion.setMateria(newEvaluacion.getMateria());
+			evaluacion.setFechaEvaluacion(newEvaluacion.getFechaEvaluacion());
+			evaluacion.setTipoEvaluacion(newEvaluacion.getTipoEvaluacion());
 
-					throw new RuntimeException("Tipo de evaluacion no encontrado");
-				}
-				evaluacion.setTipoEvaluacion(tipoEvaluacion.get());
-			}
-			if (newEvaluacionDTO.getMateriaId() != null) {
-				Optional<Materia> materia = materiaRepository.findById(newEvaluacionDTO.getMateriaId());
-				if (!materia.isPresent()) {
-					throw new RuntimeException("Materia no encontrada");
-				}
-				evaluacion.setMateria(materia.get());
-			}
-
-			if (newEvaluacionDTO.getComisionId() != null) {
-				Optional<Comision> comision = comisionRepository.findById(newEvaluacionDTO.getComisionId());
-				if (!comision.isPresent()) {
-					throw new RuntimeException("Comision no encontrada");
-				}
-				evaluacion.setComision(comision.get());
-			}
-
-			evaluacion.setFechaEvaluacion(newEvaluacionDTO.getFechaEvaluacion());
 			return evaluacionRepository.save(evaluacion);
+
 		} catch (Exception e) {
 			throw new RuntimeException("Error al actualizar la evaluación: " + e.getMessage());
 		}
+	}
+
+	// Pasar de DTO a entidad
+	@Override
+	public Evaluacion convertToEntity(EvaluacionRequestDTO evaluacionRequestDTO) {
+		try {
+			if (evaluacionRequestDTO == null) {
+				throw new RuntimeException("Evaluación no puede ser nula");
+			}
+			Evaluacion evaluacion = new Evaluacion();
+
+			if (evaluacionRequestDTO.getTipoEvaluacionId() != null) {
+				TipoEvaluacion tipoEvaluacion = tipoEvaluacionRepository
+						.findById(evaluacionRequestDTO.getTipoEvaluacionId()).orElse(null);
+				if (tipoEvaluacion == null) {
+					throw new RuntimeException("Tipo de evaluación no encontrado");
+				}
+				evaluacion.setTipoEvaluacion(tipoEvaluacion);
+			}
+
+			if (evaluacionRequestDTO.getMateriaId() != null) {
+				Materia materia = materiaRepository.findById(evaluacionRequestDTO.getMateriaId()).orElse(null);
+				if (materia == null) {
+					throw new RuntimeException("Materia no encontrada");
+				}
+				evaluacion.setMateria(materia);
+			}
+
+			if (evaluacionRequestDTO.getComisionId() != null) {
+				Comision comision = comisionRepository.findById(evaluacionRequestDTO.getComisionId()).orElse(null);
+				if (comision == null) {
+					throw new RuntimeException("Comisión no encontrada");
+				}
+				evaluacion.setComision(comision);
+			}
+			evaluacion.setId(evaluacionRequestDTO.getId());
+			evaluacion.setFechaEvaluacion(evaluacionRequestDTO.getFechaEvaluacion());
+			return evaluacion;
+		} catch (Exception e) {
+			throw new RuntimeException("Error: " + e.getMessage());
+		}
+
 	}
 
 	@Override
 	public void deleteById(Long id) {
 		evaluacionRepository.deleteById(id);
 	}
+
 }
