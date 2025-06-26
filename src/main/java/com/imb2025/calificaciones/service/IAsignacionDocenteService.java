@@ -11,7 +11,7 @@ public interface IAsignacionDocenteService {
 
     List<AsignacionDocente> findAll();
 
-    AsignacionDocente save(AsignacionDocenteRequestDTO dto);
+    AsignacionDocente save(AsignacionDocente asignacionDocente);
 
     AsignacionDocente update(Long id, AsignacionDocenteRequestDTO dto);
 
