@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDTO;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.repository.PeriodoLectivoRepository;
 import com.imb2025.calificaciones.service.IPeriodoLectivoService;
@@ -32,6 +33,9 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 
 	@Override
 	public PeriodoLectivo update(Long id, PeriodoLectivo periodoLectivo) {
+		if (repository.findById(id).isEmpty()) {
+			throw new NullPointerException();
+		}
 		periodoLectivo.setId(id);
 		return repository.save(periodoLectivo);
 	}
@@ -39,6 +43,16 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 	@Override
 	public void deleteById(Long id) {
 		repository.deleteById(id);
+	}
+
+	@Override
+	public PeriodoLectivo RequestDTOToEntity(PeriodoLectivoRequestDTO requestDTO) {
+		return new PeriodoLectivo(
+					requestDTO.getId(),
+					requestDTO.getNombre(),
+					requestDTO.getFechaInicio(),
+					requestDTO.getFechaFin()
+				);
 	}
 
 }

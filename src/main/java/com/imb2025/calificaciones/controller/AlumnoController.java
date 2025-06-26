@@ -1,42 +1,61 @@
 package com.imb2025.calificaciones.controller;
 
-import com.imb2025.calificaciones.service.IAlumnoServices;
+import com.imb2025.calificaciones.DTO.AlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.Alumno;
+import com.imb2025.calificaciones.service.IAlumnoServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
+@RequestMapping("/alumnos")
 public class AlumnoController {
 
-   @Autowired
-   IAlumnoServices IAlumnoServices;
+    @Autowired
+    private IAlumnoServices alumnoServices;
 
-
-
-    @GetMapping("/entidad")
-    public List<Alumno> obtenerTodos(){
-        return IAlumnoServices.getAll();
-    }
-    @GetMapping("/entidad/{id}")
-    public Alumno obtenerPorId(@PathVariable Long id){
-     return IAlumnoServices.findById(id);
-    }
-    @PostMapping("/entidad")
-    public Alumno crear(@RequestBody Alumno nuevoAlumno) {
-        return IAlumnoServices.save(nuevoAlumno);
+    @GetMapping
+    public List<Alumno> obtenerTodos() {
+        return alumnoServices.getAll();
     }
 
-    @PutMapping("/entidad/{id}")
-    public Alumno actualizar(@PathVariable Long id, @RequestBody Alumno datosActualizados) {
-        return IAlumnoServices.update(id, datosActualizados);
+    @GetMapping("/{id}")
+    public Alumno obtenerPorId(@PathVariable Long id) {
+        return alumnoServices.findById(id);
+        
     }
 
-    @DeleteMapping("/entidad/{id}")
+    @PostMapping
+    public Alumno crear(@RequestBody AlumnoRequestDTO alumnoDto) {
+        Alumno alumno= new Alumno();
+        try {
+            alumno = alumnoServices.mapFromDTO(alumnoDto);
+            alumno = alumnoServices.create(alumno);   
+        } catch (Exception e) {
+            throw new RuntimeException("Error al mapear el DTO: " + e.getMessage());
+        }
+        return alumno;
+    }
+
+    @PutMapping("/{id}")
+    public Alumno actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDTO alumnoDto) throws Exception {
+        Alumno alumno = new Alumno();
+        try {
+            alumno = alumnoServices.mapFromDTO(alumnoDto);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al mapear el DTO: " + e.getMessage());
+        }
+        try{
+            alumno= alumnoServices.update(id, alumno);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al actualizar el alumno: " + e.getMessage());
+        }
+        return alumno;
+    }
+
+    @DeleteMapping("/{id}")
     public void eliminar(@PathVariable Long id) {
-        IAlumnoServices.delete(id);
+        alumnoServices.deleteById(id);
     }
-
 }
