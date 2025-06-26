@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,11 +17,16 @@ public class ObservacionAlumno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id; 
-    private Long alumnoId;
-    private Long docenteId;
     private String texto;
     private Date fecha;
     
+    @ManyToOne
+    @JoinColumn(name = "docente_id")
+    private Docente docente;
+    
+    @ManyToOne
+    @JoinColumn(name = "alumno_id")
+    private Alumno alumno;
 	
 	public Long getId() {
 		return id;
@@ -27,22 +34,6 @@ public class ObservacionAlumno {
 	
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	public Long getAlumnoId() {
-		return alumnoId;
-	}
-	
-	public void setAlumnoId(Long alumnoId) {
-		this.alumnoId = alumnoId;
-	}
-	
-	public Long getDocenteId() {
-		return docenteId;
-	}
-	
-	public void setDocenteId(Long docenteId) {
-		this.docenteId = docenteId;
 	}
 	
 	public String getTexto() {
@@ -60,4 +51,22 @@ public class ObservacionAlumno {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+
+	public Docente getDocente() {
+		return docente;
+	}
+
+	public void setDocente(Docente docente) {
+		this.docente = docente;
+	}
+
+	public Alumno getAlumno() {
+		return alumno;
+	}
+
+	public void setAlumno(Alumno alumno) {
+		this.alumno = alumno;
+	}
+
+	
 }
