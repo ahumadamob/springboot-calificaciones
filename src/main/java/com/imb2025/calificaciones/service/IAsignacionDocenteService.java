@@ -12,8 +12,8 @@ public interface IAsignacionDocenteService {
 
     AsignacionDocente save(AsignacionDocente asignacionDocente);
 
-    AsignacionDocente update(Long id, AsignacionDocente asignacionDocente);
+    AsignacionDocente update(Long id, AsignacionDocente asignacionDocente) throws Exception;
 
-    void deleteById(Long id);
+    void deleteById(Long id) throws Exception;
 
 }
