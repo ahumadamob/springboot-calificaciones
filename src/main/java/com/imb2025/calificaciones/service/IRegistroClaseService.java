@@ -2,6 +2,7 @@ package com.imb2025.calificaciones.service;
 
 import java.util.List;
 
+import com.imb2025.calificaciones.dto.RegistroClaseDTO;
 import com.imb2025.calificaciones.entity.RegistroClase;
 
 public interface IRegistroClaseService {
@@ -12,9 +13,11 @@ public interface IRegistroClaseService {
 
 	RegistroClase obtenerRegistro(Long id);
 
-	void registrarClase(RegistroClase registro);
+	RegistroClase registrarClase(RegistroClaseDTO registroDTO);
 
 	
 
 	void eliminarRegistro(Long id);
+
+	RegistroClase actualizarRegistro(Long id, RegistroClaseDTO registroDTO);
 }
