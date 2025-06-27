@@ -3,7 +3,6 @@ package com.imb2025.calificaciones.service;
 import java.util.List;
 
 import com.imb2025.calificaciones.entity.AsignacionDocente;
-import com.imb2025.calificaciones.dto.AsignacionDocenteRequestDTO;
 
 public interface IAsignacionDocenteService {
 
@@ -13,7 +12,7 @@ public interface IAsignacionDocenteService {
 
     AsignacionDocente save(AsignacionDocente asignacionDocente);
 
-    AsignacionDocente update(Long id, AsignacionDocenteRequestDTO dto);
+    AsignacionDocente update(AsignacionDocente asignacionDocente);
 
     void deleteById(Long id);
 
