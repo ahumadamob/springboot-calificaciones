@@ -12,7 +12,7 @@ public interface IPlanEstudioService {
     PlanEstudio save(PlanEstudio planEstudio);
     PlanEstudio update(Long id, PlanEstudio planEstudio);
     void deleteById(Long id);
-	Optional<PlanEstudio> findById(int id);
+	
 }
 
 

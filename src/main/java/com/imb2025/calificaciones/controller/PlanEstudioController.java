@@ -38,7 +38,8 @@ public ResponseEntity<List<PlanEstudio>> getAll(){
 @GetMapping("/{id}")
 public ResponseEntity<Optional<PlanEstudio>> gitById(@PathVariable int id){
 	Optional<PlanEstudio> planestudio=planestudioserviceimp.findById(id);
-	return ResponseEntity.ok(planestudio);
+	 return ResponseEntity.ok(planestudio);
+		
 	
 }
 
