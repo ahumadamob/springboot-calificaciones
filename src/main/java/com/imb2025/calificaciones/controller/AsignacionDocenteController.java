@@ -1,7 +1,6 @@
 package com.imb2025.calificaciones.controller;
 
 import com.imb2025.calificaciones.entity.AsignacionDocente;
-import com.imb2025.calificaciones.dto.AsignacionDocenteRequestDTO;
 import com.imb2025.calificaciones.service.IAsignacionDocenteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +39,9 @@ public class AsignacionDocenteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody AsignacionDocenteRequestDTO dto) {
+    public ResponseEntity<?> create(@Valid @RequestBody AsignacionDocente asignacionDocente) {
         try {
-            AsignacionDocente createdAsignacionDocente = service.save(dto);
+            AsignacionDocente createdAsignacionDocente = service.save(asignacionDocente);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdAsignacionDocente);
         } catch (RuntimeException e) {
             Map<String, Object> response = new HashMap<>();
@@ -52,10 +51,10 @@ public class AsignacionDocenteController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody AsignacionDocenteRequestDTO dto) {
+    @PutMapping
+    public ResponseEntity<?> update(@Valid @RequestBody AsignacionDocente asignacionDocente) {
         try {
-            AsignacionDocente updatedAsignacionDocente = service.update(id, dto);
+            AsignacionDocente updatedAsignacionDocente = service.update(asignacionDocente);
             if (updatedAsignacionDocente == null) {
                 Map<String, Object> response = new HashMap<>();
                 response.put("mensaje", "Asignación docente no encontrada");
