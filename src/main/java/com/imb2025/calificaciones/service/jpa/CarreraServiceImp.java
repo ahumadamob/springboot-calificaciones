@@ -3,6 +3,8 @@ package com.imb2025.calificaciones.service.jpa;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.imb2025.calificaciones.dto.CarreraRequestDTO;
 import com.imb2025.calificaciones.entity.Carrera;
 import com.imb2025.calificaciones.repository.CarreraRepository;
 import com.imb2025.calificaciones.service.ICarreraService;
@@ -29,16 +31,38 @@ public class CarreraServiceImp implements ICarreraService {
 	}
 	
 	@Override
-	public Carrera save(Carrera carrera) {
-
-			return repo.save(carrera);
+	public Carrera create(Carrera carrera) {
+		return repo.save(carrera);
 	}
+	
+	@Override
+	public Carrera update(Carrera carrera, Long id) throws Exception {
+		if(repo.existsById(id)) {
+			carrera.setId(id);
+			return repo.save(carrera);
+		}else {
+			throw new Exception("No se encontró jugador con id" + id);
+		}
+		
+	}	
 
 	@Override
 	public void deleteById(Long id) {
 		
 		repo.deleteById(id);
 		
+	}
+
+	
+	@Override
+	public Carrera mapFromDto(CarreraRequestDTO dto) {
+	    if (dto == null) {
+	        return null;
+	    }
+	    Carrera carrera = new Carrera();
+	    carrera.setNombre(dto.getNombre());
+	    carrera.setTituloOtorgado(dto.getTituloOtorgado());
+	    return carrera;
 	}
 
 }
