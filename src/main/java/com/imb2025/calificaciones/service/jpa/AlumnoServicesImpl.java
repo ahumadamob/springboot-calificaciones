@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.DTO.AlumnoRequestDTO;
+import com.imb2025.calificaciones.dto.AlumnoRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.service.IAlumnoServices;
@@ -56,7 +56,7 @@ public class AlumnoServicesImpl implements IAlumnoServices {
    
 
     @Override
-    public Alumno mapFromDTO(AlumnoRequestDTO alumnoDto) {
+    public Alumno mapFromDTO(AlumnoRequestDto alumnoDto) {
         Alumno alumno = new Alumno();
         alumno.setNombre(alumnoDto.getNombre());
         alumno.setApellido(alumnoDto.getApellido());

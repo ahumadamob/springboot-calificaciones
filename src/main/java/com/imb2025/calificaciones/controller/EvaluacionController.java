@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.controller;
 
-import com.imb2025.calificaciones.dto.EvaluacionRequestDTO;
+import com.imb2025.calificaciones.dto.EvaluacionRequestDto;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class EvaluacionController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody EvaluacionRequestDTO evaluacionRequestDTO) {
+	public ResponseEntity<?> create(@RequestBody EvaluacionRequestDto evaluacionRequestDTO) {
 		try {
 			Evaluacion evaluacion = evaluacionServiceImp
 					.save(evaluacionServiceImp.convertToEntity(evaluacionRequestDTO));
@@ -58,7 +58,7 @@ public class EvaluacionController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable Long id,
-			@RequestBody EvaluacionRequestDTO newEvaluacionDTO) {
+			@RequestBody EvaluacionRequestDto newEvaluacionDTO) {
 		try {
 			Evaluacion evaluacion = evaluacionServiceImp.update(id,
 					evaluacionServiceImp.convertToEntity(newEvaluacionDTO));

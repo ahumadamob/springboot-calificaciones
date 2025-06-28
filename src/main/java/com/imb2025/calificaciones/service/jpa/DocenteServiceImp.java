@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.DocenteRequestDTO;
+import com.imb2025.calificaciones.dto.DocenteRequestDto;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.repository.DocenteRepository;
 import com.imb2025.calificaciones.service.IDocenteService;
@@ -40,7 +40,7 @@ public class DocenteServiceImp implements IDocenteService {
 	
 
 	@Override
-	public Docente mapFromDTO(DocenteRequestDTO docenteDTO) {
+	public Docente mapFromDTO(DocenteRequestDto docenteDTO) {
 		
 		
 		Docente docente = new Docente();

@@ -2,7 +2,7 @@ package com.imb2025.calificaciones.service;
 
 import java.util.List;
 
-import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDTO;
+import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDto;
 import com.imb2025.calificaciones.entity.InscripcionMateria;
 
 public interface IInscripcionMateriaService {
@@ -11,5 +11,5 @@ public interface IInscripcionMateriaService {
     InscripcionMateria create(InscripcionMateria inscripcionMateria);
     InscripcionMateria update(Long id,InscripcionMateria inscripcionMateria) throws Exception;
     void deleteById(Long id);
-    InscripcionMateria mapFromDto(InscripcionMateriaRequestDTO inscripcionMateriaDTO) throws Exception;
+    InscripcionMateria mapFromDto(InscripcionMateriaRequestDto inscripcionMateriaDTO) throws Exception;
 }

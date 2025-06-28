@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDTO;
+import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDto;
 import com.imb2025.calificaciones.entity.InscripcionMateria;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
@@ -59,7 +59,7 @@ public class InscripcionMateriaServiceImp implements IInscripcionMateriaService 
     }
 
     @Override
-    public InscripcionMateria mapFromDto(InscripcionMateriaRequestDTO inscripcionMateriaDTO) {
+    public InscripcionMateria mapFromDto(InscripcionMateriaRequestDto inscripcionMateriaDTO) {
         InscripcionMateria inscripcionMateria = new InscripcionMateria();
 
         Alumno alumno = alumnoRepository.findById(inscripcionMateriaDTO.getIdAlumno())

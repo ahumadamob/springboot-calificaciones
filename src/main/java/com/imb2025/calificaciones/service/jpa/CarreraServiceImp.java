@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.CarreraRequestDTO;
+import com.imb2025.calificaciones.dto.CarreraRequestDto;
 import com.imb2025.calificaciones.entity.Carrera;
 import com.imb2025.calificaciones.repository.CarreraRepository;
 import com.imb2025.calificaciones.service.ICarreraService;
@@ -55,7 +55,7 @@ public class CarreraServiceImp implements ICarreraService {
 
 	
 	@Override
-	public Carrera mapFromDto(CarreraRequestDTO dto) {
+	public Carrera mapFromDto(CarreraRequestDto dto) {
 	    if (dto == null) {
 	        return null;
 	    }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.MateriaRequestDTO;
+import com.imb2025.calificaciones.dto.MateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.service.IMateriaService;
 
@@ -39,7 +39,7 @@ public class MateriaController {
 
 	
 	@PostMapping("/api/materia")
-	public Materia createMateria(@RequestBody MateriaRequestDTO materiaRequestDto){
+	public Materia createMateria(@RequestBody MateriaRequestDto materiaRequestDto){
 		Materia materia = new Materia();
 		try {
 			materia = materiaService.mapFromDto(materiaRequestDto);
@@ -52,7 +52,7 @@ public class MateriaController {
 	}
 	
 	@PutMapping ("/api/materia/{id}")
-	public Materia updateMateria(@RequestBody MateriaRequestDTO materiaRequestDto, @PathVariable("id") Long id){
+	public Materia updateMateria(@RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id){
 		Materia materia = new Materia();
 		try {
 			materia = materiaService.mapFromDto(materiaRequestDto);

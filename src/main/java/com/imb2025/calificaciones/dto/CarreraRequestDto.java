@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.dto;
 
-public class CarreraRequestDTO {
+public class CarreraRequestDto {
 	
 	    private String nombre;
 	    private String tituloOtorgado;

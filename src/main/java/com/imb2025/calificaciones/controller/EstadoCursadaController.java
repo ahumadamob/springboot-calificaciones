@@ -1,7 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 
-import com.imb2025.calificaciones.dto.EstadoCursadaRequestDTO;
+import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.service.IEstadoCursadaService;
 import com.imb2025.calificaciones.service.jpa.EstadoCursadaServiceImp;
@@ -32,7 +32,7 @@ public class EstadoCursadaController {
     }
 
     @PostMapping
-    public EstadoCursada create(@RequestBody EstadoCursadaRequestDTO dto) {
+    public EstadoCursada create(@RequestBody EstadoCursadaRequestDto dto) {
         EstadoCursada estadoCursada = new EstadoCursada();
         try {
         	estadoCursada = service.mapFromDto(dto);
@@ -44,7 +44,7 @@ public class EstadoCursadaController {
     }
     
     @PutMapping("/{id}")
-    public EstadoCursada update(@RequestBody EstadoCursadaRequestDTO estadoCursadaRequestDTO, @PathVariable Long id) {
+    public EstadoCursada update(@RequestBody EstadoCursadaRequestDto estadoCursadaRequestDTO, @PathVariable Long id) {
         EstadoCursada estadoCursada = new EstadoCursada();
         try {
         	estadoCursada = service.mapFromDto(estadoCursadaRequestDTO);

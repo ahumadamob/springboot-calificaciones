@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.controller;
 
-import com.imb2025.calificaciones.DTO.AlumnoRequestDTO;
+import com.imb2025.calificaciones.dto.AlumnoRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.service.IAlumnoServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class AlumnoController {
     }
 
     @PostMapping
-    public Alumno crear(@RequestBody AlumnoRequestDTO alumnoDto) {
+    public Alumno crear(@RequestBody AlumnoRequestDto alumnoDto) {
         Alumno alumno= new Alumno();
         try {
             alumno = alumnoServices.mapFromDTO(alumnoDto);
@@ -39,7 +39,7 @@ public class AlumnoController {
     }
 
     @PutMapping("/{id}")
-    public Alumno actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDTO alumnoDto) throws Exception {
+    public Alumno actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDto alumnoDto) throws Exception {
         Alumno alumno = new Alumno();
         try {
             alumno = alumnoServices.mapFromDTO(alumnoDto);

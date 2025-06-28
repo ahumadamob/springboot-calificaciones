@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.EstadoCursadaRequestDTO;
+import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.repository.EstadoCursadaRepository;
 import com.imb2025.calificaciones.service.IEstadoCursadaService;
@@ -49,7 +49,7 @@ public class EstadoCursadaServiceImp implements IEstadoCursadaService {
 
 
     @Override
-	public EstadoCursada mapFromDto(EstadoCursadaRequestDTO estadoCursadaRequestDTO) {
+	public EstadoCursada mapFromDto(EstadoCursadaRequestDto estadoCursadaRequestDTO) {
 		EstadoCursada estadoCursada = new EstadoCursada();
 		estadoCursada.setNombre(estadoCursadaRequestDTO.getNombre());
 		estadoCursada.setDescripcion(estadoCursadaRequestDTO.getDescripcion());
