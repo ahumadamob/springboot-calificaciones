@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDTO;
+import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDto;
 import com.imb2025.calificaciones.entity.InscripcionMateria;
 import com.imb2025.calificaciones.service.jpa.InscripcionMateriaServiceImp;
 
@@ -32,7 +32,7 @@ public class InscripcionMateriaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody InscripcionMateriaRequestDTO dto) {
+    public ResponseEntity<?> create(@RequestBody InscripcionMateriaRequestDto dto) {
         try {
             InscripcionMateria entity = inscripcionMateriaService.mapFromDto(dto);
             InscripcionMateria saved = inscripcionMateriaService.create(entity);
@@ -50,7 +50,7 @@ public class InscripcionMateriaController {
     @PutMapping("/{idInscripcionMateria}")
     public ResponseEntity<?> update(
             @PathVariable("idInscripcionMateria") Long id,
-            @RequestBody InscripcionMateriaRequestDTO dto) {
+            @RequestBody InscripcionMateriaRequestDto dto) {
 
         try {
             InscripcionMateria entity = inscripcionMateriaService.mapFromDto(dto);

@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.EvaluacionRequestDTO;
+import com.imb2025.calificaciones.dto.EvaluacionRequestDto;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
@@ -77,7 +77,7 @@ public class EvaluacionServiceImp implements IEvaluacionService {
 
 	// Pasar de DTO a entidad
 	@Override
-	public Evaluacion convertToEntity(EvaluacionRequestDTO evaluacionRequestDTO) {
+	public Evaluacion convertToEntity(EvaluacionRequestDto evaluacionRequestDTO) {
 		try {
 			if (evaluacionRequestDTO == null) {
 				throw new RuntimeException("Evaluación no puede ser nula");

@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.EvaluacionRequestDTO;
+import com.imb2025.calificaciones.dto.EvaluacionRequestDto;
 import java.util.List;
 
 import com.imb2025.calificaciones.entity.Evaluacion;
@@ -17,5 +17,5 @@ public interface IEvaluacionService {
 
 	void deleteById(Long id); // Eliminar Evaluacion
 
-	Evaluacion convertToEntity(EvaluacionRequestDTO evaluacionRequestDTO); // Convertir DTO a entidad
+	Evaluacion convertToEntity(EvaluacionRequestDto evaluacionRequestDTO); // Convertir DTO a entidad
 }

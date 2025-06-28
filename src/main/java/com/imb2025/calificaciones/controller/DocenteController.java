@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.DocenteRequestDTO;
+import com.imb2025.calificaciones.dto.DocenteRequestDto;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.service.IDocenteService;
 
@@ -37,7 +37,7 @@ public class DocenteController {
     }
 
     @PostMapping
-    public Docente createDocente(@RequestBody DocenteRequestDTO docenteDTO){
+    public Docente createDocente(@RequestBody DocenteRequestDto docenteDTO){
         Docente docente = new Docente();
         try {
             docente = docenteService.mapFromDTO(docenteDTO);
@@ -49,7 +49,7 @@ public class DocenteController {
     }
 
     @PutMapping("/{id}")
-    public Docente updateDocente(@PathVariable Long id, @RequestBody DocenteRequestDTO docenteDTO) {
+    public Docente updateDocente(@PathVariable Long id, @RequestBody DocenteRequestDto docenteDTO) {
         Docente docente = new Docente();
         try {
             docente = docenteService.mapFromDTO(docenteDTO);

@@ -1,16 +1,16 @@
-package com.imb2025.calificaciones.DTO;
+package com.imb2025.calificaciones.dto;
 
-public class AlumnoRequestDTO{
+public class AlumnoRequestDto{
     private String nombre;
     private String apellido;
     private String email;
     private int dni;
     private String fechaNacimiento;
 
-    public AlumnoRequestDTO() {
+    public AlumnoRequestDto() {
     }
 
-    public AlumnoRequestDTO(String nombre, String apellido, String email, int dni,  String fechaNacimiento) {
+    public AlumnoRequestDto(String nombre, String apellido, String email, int dni,  String fechaNacimiento) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;

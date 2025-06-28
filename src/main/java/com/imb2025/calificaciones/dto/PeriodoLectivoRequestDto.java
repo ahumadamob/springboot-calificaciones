@@ -2,15 +2,15 @@ package com.imb2025.calificaciones.dto;
 
 import java.time.LocalDate;
 
-public class PeriodoLectivoRequestDTO {
+public class PeriodoLectivoRequestDto {
 	private Long id;
 	private String nombre;
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
 	
-	public PeriodoLectivoRequestDTO() {}
+	public PeriodoLectivoRequestDto() {}
 	
-	public PeriodoLectivoRequestDTO(Long id, String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
+	public PeriodoLectivoRequestDto(Long id, String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fechaInicio = fechaInicio;

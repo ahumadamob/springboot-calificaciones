@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.dto;
 
-public class EstadoCursadaRequestDTO {
+public class EstadoCursadaRequestDto {
     private String nombre;
     private String descripcion;
 
