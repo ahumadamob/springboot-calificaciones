@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
+import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.repository.EstadoCursadaRepository;
 import com.imb2025.calificaciones.service.IEstadoCursadaService;
@@ -26,12 +27,34 @@ public class EstadoCursadaServiceImp implements IEstadoCursadaService {
     }
 
     @Override
-    public EstadoCursada save(EstadoCursada estadoCursada) {
-        return repository.save(estadoCursada);
+    public EstadoCursada create(EstadoCursada estadoCursada) {
+    	return repository.save(estadoCursada);
     }
+    
+	@Override
+	public EstadoCursada update(EstadoCursada estadoCursada, Long id) throws Exception{
+		if(repository.existsById(id)) {
+			estadoCursada.setId(id);
+			return repository.save(estadoCursada);
+		} else {
+			throw new Exception("No se encontró estadoCursada con id "+id);
+		}
+		
+	}
 
     @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
+
+
+    @Override
+	public EstadoCursada mapFromDto(EstadoCursadaRequestDto estadoCursadaRequestDTO) {
+		EstadoCursada estadoCursada = new EstadoCursada();
+		estadoCursada.setNombre(estadoCursadaRequestDTO.getNombre());
+		estadoCursada.setDescripcion(estadoCursadaRequestDTO.getDescripcion());
+		return estadoCursada;
+	}
+
+
 }

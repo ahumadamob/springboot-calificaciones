@@ -5,35 +5,79 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.imb2025.calificaciones.dto.CursadaRequestDTO;
+import com.imb2025.calificaciones.entity.Alumno;
+import com.imb2025.calificaciones.entity.CondicionFinal;
 import com.imb2025.calificaciones.entity.Cursada;
+import com.imb2025.calificaciones.entity.Materia;
+import com.imb2025.calificaciones.repository.AlumnoRepository;
+import com.imb2025.calificaciones.repository.CondicionFinalRepository;
 import com.imb2025.calificaciones.repository.CursadaRepository;
+import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.service.ICursadaService;
-
 @Service
 public class CursadaServiceImpl implements ICursadaService{
 
-	@Autowired
-	
-	private CursadaRepository repo;
-	
-	@Override
-	public List<Cursada> findAll() {
-		return repo.findAll();
-	}
+    @Autowired
+    CursadaRepository repo;
+    @Autowired
+    AlumnoRepository alumnorepo;
+    @Autowired
+    MateriaRepository materiaRepository;
+    @Autowired
+    CondicionFinalRepository cRepository;
 
-	@Override
-	public Cursada findById(Long id) {
-		return repo.findById(id).orElse(null);
-	}
 
-	@Override
-	public Cursada save(Cursada cursada) {
-		return repo.save(cursada) ;
-	}
+    @Override
+    public List<Cursada> findAll() {
+        return repo.findAll();
+    }
 
-	@Override
-	public void deleteById(Long id) {
-		repo.deleteById(id);
-	}
+    @Override
+    public Cursada findById(Long id) {
+        return repo.findById(id).orElse(null);
+    }
 
-}
+    @Override
+    public String save(CursadaRequestDTO dto) {
+    	 Cursada cursada = new Cursada(); 
+        Mapper(cursada, dto);
+        return "Guardado correctamente";
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repo.deleteById(id);
+    }
+
+    @Override
+    public String update(Long id,CursadaRequestDTO dto){
+    	 Cursada cursada = repo.findById(id)
+    		        .orElseThrow(() -> new RuntimeException("Cursada no encontrada"));
+        Mapper(cursada, dto);
+        return"Updateada correctamente";
+    }
+
+    public void Mapper(Cursada cursada, CursadaRequestDTO dto){
+
+
+                Alumno alumno = alumnorepo.findById(dto.getAlumnoId())
+                    .orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
+
+                Materia materia = materiaRepository.findById(dto.getMateriaId())
+                    .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
+
+
+
+                CondicionFinal condicionFinal = cRepository.findById(dto.getCondicionFinalId())
+                    .orElseThrow(() -> new RuntimeException("Condición final no encontrada"));
+
+                cursada.setAlumno(alumno);
+                cursada.setMateria(materia);
+                cursada.setAnioLectivo("anioLectivoId");
+                cursada.setCondicionFinal(condicionFinal);
+                repo.save(cursada);
+
+            }
+
+    }

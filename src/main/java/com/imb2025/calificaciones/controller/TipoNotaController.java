@@ -43,11 +43,15 @@ public class TipoNotaController {
     // PUT /tiponota/{id} - actualizar existente
     @PutMapping("/{id}")
     public ResponseEntity<TipoNota> update(@PathVariable Long id, @RequestBody TipoNota tipoNota) {
-        TipoNota actualizado = tipoNotaService.update(id, tipoNota);
-        if (actualizado != null) {
+        try {
+            // Verificamos si el TipoNota existe antes de intentar actualizar
+            tipoNotaService.findById(id);
+
+            TipoNota actualizado = tipoNotaService.update(id, tipoNota);
             return ResponseEntity.ok(actualizado);
-        } else {
-            return ResponseEntity.notFound().build();
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(null);
         }
     }
 

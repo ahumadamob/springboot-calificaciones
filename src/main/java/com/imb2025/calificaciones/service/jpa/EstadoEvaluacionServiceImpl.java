@@ -1,11 +1,11 @@
 package com.imb2025.calificaciones.service.jpa;
 
 import com.imb2025.calificaciones.entity.EstadoEvaluacion;
-
 import com.imb2025.calificaciones.repository.EstadoEvaluacionRepository;
 import com.imb2025.calificaciones.service.IEstadoEvaluacionServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,16 +21,21 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionServices {
     }
 
     @Override
-    public EstadoEvaluacion save(EstadoEvaluacion estado) {
+    @Transactional
+    public EstadoEvaluacion save(EstadoEvaluacion estadoEvaluacion) {
+        EstadoEvaluacion estado = new EstadoEvaluacion();
+        estado.setNombre(estadoEvaluacion.getNombre());
+        estado.setDescripcion(estadoEvaluacion.getDescripcion());
         return repository.save(estado);
     }
 
     @Override
-    public EstadoEvaluacion update(Long id, EstadoEvaluacion estadoActualizado) {
+    @Transactional
+    public EstadoEvaluacion update(Long id, EstadoEvaluacion estadoEvaluacion) {
         EstadoEvaluacion existente = repository.findById(id).orElse(null);
         if (existente != null) {
-            existente.setNombre(estadoActualizado.getNombre());
-            existente.setDescripcion(estadoActualizado.getDescripcion());
+            existente.setNombre(estadoEvaluacion.getNombre());
+            existente.setDescripcion(estadoEvaluacion.getDescripcion());
             return repository.save(existente);
         }
         return null;
