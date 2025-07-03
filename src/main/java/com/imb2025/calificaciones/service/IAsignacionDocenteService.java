@@ -12,7 +12,7 @@ public interface IAsignacionDocenteService {
 
     AsignacionDocente save(AsignacionDocente asignacionDocente);
 
-    AsignacionDocente update(Long id, AsignacionDocente asignacionDocente);
+    AsignacionDocente update(AsignacionDocente asignacionDocente);
 
     void deleteById(Long id);
 

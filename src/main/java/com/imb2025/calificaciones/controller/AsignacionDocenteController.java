@@ -1,20 +1,24 @@
 package com.imb2025.calificaciones.controller;
 
 import com.imb2025.calificaciones.entity.AsignacionDocente;
-import com.imb2025.calificaciones.service.jpa.AsignacionDocenteServiceImp;
+import com.imb2025.calificaciones.service.IAsignacionDocenteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
+import jakarta.validation.Valid;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/asignacion-docente")
 public class AsignacionDocenteController {
 
     @Autowired
-    private AsignacionDocenteServiceImp service;
+    private IAsignacionDocenteService service;
 
     @GetMapping
     public ResponseEntity<List<AsignacionDocente>> getAll() {
@@ -23,27 +27,59 @@ public class AsignacionDocenteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AsignacionDocente> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable Long id) {
         AsignacionDocente asignacionDocente = service.findById(id);
+        if (asignacionDocente == null) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", "Asignación docente no encontrada");
+            response.put("error", "Not Found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
         return ResponseEntity.ok(asignacionDocente);
     }
 
     @PostMapping
-    public ResponseEntity<AsignacionDocente> create(@RequestBody AsignacionDocente asignacionDocente) {
-        AsignacionDocente createdAsignacionDocente = service.save(asignacionDocente);
-        return ResponseEntity.ok(createdAsignacionDocente);
+    public ResponseEntity<?> create(@Valid @RequestBody AsignacionDocente asignacionDocente) {
+        try {
+            AsignacionDocente createdAsignacionDocente = service.save(asignacionDocente);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdAsignacionDocente);
+        } catch (RuntimeException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", e.getMessage());
+            response.put("error", "Bad Request");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<AsignacionDocente> update(@PathVariable Long id,
-            @RequestBody AsignacionDocente asignacionDocente) {
-        AsignacionDocente updatedAsignacionDocente = service.update(id, asignacionDocente);
-        return ResponseEntity.ok(updatedAsignacionDocente);
+    @PutMapping
+    public ResponseEntity<?> update(@Valid @RequestBody AsignacionDocente asignacionDocente) {
+        try {
+            AsignacionDocente updatedAsignacionDocente = service.update(asignacionDocente);
+            if (updatedAsignacionDocente == null) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("mensaje", "Asignación docente no encontrada");
+                response.put("error", "Not Found");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            }
+            return ResponseEntity.ok(updatedAsignacionDocente);
+        } catch (RuntimeException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", e.getMessage());
+            response.put("error", "Bad Request");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.deleteById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        try {
+            service.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("mensaje", e.getMessage());
+            response.put("error", "Bad Request");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 }
