@@ -1,0 +1,85 @@
+package com.imb2025.calificaciones.service.jpa;
+
+import com.imb2025.calificaciones.dto.RequisitoMateriaRequestDTO;
+import com.imb2025.calificaciones.entity.Materia;
+import com.imb2025.calificaciones.entity.RequisitoMateria;
+import com.imb2025.calificaciones.repository.MateriaRepository;
+import com.imb2025.calificaciones.repository.RequisitoMateriaRepository;
+import com.imb2025.calificaciones.service.RequisitoMateriaService;
+import com.imb2025.calificaciones.condicionfinal.exception.EntidadNoEncontradaException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class RequisitoMateriaServiceImpl implements RequisitoMateriaService {
+
+    @Autowired
+    private RequisitoMateriaRepository requisitoRepository;
+
+    @Autowired
+    private MateriaRepository materiaRepository;
+
+    @Override
+    public List<RequisitoMateria> findAll() {
+        return requisitoRepository.findAll();
+    }
+
+    @Override
+    public Optional<RequisitoMateria> findById(Long id) {
+        return requisitoRepository.findById(id);
+    }
+
+    @Override
+    public RequisitoMateria save(RequisitoMateriaRequestDTO dto) {
+        try {
+            Materia materia = materiaRepository.findById(dto.getMateriaId())
+                .orElseThrow(() -> new EntidadNoEncontradaException("Materia con ID " + dto.getMateriaId() + " no encontrada."));
+
+            Materia correlativa = materiaRepository.findById(dto.getMateriaRequeridaId())
+                .orElseThrow(() -> new EntidadNoEncontradaException("Materia correlativa con ID " + dto.getMateriaRequeridaId() + " no encontrada."));
+
+            RequisitoMateria requisito = new RequisitoMateria();
+            requisito.setMateria(materia);
+            requisito.setMateriaCorrelativa(correlativa);
+
+            return requisitoRepository.save(requisito);
+
+        } catch (EntidadNoEncontradaException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("Error al guardar requisito: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public RequisitoMateria update(Long id, RequisitoMateriaRequestDTO dto) {
+        try {
+            RequisitoMateria existente = requisitoRepository.findById(id)
+                .orElseThrow(() -> new EntidadNoEncontradaException("Requisito con ID " + id + " no encontrado."));
+
+            Materia materia = materiaRepository.findById(dto.getMateriaId())
+                .orElseThrow(() -> new EntidadNoEncontradaException("Materia con ID " + dto.getMateriaId() + " no encontrada."));
+
+            Materia correlativa = materiaRepository.findById(dto.getMateriaRequeridaId())
+                .orElseThrow(() -> new EntidadNoEncontradaException("Materia correlativa con ID " + dto.getMateriaRequeridaId() + " no encontrada."));
+
+            existente.setMateria(materia);
+            existente.setMateriaCorrelativa(correlativa);
+
+            return requisitoRepository.save(existente);
+
+        } catch (EntidadNoEncontradaException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("Error al actualizar requisito: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        requisitoRepository.deleteById(id);
+    }
+}

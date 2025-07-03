@@ -1,11 +1,16 @@
 package com.imb2025.calificaciones.controller;
 
+import com.imb2025.calificaciones.dto.RequisitoMateriaRequestDTO;
 import com.imb2025.calificaciones.entity.RequisitoMateria;
 import com.imb2025.calificaciones.service.RequisitoMateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/requisito-materia")
@@ -20,22 +25,52 @@ public class RequisitoMateriaController {
     }
 
     @GetMapping("/{id}")
-    public RequisitoMateria getById(@PathVariable Long id) {
-        return service.findById(id).orElseThrow();
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        Optional<RequisitoMateria> requisito = service.findById(id);
+        if (requisito.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("El requisito con ID " + id + " no existe.");
+        }
+        return ResponseEntity.ok(requisito.get());
     }
 
     @PostMapping
-    public RequisitoMateria create(@RequestBody RequisitoMateria requisito) {
-        return service.save(requisito);
+    public ResponseEntity<?> create(@RequestBody @Valid RequisitoMateriaRequestDTO dto) {
+        try {
+            RequisitoMateria nuevo = service.save(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error al crear requisito: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
-    public RequisitoMateria update(@PathVariable Long id, @RequestBody RequisitoMateria requisito) {
-        return service.update(id, requisito);
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid RequisitoMateriaRequestDTO dto) {
+        Optional<RequisitoMateria> existente = service.findById(id);
+        if (existente.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No se encontró un requisito con el ID " + id + " para actualizar.");
+        }
+
+        try {
+            RequisitoMateria actualizado = service.update(id, dto);
+            return ResponseEntity.ok(actualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Error al actualizar: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        Optional<RequisitoMateria> existente = service.findById(id);
+        if (existente.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No se encontró el requisito con ID " + id + " para eliminar.");
+        }
+
         service.deleteById(id);
+        return ResponseEntity.ok("Requisito eliminado correctamente");
     }
 }
