@@ -35,18 +35,9 @@ public class RequisitoMateriaServiceImpl implements RequisitoMateriaService {
     @Override
     public RequisitoMateria save(RequisitoMateriaRequestDTO dto) {
         try {
-            Materia materia = materiaRepository.findById(dto.getMateriaId())
-                .orElseThrow(() -> new EntidadNoEncontradaException("Materia con ID " + dto.getMateriaId() + " no encontrada."));
-
-            Materia correlativa = materiaRepository.findById(dto.getMateriaRequeridaId())
-                .orElseThrow(() -> new EntidadNoEncontradaException("Materia correlativa con ID " + dto.getMateriaRequeridaId() + " no encontrada."));
-
-            RequisitoMateria requisito = new RequisitoMateria();
-            requisito.setMateria(materia);
-            requisito.setMateriaCorrelativa(correlativa);
-
-            return requisitoRepository.save(requisito);
-
+            // 🆕 Línea 38 → se delega la conversión del DTO a entidad
+            RequisitoMateria requisito = mapearDesdeDto(dto);
+            return requisitoRepository.save(requisito); // Línea 39
         } catch (EntidadNoEncontradaException e) {
             throw e;
         } catch (Exception e) {
@@ -60,17 +51,11 @@ public class RequisitoMateriaServiceImpl implements RequisitoMateriaService {
             RequisitoMateria existente = requisitoRepository.findById(id)
                 .orElseThrow(() -> new EntidadNoEncontradaException("Requisito con ID " + id + " no encontrado."));
 
-            Materia materia = materiaRepository.findById(dto.getMateriaId())
-                .orElseThrow(() -> new EntidadNoEncontradaException("Materia con ID " + dto.getMateriaId() + " no encontrada."));
-
-            Materia correlativa = materiaRepository.findById(dto.getMateriaRequeridaId())
-                .orElseThrow(() -> new EntidadNoEncontradaException("Materia correlativa con ID " + dto.getMateriaRequeridaId() + " no encontrada."));
-
-            existente.setMateria(materia);
-            existente.setMateriaCorrelativa(correlativa);
+            RequisitoMateria actualizado = mapearDesdeDto(dto); // 🆕 Línea 53
+            existente.setMateria(actualizado.getMateria());
+            existente.setMateriaCorrelativa(actualizado.getMateriaCorrelativa());
 
             return requisitoRepository.save(existente);
-
         } catch (EntidadNoEncontradaException e) {
             throw e;
         } catch (Exception e) {
@@ -81,5 +66,19 @@ public class RequisitoMateriaServiceImpl implements RequisitoMateriaService {
     @Override
     public void deleteById(Long id) {
         requisitoRepository.deleteById(id);
+    }
+
+    //  Método nuevo prueba  
+    private RequisitoMateria mapearDesdeDto(RequisitoMateriaRequestDTO dto) {
+        Materia materia = materiaRepository.findById(dto.getMateriaId())
+            .orElseThrow(() -> new EntidadNoEncontradaException("Materia con ID " + dto.getMateriaId() + " no encontrada."));
+
+        Materia correlativa = materiaRepository.findById(dto.getMateriaRequeridaId())
+            .orElseThrow(() -> new EntidadNoEncontradaException("Materia correlativa con ID " + dto.getMateriaRequeridaId() + " no encontrada."));
+
+        RequisitoMateria entidad = new RequisitoMateria();
+        entidad.setMateria(materia);
+        entidad.setMateriaCorrelativa(correlativa);
+        return entidad;
     }
 }
