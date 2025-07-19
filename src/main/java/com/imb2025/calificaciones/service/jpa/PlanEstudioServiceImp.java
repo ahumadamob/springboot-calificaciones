@@ -26,7 +26,7 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
     private CarreraRepository carreraRepository;
 
     @Autowired
-    private AnioVigenciaRepository aniovigenciaRepository;
+    /*private AnioVigenciaRepository aniovigenciaRepository;*/
 
     @Override
     public List<PlanEstudio> findAll() {
@@ -58,12 +58,15 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
                 carreraRepository.existsById(newPlanEstudio.getCarreraId())) {
                 throw new EntidadNoEncontradaException("Carrera con ID " + newPlanEstudio.getCarreraId() + " no existe");
             }
-
+            
+            
+            /*
             // Validar existencia de anio vigencia
             if (newPlanEstudio.getAnioVigencia() == null ||
                 !anioVigenciaRepository.existsById(newPlanEstudio.getAnioVigencia()) {
                 throw new EntidadNoEncontradaException("Año de vigencia con ID " + newPlanEstudio.getAnioVigencia() + " no existe");
             }
+            */
 
             // Actualizar campos
             existente.setCarreraId(newPlanEstudio.getCarreraId());
@@ -93,9 +96,13 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
         PlanEstudio plan = new PlanEstudio();
 
         // Validar carrera
+        /*
         Carrera carrera = carreraRepository.findById(dto.getCarreraId())
             .orElseThrow(() -> new EntidadNoEncontradaException("Carrera con ID " + dto.getCarreraId() + " no encontrada"));
         plan.setCarreraId(carrera);
+        */
+        plan.setCarreraId(dto.getCarreraId());
+       
 
         // Validar nombre
         if (dto.getNombre() == null || dto.getNombre().isEmpty()) {
@@ -104,9 +111,12 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
         plan.setNombre(dto.getNombre());
 
         // Validar año vigencia
+        /*
         AnioVigencia anio = anioVigenciaRepository.findById(dto.getAniovigencia())
             .orElseThrow(() -> new EntidadNoEncontradaException("Año de vigencia con ID " + dto.getAniovigencia() + " no encontrado"));
         plan.setAnioVigencia(anio);
+        */
+        
 
         // Si viene el ID (por PUT)
         if (dto.getId() != null) {

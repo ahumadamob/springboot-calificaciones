@@ -19,9 +19,7 @@ public interface ITurnoService {
 	
 	public Turno mapFromDTO(TurnoRequestDTO turnoRequestDTO);
 
-	boolean existsById(Long id); 
-	
-	public Turno mapFromDTO(TurnoRequestDTO turnoRequestDTO); 
+	boolean existsById(Long id); 	
 	
 
 }
