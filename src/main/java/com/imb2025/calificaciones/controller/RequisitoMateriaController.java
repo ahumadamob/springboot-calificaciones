@@ -1,7 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 import com.imb2025.calificaciones.entity.RequisitoMateria;
-import com.imb2025.calificaciones.service.RequisitoMateriaService;
+import com.imb2025.calificaciones.service.IRequisitoMateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class RequisitoMateriaController {
 
     @Autowired
-    private RequisitoMateriaService service;
+    private IRequisitoMateriaService service;
 
     @GetMapping
     public List<RequisitoMateria> getAll() {
@@ -21,7 +21,7 @@ public class RequisitoMateriaController {
 
     @GetMapping("/{id}")
     public RequisitoMateria getById(@PathVariable Long id) {
-        return service.findById(id).orElseThrow();
+        return service.findById(id);
     }
 
     @PostMapping

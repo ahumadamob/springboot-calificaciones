@@ -5,9 +5,9 @@ import com.imb2025.calificaciones.entity.RequisitoMateria;
 import java.util.List;
 import java.util.Optional;
 
-public interface RequisitoMateriaService {
+public interface IRequisitoMateriaService {
     List<RequisitoMateria> findAll();
-    Optional<RequisitoMateria> findById(Long id);
+    RequisitoMateria findById(Long id);
     RequisitoMateria save(RequisitoMateria requisito);
     RequisitoMateria update(Long id, RequisitoMateria requisito);
     void deleteById(Long id);
