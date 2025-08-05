@@ -36,7 +36,7 @@ public class AsignacionDocenteController {
 
     @PostMapping
     public ResponseEntity<AsignacionDocente> create(@RequestBody AsignacionDocente asignacionDocente) {
-        AsignacionDocente createdAsignacionDocente = service.save(asignacionDocente);
+        AsignacionDocente createdAsignacionDocente = service.create(asignacionDocente);
         return ResponseEntity.ok(createdAsignacionDocente);
     }
 

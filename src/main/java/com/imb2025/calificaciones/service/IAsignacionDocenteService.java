@@ -10,7 +10,9 @@ public interface IAsignacionDocenteService {
 
     List<AsignacionDocente> findAll();
 
-    AsignacionDocente save(AsignacionDocente asignacionDocente);
+    boolean existsById(Long id);
+
+    AsignacionDocente create(AsignacionDocente asignacionDocente);
 
     AsignacionDocente update(Long id, AsignacionDocente asignacionDocente) throws Exception;
 
