@@ -1,14 +1,8 @@
 package com.imb2025.calificaciones.entity;
 
+import java.time.LocalDate;
 
-import java.sql.Date;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name= "calendario_materia")
@@ -17,15 +11,19 @@ public class CalendarioMateria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="materia_id")
-	private Long materiaId;
-	@Column(name="comision_id")
-	private Long comisionId;
 	@Column(name="fecha_inicio")
-	private Date fechaInicio;
+	private LocalDate fechaInicio;
 	@Column(name="fecha_fin")
-	private Date fechaFin;
-	
+	private LocalDate fechaFin;
+
+	@ManyToOne
+	@JoinColumn(name = "materia_id")
+	private Materia materia;
+
+	@ManyToOne
+	@JoinColumn(name = "comision_id")
+	private Comision comision;
+
 	// GETTERS & SETTERS
 	
 	public Long getId() {
@@ -34,31 +32,36 @@ public class CalendarioMateria {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Long getMateriaId() {
-		return materiaId;
-	}
-	public void setMateriaId(Long materiaId) {
-		this.materiaId = materiaId;
-	}
-	public Long getComisionId() {
-		return comisionId;
-	}
-	public void setComisionId(Long comisionId) {
-		this.comisionId = comisionId;
-	}
-	public Date getFechaInicio() {
+
+	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
-	public void setFechaInicio(Date fechaInicio) {
+
+	public void setFechaInicio(LocalDate fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
-	public Date getFechaFin() {
+
+	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
-	public void setFechaFin(Date fechaFin) {
+
+	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
-	
-	
-	
+
+	public Materia getMateria() {
+		return materia;
+	}
+
+	public void setMateria(Materia materia) {
+		this.materia = materia;
+	}
+
+	public Comision getComision() {
+		return comision;
+	}
+
+	public void setComision(Comision comision) {
+		this.comision = comision;
+	}
 }
