@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDTO;
+import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDto;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
 import com.imb2025.calificaciones.service.IObservacionAlumnoService;
 
@@ -46,13 +46,13 @@ public class ObservacionAlumnoController {
         }
 
         @PostMapping
-        public ResponseEntity<ObservacionAlumno> create(@RequestBody ObservacionAlumnoRequestDTO dto) {
+        public ResponseEntity<ObservacionAlumno> create(@RequestBody ObservacionAlumnoRequestDto dto) {
                 ObservacionAlumno observacionAlumno = observacionAlumnoService.create(observacionAlumnoService.fromDTO(dto));
                 return ResponseEntity.status(HttpStatus.CREATED).body(observacionAlumno);
         }
 
         @PutMapping("/{id}")
-        public ResponseEntity<ObservacionAlumno> update(@RequestBody ObservacionAlumnoRequestDTO dto, @PathVariable Long id) {
+        public ResponseEntity<ObservacionAlumno> update(@RequestBody ObservacionAlumnoRequestDto dto, @PathVariable Long id) {
                 ObservacionAlumno observacionAlumno = observacionAlumnoService.update(id, observacionAlumnoService.fromDTO(dto));
                 return ResponseEntity.ok(observacionAlumno);
         }

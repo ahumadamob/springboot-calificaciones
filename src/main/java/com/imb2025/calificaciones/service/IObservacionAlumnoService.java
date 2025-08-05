@@ -3,7 +3,7 @@ package com.imb2025.calificaciones.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDTO;
+import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDto;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
 
  
@@ -15,7 +15,7 @@ public interface IObservacionAlumnoService {
         ObservacionAlumno update(Long id, ObservacionAlumno observacionAlumno) throws Exception;
         void deleteById(Long id) throws Exception;
         boolean existsById(Long id);
-    ObservacionAlumno fromDTO(ObservacionAlumnoRequestDTO dto);
+    ObservacionAlumno fromDTO(ObservacionAlumnoRequestDto dto);
 	
 	
 
