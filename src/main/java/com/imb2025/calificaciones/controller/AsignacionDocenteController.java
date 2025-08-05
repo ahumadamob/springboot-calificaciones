@@ -30,7 +30,7 @@ public class AsignacionDocenteController {
     public ResponseEntity<AsignacionDocente> getById(@PathVariable Long id) throws Exception {
         AsignacionDocente asignacionDocente = service.findById(id);
         if (asignacionDocente == null) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(asignacionDocente);
     }
