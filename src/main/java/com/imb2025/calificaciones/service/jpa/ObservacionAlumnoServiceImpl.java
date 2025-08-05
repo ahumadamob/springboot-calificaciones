@@ -71,23 +71,28 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 	
 
 	@Override
-	public void deleteById(Long id) throws Exception{
-		try {
-			Optional<ObservacionAlumno> obs = observacionAlumnoRepository.findById(id);
-			if (obs.isPresent()) {
-				observacionAlumnoRepository.deleteById(id);
-			} else {
-				throw new Exception("la observación de alumno no existe");
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("error al eliminar la observación del alumno: " + e.getMessage()); 
-		}
-		
-	}
+        public void deleteById(Long id) throws Exception{
+                try {
+                        Optional<ObservacionAlumno> obs = observacionAlumnoRepository.findById(id);
+                        if (obs.isPresent()) {
+                                observacionAlumnoRepository.deleteById(id);
+                        } else {
+                                throw new Exception("la observación de alumno no existe");
+                        }
+                } catch (Exception e) {
+                        throw new RuntimeException("error al eliminar la observación del alumno: " + e.getMessage());
+                }
 
-	public ObservacionAlumno fromDTO(ObservacionAlumnoRequestDTO dto) {
-	    Docente docente = docenteRepository.findById(dto.getDocenteId())
-	            .orElseThrow(() -> new RuntimeException("docente no encontrado"));
+        }
+
+        @Override
+        public boolean existsById(Long id) {
+                return observacionAlumnoRepository.existsById(id);
+        }
+
+        public ObservacionAlumno fromDTO(ObservacionAlumnoRequestDTO dto) {
+            Docente docente = docenteRepository.findById(dto.getDocenteId())
+                    .orElseThrow(() -> new RuntimeException("docente no encontrado"));
 
 	    Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
 	            .orElseThrow(() -> new RuntimeException("alumno no encontrado"));
