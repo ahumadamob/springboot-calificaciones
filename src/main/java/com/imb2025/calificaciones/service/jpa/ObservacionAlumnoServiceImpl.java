@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDTO;
+import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
@@ -80,7 +80,7 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
                 return observacionAlumnoRepository.existsById(id);
         }
 
-        public ObservacionAlumno fromDTO(ObservacionAlumnoRequestDTO dto) {
+        public ObservacionAlumno fromDTO(ObservacionAlumnoRequestDto dto) {
             Docente docente = docenteRepository.findById(dto.getDocenteId())
                     .orElseThrow(() -> new RuntimeException("docente no encontrado"));
 
