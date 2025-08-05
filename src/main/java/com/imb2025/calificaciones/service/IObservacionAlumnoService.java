@@ -13,7 +13,7 @@ public interface IObservacionAlumnoService {
 	List<ObservacionAlumno> findAll();
         ObservacionAlumno create(ObservacionAlumno observacionAlumno);
         ObservacionAlumno update(Long id, ObservacionAlumno observacionAlumno) throws Exception;
-        void deleteById(Long id);
+        void deleteById(Long id) throws Exception;
         boolean existsById(Long id);
     ObservacionAlumno fromDTO(ObservacionAlumnoRequestDTO dto);
 	
