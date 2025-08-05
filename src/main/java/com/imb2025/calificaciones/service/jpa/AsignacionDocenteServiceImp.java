@@ -23,26 +23,24 @@ public class AsignacionDocenteServiceImp implements IAsignacionDocenteService {
         return repository.findById(id).orElse(null);
     }
 
-    public AsignacionDocente existsById(Long id) {
-        return repository.existsById(id) ? findById(id) : null;
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
     }
 
-    public AsignacionDocente save(AsignacionDocente asignacionDocente) {
+    public AsignacionDocente create(AsignacionDocente asignacionDocente) {
         return repository.save(asignacionDocente);
     }
 
-    public AsignacionDocente update(Long id, AsignacionDocente asignacionDocente) {
-        repository.findById(id).orElseThrow(
-                () -> new RuntimeException(
-                        "Can't update AsignacionDocente with id: " + id + " because it does not exist"));
+    public AsignacionDocente update(Long id, AsignacionDocente asignacionDocente) throws Exception {
+        repository.findById(id).orElseThrow(() ->
+                new Exception("Can't update AsignacionDocente with id: " + id + " because it does not exist"));
         asignacionDocente.setId(id);
         return repository.save(asignacionDocente);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
         if (!repository.existsById(id)) {
-            throw new RuntimeException(
-                    "Can't delete AsignacionDocente with id: " + id + " because it does not exist");
+            throw new Exception("Can't delete AsignacionDocente with id: " + id + " because it does not exist");
         }
         repository.deleteById(id);
     }
