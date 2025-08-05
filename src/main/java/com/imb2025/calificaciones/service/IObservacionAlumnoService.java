@@ -11,9 +11,10 @@ public interface IObservacionAlumnoService {
 	
 	Optional<ObservacionAlumno> findById(Long id);
 	List<ObservacionAlumno> findAll();
-	ObservacionAlumno create(ObservacionAlumno observacionAlumno);
-	ObservacionAlumno update(Long id, ObservacionAlumno observacionAlumno) throws Exception;
-	void deleteById(Long id);
+        ObservacionAlumno create(ObservacionAlumno observacionAlumno);
+        ObservacionAlumno update(Long id, ObservacionAlumno observacionAlumno) throws Exception;
+        void deleteById(Long id);
+        boolean existsById(Long id);
     ObservacionAlumno fromDTO(ObservacionAlumnoRequestDTO dto);
 	
 	
