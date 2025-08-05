@@ -4,6 +4,7 @@ import com.imb2025.calificaciones.entity.AsignacionDocente;
 import com.imb2025.calificaciones.service.jpa.AsignacionDocenteServiceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +38,7 @@ public class AsignacionDocenteController {
     @PostMapping
     public ResponseEntity<AsignacionDocente> create(@RequestBody AsignacionDocente asignacionDocente) {
         AsignacionDocente createdAsignacionDocente = service.create(asignacionDocente);
-        return ResponseEntity.ok(createdAsignacionDocente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAsignacionDocente);
     }
 
     @PutMapping("/{id}")
