@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imb2025.calificaciones.dto.MateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.service.IMateriaService;
 
@@ -32,27 +33,40 @@ public class MateriaController {
 	}
 	
 	@GetMapping("/api/materia/{id}")
-	public Materia getMateriaById(@PathVariable("id") Long id) {
+	public Materia getMateriaById(@PathVariable("idalumno") Long id) {
 	    return materiaService.findById(id);
 	}
 
 	
 	@PostMapping("/api/materia")
-	public Materia createMateria(@RequestBody Materia materia){
-		return materiaService.save(materia);
+	public Materia createMateria(@RequestBody MateriaRequestDto materiaRequestDto){
+		Materia materia = new Materia();
+		try {
+			materia = materiaService.mapFromDto(materiaRequestDto);
+			materia = materiaService.create(materia);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return materia;
 		
 	}
 	
-	@PutMapping ("/api/materia")
-	public Materia updateMateria(@RequestBody Materia materia){
-		return materiaService.save(materia);
+	@PutMapping ("/api/materia/{id}")
+	public Materia updateMateria(@RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id){
+		Materia materia = new Materia();
+		try {
+			materia = materiaService.mapFromDto(materiaRequestDto);
+			materia = materiaService.update(materia,id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
+		return materia;
 	}
+	@DeleteMapping("/api/materia/{idalumno}")
+	public void deleteMateria(@PathVariable("idalumno") Long id) {
+	    materiaService.deleteById(id); 
+
 	
-	@DeleteMapping("/api/materia/{id}")
-	public void deleteMateria(@PathVariable("id") Long id) {
-	    materiaService.deleteById(id);
 	}
-
-
 }
