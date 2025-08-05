@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.TipoEvaluacionRequestDTO;
+import com.imb2025.calificaciones.dto.TipoEvaluacionRequestDto;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
 import com.imb2025.calificaciones.service.ITipoEvaluacionService;
 
@@ -50,7 +50,7 @@ public class TipoEvaluacionController {
 	}
 	
 	@PutMapping("/tipoEvaluacion/{id}")
-	public ResponseEntity<?> actualizarTipoEvaluacion(@PathVariable Long id, @RequestBody TipoEvaluacionRequestDTO dto) {
+	public ResponseEntity<?> actualizarTipoEvaluacion(@PathVariable Long id, @RequestBody TipoEvaluacionRequestDto dto) {
 	    
 		TipoEvaluacion tipo = tipoEvaluacionService.findById(id);
 

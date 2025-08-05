@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.MateriaRequestDTO;
+import com.imb2025.calificaciones.dto.MateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.service.IMateriaService;
@@ -56,7 +56,7 @@ public class MateriaServiceImpl implements IMateriaService{
 	}
 
 	@Override
-	public Materia mapFromDto(MateriaRequestDTO materiaRequestDto) throws Exception {
+	public Materia mapFromDto(MateriaRequestDto materiaRequestDto) throws Exception {
 		Materia materia = new Materia();
 		materia.setNombre(materiaRequestDto.getNombre());
 		materia.setCargaHoraria(materiaRequestDto.getCargaHoraria());

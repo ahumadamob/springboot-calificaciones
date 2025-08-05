@@ -2,7 +2,7 @@ package com.imb2025.calificaciones.dto;
 
 import java.util.Date;
 
-public class EvaluacionRequestDTO {
+public class EvaluacionRequestDto {
 
 	private Long id;
 

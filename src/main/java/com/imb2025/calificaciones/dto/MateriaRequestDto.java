@@ -1,13 +1,13 @@
 package com.imb2025.calificaciones.dto;
 
-public class MateriaRequestDTO {
+public class MateriaRequestDto {
 
 	private String nombre;
 	private String codigo;
 	private String cargaHoraria;
 	private String nivel;
  
-	public MateriaRequestDTO() {}
+	public MateriaRequestDto() {}
 
 	public String getNombre() {
 		return nombre;

@@ -35,7 +35,7 @@ public class PlanEstudio {
 
 	    public Long getCarreraId() { return carreraId; }
 
-	    public void setCarreraId(Long carreraId) { this.carreraId = carreraId; }
+	    public void setCarreraId(Long long1) { this.carreraId = long1; }
 
 	    public String getNombre() { return nombre; }
 

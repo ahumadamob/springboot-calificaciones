@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDTO;
+import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDto;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.service.IPeriodoLectivoService;
 
@@ -39,7 +39,7 @@ public class PeriodoLectivoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<PeriodoLectivo> create(@RequestBody PeriodoLectivoRequestDTO periodoLectivo) {
+	public ResponseEntity<PeriodoLectivo> create(@RequestBody PeriodoLectivoRequestDto periodoLectivo) {
 		PeriodoLectivo createdPeriodoLectivo = service.save(
 					service.RequestDTOToEntity(periodoLectivo)
 				);
@@ -51,7 +51,7 @@ public class PeriodoLectivoController {
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<PeriodoLectivo> update(@PathVariable Long id, 
-			@RequestBody PeriodoLectivoRequestDTO periodoLectivo) {
+			@RequestBody PeriodoLectivoRequestDto periodoLectivo) {
 		PeriodoLectivo updatedPeriodoLectivo;
 		try {			
 			updatedPeriodoLectivo = service.update(
