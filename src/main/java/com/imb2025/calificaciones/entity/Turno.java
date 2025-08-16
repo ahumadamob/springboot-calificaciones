@@ -14,11 +14,27 @@ public class Turno {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nombre;
-	
-	private LocalTime horaInicio;
-	
-	private LocalTime horaFin;
+        private String nombre;
+
+        private LocalTime horaInicio;
+
+        private LocalTime horaFin;
+
+        public Turno() {
+        }
+
+        public Turno(Long id, String nombre, LocalTime horaInicio, LocalTime horaFin) {
+                this.id = id;
+                this.nombre = nombre;
+                this.horaInicio = horaInicio;
+                this.horaFin = horaFin;
+        }
+
+        public Turno(String nombre, LocalTime horaInicio, LocalTime horaFin) {
+                this.nombre = nombre;
+                this.horaInicio = horaInicio;
+                this.horaFin = horaFin;
+        }
 	
 	public Long getId() {
 		return id;
