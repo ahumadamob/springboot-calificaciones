@@ -11,9 +11,27 @@ public class Materia {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nombre;
-	private String codigo;
-	private String cargaHoraria;
-	private String nivel;
+        private String codigo;
+        private String cargaHoraria;
+        private String nivel;
+
+        public Materia() {
+        }
+
+        public Materia(Long id, String nombre, String codigo, String cargaHoraria, String nivel) {
+                this.id = id;
+                this.nombre = nombre;
+                this.codigo = codigo;
+                this.cargaHoraria = cargaHoraria;
+                this.nivel = nivel;
+        }
+
+        public Materia(String nombre, String codigo, String cargaHoraria, String nivel) {
+                this.nombre = nombre;
+                this.codigo = codigo;
+                this.cargaHoraria = cargaHoraria;
+                this.nivel = nivel;
+        }
 	
 	public Long getId() {
 		return id;
