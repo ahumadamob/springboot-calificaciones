@@ -30,19 +30,24 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
 
     @Override
     public TipoNota save(TipoNota tipoNota) {
-        return tipoNotaRepository.save(tipoNota);
+        try {
+            return tipoNotaRepository.save(tipoNota);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al guardar TipoNota: " + e.getMessage());
+        }
     }
-
+    
     @Override
     public TipoNota update(Long id, TipoNota tipoNota) {
-        Optional<TipoNota> existente = tipoNotaRepository.findById(id);
-        if (existente.isPresent()) {
-            TipoNota t = existente.get();
-            t.setNombre(tipoNota.getNombre());
-            t.setDescripcion(tipoNota.getDescripcion());
-            return tipoNotaRepository.save(t);
-        } else {
-            return null;
+    	try {
+            TipoNota existente = tipoNotaRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("TipoNota no encontrada con id: " + id));
+
+            existente.setNombre(tipoNota.getNombre());
+            existente.setDescripcion(tipoNota.getDescripcion());
+            return tipoNotaRepository.save(existente);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al actualizar TipoNota: " + e.getMessage());
         }
     }
 

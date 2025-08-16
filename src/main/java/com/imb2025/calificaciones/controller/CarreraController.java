@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.CarreraRequestDTO;
+import com.imb2025.calificaciones.dto.CarreraRequestDto;
 import com.imb2025.calificaciones.entity.Carrera;
 import com.imb2025.calificaciones.service.ICarreraService;
 
@@ -38,7 +38,7 @@ public class CarreraController {
     } 
     
     @PostMapping
-    public ResponseEntity<Carrera> createCarrera(@RequestBody @Valid CarreraRequestDTO dto) {
+    public ResponseEntity<Carrera> createCarrera(@RequestBody @Valid CarreraRequestDto dto) {
         try {
             Carrera carrera = new Carrera();
             carrera.setNombre(dto.getNombre());
@@ -53,7 +53,7 @@ public class CarreraController {
     	
         
     @PutMapping("/{idcarrera}")
-    public ResponseEntity<?> updateCarrera(@PathVariable("idcarrera") Long id, @RequestBody @Valid CarreraRequestDTO dto) {
+    public ResponseEntity<?> updateCarrera(@PathVariable("idcarrera") Long id, @RequestBody @Valid CarreraRequestDto dto) {
         try {
             Carrera existente = carreraService.findById(id);
             if (existente == null) {

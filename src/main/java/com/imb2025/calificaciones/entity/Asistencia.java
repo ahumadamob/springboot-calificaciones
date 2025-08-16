@@ -1,9 +1,6 @@
 package com.imb2025.calificaciones.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Asistencia {
@@ -12,9 +9,11 @@ public class Asistencia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long alumnoId;
+    @ManyToOne
+    private Alumno alumno;
 
-    private Long registroClaseId;
+    @ManyToOne
+    private RegistroClase registroClase;
 
     private Boolean presente;
 
@@ -27,20 +26,20 @@ public class Asistencia {
         this.id = id;
     }
 
-    public Long getAlumnoId() {
-        return alumnoId;
+    public Alumno getAlumno() {
+        return alumno;
     }
 
-    public void setAlumnoId(Long alumnoId) {
-        this.alumnoId = alumnoId;
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
     }
 
-    public Long getRegistroClaseId() {
-        return registroClaseId;
+    public RegistroClase getRegistroClase() {
+        return registroClase;
     }
 
-    public void setRegistroClaseId(Long registroClaseId) {
-        this.registroClaseId = registroClaseId;
+    public void setRegistroClase(RegistroClase registroClase) {
+        this.registroClase = registroClase;
     }
 
     public Boolean getPresente() {
