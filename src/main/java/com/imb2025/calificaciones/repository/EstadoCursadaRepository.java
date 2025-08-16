@@ -7,5 +7,5 @@ import com.imb2025.calificaciones.entity.EstadoCursada;
 
 @Repository
 public interface EstadoCursadaRepository extends JpaRepository<EstadoCursada, Long> {
-
 }
+

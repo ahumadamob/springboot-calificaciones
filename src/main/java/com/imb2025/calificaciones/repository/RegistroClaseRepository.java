@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.imb2025.calificaciones.entity.RegistroClase;
 
 @Repository
-public interface RegistroClaseRepository extends JpaRepository<RegistroClase,Long> {
-
+public interface RegistroClaseRepository extends JpaRepository<RegistroClase, Long> {
 }
+

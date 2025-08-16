@@ -7,5 +7,5 @@ import com.imb2025.calificaciones.entity.PeriodoLectivo;
 
 @Repository
 public interface PeriodoLectivoRepository extends JpaRepository<PeriodoLectivo, Long> {
-
 }
+
