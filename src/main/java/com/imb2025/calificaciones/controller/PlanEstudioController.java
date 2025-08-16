@@ -19,7 +19,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.imb2025.calificaciones.condicionfinal.exception.EntidadNoEncontradaException;
+import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
 import com.imb2025.calificaciones.dto.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.entity.PlanEstudio;
 import com.imb2025.calificaciones.service.jpa.PlanEstudioServiceImp;

@@ -1,12 +1,12 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.RequisitoMateriaRequestDTO;
+import com.imb2025.calificaciones.dto.RequisitoMateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.entity.RequisitoMateria;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.repository.RequisitoMateriaRepository;
-import com.imb2025.calificaciones.service.RequisitoMateriaService;
-import com.imb2025.calificaciones.condicionfinal.exception.EntidadNoEncontradaException;
+import com.imb2025.calificaciones.service.IRequisitoMateriaService;
+import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class RequisitoMateriaServiceImpl implements RequisitoMateriaService {
+public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
 
     @Autowired
     private RequisitoMateriaRepository requisitoRepository;
@@ -33,7 +33,7 @@ public class RequisitoMateriaServiceImpl implements RequisitoMateriaService {
     }
 
     @Override
-    public RequisitoMateria save(RequisitoMateriaRequestDTO dto) {
+    public RequisitoMateria save(RequisitoMateriaRequestDto dto) {
         try {
             // 🆕 Línea 38 → se delega la conversión del DTO a entidad
             RequisitoMateria requisito = mapearDesdeDto(dto);
@@ -46,7 +46,7 @@ public class RequisitoMateriaServiceImpl implements RequisitoMateriaService {
     }
 
     @Override
-    public RequisitoMateria update(Long id, RequisitoMateriaRequestDTO dto) {
+    public RequisitoMateria update(Long id, RequisitoMateriaRequestDto dto) {
         try {
             RequisitoMateria existente = requisitoRepository.findById(id)
                 .orElseThrow(() -> new EntidadNoEncontradaException("Requisito con ID " + id + " no encontrado."));
@@ -69,7 +69,7 @@ public class RequisitoMateriaServiceImpl implements RequisitoMateriaService {
     }
 
     //  Método nuevo prueba  
-    private RequisitoMateria mapearDesdeDto(RequisitoMateriaRequestDTO dto) {
+    private RequisitoMateria mapearDesdeDto(RequisitoMateriaRequestDto dto) {
         Materia materia = materiaRepository.findById(dto.getMateriaId())
             .orElseThrow(() -> new EntidadNoEncontradaException("Materia con ID " + dto.getMateriaId() + " no encontrada."));
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.service.IAlumnoServices;
-import com.imb2025.calificaciones.dto.AlumnoRequestDTO;
+import com.imb2025.calificaciones.dto.AlumnoRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -40,12 +40,12 @@ public class AlumnoController {
     }
 
     @PostMapping("/entidad")
-    public ResponseEntity<Alumno> crear(@RequestBody AlumnoRequestDTO nuevoAlumno) throws Exception {
+    public ResponseEntity<Alumno> crear(@RequestBody AlumnoRequestDto nuevoAlumno) throws Exception {
         return ResponseEntity.ok(IAlumnoServices.create(nuevoAlumno));
     }
 
     @PutMapping("/entidad/{id}")
-    public ResponseEntity<Alumno> actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDTO datosActualizados) throws Exception {
+    public ResponseEntity<Alumno> actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDto datosActualizados) throws Exception {
         return ResponseEntity.ok(IAlumnoServices.update(id, datosActualizados));
     }
 

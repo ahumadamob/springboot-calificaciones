@@ -45,10 +45,10 @@ public class EvaluacionController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody EvaluacionRequestDto evaluacionRequestDTO) {
+	public ResponseEntity<?> create(@RequestBody EvaluacionRequestDto evaluacionRequestDto) {
 		try {
 			Evaluacion evaluacion = evaluacionServiceImp
-					.save(evaluacionServiceImp.convertToEntity(evaluacionRequestDTO));
+					.save(evaluacionServiceImp.convertToEntity(evaluacionRequestDto));
 			return ResponseEntity.status(HttpStatus.CREATED).body(evaluacion);
 		} catch (RuntimeException e) {
 			Map<String, Object> message = new HashMap<>();

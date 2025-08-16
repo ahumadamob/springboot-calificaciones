@@ -77,39 +77,39 @@ public class EvaluacionServiceImp implements IEvaluacionService {
 
 	// Pasar de DTO a entidad
 	@Override
-	public Evaluacion convertToEntity(EvaluacionRequestDto evaluacionRequestDTO) {
+	public Evaluacion convertToEntity(EvaluacionRequestDto evaluacionRequestDto) {
 		try {
-			if (evaluacionRequestDTO == null) {
+			if (evaluacionRequestDto == null) {
 				throw new RuntimeException("Evaluación no puede ser nula");
 			}
 			Evaluacion evaluacion = new Evaluacion();
 
-			if (evaluacionRequestDTO.getTipoEvaluacionId() != null) {
+			if (evaluacionRequestDto.getTipoEvaluacionId() != null) {
 				TipoEvaluacion tipoEvaluacion = tipoEvaluacionRepository
-						.findById(evaluacionRequestDTO.getTipoEvaluacionId()).orElse(null);
+						.findById(evaluacionRequestDto.getTipoEvaluacionId()).orElse(null);
 				if (tipoEvaluacion == null) {
 					throw new RuntimeException("Tipo de evaluación no encontrado");
 				}
 				evaluacion.setTipoEvaluacion(tipoEvaluacion);
 			}
 
-			if (evaluacionRequestDTO.getMateriaId() != null) {
-				Materia materia = materiaRepository.findById(evaluacionRequestDTO.getMateriaId()).orElse(null);
+			if (evaluacionRequestDto.getMateriaId() != null) {
+				Materia materia = materiaRepository.findById(evaluacionRequestDto.getMateriaId()).orElse(null);
 				if (materia == null) {
 					throw new RuntimeException("Materia no encontrada");
 				}
 				evaluacion.setMateria(materia);
 			}
 
-			if (evaluacionRequestDTO.getComisionId() != null) {
-				Comision comision = comisionRepository.findById(evaluacionRequestDTO.getComisionId()).orElse(null);
+			if (evaluacionRequestDto.getComisionId() != null) {
+				Comision comision = comisionRepository.findById(evaluacionRequestDto.getComisionId()).orElse(null);
 				if (comision == null) {
 					throw new RuntimeException("Comisión no encontrada");
 				}
 				evaluacion.setComision(comision);
 			}
-                        evaluacion.setId(evaluacionRequestDTO.getId());
-                        evaluacion.setFecha(evaluacionRequestDTO.getFechaEvaluacion());
+                        evaluacion.setId(evaluacionRequestDto.getId());
+                        evaluacion.setFecha(evaluacionRequestDto.getFechaEvaluacion());
 			return evaluacion;
 		} catch (Exception e) {
 			throw new RuntimeException("Error: " + e.getMessage());

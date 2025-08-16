@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.imb2025.calificaciones.dto.CursadaRequestDTO;
+import com.imb2025.calificaciones.dto.CursadaRequestDto;
 import com.imb2025.calificaciones.entity.Cursada;
 import com.imb2025.calificaciones.service.ICursadaService;
 
@@ -36,12 +36,12 @@ public class CursadaController {
     }
 
     @PostMapping("/api/cursada")
-    public ResponseEntity<String> createCursada(@RequestBody CursadaRequestDTO cursada){
+    public ResponseEntity<String> createCursada(@RequestBody CursadaRequestDto cursada){
         return ResponseEntity.ok(cursadaService.save(cursada));
     } 
 
     @PutMapping("/api/cursada")
-    public ResponseEntity<String> updateCursada(@RequestBody CursadaRequestDTO cursada){
+    public ResponseEntity<String> updateCursada(@RequestBody CursadaRequestDto cursada){
         return ResponseEntity.ok(cursadaService.save(cursada));
 
     }
@@ -53,7 +53,7 @@ public class CursadaController {
     }
 
     @PutMapping("/api/cursada/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody CursadaRequestDTO dto) {
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody CursadaRequestDto dto) {
         try {
             return ResponseEntity.ok(cursadaService.update(id,dto));
         } catch (Exception e) {

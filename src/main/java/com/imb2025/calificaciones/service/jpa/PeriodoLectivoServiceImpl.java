@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDTO;
+import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDto;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.repository.PeriodoLectivoRepository;
 import com.imb2025.calificaciones.service.IPeriodoLectivoService;
@@ -54,7 +54,7 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 	}
 
 	@Override
-	public PeriodoLectivo mapFromDTO(PeriodoLectivoRequestDTO requestDTO) {
+	public PeriodoLectivo mapFromDTO(PeriodoLectivoRequestDto requestDTO) {
 		PeriodoLectivo periodoLectivo = new PeriodoLectivo();
 		
 		periodoLectivo.setNombre(requestDTO.getNombre());

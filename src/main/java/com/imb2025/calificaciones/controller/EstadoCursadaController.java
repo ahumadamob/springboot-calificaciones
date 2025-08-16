@@ -53,10 +53,10 @@ public class EstadoCursadaController {
     }
     
     @PutMapping("/{id}")
-    public EstadoCursada update(@RequestBody EstadoCursadaRequestDto estadoCursadaRequestDTO, @PathVariable Long id) {
+    public EstadoCursada update(@RequestBody EstadoCursadaRequestDto estadoCursadaRequestDto, @PathVariable Long id) {
         EstadoCursada estadoCursada = new EstadoCursada();
         try {
-        	estadoCursada = service.mapFromDto(estadoCursadaRequestDTO);
+        	estadoCursada = service.mapFromDto(estadoCursadaRequestDto);
         	estadoCursada = service.update(estadoCursada, id);
         }catch(Exception e){
         	e.printStackTrace();

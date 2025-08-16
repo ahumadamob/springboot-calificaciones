@@ -17,7 +17,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.imb2025.calificaciones.dto.TurnoRequestDTO;
+import com.imb2025.calificaciones.dto.TurnoRequestDto;
 import com.imb2025.calificaciones.entity.Turno;
 import com.imb2025.calificaciones.service.ITurnoService;
 
@@ -44,18 +44,18 @@ public class TurnoController {
 	}
 	
 	 @PostMapping
-	  public ResponseEntity<Turno> createTurno(@RequestBody TurnoRequestDTO turnoRequestDTO) {
+	  public ResponseEntity<Turno> createTurno(@RequestBody TurnoRequestDto turnoRequestDto) {
 		 Turno turno = new Turno();
 		
-			 turno = turnoService.mapFromDTO(turnoRequestDTO);
+			 turno = turnoService.mapFromDTO(turnoRequestDto);
 			 turno = turnoService.create(turno);
 			 return ResponseEntity.status(HttpStatus.CREATED).body(turno);
 	    }
 	 
 	 @PutMapping("/{id}")
-	    public ResponseEntity<Turno> updateTurno(@RequestBody TurnoRequestDTO turnoRequestDTO, @PathVariable Long id) throws Exception {
+	    public ResponseEntity<Turno> updateTurno(@RequestBody TurnoRequestDto turnoRequestDto, @PathVariable Long id) throws Exception {
 		 Turno turno = new Turno();
-			 turno = turnoService.mapFromDTO(turnoRequestDTO);
+			 turno = turnoService.mapFromDTO(turnoRequestDto);
 			 turno = turnoService.update(id, turno);
 			 return ResponseEntity.ok(turno);
 	 }

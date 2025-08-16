@@ -2,7 +2,6 @@ package com.imb2025.calificaciones.service.jpa;
 
 import com.imb2025.calificaciones.entity.EstadoEvaluacion;
 import com.imb2025.calificaciones.repository.EstadoEvaluacionRepository;
-import com.imb2025.calificaciones.service.IEstadoEvaluacionServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionServices {
+public class EstadoEvaluacionServiceImpl  {
 
     @Autowired
     private EstadoEvaluacionRepository repository;

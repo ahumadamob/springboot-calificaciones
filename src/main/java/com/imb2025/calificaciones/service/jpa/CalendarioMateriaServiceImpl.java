@@ -3,7 +3,7 @@ package com.imb2025.calificaciones.service.jpa;
 import java.util.List;
 import java.util.Optional;
 
-import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDTO;
+import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDto;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.repository.ComisionRepository;
@@ -67,7 +67,7 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService{
 	}
 
 	@Override
-	public CalendarioMateria mapFromDto(CalendarioMateriaRequestDTO calMatDto) throws Exception {
+	public CalendarioMateria mapFromDto(CalendarioMateriaRequestDto calMatDto) throws Exception {
 
 		CalendarioMateria calendarioMateria = new CalendarioMateria();
 

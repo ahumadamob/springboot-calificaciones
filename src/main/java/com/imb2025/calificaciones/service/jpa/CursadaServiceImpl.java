@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.CursadaRequestDTO;
+import com.imb2025.calificaciones.dto.CursadaRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.CondicionFinal;
 import com.imb2025.calificaciones.entity.Cursada;
@@ -39,7 +39,7 @@ public class CursadaServiceImpl implements ICursadaService{
     }
 
     @Override
-    public String save(CursadaRequestDTO dto) {
+    public String save(CursadaRequestDto dto) {
     	 Cursada cursada = new Cursada(); 
         Mapper(cursada, dto);
         return "Guardado correctamente";
@@ -51,14 +51,14 @@ public class CursadaServiceImpl implements ICursadaService{
     }
 
     @Override
-    public String update(Long id,CursadaRequestDTO dto){
+    public String update(Long id,CursadaRequestDto dto){
     	 Cursada cursada = repo.findById(id)
     		        .orElseThrow(() -> new RuntimeException("Cursada no encontrada"));
         Mapper(cursada, dto);
         return"Updateada correctamente";
     }
 
-    public void Mapper(Cursada cursada, CursadaRequestDTO dto){
+    public void Mapper(Cursada cursada, CursadaRequestDto dto){
 
 
                 Alumno alumno = alumnorepo.findById(dto.getAlumnoId())

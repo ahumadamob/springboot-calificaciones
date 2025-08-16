@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.TurnoRequestDTO;
+import com.imb2025.calificaciones.dto.TurnoRequestDto;
 import com.imb2025.calificaciones.entity.Turno;
 import com.imb2025.calificaciones.repository.TurnoRepository;
 import com.imb2025.calificaciones.service.ITurnoService;
@@ -55,11 +55,11 @@ public class TurnoServiceImp implements ITurnoService {
 	}
 
 	@Override
-	public Turno mapFromDTO(TurnoRequestDTO turnoRequestDTO) {
+	public Turno mapFromDTO(TurnoRequestDto turnoRequestDto) {
 		Turno turno = new Turno();
-		turno.setNombre(turnoRequestDTO.getNombre());
-		turno.setHoraInicio(turnoRequestDTO.getHoraInicio());
-		turno.setHoraFin(turnoRequestDTO.getHoraFin());
+		turno.setNombre(turnoRequestDto.getNombre());
+		turno.setHoraInicio(turnoRequestDto.getHoraInicio());
+		turno.setHoraFin(turnoRequestDto.getHoraFin());
 		return turno;
 	}
 	

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.EstadoEvaluacionRequestDTO;
+import com.imb2025.calificaciones.dto.EstadoEvaluacionRequestDto;
 import com.imb2025.calificaciones.entity.EstadoEvaluacion;
-import com.imb2025.calificaciones.condicionfinal.exception.EntidadNoEncontradaException;
+import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
 import com.imb2025.calificaciones.service.jpa.EstadoEvaluacionServiceImpl;
 
 import jakarta.persistence.EntityNotFoundException;
