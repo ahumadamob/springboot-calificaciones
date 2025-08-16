@@ -23,16 +23,28 @@ public class AsignacionDocenteServiceImp implements IAsignacionDocenteService {
         return repository.findById(id).orElse(null);
     }
 
-    public AsignacionDocente save(AsignacionDocente asignacionDocente) {
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
+    }
+
+    public AsignacionDocente create(AsignacionDocente asignacionDocente) {
         return repository.save(asignacionDocente);
     }
 
-    public AsignacionDocente update(Long id, AsignacionDocente asignacionDocente) {
+    public AsignacionDocente update(Long id, AsignacionDocente asignacionDocente) throws Exception {
+        if (!existsById(id)) {
+            throw new Exception(
+                    "Can't update AsignacionDocente with id: " + id + " because it does not exist");
+        }
         asignacionDocente.setId(id);
         return repository.save(asignacionDocente);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
+        if (!existsById(id)) {
+            throw new Exception(
+                    "Can't delete AsignacionDocente with id: " + id + " because it does not exist");
+        }
         repository.deleteById(id);
     }
 }

@@ -1,8 +1,10 @@
 package com.imb2025.calificaciones.controller;
 
 import com.imb2025.calificaciones.service.IAlumnoServices;
+import com.imb2025.calificaciones.dto.AlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.Alumno;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,32 +12,43 @@ import java.util.List;
 @RestController
 public class AlumnoController {
 
-   @Autowired
-   IAlumnoServices IAlumnoServices;
-
-
+    @Autowired
+    IAlumnoServices IAlumnoServices;
 
     @GetMapping("/entidad")
-    public List<Alumno> obtenerTodos(){
-        return IAlumnoServices.getAll();
+    public ResponseEntity<List<Alumno>> obtenerTodos() {
+        List<Alumno> alumnos = IAlumnoServices.findAll();   
+        return alumnos.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(alumnos);
     }
-    @GetMapping("/entidad/{id}")
-    public Alumno obtenerPorId(@PathVariable Long id){
-     return IAlumnoServices.findById(id);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Alumno> obtenerAlumnoPorId(@PathVariable Long id) {
+        return IAlumnoServices.existsById(id)
+                ? ResponseEntity.ok(IAlumnoServices.findById(id))
+                : ResponseEntity.noContent().build();
     }
+
     @PostMapping("/entidad")
-    public Alumno crear(@RequestBody Alumno nuevoAlumno) {
-        return IAlumnoServices.save(nuevoAlumno);
+    public ResponseEntity<Alumno> crear(@RequestBody AlumnoRequestDTO nuevoAlumno) throws Exception {
+        return ResponseEntity.ok(IAlumnoServices.create(nuevoAlumno));
     }
 
     @PutMapping("/entidad/{id}")
-    public Alumno actualizar(@PathVariable Long id, @RequestBody Alumno datosActualizados) {
-        return IAlumnoServices.update(id, datosActualizados);
+    public ResponseEntity<Alumno> actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDTO datosActualizados) throws Exception {
+        return ResponseEntity.ok(IAlumnoServices.update(id, datosActualizados));
     }
 
     @DeleteMapping("/entidad/{id}")
-    public void eliminar(@PathVariable Long id) {
-        IAlumnoServices.delete(id);
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        IAlumnoServices.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
 }
