@@ -15,7 +15,7 @@ public class Evaluacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Date fechaEvaluacion;
+        private Date fecha;
 
 	@ManyToOne
 	private TipoEvaluacion tipoEvaluacion;
@@ -27,9 +27,24 @@ public class Evaluacion {
 	private Comision comision;
 
 	
-	public Evaluacion() {
-		super();
-	}
+        public Evaluacion() {
+                super();
+        }
+
+        public Evaluacion(Long id, Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia, Comision comision) {
+                this.id = id;
+                this.fecha = fecha;
+                this.tipoEvaluacion = tipoEvaluacion;
+                this.materia = materia;
+                this.comision = comision;
+        }
+
+        public Evaluacion(Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia, Comision comision) {
+                this.fecha = fecha;
+                this.tipoEvaluacion = tipoEvaluacion;
+                this.materia = materia;
+                this.comision = comision;
+        }
 
 	public Long getId() {
 		return id;
@@ -39,13 +54,13 @@ public class Evaluacion {
 		this.id = id;
 	}
 
-	public Date getFechaEvaluacion() {
-		return fechaEvaluacion;
-	}
+        public Date getFecha() {
+                return fecha;
+        }
 
-	public void setFechaEvaluacion(Date fechaEvaluacion) {
-		this.fechaEvaluacion = fechaEvaluacion;
-	}
+        public void setFecha(Date fecha) {
+                this.fecha = fecha;
+        }
 
 	public TipoEvaluacion getTipoEvaluacion() {
 		return tipoEvaluacion;

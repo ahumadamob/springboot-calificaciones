@@ -63,10 +63,10 @@ public class EvaluacionServiceImp implements IEvaluacionService {
 					.orElseThrow(() -> new RuntimeException("Evaluación no encontrada"));
 
 			
-			evaluacion.setComision(newEvaluacion.getComision());
-			evaluacion.setMateria(newEvaluacion.getMateria());
-			evaluacion.setFechaEvaluacion(newEvaluacion.getFechaEvaluacion());
-			evaluacion.setTipoEvaluacion(newEvaluacion.getTipoEvaluacion());
+                        evaluacion.setComision(newEvaluacion.getComision());
+                        evaluacion.setMateria(newEvaluacion.getMateria());
+                        evaluacion.setFecha(newEvaluacion.getFecha());
+                        evaluacion.setTipoEvaluacion(newEvaluacion.getTipoEvaluacion());
 
 			return evaluacionRepository.save(evaluacion);
 
@@ -108,8 +108,8 @@ public class EvaluacionServiceImp implements IEvaluacionService {
 				}
 				evaluacion.setComision(comision);
 			}
-			evaluacion.setId(evaluacionRequestDTO.getId());
-			evaluacion.setFechaEvaluacion(evaluacionRequestDTO.getFechaEvaluacion());
+                        evaluacion.setId(evaluacionRequestDTO.getId());
+                        evaluacion.setFecha(evaluacionRequestDTO.getFechaEvaluacion());
 			return evaluacion;
 		} catch (Exception e) {
 			throw new RuntimeException("Error: " + e.getMessage());
