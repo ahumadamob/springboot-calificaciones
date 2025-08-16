@@ -4,67 +4,78 @@ import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Horario {
 	
 	
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id ;
-	
-	@Column(name = "comisionId")
-	private int comisionId;
-	
-	@Column(name = "diaSemana")
-	private String diaSemana;
-	
-	@Column(name = "horarioInicio")
-	@JsonFormat(pattern = "HH:mm")
-	private LocalTime horarioInicio;
-	
-	@Column(name = "horarioFin")
-	@JsonFormat(pattern = "HH:mm")
-	private LocalTime horaFin;
+    private Long id;
 
-	public int getComisionId() {
-		return comisionId;
-	}
+    @ManyToOne
+    private Comision comision;
 
-	public void setComisionId(int comisionId) {
-		this.comisionId = comisionId;
-	}
+    private String diaSemana;
 
-	public String getDiaSemana() {
-		return diaSemana;
-	}
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime horaInicio;
 
-	public void setDiaSemana(String diaSemana) {
-		this.diaSemana = diaSemana;
-	}
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime horaFin;
 
-	public LocalTime getHorarioInicio() {
-		return horarioInicio;
-	}
+    public Horario() {
+    }
 
-	public void setHorarioInicio(LocalTime horarioInicio) {
-		this.horarioInicio = horarioInicio;
-	}
+    public Horario(Comision comision, String diaSemana, LocalTime horaInicio, LocalTime horaFin) {
+        this.comision = comision;
+        this.diaSemana = diaSemana;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+    }
 
-	public LocalTime getHoraFin() {
-		return horaFin;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setHoraFin(LocalTime horaFin) {
-		this.horaFin = horaFin;
-	}
-	
-	
-	
-	
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Comision getComision() {
+        return comision;
+    }
+
+    public void setComision(Comision comision) {
+        this.comision = comision;
+    }
+
+    public String getDiaSemana() {
+        return diaSemana;
+    }
+
+    public void setDiaSemana(String diaSemana) {
+        this.diaSemana = diaSemana;
+    }
+
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public LocalTime getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(LocalTime horaFin) {
+        this.horaFin = horaFin;
+    }
 }
