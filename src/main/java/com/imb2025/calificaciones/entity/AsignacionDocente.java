@@ -33,6 +33,21 @@ public class AsignacionDocente {
     public AsignacionDocente() {
     }
 
+    public AsignacionDocente(Long id, Docente docente, Materia materia, Comision comision, PeriodoLectivo periodoLectivo) {
+        this.id = id;
+        this.docente = docente;
+        this.materia = materia;
+        this.comision = comision;
+        this.periodoLectivo = periodoLectivo;
+    }
+
+    public AsignacionDocente(Docente docente, Materia materia, Comision comision, PeriodoLectivo periodoLectivo) {
+        this.docente = docente;
+        this.materia = materia;
+        this.comision = comision;
+        this.periodoLectivo = periodoLectivo;
+    }
+
     public Long getId() {
         return id;
     }
