@@ -1,50 +1,65 @@
 package com.imb2025.calificaciones.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-@Table(name = "plan_estudio")
-
-
 public class PlanEstudio {
-	
-	
 
-	    @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	    @Column(name = "carrera_id", nullable = false)
-	    private Long carreraId;
+    @ManyToOne
+    @JoinColumn(name = "carrera_id")
+    private Carrera carrera;
 
-	    @Column(nullable = false)
-	    private String nombre;
+    private String nombre;
 
-	    @Column(name = "anio_vigencia", nullable = false)
-	    private int anioVigencia;
+    private int anioVigencia;
 
-	    
-	    public Long getId() { return id; }
+    public PlanEstudio() {
+    }
 
-	    public void setId(Long id) { this.id = id; }
+    public PlanEstudio(Carrera carrera, String nombre, int anioVigencia) {
+        this.carrera = carrera;
+        this.nombre = nombre;
+        this.anioVigencia = anioVigencia;
+    }
 
-	    public Long getCarreraId() { return carreraId; }
+    public Long getId() {
+        return id;
+    }
 
-	    public void setCarreraId(Long long1) { this.carreraId = long1; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	    public String getNombre() { return nombre; }
+    public Carrera getCarrera() {
+        return carrera;
+    }
 
-	    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
+    }
 
-	    public int getAnioVigencia() { return anioVigencia; }
+    public String getNombre() {
+        return nombre;
+    }
 
-	    public void setAnioVigencia(int anioVigencia) { this.anioVigencia = anioVigencia; }
-	
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
+    public int getAnioVigencia() {
+        return anioVigencia;
+    }
 
+    public void setAnioVigencia(int anioVigencia) {
+        this.anioVigencia = anioVigencia;
+    }
 }
