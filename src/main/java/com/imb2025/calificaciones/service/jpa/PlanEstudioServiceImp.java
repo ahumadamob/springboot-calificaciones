@@ -1,7 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,9 +53,11 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
             }
 
             // Validar existencia de carrera
-            if (newPlanEstudio.getCarreraId() == null ||
-                carreraRepository.existsById(newPlanEstudio.getCarreraId())) {
-                throw new EntidadNoEncontradaException("Carrera con ID " + newPlanEstudio.getCarreraId() + " no existe");
+            if (newPlanEstudio.getCarrera() == null ||
+                newPlanEstudio.getCarrera().getId() == null ||
+                !carreraRepository.existsById(newPlanEstudio.getCarrera().getId())) {
+                Long carreraId = newPlanEstudio.getCarrera() != null ? newPlanEstudio.getCarrera().getId() : null;
+                throw new EntidadNoEncontradaException("Carrera con ID " + carreraId + " no existe");
             }
             
             
@@ -69,7 +70,7 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
             */
 
             // Actualizar campos
-            existente.setCarreraId(newPlanEstudio.getCarreraId());
+            existente.setCarrera(newPlanEstudio.getCarrera());
             existente.setNombre(newPlanEstudio.getNombre());
             existente.setAnioVigencia(newPlanEstudio.getAnioVigencia());
 
@@ -96,12 +97,9 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
         PlanEstudio plan = new PlanEstudio();
 
         // Validar carrera
-        /*
         Carrera carrera = carreraRepository.findById(dto.getCarreraId())
             .orElseThrow(() -> new EntidadNoEncontradaException("Carrera con ID " + dto.getCarreraId() + " no encontrada"));
-        plan.setCarreraId(carrera);
-        */
-        plan.setCarreraId(dto.getCarreraId());
+        plan.setCarrera(carrera);
        
 
         // Validar nombre
