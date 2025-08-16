@@ -1,27 +1,20 @@
 package com.imb2025.calificaciones.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import com.imb2025.calificaciones.dto.EvaluacionRequestDto;
 import com.imb2025.calificaciones.dto.PlanEstudioRequestDto;
-import com.imb2025.calificaciones.entity.Evaluacion;
 import com.imb2025.calificaciones.entity.PlanEstudio;
+import java.util.List;
 
 public interface IPlanEstudioService {
-	
-	List<PlanEstudio> findAll(); // Todos las evaluaciones GET ALL
 
-	PlanEstudio findById(Long id); // Encontrar una Evaluacion por id GET ID
+    public List<PlanEstudio> findAll();
 
-	PlanEstudio save(PlanEstudio planestudio); // Crear y guardar Evaluacion POST
+    public PlanEstudio findById(Long id);
 
-	PlanEstudio update(Long id, PlanEstudio planestudio); // Actualizar Evaluacion PUT
+    public PlanEstudio create(PlanEstudioRequestDto dto);
 
-	void deleteById(Long id); // Eliminar Evaluacion
+    public PlanEstudio update(Long id, PlanEstudioRequestDto dto);
 
-	PlanEstudio convertToEntity(PlanEstudioRequestDto planestudioRequestDTO); // Convertir DTO a entidad
+    public void deleteById(Long id);
+
+    public PlanEstudio fromDto(PlanEstudioRequestDto dto);
 }
-
-
-

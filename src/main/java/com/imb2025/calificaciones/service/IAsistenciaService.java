@@ -1,19 +1,20 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.AsistenciaRequestDTO;
+import com.imb2025.calificaciones.dto.AsistenciaRequestDto;
 import com.imb2025.calificaciones.entity.Asistencia;
-
 import java.util.List;
 
 public interface IAsistenciaService {
 
-    List<Asistencia> findAll();
+    public List<Asistencia> findAll();
 
-    Asistencia findById(Long id);
+    public Asistencia findById(Long id);
 
-    Asistencia save(AsistenciaRequestDTO asistencia) throws Exception;
+    public Asistencia create(AsistenciaRequestDto dto) throws Exception;
 
-    Asistencia update(Long id, AsistenciaRequestDTO asistencia) throws Exception;
+    public Asistencia update(Long id, AsistenciaRequestDto dto) throws Exception;
 
-    void deleteById(Long id) throws Exception;
+    public void deleteById(Long id) throws Exception;
+
+    public Asistencia fromDto(AsistenciaRequestDto dto) throws Exception;
 }

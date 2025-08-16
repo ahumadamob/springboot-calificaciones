@@ -1,15 +1,20 @@
 package com.imb2025.calificaciones.service;
 
-import java.util.List;
-
 import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDto;
 import com.imb2025.calificaciones.entity.InscripcionMateria;
+import java.util.List;
 
 public interface IInscripcionMateriaService {
-    InscripcionMateria findById(Long id);
-    List<InscripcionMateria> findAll();
-    InscripcionMateria create(InscripcionMateria inscripcionMateria);
-    InscripcionMateria update(Long id,InscripcionMateria inscripcionMateria) throws Exception;
-    void deleteById(Long id);
-    InscripcionMateria mapFromDto(InscripcionMateriaRequestDto inscripcionMateriaDTO) throws Exception;
+
+    public List<InscripcionMateria> findAll();
+
+    public InscripcionMateria findById(Long id);
+
+    public InscripcionMateria create(InscripcionMateriaRequestDto dto);
+
+    public InscripcionMateria update(Long id, InscripcionMateriaRequestDto dto) throws Exception;
+
+    public void deleteById(Long id);
+
+    public InscripcionMateria fromDto(InscripcionMateriaRequestDto dto) throws Exception;
 }

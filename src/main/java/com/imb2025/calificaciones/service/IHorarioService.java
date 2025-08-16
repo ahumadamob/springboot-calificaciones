@@ -1,18 +1,20 @@
 package com.imb2025.calificaciones.service;
 
-import java.util.List;
+import com.imb2025.calificaciones.dto.HorarioRequestDto;
 import com.imb2025.calificaciones.entity.Horario;
+import java.util.List;
 
 public interface IHorarioService {
 
-	public List<Horario> getAll();
+    public List<Horario> findAll();
 
-	public Horario save(Horario nuevoHorario);
+    public Horario findById(Long id);
 
-	public Horario update(Long id, Horario datosActualizados);
+    public Horario create(HorarioRequestDto dto);
 
-	public void delete(Long id);
+    public Horario update(Long id, HorarioRequestDto dto);
 
-	public Horario findById(Long id);
+    public void deleteById(Long id);
 
+    public Horario fromDto(HorarioRequestDto dto);
 }

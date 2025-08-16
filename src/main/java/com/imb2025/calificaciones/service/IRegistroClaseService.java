@@ -1,23 +1,20 @@
 package com.imb2025.calificaciones.service;
 
+import com.imb2025.calificaciones.dto.RegistroClaseRequestDto;
+import com.imb2025.calificaciones.entity.RegistroClase;
 import java.util.List;
 
-import com.imb2025.calificaciones.dto.RegistroClaseDTO;
-import com.imb2025.calificaciones.entity.RegistroClase;
-
 public interface IRegistroClaseService {
-	
 
+    public List<RegistroClase> findAll();
 
-	List<RegistroClase> obtenerTodosLosRegistros();
+    public RegistroClase findById(Long id);
 
-	RegistroClase obtenerRegistro(Long id);
+    public RegistroClase create(RegistroClaseRequestDto dto);
 
-	RegistroClase registrarClase(RegistroClaseDTO registroDTO);
+    public RegistroClase update(Long id, RegistroClaseRequestDto dto);
 
-	
+    public void deleteById(Long id);
 
-	void eliminarRegistro(Long id);
-
-	RegistroClase actualizarRegistro(Long id, RegistroClaseDTO registroDTO);
+    public RegistroClase fromDto(RegistroClaseRequestDto dto);
 }
