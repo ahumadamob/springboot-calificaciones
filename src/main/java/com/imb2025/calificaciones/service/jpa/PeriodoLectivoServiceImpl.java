@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDto;
+import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDTO;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.repository.PeriodoLectivoRepository;
 import com.imb2025.calificaciones.service.IPeriodoLectivoService;
@@ -23,7 +23,12 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 
 	@Override
 	public PeriodoLectivo findById(Long id) {
-		return repository.findById(id).orElseThrow();
+		return repository.findById(id).orElse(null);
+	}
+	
+	@Override
+	public Boolean existsById(Long id) {
+		return repository.existsById(id);
 	}
 
 	@Override
@@ -32,27 +37,32 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 	}
 
 	@Override
-	public PeriodoLectivo update(Long id, PeriodoLectivo periodoLectivo) {
-		if (repository.findById(id).isEmpty()) {
-			throw new NullPointerException();
-		}
+	public PeriodoLectivo update(Long id, PeriodoLectivo periodoLectivo) throws Exception {
+		repository.findById(id).orElseThrow(
+				() -> new Exception("Periodo no encontrado")
+		);
 		periodoLectivo.setId(id);
 		return repository.save(periodoLectivo);
 	}
 
 	@Override
-	public void deleteById(Long id) {
+	public void deleteById(Long id) throws Exception {
+		repository.findById(id).orElseThrow(
+				() -> new Exception("Periodo no encontrado")
+		);
 		repository.deleteById(id);
 	}
 
 	@Override
-	public PeriodoLectivo RequestDTOToEntity(PeriodoLectivoRequestDto requestDTO) {
-		return new PeriodoLectivo(
-					requestDTO.getId(),
-					requestDTO.getNombre(),
-					requestDTO.getFechaInicio(),
-					requestDTO.getFechaFin()
-				);
+	public PeriodoLectivo mapFromDTO(PeriodoLectivoRequestDTO requestDTO) {
+		PeriodoLectivo periodoLectivo = new PeriodoLectivo();
+		
+		periodoLectivo.setNombre(requestDTO.getNombre());
+		periodoLectivo.setFechaInicio(requestDTO.getFechaInicio());
+		periodoLectivo.setFechaFin(requestDTO.getFechaFin());
+		
+		return periodoLectivo;
 	}
+
 
 }

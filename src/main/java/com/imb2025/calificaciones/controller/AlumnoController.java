@@ -1,61 +1,54 @@
 package com.imb2025.calificaciones.controller;
 
-import com.imb2025.calificaciones.dto.AlumnoRequestDto;
-import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.service.IAlumnoServices;
+import com.imb2025.calificaciones.dto.AlumnoRequestDTO;
+import com.imb2025.calificaciones.entity.Alumno;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/alumnos")
 public class AlumnoController {
 
     @Autowired
-    private IAlumnoServices alumnoServices;
+    IAlumnoServices IAlumnoServices;
 
-    @GetMapping
-    public List<Alumno> obtenerTodos() {
-        return alumnoServices.getAll();
+    @GetMapping("/entidad")
+    public ResponseEntity<List<Alumno>> obtenerTodos() {
+        List<Alumno> alumnos = IAlumnoServices.findAll();   
+        return alumnos.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(alumnos);
     }
 
     @GetMapping("/{id}")
-    public Alumno obtenerPorId(@PathVariable Long id) {
-        return alumnoServices.findById(id);
-        
+    public ResponseEntity<Alumno> obtenerAlumnoPorId(@PathVariable Long id) {
+        return IAlumnoServices.existsById(id)
+                ? ResponseEntity.ok(IAlumnoServices.findById(id))
+                : ResponseEntity.noContent().build();
     }
 
-    @PostMapping
-    public Alumno crear(@RequestBody AlumnoRequestDto alumnoDto) {
-        Alumno alumno= new Alumno();
-        try {
-            alumno = alumnoServices.mapFromDTO(alumnoDto);
-            alumno = alumnoServices.create(alumno);   
-        } catch (Exception e) {
-            throw new RuntimeException("Error al mapear el DTO: " + e.getMessage());
-        }
-        return alumno;
+    @PostMapping("/entidad")
+    public ResponseEntity<Alumno> crear(@RequestBody AlumnoRequestDTO nuevoAlumno) throws Exception {
+        return ResponseEntity.ok(IAlumnoServices.create(nuevoAlumno));
     }
 
-    @PutMapping("/{id}")
-    public Alumno actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDto alumnoDto) throws Exception {
-        Alumno alumno = new Alumno();
-        try {
-            alumno = alumnoServices.mapFromDTO(alumnoDto);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al mapear el DTO: " + e.getMessage());
-        }
-        try{
-            alumno= alumnoServices.update(id, alumno);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al actualizar el alumno: " + e.getMessage());
-        }
-        return alumno;
+    @PutMapping("/entidad/{id}")
+    public ResponseEntity<Alumno> actualizar(@PathVariable Long id, @RequestBody AlumnoRequestDTO datosActualizados) throws Exception {
+        return ResponseEntity.ok(IAlumnoServices.update(id, datosActualizados));
     }
 
-    @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        alumnoServices.deleteById(id);
+    @DeleteMapping("/entidad/{id}")
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        IAlumnoServices.deleteById(id);
+        return ResponseEntity.ok().build();
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
 }

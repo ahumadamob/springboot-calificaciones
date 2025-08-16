@@ -7,61 +7,64 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class RegistroClase {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name="fecha_clase",nullable = false)
-	private LocalDate fecha;
-	@Column(name="tema_materia",nullable = false)
-	private String tema;
-	
-	@Column(name = "docente_id",nullable = false)
-    private Long docenteId;
 
-    @Column(name = "comision_id",nullable = false)
-    private Long comisionId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	public LocalDate getFecha() {
-		return fecha;
-	}
+    @Column(name = "fecha_clase", nullable = false)
+    private LocalDate fecha;
 
-	public void setFecha(LocalDate fecha) {
-		this.fecha = fecha;
-	}
+    @Column(name = "tema_materia", nullable = false)
+    private String tema;
 
-	public String getTema() {
-		return tema;
-	}
+    @OneToOne
+    @JoinColumn(name = "docente_id", nullable = false)
+    private Docente docente;
 
-	public void setTema(String tema) {
-		this.tema = tema;
-	}
+    @OneToOne
+    @JoinColumn(name = "comision_id", nullable = false)
+    private Comision comision;
 
-	public Long getDocenteId() {
-		return docenteId;
-	}
+    // Getters y Setters
+    public Long getId() {
+        return id;
+    }
 
-	public void setDocenteId(Long docenteId) {
-		this.docenteId = docenteId;
-	}
+    public LocalDate getFecha() {
+        return fecha;
+    }
 
-	public Long getComisionId() {
-		return comisionId;
-	}
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
 
-	public void setComisionId(Long comisionId) {
-		this.comisionId = comisionId;
-	}
+    public String getTema() {
+        return tema;
+    }
 
-	public Long getId() {
-		return id;
-	}
-    
-    
+    public void setTema(String tema) {
+        this.tema = tema;
+    }
 
+    public Docente getDocente() {
+        return docente;
+    }
+
+    public void setDocente(Docente docente) {
+        this.docente = docente;
+    }
+
+    public Comision getComision() {
+        return comision;
+    }
+
+    public void setComision(Comision comision) {
+        this.comision = comision;
+    }
 }
