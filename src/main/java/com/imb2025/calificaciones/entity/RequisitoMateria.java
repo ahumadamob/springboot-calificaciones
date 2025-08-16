@@ -1,6 +1,12 @@
 package com.imb2025.calificaciones.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "requisito_materia")
@@ -17,9 +23,21 @@ public class RequisitoMateria {
     @ManyToOne
     @JoinColumn(name = "materia_correlativa_id", nullable = false)
     private Materia materiaCorrelativa;
-    
 
-    // Getters y Setters
+    public RequisitoMateria() {
+    }
+
+    public RequisitoMateria(Long id, Materia materia, Materia materiaCorrelativa) {
+        this.id = id;
+        this.materia = materia;
+        this.materiaCorrelativa = materiaCorrelativa;
+    }
+
+    public RequisitoMateria(Materia materia, Materia materiaCorrelativa) {
+        this.materia = materia;
+        this.materiaCorrelativa = materiaCorrelativa;
+    }
+
     public Long getId() {
         return id;
     }
