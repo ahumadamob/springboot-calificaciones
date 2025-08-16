@@ -2,66 +2,85 @@ package com.imb2025.calificaciones.entity;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-@Table(name= "calendario_materia")
 public class CalendarioMateria {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@Column(name="fecha_inicio")
-	private LocalDate fechaInicio;
-	@Column(name="fecha_fin")
-	private LocalDate fechaFin;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+        private LocalDate fechaInicio;
+        private LocalDate fechaFin;
 
-	@ManyToOne
-	@JoinColumn(name = "materia_id")
-	private Materia materia;
+        @ManyToOne
+        private Materia materia;
 
-	@ManyToOne
-	@JoinColumn(name = "comision_id")
-	private Comision comision;
+        @ManyToOne
+        private Comision comision;
 
-	// GETTERS & SETTERS
-	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+        // CONSTRUCTORES
 
-	public LocalDate getFechaInicio() {
-		return fechaInicio;
-	}
+        public CalendarioMateria() {
+        }
 
-	public void setFechaInicio(LocalDate fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
+        public CalendarioMateria(Long id, LocalDate fechaInicio, LocalDate fechaFin, Materia materia, Comision comision) {
+                this.id = id;
+                this.fechaInicio = fechaInicio;
+                this.fechaFin = fechaFin;
+                this.materia = materia;
+                this.comision = comision;
+        }
 
-	public LocalDate getFechaFin() {
-		return fechaFin;
-	}
+        public CalendarioMateria(LocalDate fechaInicio, LocalDate fechaFin, Materia materia, Comision comision) {
+                this.fechaInicio = fechaInicio;
+                this.fechaFin = fechaFin;
+                this.materia = materia;
+                this.comision = comision;
+        }
 
-	public void setFechaFin(LocalDate fechaFin) {
-		this.fechaFin = fechaFin;
-	}
+        // GETTERS & SETTERS
 
-	public Materia getMateria() {
-		return materia;
-	}
+        public Long getId() {
+                return id;
+        }
+        public void setId(Long id) {
+                this.id = id;
+        }
 
-	public void setMateria(Materia materia) {
-		this.materia = materia;
-	}
+        public LocalDate getFechaInicio() {
+                return fechaInicio;
+        }
 
-	public Comision getComision() {
-		return comision;
-	}
+        public void setFechaInicio(LocalDate fechaInicio) {
+                this.fechaInicio = fechaInicio;
+        }
 
-	public void setComision(Comision comision) {
-		this.comision = comision;
-	}
+        public LocalDate getFechaFin() {
+                return fechaFin;
+        }
+
+        public void setFechaFin(LocalDate fechaFin) {
+                this.fechaFin = fechaFin;
+        }
+
+        public Materia getMateria() {
+                return materia;
+        }
+
+        public void setMateria(Materia materia) {
+                this.materia = materia;
+        }
+
+        public Comision getComision() {
+                return comision;
+        }
+
+        public void setComision(Comision comision) {
+                this.comision = comision;
+        }
 }
