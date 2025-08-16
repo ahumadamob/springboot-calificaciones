@@ -11,7 +11,7 @@ import com.imb2025.calificaciones.repository.SedeRepository;
 import com.imb2025.calificaciones.service.ISedeService;
 /*Como estamos en el Servicio aca vamos a darle la FUNCIONALIDAD,
  el SERVICIO va a comunicarse con el REPOSITORIO.
- Para ello vamos a crear un objeto del tipo SEDE REPOSITORIO a nivel de toda la CLASE, que vamos 
+ Para ello vamos a crear un objeto del tipo SEDE REPOSITORIO a nivel de toda la CLASE, que vamos
  a utilizar dentro de todos los métodos y deberá tener una INYECCION DE DEPENDENCIA
  Este objeto: "SedeRepository al estar EXTENDIDO de JPA REPOSITORY nos va a traer muchos que nos
  van a solucionar muchas cosas"*/
@@ -19,27 +19,27 @@ import com.imb2025.calificaciones.service.ISedeService;
 @Service
 public class SedeServiceImpl implements ISedeService {
 
-	@Autowired
-	private SedeRepository repo;
-	
-	@Override
-	public List<Sede> findAll() {
-		return repo.findAll();
-	}
+    @Autowired
+    private SedeRepository repo;
 
-	@Override
-	public Sede findById(Long id) {
-		return repo.findById(id).orElse(null);
-	}
+    @Override
+    public List<Sede> findAll() {
+        return repo.findAll();
+    }
 
-	@Override
-	public Sede save(Sede sede) {
-		return repo.save(sede);
-	}
+    @Override
+    public Sede findById(Long id) {
+        return repo.findById(id).orElse(null);
+    }
 
-	@Override
-	public void deletedById(Long id) {
-		repo.deleteById(id);
-		
-	}
+    @Override
+    public Sede save(Sede sede) {
+        return repo.save(sede);
+    }
+
+    @Override
+    public void deletedById(Long id) {
+        repo.deleteById(id);
+
+    }
 }

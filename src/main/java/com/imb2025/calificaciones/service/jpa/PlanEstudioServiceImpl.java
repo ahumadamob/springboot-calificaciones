@@ -16,7 +16,7 @@ import com.imb2025.calificaciones.service.IPlanEstudioService;
 import jakarta.transaction.Transactional;
 
 @Service
-public class PlanEstudioServiceImp implements IPlanEstudioService {
+public class PlanEstudioServiceImpl implements IPlanEstudioService {
 
     @Autowired
     private PlanEstudioRepository planestudiorepository;
@@ -45,7 +45,7 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
 
     @Override
     @Transactional
-    public PlanEstudio update(Long id, PlanEstudio newPlanEstudio) {
+    public PlanEstudio update(PlanEstudio newPlanEstudio, Long id) {
         try {
             PlanEstudio existente = findById(id);
             if (existente == null) {
@@ -59,8 +59,7 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
                 Long carreraId = newPlanEstudio.getCarrera() != null ? newPlanEstudio.getCarrera().getId() : null;
                 throw new EntidadNoEncontradaException("Carrera con ID " + carreraId + " no existe");
             }
-            
-            
+
             /*
             // Validar existencia de anio vigencia
             if (newPlanEstudio.getAnioVigencia() == null ||
@@ -100,7 +99,6 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
         Carrera carrera = carreraRepository.findById(dto.getCarreraId())
             .orElseThrow(() -> new EntidadNoEncontradaException("Carrera con ID " + dto.getCarreraId() + " no encontrada"));
         plan.setCarrera(carrera);
-       
 
         // Validar nombre
         if (dto.getNombre() == null || dto.getNombre().isEmpty()) {
@@ -114,7 +112,6 @@ public class PlanEstudioServiceImp implements IPlanEstudioService {
             .orElseThrow(() -> new EntidadNoEncontradaException("Año de vigencia con ID " + dto.getAniovigencia() + " no encontrado"));
         plan.setAnioVigencia(anio);
         */
-        
 
         // Si viene el ID (por PUT)
         if (dto.getId() != null) {

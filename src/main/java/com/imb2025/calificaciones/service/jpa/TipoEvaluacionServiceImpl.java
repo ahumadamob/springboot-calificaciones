@@ -32,12 +32,12 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     }
 
     @Override
-    public TipoEvaluacion update(Long id, TipoEvaluacion tipoEvaluacion) {
+    public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id) {
         if (!repo.existsById(id)) {
             throw new RuntimeException("El Tipo de Evaluacion con ID " + id + " no existe.");
         }
 
-        tipoEvaluacion.setId(id); 
+        tipoEvaluacion.setId(id);
         return repo.save(tipoEvaluacion);
     }
 
@@ -49,9 +49,4 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
         repo.deleteById(id);
     }
 
-    
-    @Override
-    public boolean existsById(Long id) {
-        return repo.existsById(id);
-    }
 }

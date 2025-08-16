@@ -9,37 +9,33 @@ import com.imb2025.calificaciones.entity.NivelMateria;
 import com.imb2025.calificaciones.repository.NivelMateriaRepository;
 import com.imb2025.calificaciones.service.INivelMateriaService;
 
-@Service 
+@Service
 public class NivelMateriaServiceImpl implements INivelMateriaService {
-	
-	@Autowired
-	private NivelMateriaRepository repo;
 
+    @Autowired
+    private NivelMateriaRepository repo;
 
-	@Override
-	public List<NivelMateria> findAll() {
-			return repo.findAll();
+    @Override
+    public List<NivelMateria> findAll() {
+            return repo.findAll();
 
-	}
+    }
 
-	@Override
-	public NivelMateria findById(Long id) {
-		return repo.findById(id).orElse(null);
-	}
+    @Override
+    public NivelMateria findById(Long id) {
+        return repo.findById(id).orElse(null);
+    }
 
-	@Override
-	public NivelMateria save(NivelMateria nivelMateria) {
-		 return repo.save(nivelMateria);
-	}
+    @Override
+    public NivelMateria save(NivelMateria nivelMateria) {
+         return repo.save(nivelMateria);
+    }
 
-	@Override
-	public void deleteById(Long id) {
-		repo.deleteById(id);
-		
-	}
+    @Override
+    public void deleteById(Long id) {
+        repo.deleteById(id);
 
-	
-		
-	}
+    }
 
+    }
 

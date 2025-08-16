@@ -11,38 +11,38 @@ import com.imb2025.calificaciones.service.IHorarioService;
 @Service
 public class HorarioServiceImpl implements IHorarioService{
 
-	@Autowired
-	private HorarioRepository horarioRepository;
-	
-	@Override
-	public List<Horario> getAll() {
-		
-		return horarioRepository.findAll();
-	}
+    @Autowired
+    private HorarioRepository horarioRepository;
 
-	@Override
-	public Horario save(Horario nuevoHorario) {
-		
-		return horarioRepository.save(nuevoHorario);
-	}
+    @Override
+    public List<Horario> getAll() {
 
-	@Override
-	public Horario update(Long id, Horario datosActualizados) {
-		
-		return horarioRepository.save(datosActualizados);
-	}
+        return horarioRepository.findAll();
+    }
 
-	@Override
-	public void delete(Long id) {
-		
-		horarioRepository.deleteById(id);
-		
-	}
+    @Override
+    public Horario save(Horario nuevoHorario) {
 
-	@Override
-	public Horario findById(Long id) {
-		
-		return horarioRepository.findById(id).orElse(null);
-	}
+        return horarioRepository.save(nuevoHorario);
+    }
+
+    @Override
+    public Horario update(Horario datosActualizados, Long id) {
+
+        return horarioRepository.save(datosActualizados);
+    }
+
+    @Override
+    public void delete(Long id) {
+
+        horarioRepository.deleteById(id);
+
+    }
+
+    @Override
+    public Horario findById(Long id) {
+
+        return horarioRepository.findById(id).orElse(null);
+    }
 
 }
