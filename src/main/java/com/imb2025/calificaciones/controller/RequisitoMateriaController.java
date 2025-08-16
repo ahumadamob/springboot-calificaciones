@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.RequisitoMateriaRequestDTO;
+import com.imb2025.calificaciones.dto.RequisitoMateriaRequestDto;
 import com.imb2025.calificaciones.entity.RequisitoMateria;
-import com.imb2025.calificaciones.service.RequisitoMateriaService;
+import com.imb2025.calificaciones.service.IRequisitoMateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.validation.Valid;
@@ -26,7 +26,7 @@ import java.util.Optional;
 public class RequisitoMateriaController {
 
     @Autowired
-    private RequisitoMateriaService service;
+    private IRequisitoMateriaService service;
 
     @GetMapping
     public List<RequisitoMateria> getAll() {
@@ -44,7 +44,7 @@ public class RequisitoMateriaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid RequisitoMateriaRequestDTO dto) {
+    public ResponseEntity<?> create(@RequestBody @Valid RequisitoMateriaRequestDto dto) {
         try {
             RequisitoMateria nuevo = service.save(dto);
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
@@ -55,7 +55,7 @@ public class RequisitoMateriaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid RequisitoMateriaRequestDTO dto) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid RequisitoMateriaRequestDto dto) {
         Optional<RequisitoMateria> existente = service.findById(id);
         if (existente.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

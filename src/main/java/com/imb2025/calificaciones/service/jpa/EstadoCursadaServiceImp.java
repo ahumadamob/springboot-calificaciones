@@ -49,10 +49,10 @@ public class EstadoCursadaServiceImp implements IEstadoCursadaService {
 
 
     @Override
-	public EstadoCursada mapFromDto(EstadoCursadaRequestDto estadoCursadaRequestDTO) {
+	public EstadoCursada mapFromDto(EstadoCursadaRequestDto estadoCursadaRequestDto) {
 		EstadoCursada estadoCursada = new EstadoCursada();
-		estadoCursada.setNombre(estadoCursadaRequestDTO.getNombre());
-		estadoCursada.setDescripcion(estadoCursadaRequestDTO.getDescripcion());
+		estadoCursada.setNombre(estadoCursadaRequestDto.getNombre());
+		estadoCursada.setDescripcion(estadoCursadaRequestDto.getDescripcion());
 		return estadoCursada;
 	}
 

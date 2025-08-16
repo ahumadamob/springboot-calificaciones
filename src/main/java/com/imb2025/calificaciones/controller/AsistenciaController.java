@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.AsistenciaRequestDTO;
+import com.imb2025.calificaciones.dto.AsistenciaRequestDto;
 import com.imb2025.calificaciones.entity.Asistencia;
 import com.imb2025.calificaciones.service.IAsistenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class AsistenciaController {
 
     // POST - crear nueva asistencia
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody AsistenciaRequestDTO dto) {
+    public ResponseEntity<?> create(@RequestBody AsistenciaRequestDto dto) {
         try {
             Asistencia nueva = asistenciaService.save(dto);
             return ResponseEntity.ok(nueva);
@@ -54,7 +54,7 @@ public class AsistenciaController {
 
     // PUT - actualizar asistencia existente
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AsistenciaRequestDTO dto) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AsistenciaRequestDto dto) {
         try {
             Asistencia actualizada = asistenciaService.update(id, dto);
             return ResponseEntity.ok(actualizada);

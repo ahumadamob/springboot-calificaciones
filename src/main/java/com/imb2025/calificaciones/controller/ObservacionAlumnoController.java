@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.dto.ErrorMessage;
 import com.imb2025.calificaciones.dto.ErrorResponseDto;
-import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDTO;
+import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDto;
 import com.imb2025.calificaciones.dto.SuccessResponseDto;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
 import com.imb2025.calificaciones.service.IObservacionAlumnoService;
@@ -80,7 +80,7 @@ public class ObservacionAlumnoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody ObservacionAlumnoRequestDTO dto, HttpServletRequest request) {
+	public ResponseEntity<?> create(@RequestBody ObservacionAlumnoRequestDto dto, HttpServletRequest request) {
 		try {	
 			
 			ObservacionAlumno observacionAlumno = observacionAlumnoService.create(observacionAlumnoService.fromDTO(dto));
@@ -124,7 +124,7 @@ public class ObservacionAlumnoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@RequestBody ObservacionAlumnoRequestDTO dto, @PathVariable Long id, HttpServletRequest request) {
+	public ResponseEntity<?> update(@RequestBody ObservacionAlumnoRequestDto dto, @PathVariable Long id, HttpServletRequest request) {
 	try {	
 			
 			ObservacionAlumno observacionAlumno = observacionAlumnoService.update(id, observacionAlumnoService.fromDTO(dto));

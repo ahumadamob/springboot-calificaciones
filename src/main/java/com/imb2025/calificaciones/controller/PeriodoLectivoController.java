@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDTO;
+import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDto;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.service.IPeriodoLectivoService;
 
@@ -44,7 +44,7 @@ public class PeriodoLectivoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<PeriodoLectivo> create(@RequestBody PeriodoLectivoRequestDTO periodoLectivo) {
+	public ResponseEntity<PeriodoLectivo> create(@RequestBody PeriodoLectivoRequestDto periodoLectivo) {
 		PeriodoLectivo createdPeriodoLectivo = service.save(
 					service.mapFromDTO(periodoLectivo)
 				);
@@ -53,7 +53,7 @@ public class PeriodoLectivoController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<PeriodoLectivo> updateById(@PathVariable Long id, 
-			@RequestBody PeriodoLectivoRequestDTO periodoLectivo) throws Exception {
+			@RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
 		PeriodoLectivo updatedPeriodoLectivo = service.update(
 				id, 
 				service.mapFromDTO(periodoLectivo)

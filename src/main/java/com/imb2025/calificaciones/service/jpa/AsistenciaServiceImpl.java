@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.AsistenciaRequestDTO;
+import com.imb2025.calificaciones.dto.AsistenciaRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.Asistencia;
 import com.imb2025.calificaciones.entity.RegistroClase;
@@ -37,7 +37,7 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
     }
 
     @Override
-    public Asistencia save(AsistenciaRequestDTO dto) throws Exception {
+    public Asistencia save(AsistenciaRequestDto dto) throws Exception {
         try {
         	Asistencia asistencia = new Asistencia();
 			if(dto.getAlumnoId() != null) {
@@ -68,7 +68,7 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
     }
 
     @Override
-    public Asistencia update(Long id, AsistenciaRequestDTO dto) throws Exception {
+    public Asistencia update(Long id, AsistenciaRequestDto dto) throws Exception {
         Optional<Asistencia> asistenciaOpt = asistenciaRepository.findById(id);
         
         if (asistenciaOpt.isEmpty()) {

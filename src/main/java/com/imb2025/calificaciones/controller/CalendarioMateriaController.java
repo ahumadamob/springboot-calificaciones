@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDTO;
+import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDto;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ public class CalendarioMateriaController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody CalendarioMateriaRequestDTO calendarioMateriaDto){
+	public ResponseEntity<?> create(@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto){
 
 		try {
 			CalendarioMateria calendarioMateria;
@@ -58,7 +58,7 @@ public class CalendarioMateriaController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable Long id,
-													@RequestBody CalendarioMateriaRequestDTO calendarioMateriaDto){
+													@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto){
 		try {
 			CalendarioMateria calendarioMateria;
 			calendarioMateria = calMatSer.mapFromDto(calendarioMateriaDto);
