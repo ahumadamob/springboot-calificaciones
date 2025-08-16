@@ -1,21 +1,21 @@
 package com.imb2025.calificaciones.service;
 
 import com.imb2025.calificaciones.dto.EvaluacionRequestDto;
-import java.util.List;
-
 import com.imb2025.calificaciones.entity.Evaluacion;
+import java.util.List;
 
 public interface IEvaluacionService {
 
-	List<Evaluacion> findAll(); // Todos las evaluaciones GET ALL
+    public List<Evaluacion> findAll();
 
-	Evaluacion findById(Long id); // Encontrar una Evaluacion por id GET ID
+    public Evaluacion findById(Long id);
 
-	Evaluacion save(Evaluacion evaluacion); // Crear y guardar Evaluacion POST
+    public Evaluacion create(EvaluacionRequestDto dto);
 
-	Evaluacion update(Long id, Evaluacion evaluacion); // Actualizar Evaluacion PUT
+    public Evaluacion update(Long id, EvaluacionRequestDto dto);
 
-	void deleteById(Long id); // Eliminar Evaluacion
+    public void deleteById(Long id);
 
-	Evaluacion convertToEntity(EvaluacionRequestDto evaluacionRequestDTO); // Convertir DTO a entidad
+    public Evaluacion fromDto(EvaluacionRequestDto dto);
 }
+
