@@ -1,7 +1,10 @@
 package com.imb2025.calificaciones.entity;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.util.Date;
 @Entity
@@ -9,18 +12,21 @@ public class Alumno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
-    @Column(name = "nombre")
     private String nombre;
-    @Column(name = "apellido")
     private String apellido;
-    @Column(name = "dni", nullable = false)
     private int dni;
-    @Column(name = "email", nullable = false)
     private String email;
-    @Column(name = "fecha_nacimiento", nullable = false)
     private Date fechaNacimiento ;
 
     public Alumno() {
+    }
+
+    public Alumno(String nombre, String apellido, int dni, String email, Date fechaNacimiento) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.email = email;
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public Alumno(Long id, String nombre, String apellido, int dni, String email, Date fechaNacimiento) {
