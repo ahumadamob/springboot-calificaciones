@@ -19,6 +19,22 @@ public class InscripcionMateria {
     private Materia materia;
     @ManyToOne
     private PeriodoLectivo periodoLectivo;
+
+    public InscripcionMateria() {
+    }
+
+    public InscripcionMateria(Long id, Alumno alumno, Materia materia, PeriodoLectivo periodoLectivo) {
+        this.id = id;
+        this.alumno = alumno;
+        this.materia = materia;
+        this.periodoLectivo = periodoLectivo;
+    }
+
+    public InscripcionMateria(Alumno alumno, Materia materia, PeriodoLectivo periodoLectivo) {
+        this.alumno = alumno;
+        this.materia = materia;
+        this.periodoLectivo = periodoLectivo;
+    }
     public Long getId() {
         return id;
     }
