@@ -1,15 +1,10 @@
 package com.imb2025.calificaciones.dto;
 
-import jakarta.validation.constraints.NotBlank;
+public class NivelMateriaRequestDto {
 
-public class EstadoEvaluacionRequestDTO {
-
-    @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;
-
     private String descripcion;
 
-    // Getters y setters
     public String getNombre() {
         return nombre;
     }

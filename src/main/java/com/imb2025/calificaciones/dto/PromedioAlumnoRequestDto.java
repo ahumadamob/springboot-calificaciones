@@ -1,10 +1,10 @@
 package com.imb2025.calificaciones.dto;
 
-public class InscripcionMateriaRequestDto {
+public class PromedioAlumnoRequestDto {
 
     private Long alumnoId;
     private Long materiaId;
-    private Long periodoLectivoId;
+    private Double promedio;
 
     public Long getAlumnoId() {
         return alumnoId;
@@ -22,11 +22,11 @@ public class InscripcionMateriaRequestDto {
         this.materiaId = materiaId;
     }
 
-    public Long getPeriodoLectivoId() {
-        return periodoLectivoId;
+    public Double getPromedio() {
+        return promedio;
     }
 
-    public void setPeriodoLectivoId(Long periodoLectivoId) {
-        this.periodoLectivoId = periodoLectivoId;
+    public void setPromedio(Double promedio) {
+        this.promedio = promedio;
     }
 }
