@@ -1,6 +1,7 @@
 package com.imb2025.calificaciones.dto;
 
-public class AlumnoRequestDto{
+public class AlumnoRequestDto {
+
     private String nombre;
     private String apellido;
     private String email;
@@ -10,7 +11,7 @@ public class AlumnoRequestDto{
     public AlumnoRequestDto() {
     }
 
-    public AlumnoRequestDto(String nombre, String apellido, String email, int dni,  String fechaNacimiento) {
+    public AlumnoRequestDto(String nombre, String apellido, String email, int dni, String fechaNacimiento) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -42,6 +43,13 @@ public class AlumnoRequestDto{
         this.email = email;
     }
 
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
 
     public String getFechaNacimiento() {
         return fechaNacimiento;
@@ -49,14 +57,5 @@ public class AlumnoRequestDto{
 
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
-    }
-
-
-    public int getDni() {
-        return dni;
-    }
-
-    public void setDni(int dni) {
-        this.dni = dni;
     }
 }

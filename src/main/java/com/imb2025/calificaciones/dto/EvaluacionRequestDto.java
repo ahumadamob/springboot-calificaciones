@@ -4,54 +4,40 @@ import java.util.Date;
 
 public class EvaluacionRequestDto {
 
-	private Long id;
+    private Date fechaEvaluacion;
+    private Long tipoEvaluacionId;
+    private Long materiaId;
+    private Long comisionId;
 
-	private Date fechaEvaluacion;
+    public Date getFechaEvaluacion() {
+        return fechaEvaluacion;
+    }
 
-	private Long tipoEvaluacionId;
+    public void setFechaEvaluacion(Date fechaEvaluacion) {
+        this.fechaEvaluacion = fechaEvaluacion;
+    }
 
-	private Long materiaId;
+    public Long getTipoEvaluacionId() {
+        return tipoEvaluacionId;
+    }
 
-	private Long comisionId;
+    public void setTipoEvaluacionId(Long tipoEvaluacionId) {
+        this.tipoEvaluacionId = tipoEvaluacionId;
+    }
 
+    public Long getMateriaId() {
+        return materiaId;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setMateriaId(Long materiaId) {
+        this.materiaId = materiaId;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getComisionId() {
+        return comisionId;
+    }
 
-	public Date getFechaEvaluacion() {
-		return fechaEvaluacion;
-	}
-
-	public void setFechaEvaluacion(Date fechaEvaluacion) {
-		this.fechaEvaluacion = fechaEvaluacion;
-	}
-
-	public Long getTipoEvaluacionId() {
-		return tipoEvaluacionId;
-	}
-
-	public void setTipoEvaluacionId(Long tipoEvaluacionId) {
-		this.tipoEvaluacionId = tipoEvaluacionId;
-	}
-
-	public Long getMateriaId() {
-		return materiaId;
-	}
-
-	public void setMateriaId(Long materiaId) {
-		this.materiaId = materiaId;
-	}
-
-	public Long getComisionId() {
-		return comisionId;
-	}
-
-	public void setComisionId(Long comisionId) {
-		this.comisionId = comisionId;
-	}
+    public void setComisionId(Long comisionId) {
+        this.comisionId = comisionId;
+    }
 }

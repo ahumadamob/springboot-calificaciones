@@ -2,12 +2,12 @@ package com.imb2025.calificaciones.dto;
 
 import java.time.LocalDate;
 
-public class CalendarioMateriaRequestDTO {
+public class CalendarioMateriaRequestDto {
+
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
     private Long materiaId;
     private Long comisionId;
-
 
     public LocalDate getFechaInicio() {
         return fechaInicio;

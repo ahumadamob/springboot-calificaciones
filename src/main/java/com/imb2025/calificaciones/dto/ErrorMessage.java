@@ -1,31 +1,31 @@
 package com.imb2025.calificaciones.dto;
 
 public class ErrorMessage {
-	
+
     private String field;
     private String message;
-    
-	public ErrorMessage() {
-	}    
-    
-	public ErrorMessage(String field, String message) {
-		this.field = field;
-		this.message = message;
-	}
 
-	public String getField() {
-		return field;
-	}
+    public ErrorMessage() {
+    }
 
-	public void setField(String field) {
-		this.field = field;
-	}
+    public ErrorMessage(String field, String message) {
+        this.field = field;
+        this.message = message;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    public String getField() {
+        return field;
+    }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
