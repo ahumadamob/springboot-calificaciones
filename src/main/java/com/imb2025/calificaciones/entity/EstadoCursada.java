@@ -1,9 +1,11 @@
 package com.imb2025.calificaciones.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "estado_cursada")
 public class EstadoCursada {
 
     @Id
@@ -12,7 +14,19 @@ public class EstadoCursada {
     private String nombre;
     private String descripcion;
 
-    // Getters y Setters
+    public EstadoCursada() {
+    }
+
+    public EstadoCursada(Long id, String nombre, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
+    public EstadoCursada(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
     public Long getId() {
         return id;
     }
