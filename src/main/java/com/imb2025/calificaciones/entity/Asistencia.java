@@ -1,6 +1,10 @@
 package com.imb2025.calificaciones.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Asistencia {
@@ -17,7 +21,22 @@ public class Asistencia {
 
     private Boolean presente;
 
-    // Getters y Setters
+    public Asistencia() {
+    }
+
+    public Asistencia(Long id, Alumno alumno, RegistroClase registroClase, Boolean presente) {
+        this.id = id;
+        this.alumno = alumno;
+        this.registroClase = registroClase;
+        this.presente = presente;
+    }
+
+    public Asistencia(Alumno alumno, RegistroClase registroClase, Boolean presente) {
+        this.alumno = alumno;
+        this.registroClase = registroClase;
+        this.presente = presente;
+    }
+
     public Long getId() {
         return id;
     }
