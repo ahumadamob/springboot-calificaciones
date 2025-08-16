@@ -1,6 +1,9 @@
 package com.imb2025.calificaciones.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 
 @Entity
@@ -15,6 +18,11 @@ public class EstadoEvaluacion {
     private String descripcion;
 
     public EstadoEvaluacion() {
+    }
+
+    public EstadoEvaluacion(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
     public EstadoEvaluacion(Long id, String nombre, String descripcion) {
