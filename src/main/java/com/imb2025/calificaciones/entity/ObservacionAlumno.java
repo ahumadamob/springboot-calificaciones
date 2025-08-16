@@ -6,12 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "observacion_alumno")
 public class ObservacionAlumno {
 	
 	@Id
@@ -21,12 +18,28 @@ public class ObservacionAlumno {
     private Date fecha;
     
     @ManyToOne
-    @JoinColumn(name = "docente_id")
     private Docente docente;
-    
+
     @ManyToOne
-    @JoinColumn(name = "alumno_id")
     private Alumno alumno;
+
+    public ObservacionAlumno() {
+    }
+
+    public ObservacionAlumno(Long id, String texto, Date fecha, Docente docente, Alumno alumno) {
+        this.id = id;
+        this.texto = texto;
+        this.fecha = fecha;
+        this.docente = docente;
+        this.alumno = alumno;
+    }
+
+    public ObservacionAlumno(String texto, Date fecha, Docente docente, Alumno alumno) {
+        this.texto = texto;
+        this.fecha = fecha;
+        this.docente = docente;
+        this.alumno = alumno;
+    }
 	
 	public Long getId() {
 		return id;
