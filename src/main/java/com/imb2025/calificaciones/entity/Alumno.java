@@ -23,14 +23,16 @@ public class Alumno {
     public Alumno() {
     }
 
-    public Alumno(String nombre, int dni, Date fechaNacimiento, String email, String apellido, Long id) {
-        this.nombre = nombre;
-        this.dni = dni;
-        this.fechaNacimiento = fechaNacimiento;
-        this.email = email;
-        this.apellido = apellido;
+    public Alumno(Long id, String nombre, String apellido, int dni, String email, Date fechaNacimiento) {
         this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.email = email;
+        this.fechaNacimiento = fechaNacimiento;
     }
+
+
 
     public Long getId() {
         return id;

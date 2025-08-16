@@ -2,6 +2,7 @@ package com.imb2025.calificaciones.service;
 
 import java.util.List;
 
+import com.imb2025.calificaciones.dto.DocenteRequestDto;
 import com.imb2025.calificaciones.entity.Docente;
 
 public interface IDocenteService {
@@ -10,8 +11,14 @@ public interface IDocenteService {
 	
 			public Docente findById(Long id);
 	
-			public Docente save(Docente  docente);
+			
 	
 			public void deleteById(Long id);
+
+			public Docente mapFromDTO(DocenteRequestDto docenteDTO);
+
+			public Docente create(Docente docente);
+
+			public Docente update(Long id, Docente docente) throws Exception;
 
 }
