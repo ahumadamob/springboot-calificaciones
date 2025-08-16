@@ -7,7 +7,5 @@ import com.imb2025.calificaciones.entity.ObservacionAlumno;
 
 @Repository
 public interface ObservacionAlumnoRepository extends JpaRepository<ObservacionAlumno, Long> {
-	
-	
-
 }
+

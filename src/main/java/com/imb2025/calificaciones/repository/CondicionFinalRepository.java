@@ -6,3 +6,4 @@ import com.imb2025.calificaciones.entity.CondicionFinal;
 
 public interface CondicionFinalRepository extends JpaRepository<CondicionFinal, Long> {
 }
+

@@ -7,5 +7,5 @@ import com.imb2025.calificaciones.entity.AsignacionDocente;
 
 @Repository
 public interface AsignacionDocenteRepository extends JpaRepository<AsignacionDocente, Long> {
-
 }
+
