@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDto;
+import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDTO;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
@@ -57,7 +57,7 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 			
 			Optional<ObservacionAlumno> obs = observacionAlumnoRepository.findById(id); 
 			
-			if(obs != null) {	
+			if(obs.isPresent()) {	
 				  observacionAlumno.setId(id);
 				  return observacionAlumnoRepository.save(observacionAlumno);
 			  } else {
@@ -71,12 +71,21 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 	
 
 	@Override
-	public void deleteById(Long id) {
-		observacionAlumnoRepository.deleteById(id);
+	public void deleteById(Long id) throws Exception{
+		try {
+			Optional<ObservacionAlumno> obs = observacionAlumnoRepository.findById(id);
+			if (obs.isPresent()) {
+				observacionAlumnoRepository.deleteById(id);
+			} else {
+				throw new Exception("la observación de alumno no existe");
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("error al eliminar la observación del alumno: " + e.getMessage()); 
+		}
 		
 	}
 
-	public ObservacionAlumno fromDTO(ObservacionAlumnoRequestDto dto) {
+	public ObservacionAlumno fromDTO(ObservacionAlumnoRequestDTO dto) {
 	    Docente docente = docenteRepository.findById(dto.getDocenteId())
 	            .orElseThrow(() -> new RuntimeException("docente no encontrado"));
 
