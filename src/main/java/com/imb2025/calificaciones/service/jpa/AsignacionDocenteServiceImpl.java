@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AsignacionDocenteServiceImp implements IAsignacionDocenteService {
+public class AsignacionDocenteServiceImpl implements IAsignacionDocenteService {
 
     @Autowired
     private AsignacionDocenteRepository repository;
@@ -23,16 +23,12 @@ public class AsignacionDocenteServiceImp implements IAsignacionDocenteService {
         return repository.findById(id).orElse(null);
     }
 
-    public boolean existsById(Long id) {
-        return repository.existsById(id);
-    }
-
     public AsignacionDocente create(AsignacionDocente asignacionDocente) {
         return repository.save(asignacionDocente);
     }
 
-    public AsignacionDocente update(Long id, AsignacionDocente asignacionDocente) throws Exception {
-        if (!existsById(id)) {
+    public AsignacionDocente update(AsignacionDocente asignacionDocente, Long id) throws Exception {
+        if (!repository.existsById(id)) {
             throw new Exception(
                     "Can't update AsignacionDocente with id: " + id + " because it does not exist");
         }
@@ -41,7 +37,7 @@ public class AsignacionDocenteServiceImp implements IAsignacionDocenteService {
     }
 
     public void deleteById(Long id) throws Exception {
-        if (!existsById(id)) {
+        if (!repository.existsById(id)) {
             throw new Exception(
                     "Can't delete AsignacionDocente with id: " + id + " because it does not exist");
         }

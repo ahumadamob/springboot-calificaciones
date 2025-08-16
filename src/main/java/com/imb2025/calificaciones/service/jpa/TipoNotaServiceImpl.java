@@ -27,7 +27,6 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
                 .orElseThrow(() -> new RuntimeException("TipoNota no encontrada con id: " + id));
     }
 
-
     @Override
     public TipoNota save(TipoNota tipoNota) {
         try {
@@ -36,10 +35,10 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
             throw new RuntimeException("Error al guardar TipoNota: " + e.getMessage());
         }
     }
-    
+
     @Override
-    public TipoNota update(Long id, TipoNota tipoNota) {
-    	try {
+    public TipoNota update(TipoNota tipoNota, Long id) {
+        try {
             TipoNota existente = tipoNotaRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("TipoNota no encontrada con id: " + id));
 

@@ -2,7 +2,6 @@ package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
 
-
 import org.springframework.stereotype.Service;
 import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
 import com.imb2025.calificaciones.dto.RegistroClaseDTO;
@@ -17,11 +16,11 @@ import com.imb2025.calificaciones.service.IRegistroClaseService;
 
 @Service
 public class RegistroClaseServiceImpl implements IRegistroClaseService {
-    
+
     private final RegistroClaseRepository registroClaseRepository;
     private final DocenteRepository docenteRepository;
     private final ComisionRepository comisionRepository;
-    
+
     public RegistroClaseServiceImpl(RegistroClaseRepository registroClaseRepository,
                                     DocenteRepository docenteRepository,
                                     ComisionRepository comisionRepository) {

@@ -39,25 +39,25 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
     @Override
     public Asistencia save(AsistenciaRequestDto dto) throws Exception {
         try {
-        	Asistencia asistencia = new Asistencia();
-			if(dto.getAlumnoId() != null) {
-            	Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
+            Asistencia asistencia = new Asistencia();
+            if(dto.getAlumnoId() != null) {
+                Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
                     .orElse(null);
-            	if(alumno == null) {
-            		throw new RuntimeException("Alumno no encontrado");
-            	}
-            	asistencia.setAlumno(alumno);
-            } 
-            	
-            System.out.println("Despues de alumno");   
+                if(alumno == null) {
+                    throw new RuntimeException("Alumno no encontrado");
+                }
+                asistencia.setAlumno(alumno);
+            }
+
+            System.out.println("Despues de alumno");
             if(dto.getRegistroClaseId() != null) {
-            	RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
+                RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
                     .orElse(null);
-            	if(registro == null) {
-            		throw new RuntimeException("Registro no encontrado");
-            	}
-            	asistencia.setRegistroClase(registro);
-            }          
+                if(registro == null) {
+                    throw new RuntimeException("Registro no encontrado");
+                }
+                asistencia.setRegistroClase(registro);
+            }
             asistencia.setPresente(dto.getPresente());
 
             return asistenciaRepository.save(asistencia);
@@ -68,34 +68,34 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
     }
 
     @Override
-    public Asistencia update(Long id, AsistenciaRequestDto dto) throws Exception {
+    public Asistencia update(AsistenciaRequestDto dto, Long id) throws Exception {
         Optional<Asistencia> asistenciaOpt = asistenciaRepository.findById(id);
-        
+
         if (asistenciaOpt.isEmpty()) {
             throw new Exception("No se encontró la asistencia con ID: " + id);
         }
 
         try {
-        	Asistencia asistencia = asistenciaOpt.get();
-        	if(dto.getAlumnoId() != null) {
-            	Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
+            Asistencia asistencia = asistenciaOpt.get();
+            if(dto.getAlumnoId() != null) {
+                Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
                     .orElse(null);
-            	if(alumno == null) {
-            		throw new RuntimeException("Alumno no encontrado");
-            	}
-            	asistencia.setAlumno(alumno);
-            } 
-            	
-            System.out.println("Despues de alumno");   
+                if(alumno == null) {
+                    throw new RuntimeException("Alumno no encontrado");
+                }
+                asistencia.setAlumno(alumno);
+            }
+
+            System.out.println("Despues de alumno");
             if(dto.getRegistroClaseId() != null) {
-            	RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
+                RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
                     .orElse(null);
-            	if(registro == null) {
-            		throw new RuntimeException("Registro no encontrado");
-            	}
-            	asistencia.setRegistroClase(registro);
-            }                    
-                        
+                if(registro == null) {
+                    throw new RuntimeException("Registro no encontrado");
+                }
+                asistencia.setRegistroClase(registro);
+            }
+
             asistencia.setPresente(dto.getPresente());
 
             return asistenciaRepository.save(asistencia);

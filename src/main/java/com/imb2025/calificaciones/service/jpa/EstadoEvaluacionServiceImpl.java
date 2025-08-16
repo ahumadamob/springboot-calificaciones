@@ -30,7 +30,7 @@ public class EstadoEvaluacionServiceImpl  {
 
     @Override
     @Transactional
-    public EstadoEvaluacion update(Long id, EstadoEvaluacion estadoEvaluacion) {
+    public EstadoEvaluacion update(EstadoEvaluacion estadoEvaluacion, Long id) {
         EstadoEvaluacion existente = repository.findById(id).orElse(null);
         if (existente != null) {
             existente.setNombre(estadoEvaluacion.getNombre());

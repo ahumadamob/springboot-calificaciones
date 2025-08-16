@@ -9,7 +9,7 @@ public interface IAlumnoServices {
     boolean existsById(Long id);
     Alumno findById(Long id);
     Alumno create(AlumnoRequestDto dto);
-    Alumno update(Long id, AlumnoRequestDto dto) throws Exception;
+    Alumno update(AlumnoRequestDto dto, Long id) throws Exception;
     void deleteById(Long id);
-    Alumno mapFromDTO(AlumnoRequestDto dto);
+    Alumno fromDto(AlumnoRequestDto dto);
 }

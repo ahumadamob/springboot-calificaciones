@@ -18,7 +18,7 @@ import com.imb2025.calificaciones.repository.InscripcionMateriaRepository;
 import com.imb2025.calificaciones.service.IInscripcionMateriaService;
 
 @Service
-public class InscripcionMateriaServiceImp implements IInscripcionMateriaService {
+public class InscripcionMateriaServiceImpl implements IInscripcionMateriaService {
 
     @Autowired
     private InscripcionMateriaRepository repository;
@@ -44,7 +44,7 @@ public class InscripcionMateriaServiceImp implements IInscripcionMateriaService 
         return repository.save(inscripcionMateria);
     }
 
-    public InscripcionMateria update(Long id, InscripcionMateria inscripcionMateria) throws Exception {
+    public InscripcionMateria update(InscripcionMateria inscripcionMateria, Long id) throws Exception {
         if (repository.existsById(id)) {
             inscripcionMateria.setId(id);
             return repository.save(inscripcionMateria);
@@ -59,7 +59,7 @@ public class InscripcionMateriaServiceImp implements IInscripcionMateriaService 
     }
 
     @Override
-    public InscripcionMateria mapFromDto(InscripcionMateriaRequestDto inscripcionMateriaDTO) {
+    public InscripcionMateria fromDto(InscripcionMateriaRequestDto inscripcionMateriaDTO) {
         InscripcionMateria inscripcionMateria = new InscripcionMateria();
 
         Alumno alumno = alumnoRepository.findById(inscripcionMateriaDTO.getIdAlumno())

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EstadoCursadaServiceImp implements IEstadoCursadaService {
+public class EstadoCursadaServiceImpl implements IEstadoCursadaService {
 
     @Autowired
     private EstadoCursadaRepository repository;
@@ -20,7 +20,7 @@ public class EstadoCursadaServiceImp implements IEstadoCursadaService {
     public List<EstadoCursada> findAll() {
         return repository.findAll();
     }
-    
+
     @Override
     public EstadoCursada findById(Long id) {
         return repository.findById(id).orElse(null);
@@ -28,33 +28,31 @@ public class EstadoCursadaServiceImp implements IEstadoCursadaService {
 
     @Override
     public EstadoCursada create(EstadoCursada estadoCursada) {
-    	return repository.save(estadoCursada);
+        return repository.save(estadoCursada);
     }
-    
-	@Override
-	public EstadoCursada update(EstadoCursada estadoCursada, Long id) throws Exception{
-		if(repository.existsById(id)) {
-			estadoCursada.setId(id);
-			return repository.save(estadoCursada);
-		} else {
-			throw new Exception("No se encontró estadoCursada con id "+id);
-		}
-		
-	}
+
+    @Override
+    public EstadoCursada update(EstadoCursada estadoCursada, Long id) throws Exception{
+        if(repository.existsById(id)) {
+            estadoCursada.setId(id);
+            return repository.save(estadoCursada);
+        } else {
+            throw new Exception("No se encontró estadoCursada con id "+id);
+        }
+
+    }
 
     @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
 
-
     @Override
-	public EstadoCursada mapFromDto(EstadoCursadaRequestDto estadoCursadaRequestDto) {
-		EstadoCursada estadoCursada = new EstadoCursada();
-		estadoCursada.setNombre(estadoCursadaRequestDto.getNombre());
-		estadoCursada.setDescripcion(estadoCursadaRequestDto.getDescripcion());
-		return estadoCursada;
-	}
-
+    public EstadoCursada fromDto(EstadoCursadaRequestDto estadoCursadaRequestDto) {
+        EstadoCursada estadoCursada = new EstadoCursada();
+        estadoCursada.setNombre(estadoCursadaRequestDto.getNombre());
+        estadoCursada.setDescripcion(estadoCursadaRequestDto.getDescripcion());
+        return estadoCursada;
+    }
 
 }

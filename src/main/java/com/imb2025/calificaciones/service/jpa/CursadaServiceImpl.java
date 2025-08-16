@@ -27,7 +27,6 @@ public class CursadaServiceImpl implements ICursadaService{
     @Autowired
     CondicionFinalRepository cRepository;
 
-
     @Override
     public List<Cursada> findAll() {
         return repo.findAll();
@@ -40,7 +39,7 @@ public class CursadaServiceImpl implements ICursadaService{
 
     @Override
     public String save(CursadaRequestDto dto) {
-    	 Cursada cursada = new Cursada(); 
+         Cursada cursada = new Cursada();
         Mapper(cursada, dto);
         return "Guardado correctamente";
     }
@@ -51,23 +50,20 @@ public class CursadaServiceImpl implements ICursadaService{
     }
 
     @Override
-    public String update(Long id,CursadaRequestDto dto){
-    	 Cursada cursada = repo.findById(id)
-    		        .orElseThrow(() -> new RuntimeException("Cursada no encontrada"));
+    public String update(CursadaRequestDto dto, Long id){
+         Cursada cursada = repo.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Cursada no encontrada"));
         Mapper(cursada, dto);
         return"Updateada correctamente";
     }
 
     public void Mapper(Cursada cursada, CursadaRequestDto dto){
 
-
                 Alumno alumno = alumnorepo.findById(dto.getAlumnoId())
                     .orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
 
                 Materia materia = materiaRepository.findById(dto.getMateriaId())
                     .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
-
-
 
                 CondicionFinal condicionFinal = cRepository.findById(dto.getCondicionFinalId())
                     .orElseThrow(() -> new RuntimeException("Condición final no encontrada"));

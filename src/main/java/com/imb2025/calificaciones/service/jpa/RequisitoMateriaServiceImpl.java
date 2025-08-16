@@ -46,7 +46,7 @@ public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
     }
 
     @Override
-    public RequisitoMateria update(Long id, RequisitoMateriaRequestDto dto) {
+    public RequisitoMateria update(RequisitoMateriaRequestDto dto, Long id) {
         try {
             RequisitoMateria existente = requisitoRepository.findById(id)
                 .orElseThrow(() -> new EntidadNoEncontradaException("Requisito con ID " + id + " no encontrado."));
@@ -68,7 +68,7 @@ public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
         requisitoRepository.deleteById(id);
     }
 
-    //  Método nuevo prueba  
+    //  Método nuevo prueba
     private RequisitoMateria mapearDesdeDto(RequisitoMateriaRequestDto dto) {
         Materia materia = materiaRepository.findById(dto.getMateriaId())
             .orElseThrow(() -> new EntidadNoEncontradaException("Materia con ID " + dto.getMateriaId() + " no encontrada."));

@@ -11,15 +11,15 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
-public class AlumnoServicesImpl implements IAlumnoServices {
+public class AlumnoServiceImpl implements IAlumnoServices {
 
     @Autowired
     private AlumnoRepository alumnoRepository;
 
     @Override
-    public Alumno update(Long id, AlumnoRequestDto datosActualizados) throws Exception {
+    public Alumno update(AlumnoRequestDto datosActualizados, Long id) throws Exception {
         if (alumnoRepository.existsById(id)) {
-            return mapFromDTO(datosActualizados);
+            return fromDto(datosActualizados);
         } else {
             throw new Exception("Estudiante no encontrado");
         }
@@ -31,19 +31,14 @@ public class AlumnoServicesImpl implements IAlumnoServices {
     }
 
     @Override
-    public boolean existsById(Long id) {
-        return alumnoRepository.existsById(id);
-    }
-
-    @Override
     public Alumno findById(Long id) {
         return alumnoRepository.findById(id).orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
     }
 
     @Override
     public Alumno create(AlumnoRequestDto nuevoAlumno) {
-        return mapFromDTO(nuevoAlumno);
-       
+        return fromDto(nuevoAlumno);
+
     }
 
     @Override
@@ -55,7 +50,7 @@ public class AlumnoServicesImpl implements IAlumnoServices {
         }
     }
      @Override
-    public Alumno mapFromDTO(AlumnoRequestDto alumnoDto) {
+    public Alumno fromDto(AlumnoRequestDto alumnoDto) {
         Alumno alumno = new Alumno();
         alumno.setNombre(alumnoDto.getNombre());
         alumno.setApellido(alumnoDto.getApellido());
