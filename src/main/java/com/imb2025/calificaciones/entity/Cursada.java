@@ -4,8 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-import jakarta.persistence.*;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Cursada {
@@ -14,24 +14,33 @@ public class Cursada {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Relación con Alumno: muchos cursadas pueden tener un mismo alumno
     @ManyToOne
     @JoinColumn(name = "alumno_id")
     private Alumno alumno;
 
-    // Relación con Materia: muchos cursadas pueden tener una misma materia
     @ManyToOne
     @JoinColumn(name = "materia_id")
     private Materia materia;
 
-    private String anioLectivo;
+    @ManyToOne
+    @JoinColumn(name = "anio_lectivo_id")
+    private AnioLectivo anioLectivo;
 
-    // Relación con CondicionFinal: muchos cursadas pueden tener una misma condición
     @ManyToOne
     @JoinColumn(name = "condicion_final_id")
     private CondicionFinal condicionFinal;
 
-  
+    public Cursada() {
+    }
+
+    public Cursada(Long id, Alumno alumno, Materia materia, AnioLectivo anioLectivo, CondicionFinal condicionFinal) {
+        this.id = id;
+        this.alumno = alumno;
+        this.materia = materia;
+        this.anioLectivo = anioLectivo;
+        this.condicionFinal = condicionFinal;
+    }
+
     public Alumno getAlumno() {
         return alumno;
     }
@@ -48,11 +57,11 @@ public class Cursada {
         this.materia = materia;
     }
 
-    public String getAnioLectivo() {
+    public AnioLectivo getAnioLectivo() {
         return anioLectivo;
     }
 
-    public void setAnioLectivo(String anioLectivo) {
+    public void setAnioLectivo(AnioLectivo anioLectivo) {
         this.anioLectivo = anioLectivo;
     }
 

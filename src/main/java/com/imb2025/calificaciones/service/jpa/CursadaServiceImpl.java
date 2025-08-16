@@ -74,7 +74,6 @@ public class CursadaServiceImpl implements ICursadaService{
 
                 cursada.setAlumno(alumno);
                 cursada.setMateria(materia);
-                cursada.setAnioLectivo("anioLectivoId");
                 cursada.setCondicionFinal(condicionFinal);
                 repo.save(cursada);
 
