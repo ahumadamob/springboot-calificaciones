@@ -1,9 +1,11 @@
 package com.imb2025.calificaciones.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "carreras")
 public class Carrera {
 
     @Id
@@ -14,7 +16,20 @@ public class Carrera {
 
     private String tituloOtorgado;
 
-    // Getters y Setters
+    public Carrera() {
+    }
+
+    public Carrera(Long id, String nombre, String tituloOtorgado) {
+        this.id = id;
+        this.nombre = nombre;
+        this.tituloOtorgado = tituloOtorgado;
+    }
+
+    public Carrera(String nombre, String tituloOtorgado) {
+        this.nombre = nombre;
+        this.tituloOtorgado = tituloOtorgado;
+    }
+
     public Long getId() {
         return id;
     }
