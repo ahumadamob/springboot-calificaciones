@@ -10,7 +10,7 @@ public interface IEstadoEvaluacionService {
 
     public EstadoEvaluacion create(EstadoEvaluacion estadoEvaluacion);
 
-    public EstadoEvaluacion update(EstadoEvaluacion estadoEvaluacion, Long id);
+    public EstadoEvaluacion update(EstadoEvaluacion estadoEvaluacion, Long id) throws Exception;
 
     public EstadoEvaluacion findById(Long id);
 

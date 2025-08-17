@@ -10,7 +10,7 @@ public interface ICarreraService {
 
     public Carrera create(Carrera carrera);
 
-    public Carrera update(Carrera carrera, Long id);
+    public Carrera update(Carrera carrera, Long id) throws Exception;
 
     public Carrera findById(Long id);
 

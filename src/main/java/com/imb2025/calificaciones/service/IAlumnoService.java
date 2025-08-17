@@ -10,7 +10,7 @@ public interface IAlumnoService {
 
     public Alumno create(Alumno alumno);
 
-    public Alumno update(Alumno alumno, Long id);
+    public Alumno update(Alumno alumno, Long id) throws Exception;
 
     public Alumno findById(Long id);
 

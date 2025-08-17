@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
-import com.imb2025.calificaciones.dto.RegistroClaseDTO;
 import com.imb2025.calificaciones.dto.RegistroClaseRequestDto;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.entity.Docente;
@@ -36,30 +35,18 @@ public class RegistroClaseServiceImpl implements IRegistroClaseService {
     }
 
     @Override
-    public RegistroClase obtenerRegistro(Long id) {
+    public RegistroClase findById(Long id) {
         return registroClaseRepository.findById(id)
                 .orElseThrow(() -> new EntidadNoEncontradaException("RegistroClase no encontrado con ID: " + id));
     }
 
     @Override
-    public RegistroClase registrarClase(RegistroClaseDTO dto) {
-        Docente docente = docenteRepository.findById(dto.getDocenteId())
-                .orElseThrow(() -> new EntidadNoEncontradaException("Docente no encontrado con ID: " + dto.getDocenteId()));
-
-        Comision comision = comisionRepository.findById(dto.getComisionId())
-                .orElseThrow(() -> new EntidadNoEncontradaException("Comisión no encontrada con ID: " + dto.getComisionId()));
-
-        RegistroClase registro = new RegistroClase();
-        registro.setFecha(dto.getFecha());
-        registro.setTema(dto.getTema());
-        registro.setDocente(docente);
-        registro.setComision(comision);
-
-        return registroClaseRepository.save(registro);
+    public RegistroClase create(RegistroClase registroClase) {
+        return registroClaseRepository.save(registroClase);
     }
 
     @Override
-    public void eliminarRegistro(Long id) {
+    public void deleteById(Long id) {
         if (!registroClaseRepository.existsById(id)) {
             throw new EntidadNoEncontradaException("RegistroClase no encontrado con ID: " + id);
         }
@@ -67,22 +54,12 @@ public class RegistroClaseServiceImpl implements IRegistroClaseService {
     }
 
     @Override
-    public RegistroClase actualizarRegistro(Long id, RegistroClaseDTO dto) {
-        RegistroClase registro = registroClaseRepository.findById(id)
-                .orElseThrow(() -> new EntidadNoEncontradaException("RegistroClase no encontrado con ID: " + id));
-
-        Docente docente = docenteRepository.findById(dto.getDocenteId())
-                .orElseThrow(() -> new EntidadNoEncontradaException("Docente no encontrado con ID: " + dto.getDocenteId()));
-
-        Comision comision = comisionRepository.findById(dto.getComisionId())
-                .orElseThrow(() -> new EntidadNoEncontradaException("Comisión no encontrada con ID: " + dto.getComisionId()));
-
-        registro.setFecha(dto.getFecha());
-        registro.setTema(dto.getTema());
-        registro.setDocente(docente);
-        registro.setComision(comision);
-
-        return registroClaseRepository.save(registro);
+    public RegistroClase update(RegistroClase registroClase, Long id) throws Exception {
+        if (!registroClaseRepository.existsById(id)) {
+            throw new Exception("RegistroClase no encontrado con ID: " + id);
+        }
+        registroClase.setId(id);
+        return registroClaseRepository.save(registroClase);
     }
 
     @Override

@@ -29,8 +29,13 @@ public class HorarioServiceImpl implements IHorarioService{
     }
 
     @Override
-    public Horario update(Horario datosActualizados, Long id) {
-        return horarioRepository.save(datosActualizados);
+    public Horario update(Horario datosActualizados, Long id) throws Exception {
+        if (horarioRepository.existsById(id)) {
+            datosActualizados.setId(id);
+            return horarioRepository.save(datosActualizados);
+        } else {
+            throw new Exception("Horario no encontrado con id: " + id);
+        }
     }
 
     @Override

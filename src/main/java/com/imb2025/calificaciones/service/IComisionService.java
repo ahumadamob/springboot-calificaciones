@@ -10,7 +10,7 @@ public interface IComisionService {
 
     public Comision create(Comision comision);
 
-    public Comision update(Comision comision, Long id);
+    public Comision update(Comision comision, Long id) throws Exception;
 
     public Comision findById(Long id);
 

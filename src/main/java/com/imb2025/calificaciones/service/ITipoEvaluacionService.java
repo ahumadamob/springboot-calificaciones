@@ -10,7 +10,7 @@ public interface ITipoEvaluacionService {
 
     public TipoEvaluacion create(TipoEvaluacion tipoEvaluacion);
 
-    public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id);
+    public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id) throws Exception;
 
     public TipoEvaluacion findById(Long id);
 

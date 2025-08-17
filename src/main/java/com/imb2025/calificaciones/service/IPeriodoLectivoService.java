@@ -10,7 +10,7 @@ public interface IPeriodoLectivoService {
 
     public PeriodoLectivo create(PeriodoLectivo periodoLectivo);
 
-    public PeriodoLectivo update(PeriodoLectivo periodoLectivo, Long id);
+    public PeriodoLectivo update(PeriodoLectivo periodoLectivo, Long id) throws Exception;
 
     public PeriodoLectivo findById(Long id);
 

@@ -10,7 +10,7 @@ public interface IDocenteService {
 
     public Docente create(Docente docente);
 
-    public Docente update(Docente docente, Long id);
+    public Docente update(Docente docente, Long id) throws Exception;
 
     public Docente findById(Long id);
 

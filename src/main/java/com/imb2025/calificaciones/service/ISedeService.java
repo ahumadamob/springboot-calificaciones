@@ -10,7 +10,7 @@ public interface ISedeService {
 
     public Sede create(Sede sede);
 
-    public Sede update(Sede sede, Long id);
+    public Sede update(Sede sede, Long id) throws Exception;
 
     public Sede findById(Long id);
 

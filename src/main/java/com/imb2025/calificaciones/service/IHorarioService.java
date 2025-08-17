@@ -10,7 +10,7 @@ public interface IHorarioService {
 
     public Horario create(Horario horario);
 
-    public Horario update(Horario horario, Long id);
+    public Horario update(Horario horario, Long id) throws Exception;
 
     public Horario findById(Long id);
 

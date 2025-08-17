@@ -10,7 +10,7 @@ public interface ITipoNotaService {
 
     public TipoNota create(TipoNota tipoNota);
 
-    public TipoNota update(TipoNota tipoNota, Long id);
+    public TipoNota update(TipoNota tipoNota, Long id) throws Exception;
 
     public TipoNota findById(Long id);
 

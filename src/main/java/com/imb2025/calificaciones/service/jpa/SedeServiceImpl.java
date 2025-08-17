@@ -39,9 +39,18 @@ public class SedeServiceImpl implements ISedeService {
     }
 
     @Override
-    public void deletedById(Long id) {
-        repo.deleteById(id);
+    public Sede update(Sede sede, Long id) throws Exception {
+        if (repo.existsById(id)) {
+            sede.setId(id);
+            return repo.save(sede);
+        } else {
+            throw new Exception("Sede con ID " + id + " no encontrada.");
+        }
+    }
 
+    @Override
+    public void deleteById(Long id) {
+        repo.deleteById(id);
     }
 
     @Override

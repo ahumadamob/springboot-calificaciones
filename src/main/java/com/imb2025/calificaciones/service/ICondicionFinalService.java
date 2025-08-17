@@ -10,7 +10,7 @@ public interface ICondicionFinalService {
 
     public CondicionFinal create(CondicionFinal condicionFinal);
 
-    public CondicionFinal update(CondicionFinal condicionFinal, Long id);
+    public CondicionFinal update(CondicionFinal condicionFinal, Long id) throws Exception;
 
     public CondicionFinal findById(Long id);
 

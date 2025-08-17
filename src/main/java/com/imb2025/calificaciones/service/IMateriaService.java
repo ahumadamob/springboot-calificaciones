@@ -10,7 +10,7 @@ public interface IMateriaService {
 
     public Materia create(Materia materia);
 
-    public Materia update(Materia materia, Long id);
+    public Materia update(Materia materia, Long id) throws Exception;
 
     public Materia findById(Long id);
 
