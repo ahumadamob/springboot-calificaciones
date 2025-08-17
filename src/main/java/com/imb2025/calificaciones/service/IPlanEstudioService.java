@@ -16,5 +16,5 @@ public interface IPlanEstudioService {
 
     public void deleteById(Long id);
 
-    public PlanEstudio fromDto(PlanEstudioRequestDto dto);
+    public PlanEstudio fromDto(PlanEstudioRequestDto dto) throws Exception;
 }

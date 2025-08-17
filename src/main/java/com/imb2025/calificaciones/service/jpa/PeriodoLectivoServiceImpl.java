@@ -49,7 +49,7 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
     }
 
     @Override
-    public PeriodoLectivo fromDto(PeriodoLectivoRequestDto requestDTO) {
+    public PeriodoLectivo fromDto(PeriodoLectivoRequestDto requestDTO) throws Exception {
         PeriodoLectivo periodoLectivo = new PeriodoLectivo();
 
         periodoLectivo.setNombre(requestDTO.getNombre());

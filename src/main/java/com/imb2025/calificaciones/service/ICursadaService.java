@@ -16,5 +16,5 @@ public interface ICursadaService {
 
     public void deleteById(Long id);
 
-    public Cursada fromDto(CursadaRequestDto dto);
+    public Cursada fromDto(CursadaRequestDto dto) throws Exception;
 }

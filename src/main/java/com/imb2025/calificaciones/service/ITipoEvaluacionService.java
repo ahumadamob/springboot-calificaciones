@@ -16,5 +16,5 @@ public interface ITipoEvaluacionService {
 
     public void deleteById(Long id);
 
-    public TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto);
+    public TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto) throws Exception;
 }

@@ -116,4 +116,21 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
             throw new Exception("Error al eliminar la asistencia: " + e.getMessage());
         }
     }
+
+    @Override
+    public Asistencia fromDto(AsistenciaRequestDto dto) throws Exception {
+        Asistencia asistencia = new Asistencia();
+        if (dto.getAlumnoId() != null) {
+            Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
+                    .orElseThrow(() -> new Exception("Alumno no encontrado con ID: " + dto.getAlumnoId()));
+            asistencia.setAlumno(alumno);
+        }
+        if (dto.getRegistroClaseId() != null) {
+            RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
+                    .orElseThrow(() -> new Exception("Registro de clase no encontrado con ID: " + dto.getRegistroClaseId()));
+            asistencia.setRegistroClase(registro);
+        }
+        asistencia.setPresente(dto.getPresente());
+        return asistencia;
+    }
 }

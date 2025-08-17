@@ -49,7 +49,7 @@ public class AlumnoServiceImpl implements IAlumnoService {
     }
 
     @Override
-    public Alumno fromDto(AlumnoRequestDto alumnoDto) {
+    public Alumno fromDto(AlumnoRequestDto alumnoDto) throws Exception {
         Alumno alumno = new Alumno();
         alumno.setNombre(alumnoDto.getNombre());
         alumno.setApellido(alumnoDto.getApellido());

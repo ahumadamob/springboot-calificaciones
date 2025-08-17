@@ -16,5 +16,5 @@ public interface ITipoNotaService {
 
     public void deleteById(Long id);
 
-    public TipoNota fromDto(TipoNotaRequestDto dto);
+    public TipoNota fromDto(TipoNotaRequestDto dto) throws Exception;
 }

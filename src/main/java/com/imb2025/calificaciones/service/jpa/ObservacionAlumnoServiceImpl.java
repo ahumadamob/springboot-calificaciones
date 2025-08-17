@@ -81,12 +81,13 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 
     }
 
-    public ObservacionAlumno fromDTO(ObservacionAlumnoRequestDto dto) {
+    @Override
+    public ObservacionAlumno fromDto(ObservacionAlumnoRequestDto dto) throws Exception {
         Docente docente = docenteRepository.findById(dto.getDocenteId())
-                .orElseThrow(() -> new RuntimeException("docente no encontrado"));
+                .orElseThrow(() -> new Exception("docente no encontrado"));
 
         Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
-                .orElseThrow(() -> new RuntimeException("alumno no encontrado"));
+                .orElseThrow(() -> new Exception("alumno no encontrado"));
 
         ObservacionAlumno observacion = new ObservacionAlumno();
         observacion.setFecha(dto.getFecha());

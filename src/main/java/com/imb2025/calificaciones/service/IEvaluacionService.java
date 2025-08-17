@@ -16,5 +16,5 @@ public interface IEvaluacionService {
 
     public void deleteById(Long id);
 
-    public Evaluacion fromDto(EvaluacionRequestDto dto);
+    public Evaluacion fromDto(EvaluacionRequestDto dto) throws Exception;
 }

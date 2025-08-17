@@ -44,7 +44,7 @@ public class CondicionFinalServiceImpl implements ICondicionFinalService {
     }
 
     @Override
-    public CondicionFinal fromDto(CondicionFinalRequestDto dto) {
+    public CondicionFinal fromDto(CondicionFinalRequestDto dto) throws Exception {
         if (dto == null) {
             return null;
         }

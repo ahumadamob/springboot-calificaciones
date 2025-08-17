@@ -16,5 +16,5 @@ public interface INivelMateriaService {
 
     public void deleteById(Long id);
 
-    public NivelMateria fromDto(NivelMateriaRequestDto dto);
+    public NivelMateria fromDto(NivelMateriaRequestDto dto) throws Exception;
 }

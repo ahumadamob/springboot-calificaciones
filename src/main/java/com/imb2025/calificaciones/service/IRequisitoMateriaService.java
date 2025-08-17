@@ -16,5 +16,5 @@ public interface IRequisitoMateriaService {
 
     public void deleteById(Long id);
 
-    public RequisitoMateria fromDto(RequisitoMateriaRequestDto dto);
+    public RequisitoMateria fromDto(RequisitoMateriaRequestDto dto) throws Exception;
 }

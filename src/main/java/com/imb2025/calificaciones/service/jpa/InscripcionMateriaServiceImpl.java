@@ -1,7 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,21 +58,21 @@ public class InscripcionMateriaServiceImpl implements IInscripcionMateriaService
     }
 
     @Override
-    public InscripcionMateria fromDto(InscripcionMateriaRequestDto inscripcionMateriaDTO) {
+    public InscripcionMateria fromDto(InscripcionMateriaRequestDto inscripcionMateriaDTO) throws Exception {
         InscripcionMateria inscripcionMateria = new InscripcionMateria();
 
         Alumno alumno = alumnoRepository.findById(inscripcionMateriaDTO.getIdAlumno())
-                .orElseThrow(() -> new NoSuchElementException(
+                .orElseThrow(() -> new Exception(
                         "Alumno no encontrado con ID: " + inscripcionMateriaDTO.getIdAlumno()));
         inscripcionMateria.setAlumno(alumno);
 
         Materia materia = materiaRepository.findById(inscripcionMateriaDTO.getIdMateria())
-                .orElseThrow(() -> new NoSuchElementException(
+                .orElseThrow(() -> new Exception(
                         "Materia no encontrada con ID: " + inscripcionMateriaDTO.getIdMateria()));
         inscripcionMateria.setMateria(materia);
 
         PeriodoLectivo periodoLectivo = periodoLectivoRepository.findById(inscripcionMateriaDTO.getIdPeriodoLectivo())
-                .orElseThrow(() -> new NoSuchElementException(
+                .orElseThrow(() -> new Exception(
                         "Periodo Lectivo no encontrado con ID: " + inscripcionMateriaDTO.getIdPeriodoLectivo()));
         inscripcionMateria.setPeriodoLectivo(periodoLectivo);
 

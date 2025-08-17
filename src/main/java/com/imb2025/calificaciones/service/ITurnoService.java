@@ -16,5 +16,5 @@ public interface ITurnoService {
 
     public void deleteById(Long id);
 
-    public Turno fromDto(TurnoRequestDto dto);
+    public Turno fromDto(TurnoRequestDto dto) throws Exception;
 }

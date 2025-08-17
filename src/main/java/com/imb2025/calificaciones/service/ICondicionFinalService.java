@@ -16,5 +16,5 @@ public interface ICondicionFinalService {
 
     public void deleteById(Long id);
 
-    public CondicionFinal fromDto(CondicionFinalRequestDto dto);
+    public CondicionFinal fromDto(CondicionFinalRequestDto dto) throws Exception;
 }

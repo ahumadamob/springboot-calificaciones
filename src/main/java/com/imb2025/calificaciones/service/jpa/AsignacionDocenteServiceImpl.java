@@ -69,11 +69,15 @@ public class AsignacionDocenteServiceImpl implements IAsignacionDocenteService {
     }
 
     @Override
-    public AsignacionDocente fromDto(AsignacionDocenteRequestDto dto) {
-        Docente docente = docenteRepository.findById(dto.getDocenteId()).orElse(null);
-        Materia materia = materiaRepository.findById(dto.getMateriaId()).orElse(null);
-        Comision comision = comisionRepository.findById(dto.getComisionId()).orElse(null);
-        PeriodoLectivo periodoLectivo = periodoLectivoRepository.findById(dto.getPeriodoLectivoId()).orElse(null);
+    public AsignacionDocente fromDto(AsignacionDocenteRequestDto dto) throws Exception {
+        Docente docente = docenteRepository.findById(dto.getDocenteId())
+                .orElseThrow(() -> new Exception("Docente no encontrado con id: " + dto.getDocenteId()));
+        Materia materia = materiaRepository.findById(dto.getMateriaId())
+                .orElseThrow(() -> new Exception("Materia no encontrada con id: " + dto.getMateriaId()));
+        Comision comision = comisionRepository.findById(dto.getComisionId())
+                .orElseThrow(() -> new Exception("Comision no encontrada con id: " + dto.getComisionId()));
+        PeriodoLectivo periodoLectivo = periodoLectivoRepository.findById(dto.getPeriodoLectivoId())
+                .orElseThrow(() -> new Exception("Periodo lectivo no encontrado con id: " + dto.getPeriodoLectivoId()));
         return new AsignacionDocente(docente, materia, comision, periodoLectivo);
     }
 }

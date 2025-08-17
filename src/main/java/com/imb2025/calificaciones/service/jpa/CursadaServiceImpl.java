@@ -76,3 +76,18 @@ public class CursadaServiceImpl implements ICursadaService{
             }
 
     }
+
+    @Override
+    public Cursada fromDto(CursadaRequestDto dto) throws Exception {
+        Cursada cursada = new Cursada();
+        Alumno alumno = alumnorepo.findById(dto.getAlumnoId())
+                .orElseThrow(() -> new Exception("Alumno no encontrado con id: " + dto.getAlumnoId()));
+        Materia materia = materiaRepository.findById(dto.getMateriaId())
+                .orElseThrow(() -> new Exception("Materia no encontrada con id: " + dto.getMateriaId()));
+        CondicionFinal condicionFinal = cRepository.findById(dto.getCondicionFinalId())
+                .orElseThrow(() -> new Exception("Condición final no encontrada con id: " + dto.getCondicionFinalId()));
+        cursada.setAlumno(alumno);
+        cursada.setMateria(materia);
+        cursada.setCondicionFinal(condicionFinal);
+        return cursada;
+    }
