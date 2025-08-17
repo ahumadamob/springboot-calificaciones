@@ -42,7 +42,7 @@ public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
     }
 
     @Override
-    public RequisitoMateria update(RequisitoMateriaRequestDto dto, Long id) {
+    public RequisitoMateria update(RequisitoMateriaRequestDto dto, Long id) throws Exception {
         try {
             RequisitoMateria existente = requisitoRepository.findById(id)
                 .orElseThrow(() -> new EntidadNoEncontradaException("Requisito con ID " + id + " no encontrado."));
@@ -55,7 +55,7 @@ public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
         } catch (EntidadNoEncontradaException e) {
             throw e;
         } catch (Exception e) {
-            throw new RuntimeException("Error al actualizar requisito: " + e.getMessage());
+            throw new Exception("Error al actualizar requisito: " + e.getMessage());
         }
     }
 

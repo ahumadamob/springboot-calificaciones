@@ -45,40 +45,22 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
 
     @Override
     @Transactional
-    public PlanEstudio update(PlanEstudio newPlanEstudio, Long id) {
-        try {
-            PlanEstudio existente = findById(id);
-            if (existente == null) {
-                throw new EntidadNoEncontradaException("Plan de estudio con ID " + id + " no encontrado");
-            }
+    public PlanEstudio update(PlanEstudio newPlanEstudio, Long id) throws Exception {
+        PlanEstudio existente = planestudiorepository.findById(id)
+                .orElseThrow(() -> new Exception("Plan de estudio con ID " + id + " no encontrado"));
 
-            // Validar existencia de carrera
-            if (newPlanEstudio.getCarrera() == null ||
+        if (newPlanEstudio.getCarrera() == null ||
                 newPlanEstudio.getCarrera().getId() == null ||
                 !carreraRepository.existsById(newPlanEstudio.getCarrera().getId())) {
-                Long carreraId = newPlanEstudio.getCarrera() != null ? newPlanEstudio.getCarrera().getId() : null;
-                throw new EntidadNoEncontradaException("Carrera con ID " + carreraId + " no existe");
-            }
-
-            /*
-            // Validar existencia de anio vigencia
-            if (newPlanEstudio.getAnioVigencia() == null ||
-                !anioVigenciaRepository.existsById(newPlanEstudio.getAnioVigencia()) {
-                throw new EntidadNoEncontradaException("Año de vigencia con ID " + newPlanEstudio.getAnioVigencia() + " no existe");
-            }
-            */
-
-            // Actualizar campos
-            existente.setCarrera(newPlanEstudio.getCarrera());
-            existente.setNombre(newPlanEstudio.getNombre());
-            existente.setAnioVigencia(newPlanEstudio.getAnioVigencia());
-
-            return planestudiorepository.save(existente);
-        } catch (EntidadNoEncontradaException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new RuntimeException("Error al actualizar el plan estudio: " + e.getMessage());
+            Long carreraId = newPlanEstudio.getCarrera() != null ? newPlanEstudio.getCarrera().getId() : null;
+            throw new Exception("Carrera con ID " + carreraId + " no existe");
         }
+
+        existente.setCarrera(newPlanEstudio.getCarrera());
+        existente.setNombre(newPlanEstudio.getNombre());
+        existente.setAnioVigencia(newPlanEstudio.getAnioVigencia());
+
+        return planestudiorepository.save(existente);
     }
 
     @Override

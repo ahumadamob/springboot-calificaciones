@@ -10,7 +10,7 @@ public interface IPlanEstudioService {
 
     public PlanEstudio create(PlanEstudio planEstudio);
 
-    public PlanEstudio update(PlanEstudio planEstudio, Long id);
+    public PlanEstudio update(PlanEstudio planEstudio, Long id) throws Exception;
 
     public PlanEstudio findById(Long id);
 

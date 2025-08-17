@@ -10,7 +10,7 @@ public interface IObservacionAlumnoService {
 
     public ObservacionAlumno create(ObservacionAlumno observacionAlumno);
 
-    public ObservacionAlumno update(ObservacionAlumno observacionAlumno, Long id);
+    public ObservacionAlumno update(ObservacionAlumno observacionAlumno, Long id) throws Exception;
 
     public ObservacionAlumno findById(Long id);
 

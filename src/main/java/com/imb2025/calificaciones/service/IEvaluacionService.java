@@ -10,7 +10,7 @@ public interface IEvaluacionService {
 
     public Evaluacion create(Evaluacion evaluacion);
 
-    public Evaluacion update(Evaluacion evaluacion, Long id);
+    public Evaluacion update(Evaluacion evaluacion, Long id) throws Exception;
 
     public Evaluacion findById(Long id);
 

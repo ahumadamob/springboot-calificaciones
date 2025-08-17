@@ -10,7 +10,7 @@ public interface IRegistroClaseService {
 
     public RegistroClase create(RegistroClase registroClase);
 
-    public RegistroClase update(RegistroClase registroClase, Long id);
+    public RegistroClase update(RegistroClase registroClase, Long id) throws Exception;
 
     public RegistroClase findById(Long id);
 

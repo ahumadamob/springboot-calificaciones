@@ -53,25 +53,19 @@ public class EvaluacionServiceImpl implements IEvaluacionService {
 
     @Override
     @Transactional
-    public Evaluacion update(Evaluacion newEvaluacion, Long id) {
-        try {
-            if (id == null) {
-                throw new RuntimeException("No se pudo identificar el id");
-            }
-
-            Evaluacion evaluacion = evaluacionRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Evaluación no encontrada"));
-
-                        evaluacion.setComision(newEvaluacion.getComision());
-                        evaluacion.setMateria(newEvaluacion.getMateria());
-                        evaluacion.setFecha(newEvaluacion.getFecha());
-                        evaluacion.setTipoEvaluacion(newEvaluacion.getTipoEvaluacion());
-
-            return evaluacionRepository.save(evaluacion);
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error al actualizar la evaluación: " + e.getMessage());
+    public Evaluacion update(Evaluacion newEvaluacion, Long id) throws Exception {
+        if (id == null) {
+            throw new Exception("No se pudo identificar el id");
         }
+        Evaluacion evaluacion = evaluacionRepository.findById(id)
+                .orElseThrow(() -> new Exception("Evaluación no encontrada"));
+
+        evaluacion.setComision(newEvaluacion.getComision());
+        evaluacion.setMateria(newEvaluacion.getMateria());
+        evaluacion.setFecha(newEvaluacion.getFecha());
+        evaluacion.setTipoEvaluacion(newEvaluacion.getTipoEvaluacion());
+
+        return evaluacionRepository.save(evaluacion);
     }
 
     // Pasar de DTO a entidad

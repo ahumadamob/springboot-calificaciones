@@ -29,6 +29,10 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
 
     @Override
     @Transactional
+    public EstadoEvaluacion create(EstadoEvaluacion estadoEvaluacion) {
+        return repository.save(estadoEvaluacion);
+    }
+
     public EstadoEvaluacion create(EstadoEvaluacionRequestDto dto) {
         EstadoEvaluacion estado = fromDto(dto);
         return repository.save(estado);
@@ -36,14 +40,13 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
 
     @Override
     @Transactional
-    public EstadoEvaluacion update(Long id, EstadoEvaluacionRequestDto dto) {
-        EstadoEvaluacion existente = repository.findById(id).orElse(null);
-        if (existente == null) {
-            return null;
+    public EstadoEvaluacion update(EstadoEvaluacion estadoEvaluacion, Long id) throws Exception {
+        if (repository.existsById(id)) {
+            estadoEvaluacion.setId(id);
+            return repository.save(estadoEvaluacion);
+        } else {
+            throw new Exception("EstadoEvaluacion con ID " + id + " no encontrado.");
         }
-        existente.setNombre(dto.getNombre());
-        existente.setDescripcion(dto.getDescripcion());
-        return repository.save(existente);
     }
 
     @Override

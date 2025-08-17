@@ -10,7 +10,7 @@ public interface ITurnoService {
 
     public Turno create(Turno turno);
 
-    public Turno update(Turno turno, Long id);
+    public Turno update(Turno turno, Long id) throws Exception;
 
     public Turno findById(Long id);
 

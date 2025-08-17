@@ -10,7 +10,7 @@ public interface IEstadoCursadaService {
 
     public EstadoCursada create(EstadoCursada estadoCursada);
 
-    public EstadoCursada update(EstadoCursada estadoCursada, Long id);
+    public EstadoCursada update(EstadoCursada estadoCursada, Long id) throws Exception;
 
     public EstadoCursada findById(Long id);
 

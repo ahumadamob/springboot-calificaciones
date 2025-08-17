@@ -10,7 +10,7 @@ public interface ICalendarioMateriaService {
 
     public CalendarioMateria create(CalendarioMateria calendarioMateria);
 
-    public CalendarioMateria update(CalendarioMateria calendarioMateria, Long id);
+    public CalendarioMateria update(CalendarioMateria calendarioMateria, Long id) throws Exception;
 
     public CalendarioMateria findById(Long id);
 

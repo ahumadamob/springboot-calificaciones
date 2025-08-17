@@ -10,7 +10,7 @@ public interface IAsignacionDocenteService {
 
     public AsignacionDocente create(AsignacionDocente asignacionDocente);
 
-    public AsignacionDocente update(AsignacionDocente asignacionDocente, Long id);
+    public AsignacionDocente update(AsignacionDocente asignacionDocente, Long id) throws Exception;
 
     public AsignacionDocente findById(Long id);
 

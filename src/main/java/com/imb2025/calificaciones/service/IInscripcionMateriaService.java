@@ -10,7 +10,7 @@ public interface IInscripcionMateriaService {
 
     public InscripcionMateria create(InscripcionMateria inscripcionMateria);
 
-    public InscripcionMateria update(InscripcionMateria inscripcionMateria, Long id);
+    public InscripcionMateria update(InscripcionMateria inscripcionMateria, Long id) throws Exception;
 
     public InscripcionMateria findById(Long id);
 

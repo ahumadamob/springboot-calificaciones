@@ -40,9 +40,13 @@ public class ComisionServiceImpl implements IComisionService {
     }
 
     @Override
-    public Comision update(Comision comision, Long id) {
-        comision.setId(id);
-        return repository.save(comision);
+    public Comision update(Comision comision, Long id) throws Exception {
+        if (repository.existsById(id)) {
+            comision.setId(id);
+            return repository.save(comision);
+        } else {
+            throw new Exception("Comision con ID " + id + " no encontrada");
+        }
     }
 
     @Override

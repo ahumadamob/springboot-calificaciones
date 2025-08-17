@@ -11,7 +11,7 @@ public interface IRequisitoMateriaService {
 
     public RequisitoMateria create(RequisitoMateriaRequestDto dto);
 
-    public RequisitoMateria update(RequisitoMateriaRequestDto dto, Long id);
+    public RequisitoMateria update(RequisitoMateriaRequestDto dto, Long id) throws Exception;
 
     public Optional<RequisitoMateria> findById(Long id);
 

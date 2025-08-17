@@ -38,17 +38,12 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
     }
 
     @Override
-    public TipoNota update(TipoNota tipoNota, Long id) {
-        try {
-            TipoNota existente = tipoNotaRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("TipoNota no encontrada con id: " + id));
-
-            existente.setNombre(tipoNota.getNombre());
-            existente.setDescripcion(tipoNota.getDescripcion());
-            return tipoNotaRepository.save(existente);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al actualizar TipoNota: " + e.getMessage());
+    public TipoNota update(TipoNota tipoNota, Long id) throws Exception {
+        if (!tipoNotaRepository.existsById(id)) {
+            throw new Exception("TipoNota no encontrada con id: " + id);
         }
+        tipoNota.setId(id);
+        return tipoNotaRepository.save(tipoNota);
     }
 
     @Override

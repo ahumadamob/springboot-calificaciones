@@ -33,13 +33,13 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     }
 
     @Override
-    public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id) {
-        if (!repo.existsById(id)) {
-            throw new RuntimeException("El Tipo de Evaluacion con ID " + id + " no existe.");
+    public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id) throws Exception {
+        if (repo.existsById(id)) {
+            tipoEvaluacion.setId(id);
+            return repo.save(tipoEvaluacion);
+        } else {
+            throw new Exception("TipoEvaluacion con ID " + id + " no encontrado.");
         }
-
-        tipoEvaluacion.setId(id);
-        return repo.save(tipoEvaluacion);
     }
 
     @Override

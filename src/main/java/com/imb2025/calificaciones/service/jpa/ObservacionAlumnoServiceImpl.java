@@ -48,19 +48,15 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
     }
 
     @Override
-    public ObservacionAlumno update(Long id, ObservacionAlumno observacionAlumno) throws Exception {
-
+    public ObservacionAlumno update(ObservacionAlumno observacionAlumno, Long id) throws Exception {
         try {
-
             Optional<ObservacionAlumno> obs = observacionAlumnoRepository.findById(id);
-
-            if(obs.isPresent()) {
-                  observacionAlumno.setId(id);
-                  return observacionAlumnoRepository.save(observacionAlumno);
-              } else {
-                  throw new Exception("la observación de alumno no existe");
-              }
-
+            if (obs.isPresent()) {
+                observacionAlumno.setId(id);
+                return observacionAlumnoRepository.save(observacionAlumno);
+            } else {
+                throw new Exception("la observación de alumno no existe");
+            }
         } catch (Exception e) {
             throw new RuntimeException("error al actualizar la observación del alumno: " + e.getMessage());
         }
