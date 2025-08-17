@@ -8,11 +8,11 @@ public interface IDocenteService {
 
     public List<Docente> findAll();
 
+    public Docente create(Docente docente);
+
+    public Docente update(Docente docente, Long id);
+
     public Docente findById(Long id);
-
-    public Docente create(DocenteRequestDto dto);
-
-    public Docente update(Long id, DocenteRequestDto dto) throws Exception;
 
     public void deleteById(Long id);
 

@@ -8,11 +8,11 @@ public interface INivelMateriaService {
 
     public List<NivelMateria> findAll();
 
+    public NivelMateria create(NivelMateria nivelMateria);
+
+    public NivelMateria update(NivelMateria nivelMateria, Long id);
+
     public NivelMateria findById(Long id);
-
-    public NivelMateria create(NivelMateriaRequestDto dto);
-
-    public NivelMateria update(Long id, NivelMateriaRequestDto dto);
 
     public void deleteById(Long id);
 

@@ -8,13 +8,13 @@ public interface IInscripcionMateriaService {
 
     public List<InscripcionMateria> findAll();
 
+    public InscripcionMateria create(InscripcionMateria inscripcionMateria);
+
+    public InscripcionMateria update(InscripcionMateria inscripcionMateria, Long id);
+
     public InscripcionMateria findById(Long id);
-
-    public InscripcionMateria create(InscripcionMateriaRequestDto dto);
-
-    public InscripcionMateria update(Long id, InscripcionMateriaRequestDto dto) throws Exception;
 
     public void deleteById(Long id);
 
-    public InscripcionMateria fromDto(InscripcionMateriaRequestDto dto) throws Exception;
+    public InscripcionMateria fromDto(InscripcionMateriaRequestDto dto);
 }

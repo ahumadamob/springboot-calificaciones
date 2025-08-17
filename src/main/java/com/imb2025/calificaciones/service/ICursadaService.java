@@ -8,11 +8,11 @@ public interface ICursadaService {
 
     public List<Cursada> findAll();
 
+    public Cursada create(Cursada cursada);
+
+    public Cursada update(Cursada cursada, Long id);
+
     public Cursada findById(Long id);
-
-    public Cursada create(CursadaRequestDto dto);
-
-    public Cursada update(Long id, CursadaRequestDto dto);
 
     public void deleteById(Long id);
 

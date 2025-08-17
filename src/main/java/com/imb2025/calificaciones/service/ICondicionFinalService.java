@@ -8,14 +8,13 @@ public interface ICondicionFinalService {
 
     public List<CondicionFinal> findAll();
 
+    public CondicionFinal create(CondicionFinal condicionFinal);
+
+    public CondicionFinal update(CondicionFinal condicionFinal, Long id);
+
     public CondicionFinal findById(Long id);
-
-    public CondicionFinal create(CondicionFinalRequestDto dto);
-
-    public CondicionFinal update(Long id, CondicionFinalRequestDto dto);
 
     public void deleteById(Long id);
 
     public CondicionFinal fromDto(CondicionFinalRequestDto dto);
 }
-

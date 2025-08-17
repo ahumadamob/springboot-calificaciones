@@ -8,13 +8,13 @@ public interface IAsistenciaService {
 
     public List<Asistencia> findAll();
 
+    public Asistencia create(Asistencia asistencia);
+
+    public Asistencia update(Asistencia asistencia, Long id);
+
     public Asistencia findById(Long id);
 
-    public Asistencia create(AsistenciaRequestDto dto) throws Exception;
+    public void deleteById(Long id);
 
-    public Asistencia update(Long id, AsistenciaRequestDto dto) throws Exception;
-
-    public void deleteById(Long id) throws Exception;
-
-    public Asistencia fromDto(AsistenciaRequestDto dto) throws Exception;
+    public Asistencia fromDto(AsistenciaRequestDto dto);
 }

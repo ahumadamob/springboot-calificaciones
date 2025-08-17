@@ -8,14 +8,13 @@ public interface IAsignacionDocenteService {
 
     public List<AsignacionDocente> findAll();
 
+    public AsignacionDocente create(AsignacionDocente asignacionDocente);
+
+    public AsignacionDocente update(AsignacionDocente asignacionDocente, Long id);
+
     public AsignacionDocente findById(Long id);
 
-    public AsignacionDocente create(AsignacionDocenteRequestDto dto);
-
-    public AsignacionDocente update(Long id, AsignacionDocenteRequestDto dto) throws Exception;
-
-    public void deleteById(Long id) throws Exception;
+    public void deleteById(Long id);
 
     public AsignacionDocente fromDto(AsignacionDocenteRequestDto dto);
 }
-
