@@ -65,7 +65,10 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
 
     @Override
     @Transactional
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
+        if (!planestudiorepository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
         planestudiorepository.deleteById(id);
     }
 

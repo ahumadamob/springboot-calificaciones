@@ -62,8 +62,7 @@ public class AsignacionDocenteServiceImpl implements IAsignacionDocenteService {
     @Override
     public void deleteById(Long id) throws Exception {
         if (!repository.existsById(id)) {
-            throw new Exception(
-                    "Can't delete AsignacionDocente with id: " + id + " because it does not exist");
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
         repository.deleteById(id);
     }

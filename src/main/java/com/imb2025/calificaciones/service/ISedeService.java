@@ -14,7 +14,7 @@ public interface ISedeService {
 
     public Sede findById(Long id);
 
-    public void deleteById(Long id);
+    public void deleteById(Long id) throws Exception;
 
     public Sede fromDto(SedeRequestDto dto) throws Exception;
 }

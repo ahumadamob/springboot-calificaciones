@@ -60,7 +60,10 @@ public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
+        if (!requisitoRepository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
         requisitoRepository.deleteById(id);
     }
 

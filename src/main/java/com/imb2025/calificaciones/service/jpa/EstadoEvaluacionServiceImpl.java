@@ -50,7 +50,10 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
+        if (!repository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
         repository.deleteById(id);
     }
 

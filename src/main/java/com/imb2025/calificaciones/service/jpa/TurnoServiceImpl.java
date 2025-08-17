@@ -42,12 +42,11 @@ public class TurnoServiceImpl implements ITurnoService {
     }
 
     @Override
-    public void deleteById(Long id) throws Exception  {
-        if (turnoRepository.existsById(id)) {
-            turnoRepository.deleteById(id);
-        } else {
-            throw new Exception("Turno no encontrado");
+    public void deleteById(Long id) throws Exception {
+        if (!turnoRepository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
+        turnoRepository.deleteById(id);
     }
 
     @Override

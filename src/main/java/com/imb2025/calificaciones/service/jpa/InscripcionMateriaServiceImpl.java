@@ -53,7 +53,11 @@ public class InscripcionMateriaServiceImpl implements IInscripcionMateriaService
 
     }
 
-    public void deleteById(Long id) {
+    @Override
+    public void deleteById(Long id) throws Exception {
+        if (!repository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
         repository.deleteById(id);
     }
 

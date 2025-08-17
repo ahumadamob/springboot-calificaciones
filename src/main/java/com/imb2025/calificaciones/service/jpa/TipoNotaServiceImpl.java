@@ -47,7 +47,10 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
+        if (!tipoNotaRepository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
         tipoNotaRepository.deleteById(id);
     }
 

@@ -63,18 +63,11 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
     }
 
     @Override
-    public void deleteById(Long id) throws Exception{
-        try {
-            Optional<ObservacionAlumno> obs = observacionAlumnoRepository.findById(id);
-            if (obs.isPresent()) {
-                observacionAlumnoRepository.deleteById(id);
-            } else {
-                throw new Exception("la observación de alumno no existe");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("error al eliminar la observación del alumno: " + e.getMessage());
+    public void deleteById(Long id) throws Exception {
+        if (!observacionAlumnoRepository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
-
+        observacionAlumnoRepository.deleteById(id);
     }
 
     @Override

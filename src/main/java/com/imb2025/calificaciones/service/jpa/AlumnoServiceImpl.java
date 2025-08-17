@@ -40,12 +40,11 @@ public class AlumnoServiceImpl implements IAlumnoService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        if (alumnoRepository.existsById(id)) {
-            alumnoRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Estudiante no encontrado");
+    public void deleteById(Long id) throws Exception {
+        if (!alumnoRepository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
+        alumnoRepository.deleteById(id);
     }
 
     @Override

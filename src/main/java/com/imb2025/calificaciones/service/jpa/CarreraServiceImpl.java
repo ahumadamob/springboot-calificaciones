@@ -45,10 +45,11 @@ public class CarreraServiceImpl implements ICarreraService {
     }
 
     @Override
-    public void deleteById(Long id) {
-
+    public void deleteById(Long id) throws Exception {
+        if (!repo.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
         repo.deleteById(id);
-
     }
 
     @Override

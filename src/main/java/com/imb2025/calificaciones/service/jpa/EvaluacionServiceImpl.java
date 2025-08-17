@@ -111,7 +111,10 @@ public class EvaluacionServiceImpl implements IEvaluacionService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
+        if (!evaluacionRepository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
         evaluacionRepository.deleteById(id);
     }
 

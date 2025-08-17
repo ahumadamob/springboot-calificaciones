@@ -14,7 +14,7 @@ public interface ICarreraService {
 
     public Carrera findById(Long id);
 
-    public void deleteById(Long id);
+    public void deleteById(Long id) throws Exception;
 
     public Carrera fromDto(CarreraRequestDto dto) throws Exception;
 }

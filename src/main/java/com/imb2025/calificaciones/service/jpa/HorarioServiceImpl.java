@@ -39,7 +39,10 @@ public class HorarioServiceImpl implements IHorarioService{
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
+        if (!horarioRepository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
         horarioRepository.deleteById(id);
     }
 

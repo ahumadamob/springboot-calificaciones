@@ -14,7 +14,7 @@ public interface IObservacionAlumnoService {
 
     public ObservacionAlumno findById(Long id);
 
-    public void deleteById(Long id);
+    public void deleteById(Long id) throws Exception;
 
     public ObservacionAlumno fromDto(ObservacionAlumnoRequestDto dto) throws Exception;
 }
