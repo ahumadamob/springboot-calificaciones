@@ -22,7 +22,7 @@ public class TurnoServiceImpl implements ITurnoService {
 
     @Override
     public Turno findById(Long id) {
-        return turnoRepository.findById(id).orElseThrow(() -> new RuntimeException("Turno no encontrado"));
+        return turnoRepository.findById(id).orElse(null);
     }
 
     @Override

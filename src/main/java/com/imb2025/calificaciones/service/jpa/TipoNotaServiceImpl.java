@@ -24,8 +24,7 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
 
     @Override
     public TipoNota findById(Long id) {
-        return tipoNotaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("TipoNota no encontrada con id: " + id));
+        return tipoNotaRepository.findById(id).orElse(null);
     }
 
     @Override

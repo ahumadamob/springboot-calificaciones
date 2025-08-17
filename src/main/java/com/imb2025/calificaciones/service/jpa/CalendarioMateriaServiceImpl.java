@@ -31,7 +31,7 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService {
     @Override
     @Transactional
     public CalendarioMateria findById(Long id) {
-        return calMatRepo.findById(id).orElseThrow();
+        return calMatRepo.findById(id).orElse(null);
     }
 
     @Override

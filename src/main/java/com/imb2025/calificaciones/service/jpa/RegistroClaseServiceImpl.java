@@ -36,9 +36,8 @@ public class RegistroClaseServiceImpl implements IRegistroClaseService {
     }
 
     @Override
-    public RegistroClase obtenerRegistro(Long id) {
-        return registroClaseRepository.findById(id)
-                .orElseThrow(() -> new EntidadNoEncontradaException("RegistroClase no encontrado con ID: " + id));
+    public RegistroClase findById(Long id) {
+        return registroClaseRepository.findById(id).orElse(null);
     }
 
     @Override

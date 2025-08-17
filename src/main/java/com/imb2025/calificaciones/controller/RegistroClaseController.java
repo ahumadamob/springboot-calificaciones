@@ -41,7 +41,7 @@ public class RegistroClaseController {
 
     @GetMapping("/registroclase/{id}")
     public ResponseEntity<RegistroClase> obtenerRegistroPorId(@PathVariable Long id) {
-        RegistroClase registro = iregistroClase.obtenerRegistro(id);
+        RegistroClase registro = iregistroClase.findById(id);
         return ResponseEntity.ok(registro); // Si no existe, el servicio debe lanzar excepción
     }
 

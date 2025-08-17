@@ -31,7 +31,7 @@ public class AlumnoServiceImpl implements IAlumnoService {
 
     @Override
     public Alumno findById(Long id) {
-        return alumnoRepository.findById(id).orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+        return alumnoRepository.findById(id).orElse(null);
     }
 
     @Override

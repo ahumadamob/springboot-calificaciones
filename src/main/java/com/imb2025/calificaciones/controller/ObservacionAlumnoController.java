@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -49,35 +48,35 @@ public class ObservacionAlumnoController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> getById(@PathVariable Long id, HttpServletRequest request) {
-		
-		Optional<ObservacionAlumno> observacionAlumno = observacionAlumnoService.findById(id);
-		
-		if (observacionAlumno.isPresent()) {
-			
-			SuccessResponseDto<ObservacionAlumno> response = new SuccessResponseDto<>();
-			response.setTimestamp(LocalDateTime.now());
-			response.setStatus(HttpStatus.OK.value());
-			response.setMessage("observación obtenida correctamente por ID");
-			response.setData(observacionAlumno.get());
-			
-			return ResponseEntity.ok(response);
-			
-		} else {
-			
-			ErrorResponseDto errorResponse = new ErrorResponseDto();
-			errorResponse.setTimestamp(LocalDateTime.now());
-			errorResponse.setStatus(HttpStatus.NO_CONTENT.value());
-			errorResponse.setError("Not found");
-			errorResponse.setMessages(Arrays.asList(
-					new ErrorMessage("id", "Observación no encontrada con ID: " + id)
+        public ResponseEntity<?> getById(@PathVariable Long id, HttpServletRequest request) {
+
+                ObservacionAlumno observacionAlumno = observacionAlumnoService.findById(id);
+
+                if (observacionAlumno != null) {
+
+                        SuccessResponseDto<ObservacionAlumno> response = new SuccessResponseDto<>();
+                        response.setTimestamp(LocalDateTime.now());
+                        response.setStatus(HttpStatus.OK.value());
+                        response.setMessage("observación obtenida correctamente por ID");
+                        response.setData(observacionAlumno);
+
+                        return ResponseEntity.ok(response);
+
+                } else {
+
+                        ErrorResponseDto errorResponse = new ErrorResponseDto();
+                        errorResponse.setTimestamp(LocalDateTime.now());
+                        errorResponse.setStatus(HttpStatus.NO_CONTENT.value());
+                        errorResponse.setError("Not found");
+                        errorResponse.setMessages(Arrays.asList(
+                                        new ErrorMessage("id", "Observación no encontrada con ID: " + id)
             ));
-			errorResponse.setErrorCode("OBSERVACION_NOT_FOUND");
-			errorResponse.setPath(request.getRequestURI());
-			
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(errorResponse);
-		}
-	}
+                        errorResponse.setErrorCode("OBSERVACION_NOT_FOUND");
+                        errorResponse.setPath(request.getRequestURI());
+
+                        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(errorResponse);
+                }
+        }
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody ObservacionAlumnoRequestDto dto, HttpServletRequest request) {

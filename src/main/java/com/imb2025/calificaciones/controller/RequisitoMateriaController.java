@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/requisito-materia")
@@ -35,12 +34,12 @@ public class RequisitoMateriaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
-        Optional<RequisitoMateria> requisito = service.findById(id);
-        if (requisito.isEmpty()) {
+        RequisitoMateria requisito = service.findById(id);
+        if (requisito == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("El requisito con ID " + id + " no existe.");
         }
-        return ResponseEntity.ok(requisito.get());
+        return ResponseEntity.ok(requisito);
     }
 
     @PostMapping
@@ -56,8 +55,8 @@ public class RequisitoMateriaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid RequisitoMateriaRequestDto dto) {
-        Optional<RequisitoMateria> existente = service.findById(id);
-        if (existente.isEmpty()) {
+        RequisitoMateria existente = service.findById(id);
+        if (existente == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("No se encontró un requisito con el ID " + id + " para actualizar.");
         }
@@ -73,8 +72,8 @@ public class RequisitoMateriaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        Optional<RequisitoMateria> existente = service.findById(id);
-        if (existente.isEmpty()) {
+        RequisitoMateria existente = service.findById(id);
+        if (existente == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("No se encontró el requisito con ID " + id + " para eliminar.");
         }

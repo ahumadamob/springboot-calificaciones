@@ -6,11 +6,11 @@ import com.imb2025.calificaciones.entity.RequisitoMateria;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.repository.RequisitoMateriaRepository;
 import com.imb2025.calificaciones.service.IRequisitoMateriaService;
+import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
@@ -27,8 +27,8 @@ public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
     }
 
     @Override
-    public Optional<RequisitoMateria> findById(Long id) {
-        return requisitoRepository.findById(id);
+    public RequisitoMateria findById(Long id) {
+        return requisitoRepository.findById(id).orElse(null);
     }
 
     @Override
