@@ -31,8 +31,8 @@ public class RegistroClaseController {
     }
 
     @GetMapping("/obteneregistros")
-    public ResponseEntity<List<RegistroClase>> obtenerTodosLosRegistros() {
-        List<RegistroClase> registros = iregistroClase.obtenerTodosLosRegistros();
+    public ResponseEntity<List<RegistroClase>> findAll() {
+        List<RegistroClase> registros = iregistroClase.findAll();
         if (registros.isEmpty()) {
             return ResponseEntity.noContent().build(); // 204 No Content
         }
