@@ -45,7 +45,7 @@ public class AsistenciaController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody AsistenciaRequestDto dto) {
         try {
-            Asistencia nueva = asistenciaService.save(dto);
+            Asistencia nueva = asistenciaService.create(dto);
             return ResponseEntity.ok(nueva);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -56,7 +56,7 @@ public class AsistenciaController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AsistenciaRequestDto dto) {
         try {
-            Asistencia actualizada = asistenciaService.update(id, dto);
+            Asistencia actualizada = asistenciaService.update(dto, id);
             return ResponseEntity.ok(actualizada);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

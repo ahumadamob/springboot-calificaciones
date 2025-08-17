@@ -39,7 +39,7 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
 
     @Override
     @Transactional
-    public PlanEstudio save(PlanEstudio planEstudio) {
+    public PlanEstudio create(PlanEstudio planEstudio) {
         return planestudiorepository.save(planEstudio);
     }
 

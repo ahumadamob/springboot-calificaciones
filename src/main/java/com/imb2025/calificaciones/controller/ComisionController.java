@@ -39,17 +39,17 @@ public class ComisionController {
 	    }
 
 	    @PostMapping
-	    public ResponseEntity<Comision> create(@RequestBody Comision comision) {
-	    	Comision createdComision = ComisionService.save(comision);
-	        return ResponseEntity.ok(createdComision);
-	    }
+            public ResponseEntity<Comision> create(@RequestBody Comision comision) {
+                Comision createdComision = ComisionService.create(comision);
+                return ResponseEntity.ok(createdComision);
+            }
 
 	    @PutMapping("/{id}")
-	    public ResponseEntity<Comision> update(@PathVariable Long id,
-	            @RequestBody Comision comision) {
-	    	Comision updatedComision = ComisionService.update(id, comision);
-	        return ResponseEntity.ok(updatedComision);
-	    }
+            public ResponseEntity<Comision> update(@PathVariable Long id,
+                    @RequestBody Comision comision) {
+                Comision updatedComision = ComisionService.update(comision, id);
+                return ResponseEntity.ok(updatedComision);
+            }
 
 	    @DeleteMapping("/{id}")
 	    public ResponseEntity<Void> delete(@PathVariable Long id) {

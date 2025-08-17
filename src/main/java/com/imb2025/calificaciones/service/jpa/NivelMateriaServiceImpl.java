@@ -28,7 +28,7 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
     }
 
     @Override
-    public NivelMateria save(NivelMateria nivelMateria) {
+    public NivelMateria create(NivelMateria nivelMateria) {
          return repo.save(nivelMateria);
     }
 

@@ -37,15 +37,15 @@ public class SedeController {
 		return sedeService.findById(id);
 	}
 	
-	@PostMapping("/api/sede")
-	public Sede createSede(@RequestBody Sede sede){
-		return sedeService.save(sede);
-	}
-	
-	@PutMapping("/api/sede")
-	public Sede updateSede(@RequestBody Sede sede){
-		return sedeService.save(sede);
-	}
+        @PostMapping("/api/sede")
+        public Sede createSede(@RequestBody Sede sede){
+                return sedeService.create(sede);
+        }
+
+        @PutMapping("/api/sede")
+        public Sede updateSede(@RequestBody Sede sede){
+                return sedeService.create(sede);
+        }
 	
 	@DeleteMapping("/api/sede/{idSede}")
 	public void deleteSede(@PathVariable("idSede") Long id){

@@ -8,9 +8,9 @@ public interface ICursadaService {
 
     public List<Cursada> findAll();
 
-    public Cursada create(Cursada cursada);
+    public String create(CursadaRequestDto dto);
 
-    public Cursada update(Cursada cursada, Long id);
+    public String update(CursadaRequestDto dto, Long id);
 
     public Cursada findById(Long id);
 

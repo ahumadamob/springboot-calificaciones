@@ -3,16 +3,17 @@ package com.imb2025.calificaciones.service;
 import com.imb2025.calificaciones.dto.RequisitoMateriaRequestDto;
 import com.imb2025.calificaciones.entity.RequisitoMateria;
 import java.util.List;
+import java.util.Optional;
 
 public interface IRequisitoMateriaService {
 
     public List<RequisitoMateria> findAll();
 
-    public RequisitoMateria create(RequisitoMateria requisitoMateria);
+    public RequisitoMateria create(RequisitoMateriaRequestDto dto);
 
-    public RequisitoMateria update(RequisitoMateria requisitoMateria, Long id);
+    public RequisitoMateria update(RequisitoMateriaRequestDto dto, Long id);
 
-    public RequisitoMateria findById(Long id);
+    public Optional<RequisitoMateria> findById(Long id);
 
     public void deleteById(Long id);
 
