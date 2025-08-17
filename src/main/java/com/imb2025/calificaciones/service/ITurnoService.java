@@ -8,13 +8,13 @@ public interface ITurnoService {
 
     public List<Turno> findAll();
 
+    public Turno create(Turno turno);
+
+    public Turno update(Turno turno, Long id);
+
     public Turno findById(Long id);
 
-    public Turno create(TurnoRequestDto dto);
-
-    public Turno update(Long id, TurnoRequestDto dto) throws Exception;
-
-    public void deleteById(Long id) throws Exception;
+    public void deleteById(Long id);
 
     public Turno fromDto(TurnoRequestDto dto);
 }

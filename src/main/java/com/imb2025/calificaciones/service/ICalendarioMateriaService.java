@@ -8,13 +8,13 @@ public interface ICalendarioMateriaService {
 
     public List<CalendarioMateria> findAll();
 
+    public CalendarioMateria create(CalendarioMateria calendarioMateria);
+
+    public CalendarioMateria update(CalendarioMateria calendarioMateria, Long id);
+
     public CalendarioMateria findById(Long id);
-
-    public CalendarioMateria create(CalendarioMateriaRequestDto dto);
-
-    public CalendarioMateria update(Long id, CalendarioMateriaRequestDto dto) throws Exception;
 
     public void deleteById(Long id);
 
-    public CalendarioMateria fromDto(CalendarioMateriaRequestDto dto) throws Exception;
+    public CalendarioMateria fromDto(CalendarioMateriaRequestDto dto);
 }

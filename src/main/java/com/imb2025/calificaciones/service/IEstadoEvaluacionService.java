@@ -8,11 +8,11 @@ public interface IEstadoEvaluacionService {
 
     public List<EstadoEvaluacion> findAll();
 
+    public EstadoEvaluacion create(EstadoEvaluacion estadoEvaluacion);
+
+    public EstadoEvaluacion update(EstadoEvaluacion estadoEvaluacion, Long id);
+
     public EstadoEvaluacion findById(Long id);
-
-    public EstadoEvaluacion create(EstadoEvaluacionRequestDto dto);
-
-    public EstadoEvaluacion update(Long id, EstadoEvaluacionRequestDto dto);
 
     public void deleteById(Long id);
 

@@ -8,15 +8,13 @@ public interface ITipoEvaluacionService {
 
     public List<TipoEvaluacion> findAll();
 
+    public TipoEvaluacion create(TipoEvaluacion tipoEvaluacion);
+
+    public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id);
+
     public TipoEvaluacion findById(Long id);
-
-    public TipoEvaluacion create(TipoEvaluacionRequestDto dto);
-
-    public TipoEvaluacion update(Long id, TipoEvaluacionRequestDto dto);
 
     public void deleteById(Long id);
 
     public TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto);
 }
-
- 

@@ -8,14 +8,13 @@ public interface ICarreraService {
 
     public List<Carrera> findAll();
 
+    public Carrera create(Carrera carrera);
+
+    public Carrera update(Carrera carrera, Long id);
+
     public Carrera findById(Long id);
-
-    public Carrera create(CarreraRequestDto dto);
-
-    public Carrera update(Long id, CarreraRequestDto dto) throws Exception;
 
     public void deleteById(Long id);
 
-    public Carrera fromDto(CarreraRequestDto dto) throws Exception;
+    public Carrera fromDto(CarreraRequestDto dto);
 }
-

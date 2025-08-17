@@ -8,11 +8,11 @@ public interface ITipoNotaService {
 
     public List<TipoNota> findAll();
 
+    public TipoNota create(TipoNota tipoNota);
+
+    public TipoNota update(TipoNota tipoNota, Long id);
+
     public TipoNota findById(Long id);
-
-    public TipoNota create(TipoNotaRequestDto dto);
-
-    public TipoNota update(Long id, TipoNotaRequestDto dto);
 
     public void deleteById(Long id);
 

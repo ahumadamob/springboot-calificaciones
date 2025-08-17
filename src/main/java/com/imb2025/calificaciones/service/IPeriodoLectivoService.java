@@ -8,13 +8,13 @@ public interface IPeriodoLectivoService {
 
     public List<PeriodoLectivo> findAll();
 
+    public PeriodoLectivo create(PeriodoLectivo periodoLectivo);
+
+    public PeriodoLectivo update(PeriodoLectivo periodoLectivo, Long id);
+
     public PeriodoLectivo findById(Long id);
 
-    public PeriodoLectivo create(PeriodoLectivoRequestDto dto);
-
-    public PeriodoLectivo update(Long id, PeriodoLectivoRequestDto dto) throws Exception;
-
-    public void deleteById(Long id) throws Exception;
+    public void deleteById(Long id);
 
     public PeriodoLectivo fromDto(PeriodoLectivoRequestDto dto);
 }

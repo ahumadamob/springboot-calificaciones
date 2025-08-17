@@ -8,11 +8,11 @@ public interface IPlanEstudioService {
 
     public List<PlanEstudio> findAll();
 
+    public PlanEstudio create(PlanEstudio planEstudio);
+
+    public PlanEstudio update(PlanEstudio planEstudio, Long id);
+
     public PlanEstudio findById(Long id);
-
-    public PlanEstudio create(PlanEstudioRequestDto dto);
-
-    public PlanEstudio update(Long id, PlanEstudioRequestDto dto);
 
     public void deleteById(Long id);
 

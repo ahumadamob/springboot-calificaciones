@@ -8,11 +8,11 @@ public interface IRegistroClaseService {
 
     public List<RegistroClase> findAll();
 
+    public RegistroClase create(RegistroClase registroClase);
+
+    public RegistroClase update(RegistroClase registroClase, Long id);
+
     public RegistroClase findById(Long id);
-
-    public RegistroClase create(RegistroClaseRequestDto dto);
-
-    public RegistroClase update(Long id, RegistroClaseRequestDto dto);
 
     public void deleteById(Long id);
 

@@ -8,11 +8,11 @@ public interface IHorarioService {
 
     public List<Horario> findAll();
 
+    public Horario create(Horario horario);
+
+    public Horario update(Horario horario, Long id);
+
     public Horario findById(Long id);
-
-    public Horario create(HorarioRequestDto dto);
-
-    public Horario update(Long id, HorarioRequestDto dto);
 
     public void deleteById(Long id);
 

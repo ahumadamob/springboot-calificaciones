@@ -8,11 +8,11 @@ public interface ISedeService {
 
     public List<Sede> findAll();
 
+    public Sede create(Sede sede);
+
+    public Sede update(Sede sede, Long id);
+
     public Sede findById(Long id);
-
-    public Sede create(SedeRequestDto dto);
-
-    public Sede update(Long id, SedeRequestDto dto);
 
     public void deleteById(Long id);
 

@@ -8,13 +8,13 @@ public interface IMateriaService {
 
     public List<Materia> findAll();
 
+    public Materia create(Materia materia);
+
+    public Materia update(Materia materia, Long id);
+
     public Materia findById(Long id);
-
-    public Materia create(MateriaRequestDto dto);
-
-    public Materia update(Long id, MateriaRequestDto dto) throws Exception;
 
     public void deleteById(Long id);
 
-    public Materia fromDto(MateriaRequestDto dto) throws Exception;
+    public Materia fromDto(MateriaRequestDto dto);
 }

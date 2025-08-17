@@ -8,11 +8,11 @@ public interface IEstadoCursadaService {
 
     public List<EstadoCursada> findAll();
 
+    public EstadoCursada create(EstadoCursada estadoCursada);
+
+    public EstadoCursada update(EstadoCursada estadoCursada, Long id);
+
     public EstadoCursada findById(Long id);
-
-    public EstadoCursada create(EstadoCursadaRequestDto dto);
-
-    public EstadoCursada update(Long id, EstadoCursadaRequestDto dto) throws Exception;
 
     public void deleteById(Long id);
 
