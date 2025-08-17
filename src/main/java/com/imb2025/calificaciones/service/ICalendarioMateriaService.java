@@ -14,7 +14,7 @@ public interface ICalendarioMateriaService {
 
     public CalendarioMateria findById(Long id);
 
-    public void deleteById(Long id);
+    public void deleteById(Long id) throws Exception;
 
     public CalendarioMateria fromDto(CalendarioMateriaRequestDto dto) throws Exception;
 }

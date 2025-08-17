@@ -46,9 +46,9 @@ public class RegistroClaseServiceImpl implements IRegistroClaseService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
         if (!registroClaseRepository.existsById(id)) {
-            throw new EntidadNoEncontradaException("RegistroClase no encontrado con ID: " + id);
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
         registroClaseRepository.deleteById(id);
     }

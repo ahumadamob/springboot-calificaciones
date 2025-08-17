@@ -43,9 +43,9 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws Exception {
         if (!repo.existsById(id)) {
-            throw new RuntimeException("No existe el tipo de evaluación con ID " + id);
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
         repo.deleteById(id);
     }

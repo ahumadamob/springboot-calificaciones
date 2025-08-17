@@ -52,10 +52,11 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService {
 
     @Override
     @Transactional
-    public void deleteById(Long id) {
-        if (calMatRepo.existsById(id)) {
-            calMatRepo.deleteById(id);
+    public void deleteById(Long id) throws Exception {
+        if (!calMatRepo.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
+        calMatRepo.deleteById(id);
     }
 
     @Override

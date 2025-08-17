@@ -14,7 +14,7 @@ public interface IPeriodoLectivoService {
 
     public PeriodoLectivo findById(Long id);
 
-    public void deleteById(Long id);
+    public void deleteById(Long id) throws Exception;
 
     public PeriodoLectivo fromDto(PeriodoLectivoRequestDto dto) throws Exception;
 }

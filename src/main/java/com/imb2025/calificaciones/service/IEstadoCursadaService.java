@@ -14,7 +14,7 @@ public interface IEstadoCursadaService {
 
     public EstadoCursada findById(Long id);
 
-    public void deleteById(Long id);
+    public void deleteById(Long id) throws Exception;
 
     public EstadoCursada fromDto(EstadoCursadaRequestDto dto) throws Exception;
 }

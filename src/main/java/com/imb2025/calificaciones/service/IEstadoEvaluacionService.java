@@ -14,7 +14,7 @@ public interface IEstadoEvaluacionService {
 
     public EstadoEvaluacion findById(Long id);
 
-    public void deleteById(Long id);
+    public void deleteById(Long id) throws Exception;
 
     public EstadoEvaluacion fromDto(EstadoEvaluacionRequestDto dto) throws Exception;
 }

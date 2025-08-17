@@ -14,7 +14,7 @@ public interface IHorarioService {
 
     public Horario findById(Long id);
 
-    public void deleteById(Long id);
+    public void deleteById(Long id) throws Exception;
 
     public Horario fromDto(HorarioRequestDto dto) throws Exception;
 }

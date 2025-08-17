@@ -46,9 +46,11 @@ public class MateriaServiceImpl implements IMateriaService{
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) throws Exception {
+        if (!repo.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
         repo.deleteById(id);
-
     }
 
     @Override

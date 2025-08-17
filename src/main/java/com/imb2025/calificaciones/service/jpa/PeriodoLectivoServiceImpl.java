@@ -42,9 +42,9 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 
     @Override
     public void deleteById(Long id) throws Exception {
-        repository.findById(id).orElseThrow(
-                () -> new Exception("Periodo no encontrado")
-        );
+        if (!repository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
         repository.deleteById(id);
     }
 

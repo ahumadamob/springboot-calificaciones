@@ -107,14 +107,9 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
     @Override
     public void deleteById(Long id) throws Exception {
         if (!asistenciaRepository.existsById(id)) {
-            throw new Exception("No se encontró la asistencia con ID: " + id);
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
-
-        try {
-            asistenciaRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new Exception("Error al eliminar la asistencia: " + e.getMessage());
-        }
+        asistenciaRepository.deleteById(id);
     }
 
     @Override

@@ -14,7 +14,7 @@ public interface IComisionService {
 
     public Comision findById(Long id);
 
-    public void deleteById(Long id);
+    public void deleteById(Long id) throws Exception;
 
     public Comision fromDto(ComisionRequestDto dto) throws Exception;
 }
