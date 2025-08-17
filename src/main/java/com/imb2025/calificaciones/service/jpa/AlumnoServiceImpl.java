@@ -3,25 +3,23 @@ package com.imb2025.calificaciones.service.jpa;
 import com.imb2025.calificaciones.dto.AlumnoRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
-import com.imb2025.calificaciones.service.IAlumnoServices;
+import com.imb2025.calificaciones.service.IAlumnoService;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-
 @Service
-public class AlumnoServiceImpl implements IAlumnoServices {
+public class AlumnoServiceImpl implements IAlumnoService {
 
     @Autowired
     private AlumnoRepository alumnoRepository;
 
     @Override
-    public Alumno update(AlumnoRequestDto datosActualizados, Long id) throws Exception {
+    public Alumno update(Alumno alumno, Long id) throws Exception {
         if (!alumnoRepository.existsById(id)) {
             throw new Exception("Estudiante no encontrado");
         }
-        Alumno alumno = fromDto(datosActualizados);
         alumno.setId(id);
         return alumnoRepository.save(alumno);
     }
@@ -37,8 +35,7 @@ public class AlumnoServiceImpl implements IAlumnoServices {
     }
 
     @Override
-    public Alumno create(AlumnoRequestDto nuevoAlumno) {
-        Alumno alumno = fromDto(nuevoAlumno);
+    public Alumno create(Alumno alumno) {
         return alumnoRepository.save(alumno);
     }
 
@@ -50,7 +47,8 @@ public class AlumnoServiceImpl implements IAlumnoServices {
             throw new RuntimeException("Estudiante no encontrado");
         }
     }
-     @Override
+
+    @Override
     public Alumno fromDto(AlumnoRequestDto alumnoDto) {
         Alumno alumno = new Alumno();
         alumno.setNombre(alumnoDto.getNombre());
@@ -63,11 +61,6 @@ public class AlumnoServiceImpl implements IAlumnoServices {
             throw new IllegalArgumentException("Formato de fecha incorrecto. Se espera yyyy-MM-dd.");
         }
         return alumno;
-    }
-
-    @Override
-    public boolean existsById(Long id) {
-        return alumnoRepository.existsById(id);
     }
 }
 

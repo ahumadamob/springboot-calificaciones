@@ -1,26 +1,20 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDto;
+import com.imb2025.calificaciones.entity.CalendarioMateria;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.repository.ComisionRepository;
+import com.imb2025.calificaciones.repository.ICalendarioMateriaRepository;
 import com.imb2025.calificaciones.repository.MateriaRepository;
-import jakarta.persistence.EntityNotFoundException;
-
+import com.imb2025.calificaciones.service.ICalendarioMateriaService;
+import jakarta.transaction.Transactional;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.entity.CalendarioMateria;
-import com.imb2025.calificaciones.repository.ICalendarioMateriaRepository;
-import com.imb2025.calificaciones.service.ICalendarioMateriaService;
-
-import jakarta.transaction.Transactional;
-
 @Service
-public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService{
+public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService {
 
     @Autowired
     private ICalendarioMateriaRepository calMatRepo;
@@ -36,7 +30,7 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService{
 
     @Override
     @Transactional
-    public CalendarioMateria findByID(Long id) {
+    public CalendarioMateria findById(Long id) {
         return calMatRepo.findById(id).orElseThrow();
     }
 
@@ -58,12 +52,10 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService{
 
     @Override
     @Transactional
-    public void delete(Long id) {
-
-        if (calMatRepo.existsById(id)){
+    public void deleteById(Long id) {
+        if (calMatRepo.existsById(id)) {
             calMatRepo.deleteById(id);
         }
-
     }
 
     @Override
