@@ -16,5 +16,5 @@ public interface IInscripcionMateriaService {
 
     public void deleteById(Long id);
 
-    public InscripcionMateria fromDto(InscripcionMateriaRequestDto dto);
+    public InscripcionMateria fromDto(InscripcionMateriaRequestDto dto) throws Exception;
 }

@@ -16,5 +16,5 @@ public interface IMateriaService {
 
     public void deleteById(Long id);
 
-    public Materia fromDto(MateriaRequestDto dto);
+    public Materia fromDto(MateriaRequestDto dto) throws Exception;
 }

@@ -16,5 +16,5 @@ public interface IRegistroClaseService {
 
     public void deleteById(Long id);
 
-    public RegistroClase fromDto(RegistroClaseRequestDto dto);
+    public RegistroClase fromDto(RegistroClaseRequestDto dto) throws Exception;
 }

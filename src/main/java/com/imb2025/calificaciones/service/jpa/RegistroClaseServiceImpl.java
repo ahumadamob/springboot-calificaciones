@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
 import com.imb2025.calificaciones.dto.RegistroClaseDTO;
+import com.imb2025.calificaciones.dto.RegistroClaseRequestDto;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.entity.RegistroClase;
@@ -82,5 +83,19 @@ public class RegistroClaseServiceImpl implements IRegistroClaseService {
         registro.setComision(comision);
 
         return registroClaseRepository.save(registro);
+    }
+
+    @Override
+    public RegistroClase fromDto(RegistroClaseRequestDto dto) throws Exception {
+        Docente docente = docenteRepository.findById(dto.getDocenteId())
+                .orElseThrow(() -> new Exception("Docente no encontrado con ID: " + dto.getDocenteId()));
+        Comision comision = comisionRepository.findById(dto.getComisionId())
+                .orElseThrow(() -> new Exception("Comisión no encontrada con ID: " + dto.getComisionId()));
+        RegistroClase registro = new RegistroClase();
+        registro.setFecha(dto.getFecha());
+        registro.setTema(dto.getTema());
+        registro.setDocente(docente);
+        registro.setComision(comision);
+        return registro;
     }
 }

@@ -16,5 +16,5 @@ public interface ISedeService {
 
     public void deleteById(Long id);
 
-    public Sede fromDto(SedeRequestDto dto);
+    public Sede fromDto(SedeRequestDto dto) throws Exception;
 }

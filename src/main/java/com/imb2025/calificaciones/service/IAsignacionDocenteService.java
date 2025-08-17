@@ -16,5 +16,5 @@ public interface IAsignacionDocenteService {
 
     public void deleteById(Long id);
 
-    public AsignacionDocente fromDto(AsignacionDocenteRequestDto dto);
+    public AsignacionDocente fromDto(AsignacionDocenteRequestDto dto) throws Exception;
 }

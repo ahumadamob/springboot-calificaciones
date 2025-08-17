@@ -16,5 +16,5 @@ public interface IDocenteService {
 
     public void deleteById(Long id);
 
-    public Docente fromDto(DocenteRequestDto dto);
+    public Docente fromDto(DocenteRequestDto dto) throws Exception;
 }

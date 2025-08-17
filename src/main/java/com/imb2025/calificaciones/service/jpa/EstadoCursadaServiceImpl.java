@@ -48,7 +48,7 @@ public class EstadoCursadaServiceImpl implements IEstadoCursadaService {
     }
 
     @Override
-    public EstadoCursada fromDto(EstadoCursadaRequestDto estadoCursadaRequestDto) {
+    public EstadoCursada fromDto(EstadoCursadaRequestDto estadoCursadaRequestDto) throws Exception {
         EstadoCursada estadoCursada = new EstadoCursada();
         estadoCursada.setNombre(estadoCursadaRequestDto.getNombre());
         estadoCursada.setDescripcion(estadoCursadaRequestDto.getDescripcion());

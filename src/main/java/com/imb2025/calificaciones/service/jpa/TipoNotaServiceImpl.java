@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.imb2025.calificaciones.dto.TipoNotaRequestDto;
 import com.imb2025.calificaciones.entity.TipoNota;
 import com.imb2025.calificaciones.repository.TipoNotaRepository;
 import com.imb2025.calificaciones.service.ITipoNotaService;
@@ -53,5 +54,16 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
     @Override
     public void deleteById(Long id) {
         tipoNotaRepository.deleteById(id);
+    }
+
+    @Override
+    public TipoNota fromDto(TipoNotaRequestDto dto) throws Exception {
+        if (dto == null) {
+            throw new Exception("El dto de tipo nota no puede ser nulo");
+        }
+        TipoNota tipoNota = new TipoNota();
+        tipoNota.setNombre(dto.getNombre());
+        tipoNota.setDescripcion(dto.getDescripcion());
+        return tipoNota;
     }
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.imb2025.calificaciones.dto.SedeRequestDto;
 import com.imb2025.calificaciones.entity.Sede;
 import com.imb2025.calificaciones.repository.SedeRepository;
 import com.imb2025.calificaciones.service.ISedeService;
@@ -41,5 +42,16 @@ public class SedeServiceImpl implements ISedeService {
     public void deletedById(Long id) {
         repo.deleteById(id);
 
+    }
+
+    @Override
+    public Sede fromDto(SedeRequestDto dto) throws Exception {
+        if (dto == null) {
+            throw new Exception("El dto de sede no puede ser nulo");
+        }
+        Sede sede = new Sede();
+        sede.setNombre(dto.getNombre());
+        sede.setDireccion(dto.getDireccion());
+        return sede;
     }
 }

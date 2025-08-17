@@ -30,7 +30,7 @@ public class DocenteServiceImpl implements IDocenteService {
     }
 
     @Override
-    public Docente fromDto(DocenteRequestDto docenteDTO) {
+    public Docente fromDto(DocenteRequestDto docenteDTO) throws Exception {
 
         Docente docente = new Docente();
         docente.setNombre(docenteDTO.getNombre());

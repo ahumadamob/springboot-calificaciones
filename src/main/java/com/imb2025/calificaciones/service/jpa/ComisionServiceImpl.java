@@ -51,12 +51,14 @@ public class ComisionServiceImpl implements IComisionService {
     }
 
     @Override
-    public Comision fromDto(ComisionRequestDto dto) {
+    public Comision fromDto(ComisionRequestDto dto) throws Exception {
         if (dto == null) {
             return null;
         }
-        Turno turno = turnoRepository.findById(dto.getTurnoId()).orElse(null);
-        Sede sede = sedeRepository.findById(dto.getSedeId()).orElse(null);
+        Turno turno = turnoRepository.findById(dto.getTurnoId())
+                .orElseThrow(() -> new Exception("Turno no encontrado con id: " + dto.getTurnoId()));
+        Sede sede = sedeRepository.findById(dto.getSedeId())
+                .orElseThrow(() -> new Exception("Sede no encontrada con id: " + dto.getSedeId()));
         return new Comision(dto.getNombre(), turno, sede);
     }
 }

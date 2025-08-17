@@ -51,7 +51,7 @@ public class TurnoServiceImpl implements ITurnoService {
     }
 
     @Override
-    public Turno fromDto(TurnoRequestDto turnoRequestDto) {
+    public Turno fromDto(TurnoRequestDto turnoRequestDto) throws Exception {
         Turno turno = new Turno();
         turno.setNombre(turnoRequestDto.getNombre());
         turno.setHoraInicio(turnoRequestDto.getHoraInicio());

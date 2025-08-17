@@ -52,7 +52,7 @@ public class CarreraServiceImpl implements ICarreraService {
     }
 
     @Override
-    public Carrera fromDto(CarreraRequestDto dto) {
+    public Carrera fromDto(CarreraRequestDto dto) throws Exception {
         if (dto == null) {
             return null;
         }

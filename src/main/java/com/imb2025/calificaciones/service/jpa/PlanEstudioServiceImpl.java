@@ -88,36 +88,30 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
     }
 
     @Override
-    public PlanEstudio convertToEntity(PlanEstudioRequestDto dto) {
+    public PlanEstudio fromDto(PlanEstudioRequestDto dto) throws Exception {
         if (dto == null) {
-            throw new RuntimeException("El DTO no puede ser nulo");
+            throw new Exception("El DTO no puede ser nulo");
         }
 
         PlanEstudio plan = new PlanEstudio();
 
-        // Validar carrera
         Carrera carrera = carreraRepository.findById(dto.getCarreraId())
-            .orElseThrow(() -> new EntidadNoEncontradaException("Carrera con ID " + dto.getCarreraId() + " no encontrada"));
+            .orElseThrow(() -> new Exception("Carrera con ID " + dto.getCarreraId() + " no encontrada"));
         plan.setCarrera(carrera);
 
-        // Validar nombre
         if (dto.getNombre() == null || dto.getNombre().isEmpty()) {
-            throw new RuntimeException("El nombre no puede ser nulo o vacío");
+            throw new Exception("El nombre no puede ser nulo o vacío");
         }
         plan.setNombre(dto.getNombre());
-
-        // Validar año vigencia
-        /*
-        AnioVigencia anio = anioVigenciaRepository.findById(dto.getAniovigencia())
-            .orElseThrow(() -> new EntidadNoEncontradaException("Año de vigencia con ID " + dto.getAniovigencia() + " no encontrado"));
-        plan.setAnioVigencia(anio);
-        */
-
-        // Si viene el ID (por PUT)
-        if (dto.getId() != null) {
-            plan.setId(dto.getId());
-        }
-
+        plan.setAnioVigencia(dto.getAnioVigencia());
         return plan;
+    }
+
+    public PlanEstudio convertToEntity(PlanEstudioRequestDto dto) {
+        try {
+            return fromDto(dto);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al convertir PlanEstudio: " + e.getMessage());
+        }
     }
 }

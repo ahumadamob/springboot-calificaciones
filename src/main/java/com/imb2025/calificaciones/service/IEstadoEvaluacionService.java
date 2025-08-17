@@ -16,5 +16,5 @@ public interface IEstadoEvaluacionService {
 
     public void deleteById(Long id);
 
-    public EstadoEvaluacion fromDto(EstadoEvaluacionRequestDto dto);
+    public EstadoEvaluacion fromDto(EstadoEvaluacionRequestDto dto) throws Exception;
 }

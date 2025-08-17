@@ -16,5 +16,5 @@ public interface IAsistenciaService {
 
     public void deleteById(Long id);
 
-    public Asistencia fromDto(AsistenciaRequestDto dto);
+    public Asistencia fromDto(AsistenciaRequestDto dto) throws Exception;
 }

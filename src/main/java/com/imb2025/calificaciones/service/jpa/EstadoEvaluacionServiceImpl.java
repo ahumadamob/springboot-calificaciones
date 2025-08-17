@@ -52,7 +52,7 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
     }
 
     @Override
-    public EstadoEvaluacion fromDto(EstadoEvaluacionRequestDto dto) {
+    public EstadoEvaluacion fromDto(EstadoEvaluacionRequestDto dto) throws Exception {
         EstadoEvaluacion estado = new EstadoEvaluacion();
         estado.setNombre(dto.getNombre());
         estado.setDescripcion(dto.getDescripcion());
