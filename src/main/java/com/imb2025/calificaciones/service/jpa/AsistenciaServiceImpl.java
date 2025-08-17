@@ -37,7 +37,7 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
     }
 
     @Override
-    public Asistencia save(AsistenciaRequestDto dto) throws Exception {
+    public Asistencia create(AsistenciaRequestDto dto) throws Exception {
         try {
             Asistencia asistencia = new Asistencia();
             if(dto.getAlumnoId() != null) {

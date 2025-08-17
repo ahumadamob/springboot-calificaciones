@@ -37,12 +37,12 @@ public class CursadaController {
 
     @PostMapping("/api/cursada")
     public ResponseEntity<String> createCursada(@RequestBody CursadaRequestDto cursada){
-        return ResponseEntity.ok(cursadaService.save(cursada));
-    } 
+        return ResponseEntity.ok(cursadaService.create(cursada));
+    }
 
     @PutMapping("/api/cursada")
     public ResponseEntity<String> updateCursada(@RequestBody CursadaRequestDto cursada){
-        return ResponseEntity.ok(cursadaService.save(cursada));
+        return ResponseEntity.ok(cursadaService.create(cursada));
 
     }
 
@@ -55,7 +55,7 @@ public class CursadaController {
     @PutMapping("/api/cursada/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody CursadaRequestDto dto) {
         try {
-            return ResponseEntity.ok(cursadaService.update(id,dto));
+            return ResponseEntity.ok(cursadaService.update(dto,id));
         } catch (Exception e) {
             return ResponseEntity.status(404).body("No existe la cursada");
         }

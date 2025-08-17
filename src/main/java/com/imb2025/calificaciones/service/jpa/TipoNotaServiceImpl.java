@@ -29,7 +29,7 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
     }
 
     @Override
-    public TipoNota save(TipoNota tipoNota) {
+    public TipoNota create(TipoNota tipoNota) {
         try {
             return tipoNotaRepository.save(tipoNota);
         } catch (Exception e) {

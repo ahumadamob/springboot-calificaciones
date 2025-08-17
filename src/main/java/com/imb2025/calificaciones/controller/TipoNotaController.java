@@ -46,7 +46,7 @@ public class TipoNotaController {
     // POST /tiponota - crear nuevo
     @PostMapping
     public TipoNota create(@RequestBody TipoNota tipoNota) {
-        return tipoNotaService.save(tipoNota);
+        return tipoNotaService.create(tipoNota);
     }
 
     // PUT /tiponota/{id} - actualizar existente
@@ -56,7 +56,7 @@ public class TipoNotaController {
             // Verificamos si el TipoNota existe antes de intentar actualizar
             tipoNotaService.findById(id);
 
-            TipoNota actualizado = tipoNotaService.update(id, tipoNota);
+            TipoNota actualizado = tipoNotaService.update(tipoNota, id);
             return ResponseEntity.ok(actualizado);
 
         } catch (RuntimeException e) {

@@ -32,7 +32,7 @@ public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
     }
 
     @Override
-    public RequisitoMateria save(RequisitoMateriaRequestDto dto) {
+    public RequisitoMateria create(RequisitoMateriaRequestDto dto) {
         try {
             RequisitoMateria requisito = fromDto(dto);
             return requisitoRepository.save(requisito);

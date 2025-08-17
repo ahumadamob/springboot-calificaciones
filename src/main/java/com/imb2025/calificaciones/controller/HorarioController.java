@@ -22,25 +22,25 @@ public class HorarioController {
 	
 	@Autowired
 	private IHorarioService horarioService;
-	@GetMapping ("/entidad")
+        @GetMapping ("/entidad")
     public List<Horario> obtenerTodos() {
-        return horarioService.getAll();
+        return horarioService.findAll();
     }
 	
-	@PostMapping("/entidad")
-	public Horario crear(@RequestBody Horario nuevoHorario) {
-	    return horarioService.save(nuevoHorario);
-	}
+        @PostMapping("/entidad")
+        public Horario crear(@RequestBody Horario nuevoHorario) {
+            return horarioService.create(nuevoHorario);
+        }
 	
-	@PutMapping("/entidad/{id}")
-	public Horario actualizar(@PathVariable Long id, @RequestBody Horario datosActualizados) {
-	    return horarioService.update(id, datosActualizados);
-	}
+        @PutMapping("/entidad/{id}")
+        public Horario actualizar(@PathVariable Long id, @RequestBody Horario datosActualizados) {
+            return horarioService.update(datosActualizados, id);
+        }
 	
-	@DeleteMapping("/entidad/{id}")
-	public void eliminar(@PathVariable Long id) {
-	    horarioService.delete(id);
-	}
+        @DeleteMapping("/entidad/{id}")
+        public void eliminar(@PathVariable Long id) {
+            horarioService.deleteById(id);
+        }
 	
 	@GetMapping("/entidad/{id}")
     public Horario obtenerPorId(@PathVariable Long id){

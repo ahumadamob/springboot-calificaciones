@@ -38,7 +38,7 @@ public class CursadaServiceImpl implements ICursadaService{
     }
 
     @Override
-    public String save(CursadaRequestDto dto) {
+    public String create(CursadaRequestDto dto) {
          Cursada cursada = new Cursada();
         Mapper(cursada, dto);
         return "Guardado correctamente";

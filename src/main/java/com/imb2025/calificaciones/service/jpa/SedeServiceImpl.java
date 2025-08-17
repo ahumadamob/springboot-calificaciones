@@ -34,7 +34,7 @@ public class SedeServiceImpl implements ISedeService {
     }
 
     @Override
-    public Sede save(Sede sede) {
+    public Sede create(Sede sede) {
         return repo.save(sede);
     }
 

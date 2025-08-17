@@ -42,7 +42,7 @@ public class EvaluacionServiceImpl implements IEvaluacionService {
 
     @Override
     @Transactional
-    public Evaluacion save(Evaluacion evaluacion) {
+    public Evaluacion create(Evaluacion evaluacion) {
         try {
             return evaluacionRepository.save(evaluacion);
 
