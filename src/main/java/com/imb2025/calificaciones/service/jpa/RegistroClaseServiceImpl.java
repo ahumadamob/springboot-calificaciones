@@ -31,7 +31,7 @@ public class RegistroClaseServiceImpl implements IRegistroClaseService {
     }
 
     @Override
-    public List<RegistroClase> obtenerTodosLosRegistros() {
+    public List<RegistroClase> findAll() {
         return registroClaseRepository.findAll();
     }
 
