@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.imb2025.calificaciones.dto.HorarioRequestDto;
 import com.imb2025.calificaciones.entity.Horario;
 import com.imb2025.calificaciones.repository.HorarioRepository;
 import com.imb2025.calificaciones.repository.ComisionRepository;

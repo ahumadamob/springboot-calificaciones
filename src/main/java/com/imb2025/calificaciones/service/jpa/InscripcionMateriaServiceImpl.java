@@ -48,7 +48,7 @@ public class InscripcionMateriaServiceImpl implements IInscripcionMateriaService
             inscripcionMateria.setId(id);
             return repository.save(inscripcionMateria);
         } else {
-            throw new NoSuchElementException("No se encontró Inscripcion con el id " + id);
+            throw new Exception("No se encontró Inscripcion con el id " + id);
         }
 
     }
@@ -62,22 +62,22 @@ public class InscripcionMateriaServiceImpl implements IInscripcionMateriaService
     }
 
     @Override
-    public InscripcionMateria fromDto(InscripcionMateriaRequestDto inscripcionMateriaDTO) throws Exception {
+    public InscripcionMateria fromDto(InscripcionMateriaRequestDto inscripcionMateriaDto) throws Exception {
         InscripcionMateria inscripcionMateria = new InscripcionMateria();
 
-        Alumno alumno = alumnoRepository.findById(inscripcionMateriaDTO.getIdAlumno())
+        Alumno alumno = alumnoRepository.findById(inscripcionMateriaDto.getAlumnoId())
                 .orElseThrow(() -> new Exception(
-                        "Alumno no encontrado con ID: " + inscripcionMateriaDTO.getIdAlumno()));
+                        "Alumno no encontrado con ID: " + inscripcionMateriaDto.getAlumnoId()));
         inscripcionMateria.setAlumno(alumno);
 
-        Materia materia = materiaRepository.findById(inscripcionMateriaDTO.getIdMateria())
+        Materia materia = materiaRepository.findById(inscripcionMateriaDto.getMateriaId())
                 .orElseThrow(() -> new Exception(
-                        "Materia no encontrada con ID: " + inscripcionMateriaDTO.getIdMateria()));
+                        "Materia no encontrada con ID: " + inscripcionMateriaDto.getMateriaId()));
         inscripcionMateria.setMateria(materia);
 
-        PeriodoLectivo periodoLectivo = periodoLectivoRepository.findById(inscripcionMateriaDTO.getIdPeriodoLectivo())
+        PeriodoLectivo periodoLectivo = periodoLectivoRepository.findById(inscripcionMateriaDto.getPeriodoLectivoId())
                 .orElseThrow(() -> new Exception(
-                        "Periodo Lectivo no encontrado con ID: " + inscripcionMateriaDTO.getIdPeriodoLectivo()));
+                        "Periodo Lectivo no encontrado con ID: " + inscripcionMateriaDto.getPeriodoLectivoId()));
         inscripcionMateria.setPeriodoLectivo(periodoLectivo);
 
         return inscripcionMateria;

@@ -10,7 +10,7 @@ public interface INivelMateriaService {
 
     public NivelMateria create(NivelMateria nivelMateria);
 
-    public NivelMateria update(NivelMateria nivelMateria, Long id);
+    public NivelMateria update(NivelMateria nivelMateria, Long id) throws Exception;
 
     public NivelMateria findById(Long id);
 

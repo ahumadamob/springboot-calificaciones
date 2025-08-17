@@ -40,8 +40,16 @@ public class Cursada {
         this.anioLectivo = anioLectivo;
         this.condicionFinal = condicionFinal;
     }
+    
+    public Long getId() {
+		return id;
+	}
 
-    public Alumno getAlumno() {
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Alumno getAlumno() {
         return alumno;
     }
 

@@ -28,8 +28,8 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
     private DocenteRepository docenteRepository;
 
     @Override
-    public Optional<ObservacionAlumno> findById(Long id) {
-        return observacionAlumnoRepository.findById(id);
+    public ObservacionAlumno findById(Long id) {
+        return observacionAlumnoRepository.findById(id).orElse(null);
     }
 
     @Override

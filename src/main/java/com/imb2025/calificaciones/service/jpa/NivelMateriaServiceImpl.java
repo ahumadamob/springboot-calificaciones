@@ -51,5 +51,16 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
         return nivelMateria;
     }
 
+	@Override
+	public NivelMateria update(NivelMateria nivelMateria, Long id) throws Exception {
+        if(repo.existsById(id)){
+        	nivelMateria.setId(id);
+            return repo.save(nivelMateria);
+        }else {
+            throw new Exception("Nivel de Materia con ID " + id + " no encontrado.");
+        }
+
+	}
+
     }
 

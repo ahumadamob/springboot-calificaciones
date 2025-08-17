@@ -38,10 +38,8 @@ public class CursadaServiceImpl implements ICursadaService{
     }
 
     @Override
-    public String create(CursadaRequestDto dto) {
-         Cursada cursada = new Cursada();
-        Mapper(cursada, dto);
-        return "Guardado correctamente";
+    public Cursada create(Cursada cursada) {
+    	return repo.save(cursada);
     }
 
     @Override
@@ -53,31 +51,13 @@ public class CursadaServiceImpl implements ICursadaService{
     }
 
     @Override
-    public String update(CursadaRequestDto dto, Long id){
-         Cursada cursada = repo.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Cursada no encontrada"));
-        Mapper(cursada, dto);
-        return"Updateada correctamente";
-    }
-
-    public void Mapper(Cursada cursada, CursadaRequestDto dto){
-
-                Alumno alumno = alumnorepo.findById(dto.getAlumnoId())
-                    .orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
-
-                Materia materia = materiaRepository.findById(dto.getMateriaId())
-                    .orElseThrow(() -> new RuntimeException("Materia no encontrada"));
-
-                CondicionFinal condicionFinal = cRepository.findById(dto.getCondicionFinalId())
-                    .orElseThrow(() -> new RuntimeException("Condición final no encontrada"));
-
-                cursada.setAlumno(alumno);
-                cursada.setMateria(materia);
-                cursada.setCondicionFinal(condicionFinal);
-                repo.save(cursada);
-
-            }
-
+    public Cursada update(Cursada cursada, Long id) throws Exception{
+        if(repo.existsById(id)){
+            cursada.setId(id);
+            return repo.save(cursada);
+        }else {
+            throw new Exception("Cursada con ID " + id + " no encontrado.");
+        }
     }
 
     @Override
@@ -94,3 +74,4 @@ public class CursadaServiceImpl implements ICursadaService{
         cursada.setCondicionFinal(condicionFinal);
         return cursada;
     }
+}

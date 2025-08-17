@@ -28,14 +28,8 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
     }
 
     @Override
-    @Transactional
     public EstadoEvaluacion create(EstadoEvaluacion estadoEvaluacion) {
         return repository.save(estadoEvaluacion);
-    }
-
-    public EstadoEvaluacion create(EstadoEvaluacionRequestDto dto) {
-        EstadoEvaluacion estado = fromDto(dto);
-        return repository.save(estado);
     }
 
     @Override

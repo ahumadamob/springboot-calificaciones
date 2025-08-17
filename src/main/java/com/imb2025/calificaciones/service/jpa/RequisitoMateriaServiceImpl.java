@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
@@ -27,36 +26,24 @@ public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
     }
 
     @Override
-    public Optional<RequisitoMateria> findById(Long id) {
-        return requisitoRepository.findById(id);
+    public RequisitoMateria findById(Long id) {
+        return requisitoRepository.findById(id).orElse(null);
     }
 
     @Override
-    public RequisitoMateria create(RequisitoMateriaRequestDto dto) {
-        try {
-            RequisitoMateria requisito = fromDto(dto);
-            return requisitoRepository.save(requisito);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al guardar requisito: " + e.getMessage());
-        }
+    public RequisitoMateria create(RequisitoMateria requisitoMateria) {
+    	return requisitoRepository.save(requisitoMateria);
     }
 
     @Override
-    public RequisitoMateria update(RequisitoMateriaRequestDto dto, Long id) throws Exception {
-        try {
-            RequisitoMateria existente = requisitoRepository.findById(id)
-                .orElseThrow(() -> new EntidadNoEncontradaException("Requisito con ID " + id + " no encontrado."));
-
-            RequisitoMateria actualizado = fromDto(dto);
-            existente.setMateria(actualizado.getMateria());
-            existente.setMateriaCorrelativa(actualizado.getMateriaCorrelativa());
-
-            return requisitoRepository.save(existente);
-        } catch (EntidadNoEncontradaException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new Exception("Error al actualizar requisito: " + e.getMessage());
+    public RequisitoMateria update(RequisitoMateria requisitoMateria, Long id) throws Exception {
+        if(requisitoRepository.existsById(id)){
+        	requisitoMateria.setId(id);
+            return requisitoRepository.save(requisitoMateria);
+        }else {
+            throw new Exception("Requisito Materia con ID " + id + " no encontrado.");
         }
+
     }
 
     @Override

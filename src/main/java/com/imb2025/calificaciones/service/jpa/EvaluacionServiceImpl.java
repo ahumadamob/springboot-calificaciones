@@ -8,7 +8,6 @@ import com.imb2025.calificaciones.repository.ComisionRepository;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.repository.TipoEvaluacionRepository;
 import jakarta.transaction.Transactional;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -97,7 +96,6 @@ public class EvaluacionServiceImpl implements IEvaluacionService {
                             "Comisión no encontrada con id: " + evaluacionRequestDto.getComisionId()));
             evaluacion.setComision(comision);
         }
-        evaluacion.setId(evaluacionRequestDto.getId());
         evaluacion.setFecha(evaluacionRequestDto.getFechaEvaluacion());
         return evaluacion;
     }
