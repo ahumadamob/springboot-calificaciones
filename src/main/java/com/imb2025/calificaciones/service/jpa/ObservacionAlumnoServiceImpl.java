@@ -29,13 +29,11 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 
     @Override
     public Optional<ObservacionAlumno> findById(Long id) {
-        // TODO Auto-generated method stub
         return observacionAlumnoRepository.findById(id);
     }
 
     @Override
     public List<ObservacionAlumno> findAll() {
-        // TODO Auto-generated method stub
         return observacionAlumnoRepository.findAll();
     }
 
@@ -50,7 +48,7 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
     }
 
     @Override
-    public ObservacionAlumno update(ObservacionAlumno observacionAlumno, Long id) throws Exception {
+    public ObservacionAlumno update(Long id, ObservacionAlumno observacionAlumno) throws Exception {
 
         try {
 

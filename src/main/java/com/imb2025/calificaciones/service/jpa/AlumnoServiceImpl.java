@@ -18,11 +18,12 @@ public class AlumnoServiceImpl implements IAlumnoServices {
 
     @Override
     public Alumno update(AlumnoRequestDto datosActualizados, Long id) throws Exception {
-        if (alumnoRepository.existsById(id)) {
-            return fromDto(datosActualizados);
-        } else {
+        if (!alumnoRepository.existsById(id)) {
             throw new Exception("Estudiante no encontrado");
         }
+        Alumno alumno = fromDto(datosActualizados);
+        alumno.setId(id);
+        return alumnoRepository.save(alumno);
     }
 
     @Override
@@ -37,8 +38,8 @@ public class AlumnoServiceImpl implements IAlumnoServices {
 
     @Override
     public Alumno create(AlumnoRequestDto nuevoAlumno) {
-        return fromDto(nuevoAlumno);
-
+        Alumno alumno = fromDto(nuevoAlumno);
+        return alumnoRepository.save(alumno);
     }
 
     @Override
@@ -61,8 +62,12 @@ public class AlumnoServiceImpl implements IAlumnoServices {
         } catch (Exception e) {
             throw new IllegalArgumentException("Formato de fecha incorrecto. Se espera yyyy-MM-dd.");
         }
-        alumnoRepository.save(alumno);
         return alumno;
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        return alumnoRepository.existsById(id);
     }
+}
 
