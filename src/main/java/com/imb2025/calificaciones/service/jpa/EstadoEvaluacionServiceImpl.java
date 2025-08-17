@@ -1,52 +1,61 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.entity.EstadoEvaluacion;
-import com.imb2025.calificaciones.repository.EstadoEvaluacionRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.imb2025.calificaciones.dto.EstadoEvaluacionRequestDto;
+import com.imb2025.calificaciones.entity.EstadoEvaluacion;
+import com.imb2025.calificaciones.repository.EstadoEvaluacionRepository;
+import com.imb2025.calificaciones.service.IEstadoEvaluacionService;
 
 @Service
-public class EstadoEvaluacionServiceImpl  {
+public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
 
     @Autowired
     private EstadoEvaluacionRepository repository;
 
     @Override
-    public List<EstadoEvaluacion> getAll() {
+    public List<EstadoEvaluacion> findAll() {
         return repository.findAll();
-    }
-
-    @Override
-    @Transactional
-    public EstadoEvaluacion save(EstadoEvaluacion estadoEvaluacion) {
-        EstadoEvaluacion estado = new EstadoEvaluacion();
-        estado.setNombre(estadoEvaluacion.getNombre());
-        estado.setDescripcion(estadoEvaluacion.getDescripcion());
-        return repository.save(estado);
-    }
-
-    @Override
-    @Transactional
-    public EstadoEvaluacion update(EstadoEvaluacion estadoEvaluacion, Long id) {
-        EstadoEvaluacion existente = repository.findById(id).orElse(null);
-        if (existente != null) {
-            existente.setNombre(estadoEvaluacion.getNombre());
-            existente.setDescripcion(estadoEvaluacion.getDescripcion());
-            return repository.save(existente);
-        }
-        return null;
-    }
-
-    @Override
-    public void delete(Long id) {
-        repository.deleteById(id);
     }
 
     @Override
     public EstadoEvaluacion findById(Long id) {
         return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public EstadoEvaluacion create(EstadoEvaluacionRequestDto dto) {
+        EstadoEvaluacion estado = fromDto(dto);
+        return repository.save(estado);
+    }
+
+    @Override
+    @Transactional
+    public EstadoEvaluacion update(Long id, EstadoEvaluacionRequestDto dto) {
+        EstadoEvaluacion existente = repository.findById(id).orElse(null);
+        if (existente == null) {
+            return null;
+        }
+        existente.setNombre(dto.getNombre());
+        existente.setDescripcion(dto.getDescripcion());
+        return repository.save(existente);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
+    @Override
+    public EstadoEvaluacion fromDto(EstadoEvaluacionRequestDto dto) {
+        EstadoEvaluacion estado = new EstadoEvaluacion();
+        estado.setNombre(dto.getNombre());
+        estado.setDescripcion(dto.getDescripcion());
+        return estado;
     }
 }
