@@ -47,7 +47,7 @@ public class RequisitoMateriaController {
         try {
             RequisitoMateria nuevo = service.create(service.fromDto(dto));
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Error al crear requisito: " + e.getMessage());
         }
@@ -64,7 +64,7 @@ public class RequisitoMateriaController {
         try {
             RequisitoMateria actualizado = service.update(service.fromDto(dto), id);
             return ResponseEntity.ok(actualizado);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Error al actualizar: " + e.getMessage());
         }
