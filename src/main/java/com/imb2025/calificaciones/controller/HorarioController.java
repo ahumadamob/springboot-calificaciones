@@ -27,20 +27,28 @@ public class HorarioController {
         return horarioService.findAll();
     }
 	
-        @PostMapping("/entidad")
-        public Horario crear(@RequestBody Horario nuevoHorario) {
-            return horarioService.create(nuevoHorario);
-        }
-	
-        @PutMapping("/entidad/{id}")
-        public Horario actualizar(@PathVariable Long id, @RequestBody Horario datosActualizados) {
+    @PostMapping("/entidad")
+    public Horario crear(@RequestBody Horario nuevoHorario) {
+        return horarioService.create(nuevoHorario);
+    }
+
+    @PutMapping("/entidad/{id}")
+    public Horario actualizar(@PathVariable Long id, @RequestBody Horario datosActualizados) {
+        try {
             return horarioService.update(datosActualizados, id);
+        } catch (Exception e) {
+            return null;
         }
+    }
 	
-        @DeleteMapping("/entidad/{id}")
-        public void eliminar(@PathVariable Long id) {
-            horarioService.deleteById(id);
-        }
+    @DeleteMapping("/entidad/{id}")
+    public void eliminar(@PathVariable Long id) {
+            try {
+                    horarioService.deleteById(id);
+            } catch (Exception e) {
+                    // manejar excepción
+            }
+    }
 	
 	@GetMapping("/entidad/{id}")
     public Horario obtenerPorId(@PathVariable Long id){

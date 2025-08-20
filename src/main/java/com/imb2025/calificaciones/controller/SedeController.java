@@ -47,9 +47,13 @@ public class SedeController {
                 return sedeService.create(sede);
         }
 	
-	@DeleteMapping("/api/sede/{idSede}")
-	public void deleteSede(@PathVariable("idSede") Long id){
-		sedeService.deletedById(id);
-	}
+        @DeleteMapping("/api/sede/{idSede}")
+        public void deleteSede(@PathVariable("idSede") Long id){
+                try {
+                        sedeService.deleteById(id);
+                } catch (Exception e) {
+                        // manejar excepción de forma simple
+                }
+        }
 	
 }

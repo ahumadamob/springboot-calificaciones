@@ -30,25 +30,25 @@ public class CalendarioMateriaController {
 	private ICalendarioMateriaService calMatSer;
 	
 	
-	@GetMapping
-	public ResponseEntity<List<CalendarioMateria>> getAll (){
-		List<CalendarioMateria> getAllCalMat = calMatSer.findAll();
-		return ResponseEntity.ok(getAllCalMat);
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<CalendarioMateria> getById(@PathVariable Long id){
-		CalendarioMateria getCalMat = calMatSer.findByID(id);
-		return ResponseEntity.ok(getCalMat);
-	}
+        @GetMapping
+        public ResponseEntity<List<CalendarioMateria>> getAll (){
+                List<CalendarioMateria> calendarios = calMatSer.findAll();
+                return calendarios.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(calendarios);
+        }
+
+        @GetMapping("/{id}")
+        public ResponseEntity<CalendarioMateria> getById(@PathVariable Long id){
+                CalendarioMateria calendario = calMatSer.findById(id);
+                return calendario == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(calendario);
+        }
 	
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto){
 
 		try {
 			CalendarioMateria calendarioMateria;
-			calendarioMateria = calMatSer.mapFromDto(calendarioMateriaDto);
-			calendarioMateria = calMatSer.create(calendarioMateria);
+                        calendarioMateria = calMatSer.fromDto(calendarioMateriaDto);
+                        calendarioMateria = calMatSer.create(calendarioMateria);
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(calendarioMateria);
 		} catch (Exception e) {
@@ -61,8 +61,8 @@ public class CalendarioMateriaController {
 													@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto){
 		try {
 			CalendarioMateria calendarioMateria;
-			calendarioMateria = calMatSer.mapFromDto(calendarioMateriaDto);
-			calendarioMateria = calMatSer.update(id, calendarioMateria);
+                        calendarioMateria = calMatSer.fromDto(calendarioMateriaDto);
+                        calendarioMateria = calMatSer.update(calendarioMateria, id);
 
 			return ResponseEntity.status(HttpStatus.OK).body(calendarioMateria);
 		} catch (Exception e) {
@@ -72,11 +72,15 @@ public class CalendarioMateriaController {
 
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id){
-		calMatSer.delete(id);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-	}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+                try {
+                        calMatSer.deleteById(id);
+                        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+                } catch (Exception e) {
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                }
+    }
 	
 }
 

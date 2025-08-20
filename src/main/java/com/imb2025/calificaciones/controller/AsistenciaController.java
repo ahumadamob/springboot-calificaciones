@@ -27,8 +27,9 @@ public class AsistenciaController {
 
     // GET - listar todas las asistencias
     @GetMapping
-    public List<Asistencia> getAll() {
-        return asistenciaService.findAll();
+    public ResponseEntity<List<Asistencia>> getAll() {
+        List<Asistencia> asistencias = asistenciaService.findAll();
+        return asistencias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(asistencias);
     }
 
     // GET - buscar una asistencia por ID

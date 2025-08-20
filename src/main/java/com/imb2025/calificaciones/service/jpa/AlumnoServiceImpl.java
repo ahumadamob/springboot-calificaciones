@@ -48,6 +48,11 @@ public class AlumnoServiceImpl implements IAlumnoService {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return alumnoRepository.existsById(id);
+    }
+
+    @Override
     public Alumno fromDto(AlumnoRequestDto alumnoDto) throws Exception {
         Alumno alumno = new Alumno();
         alumno.setNombre(alumnoDto.getNombre());

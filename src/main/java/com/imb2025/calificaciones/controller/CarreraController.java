@@ -3,7 +3,10 @@ package com.imb2025.calificaciones.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,49 +33,46 @@ public class CarreraController {
     private ICarreraService carreraService;
 
     @GetMapping
-    public List<Carrera> getAll() {
-        return carreraService.findAll();
+    public ResponseEntity<List<Carrera>> getAll() {
+        List<Carrera> carreras = carreraService.findAll();
+        return carreras.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(carreras);
     }
 
-    @GetMapping("/{idcarrera}")
-    public Carrera getCarreraById(@PathVariable("idcarrera") Long id) {
-    	return carreraService.findById(id);
-    } 
-    
+    @GetMapping("/{id}")
+    public ResponseEntity<Carrera> getById(@PathVariable Long id) {
+        Carrera carrera = carreraService.findById(id);
+        return carrera == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(carrera);
+    }
+
     @PostMapping
-    public ResponseEntity<Carrera> createCarrera(@RequestBody @Valid CarreraRequestDto dto) {
-        try {
-            Carrera carrera = new Carrera();
-            carrera.setNombre(dto.getNombre());
-            carrera.setTituloOtorgado(dto.getTituloOtorgado());
-            Carrera created = carreraService.create(carrera);
-            return ResponseEntity.status(HttpStatus.CREATED).body(created);
-        } catch (Exception e) {
-            
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+    public ResponseEntity<Carrera> create(@RequestBody @Valid CarreraRequestDto dto) throws Exception {
+        Carrera carrera = carreraService.fromDto(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(carreraService.create(carrera));
     }
-    	
-        
-    @PutMapping("/{idcarrera}")
-    public ResponseEntity<?> updateCarrera(@PathVariable("idcarrera") Long id, @RequestBody @Valid CarreraRequestDto dto) {
-        try {
-            Carrera existente = carreraService.findById(id);
-            if (existente == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carrera no encontrada con ID: " + id);
-            }
 
-            Carrera actualizada = carreraService.update(carreraService.mapFromDto(dto), id);
-            return ResponseEntity.ok(actualizada);
+    @PutMapping("/{id}")
+    public ResponseEntity<Carrera> update(@PathVariable Long id, @RequestBody @Valid CarreraRequestDto dto) throws Exception {
+        Carrera existente = carreraService.findById(id);
+        if (existente == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        Carrera carrera = carreraService.fromDto(dto);
+        return ResponseEntity.ok(carreraService.update(carrera, id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            carreraService.deleteById(id);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar la carrera: " + e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
 
-    
-    @DeleteMapping("/{idcarrera}")
-    public void deleteCarrera(@PathVariable("idcarrera") Long id) {
-        carreraService.deleteById(id);
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
-   
+
 }
