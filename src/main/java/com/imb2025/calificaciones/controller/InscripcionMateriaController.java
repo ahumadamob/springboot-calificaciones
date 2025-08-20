@@ -19,19 +19,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDto;
 import com.imb2025.calificaciones.entity.InscripcionMateria;
-import com.imb2025.calificaciones.service.jpa.InscripcionMateriaServiceImp;
+import com.imb2025.calificaciones.service.IInscripcionMateriaService;
 
 @RestController
 @RequestMapping("api/v1/inscripcion-materia")
 public class InscripcionMateriaController {
 
     @Autowired
-    private InscripcionMateriaServiceImp inscripcionMateriaService;
+    private IInscripcionMateriaService inscripcionMateriaService;
 
     @GetMapping
     public ResponseEntity<List<InscripcionMateria>> getAll() {
         List<InscripcionMateria> inscripciones = inscripcionMateriaService.findAll();
-        return ResponseEntity.ok(inscripciones);
+        return inscripciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(inscripciones);
     }
 
     @GetMapping("/{idInscripcionMateria}")
@@ -43,7 +43,7 @@ public class InscripcionMateriaController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody InscripcionMateriaRequestDto dto) {
         try {
-            InscripcionMateria entity = inscripcionMateriaService.mapFromDto(dto);
+            InscripcionMateria entity = inscripcionMateriaService.fromDto(dto);
             InscripcionMateria saved = inscripcionMateriaService.create(entity);
             return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 
@@ -62,8 +62,8 @@ public class InscripcionMateriaController {
             @RequestBody InscripcionMateriaRequestDto dto) {
 
         try {
-            InscripcionMateria entity = inscripcionMateriaService.mapFromDto(dto);
-            InscripcionMateria updated = inscripcionMateriaService.update(id, entity);
+            InscripcionMateria entity = inscripcionMateriaService.fromDto(dto);
+            InscripcionMateria updated = inscripcionMateriaService.update(entity, id);
             return ResponseEntity.ok(updated);
 
         } catch (NoSuchElementException e) {

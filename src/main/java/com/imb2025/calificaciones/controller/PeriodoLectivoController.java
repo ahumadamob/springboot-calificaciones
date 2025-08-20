@@ -21,51 +21,51 @@ import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.service.IPeriodoLectivoService;
 
 @RestController
-@RequestMapping("api/periodo-lectivo")
+@RequestMapping("/api/periodo-lectivo")
 public class PeriodoLectivoController {
 	
 	@Autowired
 	private IPeriodoLectivoService service;
 	
-	@GetMapping
-	public ResponseEntity<List<PeriodoLectivo>> getAll() {
-		List<PeriodoLectivo> periodos = service.findAll();
-		return !periodos.isEmpty()? 
-				ResponseEntity.ok(periodos) : 
-					ResponseEntity.noContent().build();
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<PeriodoLectivo> getById(@PathVariable Long id) {
-		PeriodoLectivo periodoLectivo = service.findById(id);
-		return service.existsById(id)? 
-				ResponseEntity.ok(periodoLectivo) : 
-					ResponseEntity.noContent().build();
-	}
-	
-	@PostMapping
-	public ResponseEntity<PeriodoLectivo> create(@RequestBody PeriodoLectivoRequestDto periodoLectivo) {
-		PeriodoLectivo createdPeriodoLectivo = service.save(
-					service.mapFromDTO(periodoLectivo)
-				);
-		return ResponseEntity.ok(createdPeriodoLectivo);
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<PeriodoLectivo> updateById(@PathVariable Long id, 
-			@RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
-		PeriodoLectivo updatedPeriodoLectivo = service.update(
-				id, 
-				service.mapFromDTO(periodoLectivo)
-				);
-		return ResponseEntity.ok(updatedPeriodoLectivo);
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteById(@PathVariable Long id) throws Exception {
-		service.deleteById(id);
-		return ResponseEntity.noContent().build();
-	}
+        @GetMapping
+        public ResponseEntity<List<PeriodoLectivo>> getAll() {
+                List<PeriodoLectivo> periodos = service.findAll();
+                return periodos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(periodos);
+        }
+
+        @GetMapping("/{id}")
+        public ResponseEntity<PeriodoLectivo> getById(@PathVariable Long id) {
+                PeriodoLectivo periodoLectivo = service.findById(id);
+                return periodoLectivo == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(periodoLectivo);
+        }
+
+        @PostMapping
+        public ResponseEntity<PeriodoLectivo> create(@RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
+                PeriodoLectivo createdPeriodoLectivo = service.create(
+                                        service.fromDto(periodoLectivo)
+                                );
+                return ResponseEntity.ok(createdPeriodoLectivo);
+        }
+
+        @PutMapping("/{id}")
+        public ResponseEntity<PeriodoLectivo> updateById(@PathVariable Long id,
+                        @RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
+                PeriodoLectivo existente = service.findById(id);
+                if (existente == null) {
+                        return ResponseEntity.badRequest().build();
+                }
+                PeriodoLectivo updatedPeriodoLectivo = service.update(
+                                service.fromDto(periodoLectivo),
+                                id
+                                );
+                return ResponseEntity.ok(updatedPeriodoLectivo);
+        }
+
+        @DeleteMapping("/{id}")
+        public ResponseEntity<Void> deleteById(@PathVariable Long id) throws Exception {
+                service.deleteById(id);
+                return ResponseEntity.noContent().build();
+        }
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> handleException(Exception ex) {

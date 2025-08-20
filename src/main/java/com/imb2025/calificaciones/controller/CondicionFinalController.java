@@ -1,7 +1,9 @@
 package com.imb2025.calificaciones.controller;
 
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imb2025.calificaciones.dto.CondicionFinalRequestDto;
 import com.imb2025.calificaciones.entity.CondicionFinal;
 import com.imb2025.calificaciones.service.ICondicionFinalService;
 
@@ -25,28 +28,45 @@ public class CondicionFinalController {
     private ICondicionFinalService service;
 
     @GetMapping
-    public List<CondicionFinal> getAll() {
-        return service.getAll();
-    }
-
-    @PostMapping
-    public CondicionFinal create(@RequestBody CondicionFinal cf) {
-        return service.save(cf);    
+    public ResponseEntity<List<CondicionFinal>> getAll() {
+        List<CondicionFinal> condiciones = service.findAll();
+        return condiciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(condiciones);
     }
 
     @GetMapping("/{id}")
-    public CondicionFinal getById(@PathVariable Long id) {
-        return service.getById(id);
+    public ResponseEntity<CondicionFinal> getById(@PathVariable Long id) {
+        CondicionFinal condicion = service.findById(id);
+        return condicion == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(condicion);
+    }
+
+    @PostMapping
+    public ResponseEntity<CondicionFinal> create(@RequestBody CondicionFinalRequestDto dto) throws Exception {
+        CondicionFinal condicion = service.fromDto(dto);
+        return ResponseEntity.ok(service.create(condicion));
     }
 
     @PutMapping("/{id}")
-    public CondicionFinal update(@PathVariable Long id, @RequestBody CondicionFinal cf) {
-        cf.setId(id);
-        return service.save(cf);
+    public ResponseEntity<CondicionFinal> update(@PathVariable Long id, @RequestBody CondicionFinalRequestDto dto) throws Exception {
+        CondicionFinal existente = service.findById(id);
+        if (existente == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        CondicionFinal condicion = service.fromDto(dto);
+        return ResponseEntity.ok(service.update(condicion, id));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            service.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }

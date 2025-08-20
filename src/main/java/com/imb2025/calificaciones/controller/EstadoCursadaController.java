@@ -4,6 +4,7 @@ package com.imb2025.calificaciones.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.service.IEstadoCursadaService;
-import com.imb2025.calificaciones.service.jpa.EstadoCursadaServiceImp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,47 +26,49 @@ import java.util.List;
 public class EstadoCursadaController {
 
     @Autowired
-    private EstadoCursadaServiceImp service;
+    private IEstadoCursadaService service;
 
 
     @GetMapping
     public ResponseEntity<List<EstadoCursada>> getAll() {
-        List<EstadoCursada> asignaciones = service.findAll();
-        return ResponseEntity.ok(asignaciones);
+        List<EstadoCursada> estados = service.findAll();
+        return estados.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(estados);
     }
-  
+
     @GetMapping("/{id}")
-    public EstadoCursada getEstadoCursadabyId(@PathVariable Long id) {
-    	return service.findById(id);
+    public ResponseEntity<EstadoCursada> getEstadoCursadabyId(@PathVariable Long id) {
+        EstadoCursada estado = service.findById(id);
+        return estado == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(estado);
     }
 
     @PostMapping
-    public EstadoCursada create(@RequestBody EstadoCursadaRequestDto dto) {
-        EstadoCursada estadoCursada = new EstadoCursada();
-        try {
-        	estadoCursada = service.mapFromDto(dto);
-            estadoCursada= service.create(estadoCursada);
-        }catch(Exception e){
-        	e.printStackTrace();
-        }
-        return estadoCursada;
+    public ResponseEntity<EstadoCursada> create(@RequestBody EstadoCursadaRequestDto dto) throws Exception {
+        EstadoCursada estadoCursada = service.fromDto(dto);
+        return ResponseEntity.ok(service.create(estadoCursada));
     }
-    
+
     @PutMapping("/{id}")
-    public EstadoCursada update(@RequestBody EstadoCursadaRequestDto estadoCursadaRequestDto, @PathVariable Long id) {
-        EstadoCursada estadoCursada = new EstadoCursada();
-        try {
-        	estadoCursada = service.mapFromDto(estadoCursadaRequestDto);
-        	estadoCursada = service.update(estadoCursada, id);
-        }catch(Exception e){
-        	e.printStackTrace();
+    public ResponseEntity<EstadoCursada> update(@RequestBody EstadoCursadaRequestDto dto, @PathVariable Long id) throws Exception {
+        EstadoCursada existente = service.findById(id);
+        if (existente == null) {
+            return ResponseEntity.badRequest().build();
         }
-        return estadoCursada;
+        EstadoCursada estadoCursada = service.fromDto(dto);
+        return ResponseEntity.ok(service.update(estadoCursada, id));
     }
-    
 
     @DeleteMapping("/{id}")
-    public void deleteEstadoCursada(@PathVariable Long id) {
-        service.deleteById(id);
+    public ResponseEntity<Void> deleteEstadoCursada(@PathVariable Long id) {
+        try {
+            service.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }
