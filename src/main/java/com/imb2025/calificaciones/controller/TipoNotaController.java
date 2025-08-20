@@ -53,13 +53,10 @@ public class TipoNotaController {
     @PutMapping("/{id}")
     public ResponseEntity<TipoNota> update(@PathVariable Long id, @RequestBody TipoNota tipoNota) {
         try {
-            // Verificamos si el TipoNota existe antes de intentar actualizar
             tipoNotaService.findById(id);
-
             TipoNota actualizado = tipoNotaService.update(tipoNota, id);
             return ResponseEntity.ok(actualizado);
-
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(404).body(null);
         }
     }
@@ -67,8 +64,12 @@ public class TipoNotaController {
     // DELETE /tiponota/{id} - borrar por id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        tipoNotaService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        try {
+            tipoNotaService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(400).build();
+        }
     }
 }
 

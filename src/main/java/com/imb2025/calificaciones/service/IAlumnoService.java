@@ -16,5 +16,7 @@ public interface IAlumnoService {
 
     public void deleteById(Long id) throws Exception;
 
+    public boolean existsById(Long id);
+
     public Alumno fromDto(AlumnoRequestDto dto) throws Exception;
 }

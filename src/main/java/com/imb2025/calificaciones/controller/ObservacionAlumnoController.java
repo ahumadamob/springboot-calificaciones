@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -51,19 +50,19 @@ public class ObservacionAlumnoController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Long id, HttpServletRequest request) {
 		
-		Optional<ObservacionAlumno> observacionAlumno = observacionAlumnoService.findById(id);
-		
-		if (observacionAlumno.isPresent()) {
-			
-			SuccessResponseDto<ObservacionAlumno> response = new SuccessResponseDto<>();
-			response.setTimestamp(LocalDateTime.now());
-			response.setStatus(HttpStatus.OK.value());
-			response.setMessage("observación obtenida correctamente por ID");
-			response.setData(observacionAlumno.get());
-			
-			return ResponseEntity.ok(response);
-			
-		} else {
+                ObservacionAlumno observacionAlumno = observacionAlumnoService.findById(id);
+
+                if (observacionAlumno != null) {
+
+                        SuccessResponseDto<ObservacionAlumno> response = new SuccessResponseDto<>();
+                        response.setTimestamp(LocalDateTime.now());
+                        response.setStatus(HttpStatus.OK.value());
+                        response.setMessage("observación obtenida correctamente por ID");
+                        response.setData(observacionAlumno);
+
+                        return ResponseEntity.ok(response);
+
+                } else {
 			
 			ErrorResponseDto errorResponse = new ErrorResponseDto();
 			errorResponse.setTimestamp(LocalDateTime.now());
@@ -83,7 +82,7 @@ public class ObservacionAlumnoController {
 	public ResponseEntity<?> create(@RequestBody ObservacionAlumnoRequestDto dto, HttpServletRequest request) {
 		try {	
 			
-			ObservacionAlumno observacionAlumno = observacionAlumnoService.create(observacionAlumnoService.fromDTO(dto));
+                        ObservacionAlumno observacionAlumno = observacionAlumnoService.create(observacionAlumnoService.fromDto(dto));
 			
 			SuccessResponseDto<ObservacionAlumno> response = new SuccessResponseDto<>();
 			response.setTimestamp(LocalDateTime.now());
@@ -127,7 +126,7 @@ public class ObservacionAlumnoController {
 	public ResponseEntity<?> update(@RequestBody ObservacionAlumnoRequestDto dto, @PathVariable Long id, HttpServletRequest request) {
 	try {	
 			
-			ObservacionAlumno observacionAlumno = observacionAlumnoService.update(id, observacionAlumnoService.fromDTO(dto));
+                        ObservacionAlumno observacionAlumno = observacionAlumnoService.update(observacionAlumnoService.fromDto(dto), id);
 			
 			SuccessResponseDto<ObservacionAlumno> response = new SuccessResponseDto<>();
 			response.setTimestamp(LocalDateTime.now());

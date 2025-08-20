@@ -49,14 +49,22 @@ public class TipoEvaluacionController {
 
     @PutMapping("/tipoEvaluacion/{id}")
     public ResponseEntity<?> updateTipoEvaluacion(@PathVariable Long id, @RequestBody TipoEvaluacion tipoEvaluacion) {
-        TipoEvaluacion actualizado = tipoEvaluacionService.update(id, tipoEvaluacion);
-        return ResponseEntity.ok(actualizado);
+        try {
+            TipoEvaluacion actualizado = tipoEvaluacionService.update(tipoEvaluacion, id);
+            return ResponseEntity.ok(actualizado);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/tipoEvaluacion/{id}")
     public ResponseEntity<?> deleteTipoEvaluacion(@PathVariable Long id) {
-        tipoEvaluacionService.deleteById(id);
-        return ResponseEntity.ok("Eliminado correctamente");
+        try {
+            tipoEvaluacionService.deleteById(id);
+            return ResponseEntity.ok("Eliminado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     
     @ExceptionHandler(Exception.class)

@@ -72,11 +72,15 @@ public class CalendarioMateriaController {
 
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id){
-                calMatSer.deleteById(id);
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+                try {
+                        calMatSer.deleteById(id);
+                        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+                } catch (Exception e) {
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                }
+    }
 	
 }
 

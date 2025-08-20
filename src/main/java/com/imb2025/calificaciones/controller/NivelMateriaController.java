@@ -31,16 +31,24 @@ public class NivelMateriaController {
 	 public NivelMateria getNivelMateriaById(@PathVariable("id")Long id) {
 	        return nivelMateriaService.findById(id);  
 	 }       
-         @PostMapping("/api/nivelmateria")
-         public NivelMateria createNivelMateria(@RequestBody NivelMateria nivelMateria){
-                 return nivelMateriaService.create(nivelMateria);
-         }
-         @PutMapping("/api/nivelmateria")
+        @PostMapping("/api/nivelmateria")
+        public NivelMateria createNivelMateria(@RequestBody NivelMateria nivelMateria){
+                return nivelMateriaService.create(nivelMateria);
+        }
+        @PutMapping("/api/nivelmateria")
          public NivelMateria updateNivelMateria(@RequestBody NivelMateria nivelMateria){
-                 return nivelMateriaService.update(nivelMateria, nivelMateria.getId());
+                 try {
+                        return nivelMateriaService.update(nivelMateria, nivelMateria.getId());
+                 } catch (Exception e) {
+                        return null;
+                 }
          }
-	 @DeleteMapping("/api/nivelmateria/{id}")
-	 public void deleteNivelMateria(@PathVariable("id")Long id) {
-		 nivelMateriaService.deleteById(id);
-	 }
+         @DeleteMapping("/api/nivelmateria/{id}")
+         public void deleteNivelMateria(@PathVariable("id")Long id) {
+                 try {
+                        nivelMateriaService.deleteById(id);
+                 } catch (Exception e) {
+                        // manejar
+                 }
+         }
 }

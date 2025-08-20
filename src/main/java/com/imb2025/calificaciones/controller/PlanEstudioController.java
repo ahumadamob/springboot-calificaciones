@@ -61,10 +61,9 @@ public ResponseEntity<?> getPlanEstudioById(@PathVariable Long id) {
 public ResponseEntity<?> createPlanEstudio(@RequestBody PlanEstudioRequestDto planestudioRequestDto) {
     try {
         
-        PlanEstudio planestudio = planestudioserviceimp.convertToEntity(planestudioRequestDto);
+        PlanEstudio planestudio = planestudioserviceimp.fromDto(planestudioRequestDto);
 
-      
-        PlanEstudio saved = planestudioserviceimp.save(planestudio);
+        PlanEstudio saved = planestudioserviceimp.create(planestudio);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 
     } catch (EntidadNoEncontradaException e) {
@@ -94,11 +93,9 @@ public ResponseEntity<?> createPlanEstudio(@RequestBody PlanEstudioRequestDto pl
                 }
 
                 
-                PlanEstudio planestudio = planestudioserviceimp.convertToEntity(newPlanEstudioDto);
+                PlanEstudio planestudio = planestudioserviceimp.fromDto(newPlanEstudioDto);
 
-               
-
-                PlanEstudio updated = planestudioserviceimp.save(planestudio);
+                PlanEstudio updated = planestudioserviceimp.update(planestudio, id);
                 return ResponseEntity.ok(updated);
 
             } catch (EntidadNoEncontradaException e) {

@@ -76,8 +76,12 @@ public class InscripcionMateriaController {
 
     @DeleteMapping("/{idInscripcionMateria}")
     public ResponseEntity<Void> delete(@PathVariable("idInscripcionMateria") Long id) {
-        inscripcionMateriaService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        try {
+            inscripcionMateriaService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
 }
