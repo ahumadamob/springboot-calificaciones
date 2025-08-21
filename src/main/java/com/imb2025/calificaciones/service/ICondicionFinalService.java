@@ -1,12 +1,20 @@
 package com.imb2025.calificaciones.service;
 
+import com.imb2025.calificaciones.dto.CondicionFinalRequestDto;
+import com.imb2025.calificaciones.entity.CondicionFinal;
 import java.util.List;
 
-import com.imb2025.calificaciones.entity.CondicionFinal;
-
 public interface ICondicionFinalService {
-    List<CondicionFinal> getAll();
-    CondicionFinal getById(Long id);
-    CondicionFinal save(CondicionFinal cf);
-    void delete(Long id);
+
+    public List<CondicionFinal> findAll();
+
+    public CondicionFinal create(CondicionFinal condicionFinal);
+
+    public CondicionFinal update(CondicionFinal condicionFinal, Long id) throws Exception;
+
+    public CondicionFinal findById(Long id);
+
+    public void deleteById(Long id) throws Exception;
+
+    public CondicionFinal fromDto(CondicionFinalRequestDto dto) throws Exception;
 }

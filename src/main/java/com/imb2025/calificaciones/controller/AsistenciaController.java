@@ -1,11 +1,20 @@
 package com.imb2025.calificaciones.controller;
 
-import com.imb2025.calificaciones.dto.AsistenciaRequestDTO;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.imb2025.calificaciones.dto.AsistenciaRequestDto;
 import com.imb2025.calificaciones.entity.Asistencia;
 import com.imb2025.calificaciones.service.IAsistenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,8 +27,9 @@ public class AsistenciaController {
 
     // GET - listar todas las asistencias
     @GetMapping
-    public List<Asistencia> getAll() {
-        return asistenciaService.findAll();
+    public ResponseEntity<List<Asistencia>> getAll() {
+        List<Asistencia> asistencias = asistenciaService.findAll();
+        return asistencias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(asistencias);
     }
 
     // GET - buscar una asistencia por ID
@@ -34,9 +44,9 @@ public class AsistenciaController {
 
     // POST - crear nueva asistencia
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody AsistenciaRequestDTO dto) {
+    public ResponseEntity<?> create(@RequestBody AsistenciaRequestDto dto) {
         try {
-            Asistencia nueva = asistenciaService.save(dto);
+            Asistencia nueva = asistenciaService.create(dto);
             return ResponseEntity.ok(nueva);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -45,9 +55,9 @@ public class AsistenciaController {
 
     // PUT - actualizar asistencia existente
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AsistenciaRequestDTO dto) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AsistenciaRequestDto dto) {
         try {
-            Asistencia actualizada = asistenciaService.update(id, dto);
+            Asistencia actualizada = asistenciaService.update(dto, id);
             return ResponseEntity.ok(actualizada);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

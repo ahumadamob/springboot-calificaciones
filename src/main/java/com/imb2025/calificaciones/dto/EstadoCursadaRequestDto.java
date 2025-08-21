@@ -1,10 +1,10 @@
 package com.imb2025.calificaciones.dto;
 
 public class EstadoCursadaRequestDto {
+
     private String nombre;
     private String descripcion;
 
-    // Getters y Setters
     public String getNombre() {
         return nombre;
     }

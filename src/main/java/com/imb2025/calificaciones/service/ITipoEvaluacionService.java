@@ -1,18 +1,20 @@
 package com.imb2025.calificaciones.service;
 
-import java.util.List;
-
-import com.imb2025.calificaciones.dto.TipoEvaluacionRequestDTO;
+import com.imb2025.calificaciones.dto.TipoEvaluacionRequestDto;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
+import java.util.List;
 
 public interface ITipoEvaluacionService {
 
-	List<TipoEvaluacion> findAll();
-	TipoEvaluacion findById(Long id);
-	TipoEvaluacion create(TipoEvaluacion tipoevaluacion);
-	void deleteById(Long id);
-	TipoEvaluacion update(Long id, TipoEvaluacion tipoEvaluacion);
-	boolean existsById(Long id);
+    public List<TipoEvaluacion> findAll();
 
+    public TipoEvaluacion create(TipoEvaluacion tipoEvaluacion);
+
+    public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id) throws Exception;
+
+    public TipoEvaluacion findById(Long id);
+
+    public void deleteById(Long id) throws Exception;
+
+    public TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto) throws Exception;
 }
- 

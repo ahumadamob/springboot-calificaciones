@@ -1,17 +1,20 @@
 package com.imb2025.calificaciones.service;
 
-import java.util.List;
+import com.imb2025.calificaciones.dto.TipoNotaRequestDto;
 import com.imb2025.calificaciones.entity.TipoNota;
+import java.util.List;
 
 public interface ITipoNotaService {
 
-	List<TipoNota> findAll();		//Devuelve una lista con todas las entidades TipoNota.
-	
-	TipoNota findById(Long id);		//Busca un TipoNota por su ID.
-	
-	TipoNota save(TipoNota tipoNota);		//Guarda una nueva entidad.
+    public List<TipoNota> findAll();
 
-    TipoNota update(Long id, TipoNota tipoNota);		//Actualiza una entidad existente(por eso recibe el ID).
+    public TipoNota create(TipoNota tipoNota);
 
-    void deleteById(Long id);		//Elimina la entidad con ese ID.
+    public TipoNota update(TipoNota tipoNota, Long id) throws Exception;
+
+    public TipoNota findById(Long id);
+
+    public void deleteById(Long id) throws Exception;
+
+    public TipoNota fromDto(TipoNotaRequestDto dto) throws Exception;
 }

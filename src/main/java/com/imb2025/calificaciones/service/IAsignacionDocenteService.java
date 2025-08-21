@@ -1,21 +1,20 @@
 package com.imb2025.calificaciones.service;
 
-import java.util.List;
-
+import com.imb2025.calificaciones.dto.AsignacionDocenteRequestDto;
 import com.imb2025.calificaciones.entity.AsignacionDocente;
+import java.util.List;
 
 public interface IAsignacionDocenteService {
 
-    AsignacionDocente findById(Long id);
+    public List<AsignacionDocente> findAll();
 
-    List<AsignacionDocente> findAll();
+    public AsignacionDocente create(AsignacionDocente asignacionDocente);
 
-    boolean existsById(Long id);
+    public AsignacionDocente update(AsignacionDocente asignacionDocente, Long id) throws Exception;
 
-    AsignacionDocente create(AsignacionDocente asignacionDocente);
+    public AsignacionDocente findById(Long id);
 
-    AsignacionDocente update(Long id, AsignacionDocente asignacionDocente) throws Exception;
+    public void deleteById(Long id) throws Exception;
 
-    void deleteById(Long id) throws Exception;
-
+    public AsignacionDocente fromDto(AsignacionDocenteRequestDto dto) throws Exception;
 }

@@ -1,15 +1,19 @@
 package com.imb2025.calificaciones.controller;
 
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.dto.MateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
@@ -25,48 +29,49 @@ public class MateriaController {
 	@Autowired
 	private IMateriaService materiaService;
 	
-	@GetMapping("/api/materia")
-	public List<Materia>getAllMateria(){
-		
-		return materiaService.findAll();
-		
-	}
-	
-	@GetMapping("/api/materia/{id}")
-	public Materia getMateriaById(@PathVariable("idalumno") Long id) {
-	    return materiaService.findById(id);
-	}
+        @GetMapping("/api/materia")
+        public ResponseEntity<List<Materia>> getAllMateria(){
+                List<Materia> materias = materiaService.findAll();
+                return materias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(materias);
+        }
 
-	
-	@PostMapping("/api/materia")
-	public Materia createMateria(@RequestBody MateriaRequestDto materiaRequestDto){
-		Materia materia = new Materia();
-		try {
-			materia = materiaService.mapFromDto(materiaRequestDto);
-			materia = materiaService.create(materia);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return materia;
-		
-	}
-	
-	@PutMapping ("/api/materia/{id}")
-	public Materia updateMateria(@RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id){
-		Materia materia = new Materia();
-		try {
-			materia = materiaService.mapFromDto(materiaRequestDto);
-			materia = materiaService.update(materia,id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return materia;
-	}
-	@DeleteMapping("/api/materia/{idalumno}")
-	public void deleteMateria(@PathVariable("idalumno") Long id) {
-	    materiaService.deleteById(id); 
+        @GetMapping("/api/materia/{id}")
+        public ResponseEntity<Materia> getMateriaById(@PathVariable Long id) {
+            Materia materia = materiaService.findById(id);
+            return materia == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(materia);
+        }
 
-	
-	}
+
+        @PostMapping("/api/materia")
+        public ResponseEntity<Materia> createMateria(@RequestBody MateriaRequestDto materiaRequestDto) throws Exception{
+                Materia materia = materiaService.fromDto(materiaRequestDto);
+                return ResponseEntity.ok(materiaService.create(materia));
+
+        }
+
+        @PutMapping ("/api/materia/{id}")
+        public ResponseEntity<Materia> updateMateria(@RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id) throws Exception{
+                Materia existente = materiaService.findById(id);
+                if(existente == null){
+                    return ResponseEntity.badRequest().build();
+                }
+                Materia materia = materiaService.fromDto(materiaRequestDto);
+                return ResponseEntity.ok(materiaService.update(materia,id));
+        }
+        @DeleteMapping("/api/materia/{id}")
+        public ResponseEntity<Void> deleteMateria(@PathVariable("id") Long id) {
+            try {
+                materiaService.deleteById(id);
+                return ResponseEntity.ok().build();
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().build();
+            }
+
+
+        }
+
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<String> handleException(Exception ex){
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
 }

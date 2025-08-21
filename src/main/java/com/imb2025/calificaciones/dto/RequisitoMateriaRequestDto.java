@@ -2,7 +2,7 @@ package com.imb2025.calificaciones.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-public class RequisitoMateriaRequestDTO {
+public class RequisitoMateriaRequestDto {
 
     @NotNull(message = "El ID de la materia es obligatorio")
     private Long materiaId;
@@ -10,7 +10,6 @@ public class RequisitoMateriaRequestDTO {
     @NotNull(message = "El ID de la materia requerida es obligatorio")
     private Long materiaRequeridaId;
 
-    // Getters y Setters
     public Long getMateriaId() {
         return materiaId;
     }
@@ -27,4 +26,3 @@ public class RequisitoMateriaRequestDTO {
         this.materiaRequeridaId = materiaRequeridaId;
     }
 }
-

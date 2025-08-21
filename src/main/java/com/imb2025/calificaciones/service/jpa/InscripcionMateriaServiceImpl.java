@@ -1,7 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import com.imb2025.calificaciones.repository.InscripcionMateriaRepository;
 import com.imb2025.calificaciones.service.IInscripcionMateriaService;
 
 @Service
-public class InscripcionMateriaServiceImp implements IInscripcionMateriaService {
+public class InscripcionMateriaServiceImpl implements IInscripcionMateriaService {
 
     @Autowired
     private InscripcionMateriaRepository repository;
@@ -44,37 +43,41 @@ public class InscripcionMateriaServiceImp implements IInscripcionMateriaService 
         return repository.save(inscripcionMateria);
     }
 
-    public InscripcionMateria update(Long id, InscripcionMateria inscripcionMateria) throws Exception {
+    public InscripcionMateria update(InscripcionMateria inscripcionMateria, Long id) throws Exception {
         if (repository.existsById(id)) {
             inscripcionMateria.setId(id);
             return repository.save(inscripcionMateria);
         } else {
-            throw new NoSuchElementException("No se encontró Inscripcion con el id " + id);
+            throw new Exception("No se encontró Inscripcion con el id " + id);
         }
 
     }
 
-    public void deleteById(Long id) {
+    @Override
+    public void deleteById(Long id) throws Exception {
+        if (!repository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
         repository.deleteById(id);
     }
 
     @Override
-    public InscripcionMateria mapFromDto(InscripcionMateriaRequestDto inscripcionMateriaDTO) {
+    public InscripcionMateria fromDto(InscripcionMateriaRequestDto inscripcionMateriaDto) throws Exception {
         InscripcionMateria inscripcionMateria = new InscripcionMateria();
 
-        Alumno alumno = alumnoRepository.findById(inscripcionMateriaDTO.getIdAlumno())
-                .orElseThrow(() -> new NoSuchElementException(
-                        "Alumno no encontrado con ID: " + inscripcionMateriaDTO.getIdAlumno()));
+        Alumno alumno = alumnoRepository.findById(inscripcionMateriaDto.getAlumnoId())
+                .orElseThrow(() -> new Exception(
+                        "Alumno no encontrado con ID: " + inscripcionMateriaDto.getAlumnoId()));
         inscripcionMateria.setAlumno(alumno);
 
-        Materia materia = materiaRepository.findById(inscripcionMateriaDTO.getIdMateria())
-                .orElseThrow(() -> new NoSuchElementException(
-                        "Materia no encontrada con ID: " + inscripcionMateriaDTO.getIdMateria()));
+        Materia materia = materiaRepository.findById(inscripcionMateriaDto.getMateriaId())
+                .orElseThrow(() -> new Exception(
+                        "Materia no encontrada con ID: " + inscripcionMateriaDto.getMateriaId()));
         inscripcionMateria.setMateria(materia);
 
-        PeriodoLectivo periodoLectivo = periodoLectivoRepository.findById(inscripcionMateriaDTO.getIdPeriodoLectivo())
-                .orElseThrow(() -> new NoSuchElementException(
-                        "Periodo Lectivo no encontrado con ID: " + inscripcionMateriaDTO.getIdPeriodoLectivo()));
+        PeriodoLectivo periodoLectivo = periodoLectivoRepository.findById(inscripcionMateriaDto.getPeriodoLectivoId())
+                .orElseThrow(() -> new Exception(
+                        "Periodo Lectivo no encontrado con ID: " + inscripcionMateriaDto.getPeriodoLectivoId()));
         inscripcionMateria.setPeriodoLectivo(periodoLectivo);
 
         return inscripcionMateria;

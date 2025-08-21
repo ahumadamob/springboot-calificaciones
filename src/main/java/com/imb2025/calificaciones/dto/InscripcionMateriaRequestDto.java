@@ -1,30 +1,32 @@
 package com.imb2025.calificaciones.dto;
 
-
 public class InscripcionMateriaRequestDto {
-    
-   private Long idAlumno;
-   private Long idMateria;
-   private Long idPeriodoLectivo;
 
-   public Long getIdAlumno() {
-    return idAlumno;
-   }
-   public void setIdAlumno(Long idAlumno) {
-    this.idAlumno = idAlumno;
-   }
-   public Long getIdMateria() {
-    return idMateria;
-   }
-   public void setIdMateria(Long idMateria) {
-    this.idMateria = idMateria;
-   }
-   public Long getIdPeriodoLectivo() {
-    return idPeriodoLectivo;
-   }
-   public void setIdPeriodoLectivo(Long idPeriodoLectivo) {
-    this.idPeriodoLectivo = idPeriodoLectivo;
-   }
+    private Long alumnoId;
+    private Long materiaId;
+    private Long periodoLectivoId;
 
-   
+    public Long getAlumnoId() {
+        return alumnoId;
+    }
+
+    public void setAlumnoId(Long alumnoId) {
+        this.alumnoId = alumnoId;
+    }
+
+    public Long getMateriaId() {
+        return materiaId;
+    }
+
+    public void setMateriaId(Long materiaId) {
+        this.materiaId = materiaId;
+    }
+
+    public Long getPeriodoLectivoId() {
+        return periodoLectivoId;
+    }
+
+    public void setPeriodoLectivoId(Long periodoLectivoId) {
+        this.periodoLectivoId = periodoLectivoId;
+    }
 }

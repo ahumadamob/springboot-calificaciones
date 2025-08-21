@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Comision {
@@ -15,9 +16,27 @@ public class Comision {
 	
 	private String nombre;
 	
-	private Long turnoId;
-	
-	private Long sedeId;
+        @ManyToOne
+        private Turno turno;
+
+        @ManyToOne
+        private Sede sede;
+
+        public Comision() {
+        }
+
+        public Comision(Long id, String nombre, Turno turno, Sede sede) {
+                this.id = id;
+                this.nombre = nombre;
+                this.turno = turno;
+                this.sede = sede;
+        }
+
+        public Comision(String nombre, Turno turno, Sede sede) {
+                this.nombre = nombre;
+                this.turno = turno;
+                this.sede = sede;
+        }
 	
 
 	public Long getId() {
@@ -36,20 +55,20 @@ public class Comision {
 		this.nombre = nombre;
 	}
 
-	public Long getTurnoId() {
-		return turnoId;
-	}
+        public Turno getTurno() {
+                return turno;
+        }
 
-	public void setTurnoId(Long turnoId) {
-		this.turnoId = turnoId;
-	}
+        public void setTurno(Turno turno) {
+                this.turno = turno;
+        }
 
-	public Long getSedeId() {
-		return sedeId;
-	}
+        public Sede getSede() {
+                return sede;
+        }
 
-	public void setSedeId(Long sedeId) {
-		this.sedeId = sedeId;
-	}
+        public void setSede(Sede sede) {
+                this.sede = sede;
+        }
 	
 }

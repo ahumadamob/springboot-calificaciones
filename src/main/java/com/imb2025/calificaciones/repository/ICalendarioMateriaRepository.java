@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.imb2025.calificaciones.entity.CalendarioMateria;
 
 @Repository
-public interface ICalendarioMateriaRepository extends JpaRepository<CalendarioMateria, Long>{
-
+public interface ICalendarioMateriaRepository extends JpaRepository<CalendarioMateria, Long> {
 }
+

@@ -2,46 +2,43 @@ package com.imb2025.calificaciones.dto;
 
 public class MateriaRequestDto {
 
-	private String nombre;
-	private String codigo;
-	private String cargaHoraria;
-	private String nivel;
- 
-	public MateriaRequestDto() {}
+    private String nombre;
+    private String codigo;
+    private String cargaHoraria;
+    private String nivel;
 
-	public String getNombre() {
-		return nombre;
-	}
+    public MateriaRequestDto() {
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public String getCodigo() {
-		return codigo;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
+    public String getCodigo() {
+        return codigo;
+    }
 
-	public String getCargaHoraria() {
-		return cargaHoraria;
-	}
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
-	public void setCargaHoraria(String cargaHoraria) {
-		this.cargaHoraria = cargaHoraria;
-	}
+    public String getCargaHoraria() {
+        return cargaHoraria;
+    }
 
-	public String getNivel() {
-		return nivel;
-	}
+    public void setCargaHoraria(String cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
+    }
 
-	public void setNivel(String nivel) {
-		this.nivel = nivel;
-	}
+    public String getNivel() {
+        return nivel;
+    }
 
-
-	
-	
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
+    }
 }

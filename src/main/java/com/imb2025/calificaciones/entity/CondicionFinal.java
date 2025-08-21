@@ -1,10 +1,11 @@
 package com.imb2025.calificaciones.entity;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "condicion_final")
 public class CondicionFinal {
 
     @Id
@@ -13,7 +14,18 @@ public class CondicionFinal {
 
     private String nombre;
 
-    // Getters y Setters
+    public CondicionFinal() {
+    }
+
+    public CondicionFinal(Long id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+
+    public CondicionFinal(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Long getId() {
         return id;
     }

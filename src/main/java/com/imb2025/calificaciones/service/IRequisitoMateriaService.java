@@ -1,20 +1,20 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.RequisitoMateriaRequestDTO;
+import com.imb2025.calificaciones.dto.RequisitoMateriaRequestDto;
 import com.imb2025.calificaciones.entity.RequisitoMateria;
-
 import java.util.List;
-import java.util.Optional;
 
-public interface RequisitoMateriaService {
+public interface IRequisitoMateriaService {
 
-    List<RequisitoMateria> findAll();
+    public List<RequisitoMateria> findAll();
 
-    Optional<RequisitoMateria> findById(Long id);
+    public RequisitoMateria create(RequisitoMateria requisitoMateria);
 
-    RequisitoMateria save(RequisitoMateriaRequestDTO dto);
+    public RequisitoMateria update(RequisitoMateria requsitoMateria, Long id) throws Exception;
 
-    RequisitoMateria update(Long id, RequisitoMateriaRequestDTO dto);
+    public RequisitoMateria findById(Long id);
 
-    void deleteById(Long id);
+    public void deleteById(Long id) throws Exception;
+
+    public RequisitoMateria fromDto(RequisitoMateriaRequestDto dto) throws Exception;
 }

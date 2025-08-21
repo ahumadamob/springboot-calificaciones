@@ -2,8 +2,7 @@ package com.imb2025.calificaciones.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-public class AsignacionDocenteRequestDTO {
-    private Long id;
+public class AsignacionDocenteRequestDto {
 
     @NotNull(message = "El ID del docente es obligatorio")
     private Long docenteId;
@@ -16,17 +15,6 @@ public class AsignacionDocenteRequestDTO {
 
     @NotNull(message = "El ID del período lectivo es obligatorio")
     private Long periodoLectivoId;
-
-    public AsignacionDocenteRequestDTO() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getDocenteId() {
         return docenteId;

@@ -1,10 +1,20 @@
 package com.imb2025.calificaciones.controller;
 
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
 import com.imb2025.calificaciones.service.ITipoEvaluacionService;
@@ -39,14 +49,22 @@ public class TipoEvaluacionController {
 
     @PutMapping("/tipoEvaluacion/{id}")
     public ResponseEntity<?> updateTipoEvaluacion(@PathVariable Long id, @RequestBody TipoEvaluacion tipoEvaluacion) {
-        TipoEvaluacion actualizado = tipoEvaluacionService.update(id, tipoEvaluacion);
-        return ResponseEntity.ok(actualizado);
+        try {
+            TipoEvaluacion actualizado = tipoEvaluacionService.update(tipoEvaluacion, id);
+            return ResponseEntity.ok(actualizado);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/tipoEvaluacion/{id}")
     public ResponseEntity<?> deleteTipoEvaluacion(@PathVariable Long id) {
-        tipoEvaluacionService.deleteById(id);
-        return ResponseEntity.ok("Eliminado correctamente");
+        try {
+            tipoEvaluacionService.deleteById(id);
+            return ResponseEntity.ok("Eliminado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     
     @ExceptionHandler(Exception.class)

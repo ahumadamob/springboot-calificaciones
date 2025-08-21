@@ -1,12 +1,23 @@
 package com.imb2025.calificaciones.controller;
 
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.imb2025.calificaciones.dto.AsignacionDocenteRequestDto;
 import com.imb2025.calificaciones.entity.AsignacionDocente;
 import com.imb2025.calificaciones.service.IAsignacionDocenteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,16 +47,16 @@ public class AsignacionDocenteController {
     }
 
     @PostMapping
-    public ResponseEntity<AsignacionDocente> create(@RequestBody AsignacionDocente asignacionDocente) {
-        AsignacionDocente createdAsignacionDocente = service.create(asignacionDocente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdAsignacionDocente);
+    public ResponseEntity<AsignacionDocente> create(@RequestBody AsignacionDocenteRequestDto dto) throws Exception {
+        AsignacionDocente asignacion = service.fromDto(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(asignacion));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<AsignacionDocente> update(@PathVariable Long id,
-            @RequestBody AsignacionDocente asignacionDocente) throws Exception {
-        AsignacionDocente updatedAsignacionDocente = service.update(id, asignacionDocente);
-        return ResponseEntity.ok(updatedAsignacionDocente);
+            @RequestBody AsignacionDocenteRequestDto dto) throws Exception {
+        AsignacionDocente asignacion = service.fromDto(dto);
+        return ResponseEntity.ok(service.update(asignacion, id));
     }
 
     @DeleteMapping("/{id}")

@@ -1,14 +1,10 @@
 package com.imb2025.calificaciones.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,10 +13,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.condicionfinal.exception.EntidadNoEncontradaException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
 import com.imb2025.calificaciones.dto.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.entity.PlanEstudio;
-import com.imb2025.calificaciones.service.jpa.PlanEstudioServiceImp;
+import com.imb2025.calificaciones.service.IPlanEstudioService;
 
 
 @RestController
@@ -31,7 +34,7 @@ public class PlanEstudioController {
 	
 @Autowired
 
-private PlanEstudioServiceImp planestudioserviceimp;
+private IPlanEstudioService planestudioserviceimp;
 
 @GetMapping
 public ResponseEntity<List<PlanEstudio>> getAllPlanesEstudio() {
@@ -58,10 +61,9 @@ public ResponseEntity<?> getPlanEstudioById(@PathVariable Long id) {
 public ResponseEntity<?> createPlanEstudio(@RequestBody PlanEstudioRequestDto planestudioRequestDto) {
     try {
         
-        PlanEstudio planestudio = planestudioserviceimp.convertToEntity(planestudioRequestDto);
+        PlanEstudio planestudio = planestudioserviceimp.fromDto(planestudioRequestDto);
 
-      
-        PlanEstudio saved = planestudioserviceimp.save(planestudio);
+        PlanEstudio saved = planestudioserviceimp.create(planestudio);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 
     } catch (EntidadNoEncontradaException e) {
@@ -91,11 +93,9 @@ public ResponseEntity<?> createPlanEstudio(@RequestBody PlanEstudioRequestDto pl
                 }
 
                 
-                PlanEstudio planestudio = planestudioserviceimp.convertToEntity(newPlanEstudioDto);
+                PlanEstudio planestudio = planestudioserviceimp.fromDto(newPlanEstudioDto);
 
-               
-
-                PlanEstudio updated = planestudioserviceimp.save(planestudio);
+                PlanEstudio updated = planestudioserviceimp.update(planestudio, id);
                 return ResponseEntity.ok(updated);
 
             } catch (EntidadNoEncontradaException e) {

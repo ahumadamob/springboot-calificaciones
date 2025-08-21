@@ -1,23 +1,20 @@
 package com.imb2025.calificaciones.service;
 
-import java.util.List;
-
 import com.imb2025.calificaciones.dto.MateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
-
-
+import java.util.List;
 
 public interface IMateriaService {
 
-	public List<Materia> findAll();
+    public List<Materia> findAll();
 
-	public Materia findById(Long id);
+    public Materia create(Materia materia);
 
-	public Materia create(Materia materia);
+    public Materia update(Materia materia, Long id) throws Exception;
 
-	public void deleteById(long id);
-	
-	public Materia update(Materia materia, Long id) throws Exception;
-	public Materia mapFromDto(MateriaRequestDto materiaRequestDto) throws Exception;
+    public Materia findById(Long id);
 
+    public void deleteById(Long id) throws Exception;
+
+    public Materia fromDto(MateriaRequestDto dto) throws Exception;
 }

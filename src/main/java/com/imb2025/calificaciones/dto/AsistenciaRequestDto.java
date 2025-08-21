@@ -2,17 +2,14 @@ package com.imb2025.calificaciones.dto;
 
 import jakarta.validation.constraints.NotNull;
 
-public class AsistenciaRequestDTO {
+public class AsistenciaRequestDto {
 
-    
     private Long alumnoId;
-
     private Long registroClaseId;
 
     @NotNull(message = "El campo presente es obligatorio.")
     private Boolean presente;
 
-    // Getters y Setters
     public Long getAlumnoId() {
         return alumnoId;
     }

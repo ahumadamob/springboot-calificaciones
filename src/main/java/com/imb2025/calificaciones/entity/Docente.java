@@ -13,11 +13,32 @@ public class Docente {
 	private Long id ;
 	
 	private String nombre  ;
-	private String apellido ;
-	private Long legajo ;
-	private String email ;
-	private String titulo ;
-	
+        private String apellido ;
+        private Long legajo ;
+        private String email ;
+        private String titulo ;
+
+
+        public Docente() {
+        }
+
+        public Docente(Long id, String nombre, String apellido, Long legajo, String email, String titulo) {
+                this.id = id;
+                this.nombre = nombre;
+                this.apellido = apellido;
+                this.legajo = legajo;
+                this.email = email;
+                this.titulo = titulo;
+        }
+
+        public Docente(String nombre, String apellido, Long legajo, String email, String titulo) {
+                this.nombre = nombre;
+                this.apellido = apellido;
+                this.legajo = legajo;
+                this.email = email;
+                this.titulo = titulo;
+        }
+
 	
 	
 	public Long getId() {

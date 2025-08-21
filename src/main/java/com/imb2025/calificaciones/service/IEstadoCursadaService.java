@@ -1,20 +1,20 @@
 package com.imb2025.calificaciones.service;
 
-import java.util.List;
-
 import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
+import java.util.List;
 
 public interface IEstadoCursadaService {
 
-    EstadoCursada findById(Long id);
-
-    List<EstadoCursada> findAll();
+    public List<EstadoCursada> findAll();
 
     public EstadoCursada create(EstadoCursada estadoCursada);
-	public EstadoCursada update(EstadoCursada estadoCursada, Long id) throws Exception;
-    public void deleteById(Long id);
-    public  EstadoCursada mapFromDto(EstadoCursadaRequestDto estadoCursadaRequestDTO);
 
+    public EstadoCursada update(EstadoCursada estadoCursada, Long id) throws Exception;
 
+    public EstadoCursada findById(Long id);
+
+    public void deleteById(Long id) throws Exception;
+
+    public EstadoCursada fromDto(EstadoCursadaRequestDto dto) throws Exception;
 }

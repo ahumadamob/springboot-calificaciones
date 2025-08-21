@@ -2,7 +2,7 @@ package com.imb2025.calificaciones.dto;
 
 import java.time.LocalDate;
 
-public class RegistroClaseDTO {
+public class RegistroClaseRequestDto {
 
     private LocalDate fecha;
     private String tema;

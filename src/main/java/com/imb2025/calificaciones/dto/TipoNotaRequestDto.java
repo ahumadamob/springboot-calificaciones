@@ -1,10 +1,9 @@
 package com.imb2025.calificaciones.dto;
 
-public class TipoNotaRequestDTO {
-	private String nombre;
-    private String descripcion;
+public class TipoNotaRequestDto {
 
-    // Getters y Setters
+    private String nombre;
+    private String descripcion;
 
     public String getNombre() {
         return nombre;

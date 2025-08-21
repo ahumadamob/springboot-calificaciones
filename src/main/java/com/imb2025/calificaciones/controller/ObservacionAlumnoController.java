@@ -1,11 +1,6 @@
 package com.imb2025.calificaciones.controller;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,9 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.imb2025.calificaciones.dto.ErrorMessage;
 import com.imb2025.calificaciones.dto.ErrorResponseDto;
-import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDTO;
+import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDto;
 import com.imb2025.calificaciones.dto.SuccessResponseDto;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
 import com.imb2025.calificaciones.service.IObservacionAlumnoService;
@@ -49,19 +50,19 @@ public class ObservacionAlumnoController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Long id, HttpServletRequest request) {
 		
-		Optional<ObservacionAlumno> observacionAlumno = observacionAlumnoService.findById(id);
-		
-		if (observacionAlumno.isPresent()) {
-			
-			SuccessResponseDto<ObservacionAlumno> response = new SuccessResponseDto<>();
-			response.setTimestamp(LocalDateTime.now());
-			response.setStatus(HttpStatus.OK.value());
-			response.setMessage("observación obtenida correctamente por ID");
-			response.setData(observacionAlumno.get());
-			
-			return ResponseEntity.ok(response);
-			
-		} else {
+                ObservacionAlumno observacionAlumno = observacionAlumnoService.findById(id);
+
+                if (observacionAlumno != null) {
+
+                        SuccessResponseDto<ObservacionAlumno> response = new SuccessResponseDto<>();
+                        response.setTimestamp(LocalDateTime.now());
+                        response.setStatus(HttpStatus.OK.value());
+                        response.setMessage("observación obtenida correctamente por ID");
+                        response.setData(observacionAlumno);
+
+                        return ResponseEntity.ok(response);
+
+                } else {
 			
 			ErrorResponseDto errorResponse = new ErrorResponseDto();
 			errorResponse.setTimestamp(LocalDateTime.now());
@@ -78,10 +79,10 @@ public class ObservacionAlumnoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody ObservacionAlumnoRequestDTO dto, HttpServletRequest request) {
+	public ResponseEntity<?> create(@RequestBody ObservacionAlumnoRequestDto dto, HttpServletRequest request) {
 		try {	
 			
-			ObservacionAlumno observacionAlumno = observacionAlumnoService.create(observacionAlumnoService.fromDTO(dto));
+                        ObservacionAlumno observacionAlumno = observacionAlumnoService.create(observacionAlumnoService.fromDto(dto));
 			
 			SuccessResponseDto<ObservacionAlumno> response = new SuccessResponseDto<>();
 			response.setTimestamp(LocalDateTime.now());
@@ -122,10 +123,10 @@ public class ObservacionAlumnoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@RequestBody ObservacionAlumnoRequestDTO dto, @PathVariable Long id, HttpServletRequest request) {
+	public ResponseEntity<?> update(@RequestBody ObservacionAlumnoRequestDto dto, @PathVariable Long id, HttpServletRequest request) {
 	try {	
 			
-			ObservacionAlumno observacionAlumno = observacionAlumnoService.update(id, observacionAlumnoService.fromDTO(dto));
+                        ObservacionAlumno observacionAlumno = observacionAlumnoService.update(observacionAlumnoService.fromDto(dto), id);
 			
 			SuccessResponseDto<ObservacionAlumno> response = new SuccessResponseDto<>();
 			response.setTimestamp(LocalDateTime.now());

@@ -1,16 +1,20 @@
 package com.imb2025.calificaciones.service;
 
+import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDto;
+import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import java.util.List;
 
-import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDTO;
-import com.imb2025.calificaciones.entity.PeriodoLectivo;
-
 public interface IPeriodoLectivoService {
-	List<PeriodoLectivo> findAll();
-	PeriodoLectivo findById(Long id);
-	Boolean existsById(Long id);
-	PeriodoLectivo save(PeriodoLectivo periodoLectivo);
-	PeriodoLectivo update(Long id, PeriodoLectivo periodoLectivo) throws Exception ;
-	void deleteById(Long id) throws Exception ;
-	PeriodoLectivo mapFromDTO(PeriodoLectivoRequestDTO requestDTO);
+
+    public List<PeriodoLectivo> findAll();
+
+    public PeriodoLectivo create(PeriodoLectivo periodoLectivo);
+
+    public PeriodoLectivo update(PeriodoLectivo periodoLectivo, Long id) throws Exception;
+
+    public PeriodoLectivo findById(Long id);
+
+    public void deleteById(Long id) throws Exception;
+
+    public PeriodoLectivo fromDto(PeriodoLectivoRequestDto dto) throws Exception;
 }

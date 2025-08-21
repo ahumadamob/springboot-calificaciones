@@ -1,22 +1,24 @@
 package com.imb2025.calificaciones.controller;
 
-import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.imb2025.calificaciones.dto.RegistroClaseDTO;
-import com.imb2025.calificaciones.entity.RegistroClase;
-import com.imb2025.calificaciones.service.IRegistroClaseService;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+
+import com.imb2025.calificaciones.dto.RegistroClaseRequestDto;
+import com.imb2025.calificaciones.entity.RegistroClase;
+import com.imb2025.calificaciones.service.IRegistroClaseService;
+
+
 
 @RestController
 @RequestMapping("/registro")
@@ -28,39 +30,42 @@ public class RegistroClaseController {
         this.iregistroClase = iregistroClase;
     }
 
-    @GetMapping("/obteneregistros")
-    public ResponseEntity<List<RegistroClase>> obtenerTodosLosRegistros() {
-        List<RegistroClase> registros = iregistroClase.obtenerTodosLosRegistros();
-        if (registros.isEmpty()) {
-            return ResponseEntity.noContent().build(); // 204 No Content
+    @GetMapping
+    public ResponseEntity<List<RegistroClase>> findAll() {
+        List<RegistroClase> registros = iregistroClase.findAll();
+        return registros.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(registros);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RegistroClase> getById(@PathVariable Long id) {
+        RegistroClase registro = iregistroClase.findById(id);
+        return registro == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(registro);
+    }
+
+    @PostMapping
+    public ResponseEntity<RegistroClase> create(@RequestBody RegistroClaseRequestDto dto) throws Exception {
+        RegistroClase registro = iregistroClase.fromDto(dto);
+        return ResponseEntity.ok(iregistroClase.create(registro));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RegistroClase> update(@PathVariable Long id, @RequestBody RegistroClaseRequestDto dto) {
+        try {
+            RegistroClase registro = iregistroClase.fromDto(dto);
+            return ResponseEntity.ok(iregistroClase.update(registro, id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(registros); // 200 OK
     }
 
-    @GetMapping("/registroclase/{id}")
-    public ResponseEntity<RegistroClase> obtenerRegistroPorId(@PathVariable Long id) {
-        RegistroClase registro = iregistroClase.obtenerRegistro(id);
-        return ResponseEntity.ok(registro); // Si no existe, el servicio debe lanzar excepción
-    }
-
-    @PostMapping("/registroclase")
-    public ResponseEntity<RegistroClase> registrarClase(@RequestBody RegistroClaseDTO registroDTO) {
-        RegistroClase creado = iregistroClase.registrarClase(registroDTO);
-        return ResponseEntity.ok(creado);
-    }
-
-    @PutMapping("/registroclase/{id}")
-    public ResponseEntity<RegistroClase> actualizarRegistro(
-            @PathVariable Long id,
-            @RequestBody RegistroClaseDTO registroDTO) {
-        RegistroClase actualizado = iregistroClase.actualizarRegistro(id, registroDTO);
-        return ResponseEntity.ok(actualizado);
-    }
-
-    @DeleteMapping("/eliminarregistroclase/{id}")
-    public ResponseEntity<Void> eliminarRegistro(@PathVariable Long id) {
-        iregistroClase.eliminarRegistro(id);
-        return ResponseEntity.noContent().build(); // 204 No Content
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            iregistroClase.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }

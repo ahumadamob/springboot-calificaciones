@@ -1,18 +1,20 @@
 package com.imb2025.calificaciones.service;
 
-import java.util.List;
-
-import com.imb2025.calificaciones.dto.CursadaRequestDTO;
+import com.imb2025.calificaciones.dto.CursadaRequestDto;
 import com.imb2025.calificaciones.entity.Cursada;
+import java.util.List;
 
 public interface ICursadaService {
 
     public List<Cursada> findAll();
-    Cursada findById(Long id);
-    String save(CursadaRequestDTO cursada);
-    public void deleteById (Long id);
-    public String update(Long id, CursadaRequestDTO dto);
 
+    public Cursada create(Cursada cursada);
 
+    public Cursada update(Cursada cursada, Long id) throws Exception;
+
+    public Cursada findById(Long id);
+
+    public void deleteById(Long id) throws Exception;
+
+    public Cursada fromDto(CursadaRequestDto dto) throws Exception;
 }
-
