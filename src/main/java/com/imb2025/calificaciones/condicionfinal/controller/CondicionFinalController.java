@@ -1,11 +1,12 @@
 package com.imb2025.calificaciones.condicionfinal.controller;
 
 import com.imb2025.calificaciones.condicionfinal.dto.CondicionFinalRequestDTO;
+import com.imb2025.calificaciones.condicionfinal.dto.ApiResponseDTO;
 import com.imb2025.calificaciones.condicionfinal.entity.CondicionFinal;
-import com.imb2025.calificaciones.condicionfinal.exception.EntidadNoEncontradaException;
 import com.imb2025.calificaciones.condicionfinal.service.CondicionFinalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,51 +20,58 @@ public class CondicionFinalController {
     private CondicionFinalService service;
 
     @GetMapping
-    public ResponseEntity<List<CondicionFinal>> getAll() {
+    public ResponseEntity<ApiResponseDTO<List<CondicionFinal>>> getAll() {
         List<CondicionFinal> lista = service.getAll();
-        return lista.isEmpty()
-                ? ResponseEntity.noContent().build()
-                : ResponseEntity.ok(lista);
+        ApiResponseDTO<List<CondicionFinal>> resp = new ApiResponseDTO<>(
+                true,
+                lista,
+                lista.isEmpty() ? "No hay registros de condiciones finales" : "Lista de condiciones finales obtenida con éxito"
+        );
+        return ResponseEntity.ok(resp);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CondicionFinal> getById(@PathVariable Long id) {
-        try {
-            CondicionFinal cf = service.getById(id);
-            return ResponseEntity.ok(cf);
-        } catch (EntidadNoEncontradaException ex) {
-            return ResponseEntity.noContent().build(); // 204 No Content
-        }
+    public ResponseEntity<ApiResponseDTO<CondicionFinal>> getById(@PathVariable Long id) {
+        CondicionFinal cf = service.getById(id); // lanza ResourceNotFoundException si no existe
+        ApiResponseDTO<CondicionFinal> resp = new ApiResponseDTO<>(
+                true,
+                cf,
+                "Condición final encontrada con ID: " + id
+        );
+        return ResponseEntity.ok(resp);
     }
 
     @PostMapping
-    public ResponseEntity<CondicionFinal> create(@RequestBody @Valid CondicionFinalRequestDTO dto) {
+    public ResponseEntity<ApiResponseDTO<CondicionFinal>> create(@RequestBody @Valid CondicionFinalRequestDTO dto) {
         CondicionFinal creado = service.create(dto);
-        return ResponseEntity.ok(creado); // 200 OK
+        ApiResponseDTO<CondicionFinal> resp = new ApiResponseDTO<>(
+                true,
+                creado,
+                "Condición final creada correctamente"
+        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CondicionFinal> update(@PathVariable Long id, @RequestBody @Valid CondicionFinalRequestDTO dto) {
-        try {
-            CondicionFinal actualizado = service.update(id, dto);
-            return ResponseEntity.ok(actualizado);
-        } catch (EntidadNoEncontradaException ex) {
-            return ResponseEntity.badRequest().body(null); // 400 Bad Request
-        }
+    public ResponseEntity<ApiResponseDTO<CondicionFinal>> update(@PathVariable Long id,
+                                                                 @RequestBody @Valid CondicionFinalRequestDTO dto) {
+        CondicionFinal actualizado = service.update(id, dto);
+        ApiResponseDTO<CondicionFinal> resp = new ApiResponseDTO<>(
+                true,
+                actualizado,
+                "Condición final actualizada con éxito"
+        );
+        return ResponseEntity.ok(resp);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        try {
-            service.delete(id);
-            return ResponseEntity.ok().build();
-        } catch (EntidadNoEncontradaException ex) {
-            return ResponseEntity.badRequest().build(); // 400 Bad Request
-        }
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+    public ResponseEntity<ApiResponseDTO<Void>> delete(@PathVariable Long id) {
+        service.delete(id);
+        ApiResponseDTO<Void> resp = new ApiResponseDTO<>(
+                true,
+                null,
+                "Condición final eliminada con éxito"
+        );
+        return ResponseEntity.ok(resp);
     }
 }
