@@ -14,6 +14,8 @@ public interface IPlanEstudioService {
 
     public PlanEstudio findById(Long id);
 
+    public boolean existsById(Long id);
+    
     public void deleteById(Long id) throws Exception;
 
     public PlanEstudio fromDto(PlanEstudioRequestDto dto) throws Exception;

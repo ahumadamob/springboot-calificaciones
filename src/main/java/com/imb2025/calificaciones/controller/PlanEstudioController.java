@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.imb2025.calificaciones.dto.ApiResponseErrorDto;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,116 +32,56 @@ import com.imb2025.calificaciones.service.IPlanEstudioService;
 
 public class PlanEstudioController {
 	
+
 @Autowired
+IPlanEstudioService planEstudioService;
 
-private IPlanEstudioService planestudioserviceimp;
-
-@GetMapping
-public ResponseEntity<List<PlanEstudio>> getAllPlanesEstudio() {
-    List<PlanEstudio> planes = planestudioserviceimp.findAll();
-    return ResponseEntity.ok(planes);
+@GetMapping("/planestudio")
+public ResponseEntity<List<PlanEstudio>> obtenerTodos() {
+    List<PlanEstudio> planesDeEstudio = planEstudioService.findAll();
+    return planesDeEstudio.isEmpty()
+            ? ResponseEntity.noContent().build()
+            : ResponseEntity.ok(planesDeEstudio);
 }
-
 
 @GetMapping("/{id}")
-public ResponseEntity<?> getPlanEstudioById(@PathVariable Long id) {
-    Optional<PlanEstudio> plan = Optional.ofNullable(planestudioserviceimp.findById(id));
+public ResponseEntity<PlanEstudio> obtenerPlanEstudioPorId(@PathVariable Long id) {
+    return planEstudioService.existsById(id)
+            ? ResponseEntity.ok(planEstudioService.findById(id))
+            : ResponseEntity.noContent().build();
+}
 
-    if (plan.isPresent()) {
-        return ResponseEntity.ok(plan.get());
+@PostMapping("/planestudio")
+public ResponseEntity<PlanEstudio> crear(@RequestBody PlanEstudioRequestDto dto) throws Exception {
+    PlanEstudio planEstudio = planEstudioService.fromDto(dto);
+    return ResponseEntity.ok(planEstudioService.create(planEstudio));
+}
+
+@PutMapping("/planestudio/{id}")
+public ResponseEntity<PlanEstudio> actualizar(@PathVariable Long id, @RequestBody PlanEstudioRequestDto dto) throws Exception {
+    if (planEstudioService.existsById(id)) {
+        PlanEstudio planEstudio = planEstudioService.fromDto(dto);
+        return ResponseEntity.ok(planEstudioService.update(planEstudio, id));
     } else {
-        Map<String, Object> message = new HashMap<>();
-        message.put("error", "Plan de estudio con ID " + id + " no encontrado");
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        return ResponseEntity.badRequest().body(null);
     }
 }
 
-
-@PostMapping
-public ResponseEntity<?> createPlanEstudio(@RequestBody PlanEstudioRequestDto planestudioRequestDto) {
+@DeleteMapping("/planestudio/{id}")
+public ResponseEntity<Void> eliminar(@PathVariable Long id) {
     try {
-        
-        PlanEstudio planestudio = planestudioserviceimp.fromDto(planestudioRequestDto);
-
-        PlanEstudio saved = planestudioserviceimp.create(planestudio);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-
-    } catch (EntidadNoEncontradaException e) {
-        Map<String, Object> message = new HashMap<>();
-        message.put("mensaje", e.getMessage());
-        message.put("error", "Entidad relacionada no encontrada");
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-
+        planEstudioService.deleteById(id);
+        return ResponseEntity.ok().build();
     } catch (Exception e) {
-        Map<String, Object> message = new HashMap<>();
-        message.put("mensaje", e.getMessage());
-        message.put("error", "Error al crear el plan de estudio");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        return ResponseEntity.badRequest().build();
     }
 }
 
 
-        @PutMapping("/{id}")
-        public ResponseEntity<?> updatePlanEstudio(@PathVariable Long id, @RequestBody PlanEstudioRequestDto newPlanEstudioDto) {
-            try {
-                
-                Optional<PlanEstudio> existing = Optional.ofNullable(planestudioserviceimp.findById(id));
-                if (existing.isEmpty()) {
-                    Map<String, Object> message = new HashMap<>();
-                    message.put("error", "Plan de estudio con ID " + id + " no encontrado");
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-                }
 
-                
-                PlanEstudio planestudio = planestudioserviceimp.fromDto(newPlanEstudioDto);
-
-                PlanEstudio updated = planestudioserviceimp.update(planestudio, id);
-                return ResponseEntity.ok(updated);
-
-            } catch (EntidadNoEncontradaException e) {
-                Map<String, Object> message = new HashMap<>();
-                message.put("mensaje", e.getMessage());
-                message.put("error", "Entidad relacionada no encontrada");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-
-            } catch (Exception e) {
-                Map<String, Object> message = new HashMap<>();
-                message.put("mensaje", e.getMessage());
-                message.put("error", "Error al actualizar el plan de estudio");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-            }
-        }
-
-
-
-
-
-
-
-
-        @DeleteMapping("/{id}")
-        public ResponseEntity<?> deletePlanEstudio(@PathVariable Long id) {
-            try {
-                Optional<PlanEstudio> existing = Optional.ofNullable(planestudioserviceimp.findById(id));
-                if (existing.isEmpty()) {
-                    Map<String, Object> message = new HashMap<>();
-                    message.put("error", "Plan de estudio con ID " + id + " no encontrado");
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-                }
-
-                planestudioserviceimp.deleteById(id);
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
-            } catch (Exception e) {
-                Map<String, Object> message = new HashMap<>();
-                message.put("error", "Error al eliminar el plan de estudio");
-                message.put("mensaje", e.getMessage());
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
-            }
-        }
-
-
-
-	
+@ExceptionHandler(Exception.class)
+public ResponseEntity<String> handleException(Exception ex) {
+    return ResponseEntity.badRequest().body(ex.getMessage());
+}
 
 }
