@@ -1,6 +1,9 @@
 package com.imb2025.calificaciones.controller;
 
+import java.util.Collections;
+import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,14 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-
+import com.imb2025.calificaciones.dto.ApiResponseErrorDto;
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import com.imb2025.calificaciones.dto.FieldErrorDto;
 import com.imb2025.calificaciones.dto.RegistroClaseRequestDto;
 import com.imb2025.calificaciones.entity.RegistroClase;
 import com.imb2025.calificaciones.service.IRegistroClaseService;
-
-
 
 @RestController
 @RequestMapping("/registro")
@@ -31,41 +32,78 @@ public class RegistroClaseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RegistroClase>> findAll() {
+    public ResponseEntity<ApiResponseSuccessDto<List<RegistroClase>>> findAll() {
         List<RegistroClase> registros = iregistroClase.findAll();
-        return registros.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(registros);
+        ApiResponseSuccessDto<List<RegistroClase>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(registros);
+        resp.setMessage(registros.isEmpty() ? "No hay registros" : "Registros obtenidos correctamente");
+        return ResponseEntity.ok(resp);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RegistroClase> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable Long id) {
         RegistroClase registro = iregistroClase.findById(id);
-        return registro == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(registro);
+        if (registro == null) {
+            ApiResponseErrorDto resp = new ApiResponseErrorDto();
+            resp.setSuccess(false);
+            resp.setErrors(Collections.singletonList(new FieldErrorDto("id", "Registro no encontrado")));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resp);
+        } else {
+            ApiResponseSuccessDto<RegistroClase> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(true);
+            resp.setData(registro);
+            resp.setMessage("Registro obtenido correctamente");
+            return ResponseEntity.ok(resp);
+        }
     }
 
     @PostMapping
-    public ResponseEntity<RegistroClase> create(@RequestBody RegistroClaseRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<RegistroClase>> create(@RequestBody RegistroClaseRequestDto dto) throws Exception {
         RegistroClase registro = iregistroClase.fromDto(dto);
-        return ResponseEntity.ok(iregistroClase.create(registro));
+        RegistroClase creado = iregistroClase.create(registro);
+
+        ApiResponseSuccessDto<RegistroClase> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(creado);
+        resp.setMessage("Registro creado correctamente");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RegistroClase> update(@PathVariable Long id, @RequestBody RegistroClaseRequestDto dto) {
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody RegistroClaseRequestDto dto) {
         try {
             RegistroClase registro = iregistroClase.fromDto(dto);
-            return ResponseEntity.ok(iregistroClase.update(registro, id));
+            RegistroClase actualizado = iregistroClase.update(registro, id);
+
+            ApiResponseSuccessDto<RegistroClase> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(true);
+            resp.setData(actualizado);
+            resp.setMessage("Registro actualizado correctamente");
+
+            return ResponseEntity.ok(resp);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            ApiResponseErrorDto resp = new ApiResponseErrorDto();
+            resp.setSuccess(false);
+            resp.setErrors(Collections.singletonList(new FieldErrorDto("id", "Error al actualizar registro: " + e.getMessage())));
+            return ResponseEntity.badRequest().body(resp);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
             iregistroClase.deleteById(id);
-            return ResponseEntity.noContent().build();
+            ApiResponseSuccessDto<Void> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(true);
+            resp.setMessage("Registro eliminado correctamente");
+            return ResponseEntity.ok(resp);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            ApiResponseErrorDto resp = new ApiResponseErrorDto();
+            resp.setSuccess(false);
+            resp.setErrors(Collections.singletonList(new FieldErrorDto("id", "Error al eliminar registro: " + e.getMessage())));
+            return ResponseEntity.badRequest().body(resp);
         }
     }
-
 }
