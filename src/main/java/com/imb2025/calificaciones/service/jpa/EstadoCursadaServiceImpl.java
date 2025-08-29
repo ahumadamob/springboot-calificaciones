@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.repository.EstadoCursadaRepository;
@@ -23,7 +24,9 @@ public class EstadoCursadaServiceImpl implements IEstadoCursadaService {
 
     @Override
     public EstadoCursada findById(Long id) {
-        return repository.findById(id).orElse(null);
+    	return repository.findById(id)
+        	    .orElseThrow(() -> new ResourceNotFoundException(
+        	        "Estado de cursada no encontrado para el id " + id));
     }
 
     @Override

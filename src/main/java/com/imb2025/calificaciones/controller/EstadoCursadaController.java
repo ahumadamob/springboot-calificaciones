@@ -1,7 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 
-
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,9 +36,13 @@ public class EstadoCursadaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EstadoCursada> getEstadoCursadabyId(@PathVariable Long id) {
+    public ResponseEntity<ApiResponseSuccessDto <EstadoCursada>> getEstadoCursadabyId(@PathVariable Long id) {
         EstadoCursada estado = service.findById(id);
-        return estado == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(estado);
+        ApiResponseSuccessDto<EstadoCursada> response = new ApiResponseSuccessDto<>();
+    	response.setMessage("Estado de la Materia fue encontrada con exito");
+    	response.setData(estado);
+
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
