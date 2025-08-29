@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.dto.AsignacionDocenteRequestDto;
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import com.imb2025.calificaciones.dto.ApiResponseErrorDto;
 import com.imb2025.calificaciones.entity.AsignacionDocente;
 import com.imb2025.calificaciones.service.IAsignacionDocenteService;
 
@@ -29,45 +31,64 @@ public class AsignacionDocenteController {
     private IAsignacionDocenteService service;
 
     @GetMapping
-    public ResponseEntity<List<AsignacionDocente>> getAll() {
+    public ResponseEntity<ApiResponseSuccessDto<List<AsignacionDocente>>> getAll() {
         List<AsignacionDocente> asignaciones = service.findAll();
-        if (asignaciones.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(asignaciones);
+        ApiResponseSuccessDto<List<AsignacionDocente>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(asignaciones);
+        resp.setMessage(asignaciones.isEmpty() ? "No se encontraron asignaciones docentes" : "Asignaciones docentes obtenidas exitosamente");
+        return ResponseEntity.ok(resp);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AsignacionDocente> getById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<AsignacionDocente>> getById(@PathVariable Long id) throws Exception {
         AsignacionDocente asignacionDocente = service.findById(id);
-        if (asignacionDocente == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(asignacionDocente);
+        ApiResponseSuccessDto<AsignacionDocente> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(asignacionDocente);
+        resp.setMessage("Asignación docente obtenida exitosamente");
+        return ResponseEntity.ok(resp);
     }
 
     @PostMapping
-    public ResponseEntity<AsignacionDocente> create(@RequestBody AsignacionDocenteRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<AsignacionDocente>> create(@RequestBody AsignacionDocenteRequestDto dto) throws Exception {
         AsignacionDocente asignacion = service.fromDto(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(asignacion));
+        AsignacionDocente createdAsignacion = service.create(asignacion);
+        ApiResponseSuccessDto<AsignacionDocente> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(createdAsignacion);
+        resp.setMessage("Asignación docente creada exitosamente");
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AsignacionDocente> update(@PathVariable Long id,
+    public ResponseEntity<ApiResponseSuccessDto<AsignacionDocente>> update(@PathVariable Long id,
             @RequestBody AsignacionDocenteRequestDto dto) throws Exception {
         AsignacionDocente asignacion = service.fromDto(dto);
-        return ResponseEntity.ok(service.update(asignacion, id));
+        AsignacionDocente updatedAsignacion = service.update(asignacion, id);
+        ApiResponseSuccessDto<AsignacionDocente> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(updatedAsignacion);
+        resp.setMessage("Asignación docente actualizada exitosamente");
+        return ResponseEntity.ok(resp);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<Void>> deleteById(@PathVariable Long id) throws Exception {
         service.deleteById(id);
-        return ResponseEntity.noContent().build();
+        ApiResponseSuccessDto<Void> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(null);
+        resp.setMessage("Asignación docente eliminada exitosamente");
+        return ResponseEntity.ok(resp);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+    public ResponseEntity<ApiResponseErrorDto> handleException(Exception e) {
+        ApiResponseErrorDto errorResp = new ApiResponseErrorDto();
+        errorResp.setSuccess(false);
+        errorResp.setErrors(List.of(new com.imb2025.calificaciones.dto.FieldErrorDto("general", e.getMessage())));
+        return ResponseEntity.badRequest().body(errorResp);
     }
 
 }
