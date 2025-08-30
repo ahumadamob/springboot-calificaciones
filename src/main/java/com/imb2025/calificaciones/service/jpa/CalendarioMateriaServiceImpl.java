@@ -4,6 +4,7 @@ import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDto;
 import com.imb2025.calificaciones.entity.CalendarioMateria;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.entity.Materia;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.ComisionRepository;
 import com.imb2025.calificaciones.repository.ICalendarioMateriaRepository;
 import com.imb2025.calificaciones.repository.MateriaRepository;
@@ -31,7 +32,8 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService {
     @Override
     @Transactional
     public CalendarioMateria findById(Long id) {
-        return calMatRepo.findById(id).orElseThrow();
+        return calMatRepo.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Calendario materia no encontrado con id: " + id));
     }
 
     @Override
@@ -40,22 +42,18 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService {
     }
 
     @Override
-    public CalendarioMateria update(CalendarioMateria calendarioMateria, Long id) throws Exception {
-
-        if (calMatRepo.existsById(id)){
-            calendarioMateria.setId(id);
-            return calMatRepo.save(calendarioMateria);
-        } else {
-            throw new Exception ("No se encontro calendario materia con el id: "+ id);
-        }
+    public CalendarioMateria update(CalendarioMateria calendarioMateria, Long id) {
+        calMatRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Calendario materia no encontrado con id: " + id));
+        calendarioMateria.setId(id);
+        return calMatRepo.save(calendarioMateria);
     }
 
     @Override
     @Transactional
-    public void deleteById(Long id) throws Exception {
-        if (!calMatRepo.existsById(id)) {
-            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
-        }
+    public void deleteById(Long id) {
+        calMatRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Calendario materia no encontrado con id: " + id));
         calMatRepo.deleteById(id);
     }
 

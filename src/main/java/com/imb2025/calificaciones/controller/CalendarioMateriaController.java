@@ -1,6 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDto;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.entity.CalendarioMateria;
@@ -30,56 +29,71 @@ public class CalendarioMateriaController {
 	private ICalendarioMateriaService calMatSer;
 	
 	
-        @GetMapping
-        public ResponseEntity<List<CalendarioMateria>> getAll (){
-                List<CalendarioMateria> calendarios = calMatSer.findAll();
-                return calendarios.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(calendarios);
-        }
+    @GetMapping
+    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> getAll (){
+        List<CalendarioMateria> calendarios = calMatSer.findAll();
 
-        @GetMapping("/{id}")
-        public ResponseEntity<CalendarioMateria> getById(@PathVariable Long id){
-                CalendarioMateria calendario = calMatSer.findById(id);
-                return calendario == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(calendario);
-        }
+        ApiResponseSuccessDto response = new ApiResponseSuccessDto<CalendarioMateria>();
+
+        response.setSuccess(true);
+        response.setData(calendarios);
+        response.setMessage("Calendarios Materias encontrados con éxito");
+
+        return calendarios.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> getById(@PathVariable Long id){
+
+        CalendarioMateria calendario = calMatSer.findById(id);
+
+        ApiResponseSuccessDto response = new ApiResponseSuccessDto<CalendarioMateria>();
+
+        response.setSuccess(true);
+        response.setData(calendario);
+        response.setMessage("Calendario Materia encontrado con éxito");
+
+        return ResponseEntity.ok(response);
+    }
 	
 	@PostMapping
-	public ResponseEntity<?> create(@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto){
+	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> create(@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto) throws Exception {
 
-		try {
-			CalendarioMateria calendarioMateria;
-                        calendarioMateria = calMatSer.fromDto(calendarioMateriaDto);
-                        calendarioMateria = calMatSer.create(calendarioMateria);
+        CalendarioMateria calendarioMateria;
+        calendarioMateria = calMatSer.fromDto(calendarioMateriaDto);
+        calendarioMateria = calMatSer.create(calendarioMateria);
 
-			return ResponseEntity.status(HttpStatus.CREATED).body(calendarioMateria);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-		}
+        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(calendarioMateria);
+        response.setMessage("Calendario Materia creado con éxito");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable Long id,
-													@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto){
-		try {
-			CalendarioMateria calendarioMateria;
-                        calendarioMateria = calMatSer.fromDto(calendarioMateriaDto);
-                        calendarioMateria = calMatSer.update(calendarioMateria, id);
+	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> update(@PathVariable Long id,
+													@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto) throws Exception {
+        CalendarioMateria calendarioMateria;
+        calendarioMateria = calMatSer.fromDto(calendarioMateriaDto);
+        calendarioMateria = calMatSer.update(calendarioMateria, id);
 
-			return ResponseEntity.status(HttpStatus.OK).body(calendarioMateria);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-		}
+        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(calendarioMateria);
+        response.setMessage("Calendario Materia actualizado con éxito");
 
+        return ResponseEntity.status(HttpStatus.OK).body(response);
 
 	}
 	
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-                try {
-                        calMatSer.deleteById(id);
-                        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-                } catch (Exception e) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-                }
+    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> delete(@PathVariable Long id) throws Exception {
+        calMatSer.deleteById(id);
+        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+        response.setMessage("Calendario Materia con id: " + id + " eliminado con éxito");
+        response.setSuccess(true);
+        return ResponseEntity.ok(response);
     }
 	
 }
