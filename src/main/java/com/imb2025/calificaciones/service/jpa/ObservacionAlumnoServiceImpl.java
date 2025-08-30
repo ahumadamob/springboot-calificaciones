@@ -10,6 +10,7 @@ import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.repository.DocenteRepository;
 import com.imb2025.calificaciones.repository.ObservacionAlumnoRepository;
@@ -29,7 +30,9 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 
     @Override
     public ObservacionAlumno findById(Long id) {
-        return observacionAlumnoRepository.findById(id).orElse(null);
+        return observacionAlumnoRepository.findById(id)
+        		.orElseThrow(()-> new ResourceNotFoundException(
+        				"observación no encontrada con id " + id));
     }
 
     @Override
@@ -42,7 +45,7 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
         try {
             return observacionAlumnoRepository.save(observacionAlumno);
         } catch (Exception e) {
-            throw new RuntimeException("error al crear la observación del alumno: " + e.getMessage());
+            throw new RuntimeException("Error al crear la observación del alumno: " + e.getMessage());
         }
 
     }
@@ -55,10 +58,10 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
                 observacionAlumno.setId(id);
                 return observacionAlumnoRepository.save(observacionAlumno);
             } else {
-                throw new Exception("la observación de alumno no existe");
+                throw new Exception("La observación de alumno no existe");
             }
         } catch (Exception e) {
-            throw new RuntimeException("error al actualizar la observación del alumno: " + e.getMessage());
+            throw new RuntimeException("Error al actualizar la observación del alumno: " + e.getMessage());
         }
     }
 
