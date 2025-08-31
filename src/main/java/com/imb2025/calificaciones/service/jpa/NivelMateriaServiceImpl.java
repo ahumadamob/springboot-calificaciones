@@ -105,7 +105,6 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
 
 	@Override
 	public NivelMateria save(NivelMateria nuevo) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
@@ -128,10 +127,10 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
 
 	    return mapToResponseDTO(guardado); // ✅ convertir a DTO de respuesta
 	}
-
 	@Override
 	public NivelMateria findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	    return repo.findById(id)
+	        .orElseThrow(() -> new EntidadNoEncontradaException(
+	            "NivelMateria no encontrada con ID: " + id));
 	}
-}
+	    }

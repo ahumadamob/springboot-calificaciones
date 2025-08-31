@@ -1,6 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 import java.util.List;
+import com.imb2025.calificaciones.dto.ApiResponseDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.imb2025.calificaciones.dto.NivelMateriaRequestDTO;
 import com.imb2025.calificaciones.dto.NivelMateriaResponseDTO;
 import com.imb2025.calificaciones.service.INivelMateriaService;
+import com.imb2025.calificaciones.entity.NivelMateria;
 
 @RestController
 @RequestMapping("/api/nivelmateria")  // o el endpoint que vos estés usando
@@ -23,16 +25,20 @@ public class NivelMateriaController {
         List<NivelMateriaResponseDTO> lista = nivelMateriaService.listarTodos();
         return ResponseEntity.ok(lista);
     }
-
-    // ✅ GET - Obtener uno por ID
     @GetMapping("/{id}")
-    public ResponseEntity<NivelMateriaResponseDTO> obtenerPorId(@PathVariable Long id) {
-        if (!nivelMateriaService.existePorId(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        NivelMateriaResponseDTO dto = nivelMateriaService.obtenerPorId(id);
-        return ResponseEntity.ok(dto);
+    public ResponseEntity<ApiResponseDTO<NivelMateria>> getById(@PathVariable Long id) {
+        // usar SIEMPRE la variable correcta del servicio:
+        NivelMateria entidad = nivelMateriaService.findById(id);
+
+        ApiResponseDTO<NivelMateria> resp = new ApiResponseDTO<>();
+        resp.setSuccess(true);
+        resp.setData(entidad);
+        resp.setMessage("NivelMateria encontrada correctamente");
+
+        return ResponseEntity.ok(resp);
     }
+ 
+
     @PutMapping("/{id}")
     public ResponseEntity<NivelMateriaResponseDTO> actualizar(@PathVariable Long id, @RequestBody NivelMateriaRequestDTO dto) {
         if (!nivelMateriaService.existePorId(id)) {

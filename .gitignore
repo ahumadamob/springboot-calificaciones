@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+# Ignorar clases de PeriodoLectivo que no manejás
+/src/main/java/com/imb2025/calificaciones/service/jpa/PeriodoLectivoServiceImpl.java
+/src/main/java/com/imb2025/calificaciones/controller/PeriodoLectivoController.java
+/src/main/java/com/imb2025/calificaciones/dto/PeriodoLectivoRequestDTO.java
