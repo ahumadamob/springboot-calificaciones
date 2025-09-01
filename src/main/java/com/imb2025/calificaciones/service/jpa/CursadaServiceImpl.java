@@ -10,6 +10,7 @@ import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.CondicionFinal;
 import com.imb2025.calificaciones.entity.Cursada;
 import com.imb2025.calificaciones.entity.Materia;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.repository.CondicionFinalRepository;
 import com.imb2025.calificaciones.repository.CursadaRepository;
@@ -34,7 +35,8 @@ public class CursadaServiceImpl implements ICursadaService{
 
     @Override
     public Cursada findById(Long id) {
-        return repo.findById(id).orElse(null);
+        return repo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException ("Cursada no encontrada con id " + id));
     }
 
     @Override
