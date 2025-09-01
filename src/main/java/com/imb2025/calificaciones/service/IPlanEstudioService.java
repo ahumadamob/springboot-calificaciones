@@ -2,21 +2,24 @@ package com.imb2025.calificaciones.service;
 
 import com.imb2025.calificaciones.dto.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.entity.PlanEstudio;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
+
 import java.util.List;
 
 public interface IPlanEstudioService {
 
-    public List<PlanEstudio> findAll();
+    List<PlanEstudio> findAll();
 
-    public PlanEstudio create(PlanEstudio planEstudio);
+    PlanEstudio create(PlanEstudio planEstudio);
 
-    public PlanEstudio update(PlanEstudio planEstudio, Long id) throws Exception;
+    PlanEstudio update(PlanEstudio planEstudio, Long id) throws ResourceNotFoundException, Exception;
 
-    public PlanEstudio findById(Long id);
+    PlanEstudio findById(Long id) throws ResourceNotFoundException;
 
-    public boolean existsById(Long id);
-    
-    public void deleteById(Long id) throws Exception;
+    boolean existsById(Long id);
 
-    public PlanEstudio fromDto(PlanEstudioRequestDto dto) throws Exception;
+    void deleteById(Long id) throws ResourceNotFoundException;
+
+    PlanEstudio fromDto(PlanEstudioRequestDto dto) throws Exception;
 }
+

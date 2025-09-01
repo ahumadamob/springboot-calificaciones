@@ -1,87 +1,89 @@
 package com.imb2025.calificaciones.controller;
 
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.imb2025.calificaciones.dto.ApiResponseErrorDto;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.entity.PlanEstudio;
 import com.imb2025.calificaciones.service.IPlanEstudioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
-@RequestMapping("/planestudio")
-
-
+@RequestMapping("/planestudios")
 public class PlanEstudioController {
-	
 
-@Autowired
-IPlanEstudioService planEstudioService;
+    @Autowired
+    private IPlanEstudioService planEstudioService;
 
-@GetMapping("/planestudio")
-public ResponseEntity<List<PlanEstudio>> obtenerTodos() {
-    List<PlanEstudio> planesDeEstudio = planEstudioService.findAll();
-    return planesDeEstudio.isEmpty()
-            ? ResponseEntity.noContent().build()
-            : ResponseEntity.ok(planesDeEstudio);
-}
+    
+    @GetMapping
+    public ResponseEntity<ApiResponseSuccessDto<List<PlanEstudio>>> getAllPlanesEstudio() {
+        List<PlanEstudio> planes = planEstudioService.findAll();
 
-@GetMapping("/{id}")
-public ResponseEntity<PlanEstudio> obtenerPlanEstudioPorId(@PathVariable Long id) {
-    return planEstudioService.existsById(id)
-            ? ResponseEntity.ok(planEstudioService.findById(id))
-            : ResponseEntity.noContent().build();
-}
+        ApiResponseSuccessDto<List<PlanEstudio>> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Listado de planes de estudio obtenido con éxito");
+        response.setData(planes);
 
-@PostMapping("/planestudio")
-public ResponseEntity<PlanEstudio> crear(@RequestBody PlanEstudioRequestDto dto) throws Exception {
-    PlanEstudio planEstudio = planEstudioService.fromDto(dto);
-    return ResponseEntity.ok(planEstudioService.create(planEstudio));
-}
-
-@PutMapping("/planestudio/{id}")
-public ResponseEntity<PlanEstudio> actualizar(@PathVariable Long id, @RequestBody PlanEstudioRequestDto dto) throws Exception {
-    if (planEstudioService.existsById(id)) {
-        PlanEstudio planEstudio = planEstudioService.fromDto(dto);
-        return ResponseEntity.ok(planEstudioService.update(planEstudio, id));
-    } else {
-        return ResponseEntity.badRequest().body(null);
+        return planes.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(response);
     }
-}
 
-@DeleteMapping("/planestudio/{id}")
-public ResponseEntity<Void> eliminar(@PathVariable Long id) {
-    try {
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> getPlanEstudioById(@PathVariable Long id) {
+        PlanEstudio plan = planEstudioService.findById(id);
+
+        ApiResponseSuccessDto<PlanEstudio> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Plan de estudio encontrado con éxito");
+        response.setData(plan);
+
+        return ResponseEntity.ok(response);
+    }
+
+    
+    @PostMapping
+    public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> createPlanEstudio(@RequestBody PlanEstudioRequestDto dto) throws Exception {
+        PlanEstudio nuevo = planEstudioService.fromDto(dto);
+        PlanEstudio saved = planEstudioService.create(nuevo);
+
+        ApiResponseSuccessDto<PlanEstudio> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Plan de estudio creado con éxito");
+        response.setData(saved);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> updatePlanEstudio(
+            @PathVariable Long id,
+            @RequestBody PlanEstudioRequestDto dto) throws Exception {
+
+        PlanEstudio actualizado = planEstudioService.update(
+                planEstudioService.fromDto(dto),
+                id
+        );
+
+        ApiResponseSuccessDto<PlanEstudio> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Plan de estudio actualizado con éxito");
+        response.setData(actualizado);
+
+        return ResponseEntity.ok(response);
+    }
+
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<Void>> deletePlanEstudio(@PathVariable Long id) {
         planEstudioService.deleteById(id);
-        return ResponseEntity.ok().build();
-    } catch (Exception e) {
-        return ResponseEntity.badRequest().build();
+
+        ApiResponseSuccessDto<Void> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Plan de estudio eliminado con éxito");
+        response.setData(null);
+
+        return ResponseEntity.ok(response);
     }
-}
-
-
-
-@ExceptionHandler(Exception.class)
-public ResponseEntity<String> handleException(Exception ex) {
-    return ResponseEntity.badRequest().body(ex.getMessage());
-}
-
 }
