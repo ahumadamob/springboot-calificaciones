@@ -8,6 +8,7 @@ import com.imb2025.calificaciones.repository.RequisitoMateriaRepository;
 import com.imb2025.calificaciones.service.IRequisitoMateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -27,7 +28,10 @@ public class RequisitoMateriaServiceImpl implements IRequisitoMateriaService {
 
     @Override
     public RequisitoMateria findById(Long id) {
-        return requisitoRepository.findById(id).orElse(null);
+    	return requisitoRepository.findById(id)
+    		    .orElseThrow(() -> new ResourceNotFoundException(
+    		        "Entidad no encontrada con id " + id));
+
     }
 
     @Override
