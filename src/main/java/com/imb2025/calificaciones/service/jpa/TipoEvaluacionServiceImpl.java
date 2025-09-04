@@ -25,7 +25,7 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     @Override
     public TipoEvaluacion findById(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("No se encontró el Tipo de Evaluacion con ID " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró el Tipo de Evaluacion con ID " + id));
     }
 
     @Override
