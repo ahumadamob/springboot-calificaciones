@@ -1,6 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,59 +17,85 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
 import com.imb2025.calificaciones.service.ITipoEvaluacionService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/tipoEvaluacion")
 public class TipoEvaluacionController {
 
     @Autowired
     private ITipoEvaluacionService tipoEvaluacionService;
 
     @GetMapping("/tipoEvaluacion")
-    public ResponseEntity<?> getTodosTipoEvaluacion() {
+    public ResponseEntity<ApiResponseSuccessDto<List<TipoEvaluacion>>> getTodosTipoEvaluacion() {
         List<TipoEvaluacion> lista = tipoEvaluacionService.findAll();
-        if (lista.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(lista);
+        
+        ApiResponseSuccessDto<List<TipoEvaluacion>> resp = new ApiResponseSuccessDto<>(
+                true,
+                lista.isEmpty() ? "No hay registros de TipoEvaluacion" : "Lista de TipoEvaluacion obtenida correctamente",
+                lista
+        );
+
+        return lista.isEmpty()
+                ? ResponseEntity.status(HttpStatus.NO_CONTENT).body(resp)
+                : ResponseEntity.ok(resp);
     }
 
     @GetMapping("/tipoEvaluacion/{id}")
-    public ResponseEntity<?> getTipoEvaluacionById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponseSuccessDto<TipoEvaluacion>> getTipoEvaluacionById(@PathVariable Long id) {
         TipoEvaluacion tipo = tipoEvaluacionService.findById(id);
-        return ResponseEntity.ok(tipo);
+
+        ApiResponseSuccessDto<TipoEvaluacion> resp = new ApiResponseSuccessDto<>(
+                true, "Tipo de Evaluacion encontrada", 
+                tipo
+        );
+
+        return ResponseEntity.ok(resp);
+    }
+    
+    @PostMapping("/tipoEvaluacion")
+    public ResponseEntity<ApiResponseSuccessDto<TipoEvaluacion>> createTipoEvaluacion(@RequestBody TipoEvaluacion tipoEvaluacion) {
+        TipoEvaluacion creado = tipoEvaluacionService.create(tipoEvaluacion);
+
+        ApiResponseSuccessDto<TipoEvaluacion> resp = new ApiResponseSuccessDto<>(
+                true, "Tipo de Evaluacion creada exitosamente",
+                creado
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
-    @PostMapping("/tipoEvaluacion")
-    public ResponseEntity<?> createTipoEvaluacion(@RequestBody TipoEvaluacion tipoEvaluacion) {
-        TipoEvaluacion creado = tipoEvaluacionService.create(tipoEvaluacion);
-        return ResponseEntity.ok(creado);
-    }
 
     @PutMapping("/tipoEvaluacion/{id}")
-    public ResponseEntity<?> updateTipoEvaluacion(@PathVariable Long id, @RequestBody TipoEvaluacion tipoEvaluacion) {
-        try {
-            TipoEvaluacion actualizado = tipoEvaluacionService.update(tipoEvaluacion, id);
-            return ResponseEntity.ok(actualizado);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<ApiResponseSuccessDto<TipoEvaluacion>> updateTipoEvaluacion(
+            @PathVariable Long id,
+            @RequestBody TipoEvaluacion tipoEvaluacion) throws Exception {
+
+        TipoEvaluacion actualizado = tipoEvaluacionService.update(tipoEvaluacion, id);
+
+        ApiResponseSuccessDto<TipoEvaluacion> resp = new ApiResponseSuccessDto<>(
+                true,
+                "Tipo de Evaluacion actualizada",
+                actualizado
+        );
+
+        return ResponseEntity.ok(resp);
     }
 
     @DeleteMapping("/tipoEvaluacion/{id}")
-    public ResponseEntity<?> deleteTipoEvaluacion(@PathVariable Long id) {
-        try {
-            tipoEvaluacionService.deleteById(id);
-            return ResponseEntity.ok("Eliminado correctamente");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<ApiResponseSuccessDto<Void>> deleteTipoEvaluacion(@PathVariable Long id) throws Exception {
+        tipoEvaluacionService.deleteById(id);
+
+        ApiResponseSuccessDto<Void> resp = new ApiResponseSuccessDto<>(
+                true,
+                "Tipo de Evaluacion eliminada correctamente",
+                null
+        );
+
+        return ResponseEntity.ok(resp);
     }
     
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
-    }
+   
 }
