@@ -22,6 +22,8 @@ import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDto;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.service.IPeriodoLectivoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/periodo-lectivo")
 public class PeriodoLectivoController {
@@ -43,7 +45,8 @@ public class PeriodoLectivoController {
         }
 
         @PostMapping
-        public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> create(@RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
+        public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> create(
+        		@Valid @RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
                 PeriodoLectivo createdPeriodoLectivo = service.create(
                                         service.fromDto(periodoLectivo)
                                 );
@@ -53,7 +56,7 @@ public class PeriodoLectivoController {
 
         @PutMapping("/{id}")
         public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> updateById(@PathVariable Long id,
-                        @RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
+                        @Valid @RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
                 PeriodoLectivo updatedPeriodoLectivo = service.update(
                                 service.fromDto(periodoLectivo),
                                 id
