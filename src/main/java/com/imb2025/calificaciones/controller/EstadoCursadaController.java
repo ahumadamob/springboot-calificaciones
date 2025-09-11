@@ -2,6 +2,8 @@ package com.imb2025.calificaciones.controller;
 
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.service.IEstadoCursadaService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -46,13 +50,22 @@ public class EstadoCursadaController {
     }
 
     @PostMapping
-    public ResponseEntity<EstadoCursada> create(@RequestBody EstadoCursadaRequestDto dto) throws Exception {
-        EstadoCursada estadoCursada = service.fromDto(dto);
-        return ResponseEntity.ok(service.create(estadoCursada));
+    public ResponseEntity<ApiResponseSuccessDto<EstadoCursada>> create(
+            @Valid @RequestBody EstadoCursadaRequestDto dto) throws Exception {
+
+        EstadoCursada estadoCursada = service.create(service.fromDto(dto));
+
+        ApiResponseSuccessDto<EstadoCursada> response = new ApiResponseSuccessDto<EstadoCursada>(
+            true,
+            "Estado de cursada creado exitosamente",
+            estadoCursada
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EstadoCursada> update(@RequestBody EstadoCursadaRequestDto dto, @PathVariable Long id) throws Exception {
+    public ResponseEntity<EstadoCursada> update(@RequestBody EstadoCursadaRequestDto dto, @Valid @PathVariable Long id) throws Exception {
         EstadoCursada existente = service.findById(id);
         if (existente == null) {
             return ResponseEntity.badRequest().build();
