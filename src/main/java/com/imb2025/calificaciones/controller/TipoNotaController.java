@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import com.imb2025.calificaciones.dto.TipoNotaRequestDto;
 import com.imb2025.calificaciones.entity.TipoNota;
 import com.imb2025.calificaciones.service.ITipoNotaService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -54,14 +57,21 @@ public class TipoNotaController {
 
     // POST /tiponota - crear nuevo
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<TipoNota>> create(@RequestBody TipoNota tipoNota) {
-        TipoNota created = tipoNotaService.create(tipoNota);
-        ApiResponseSuccessDto<TipoNota> resp = new ApiResponseSuccessDto<>(
+    public ResponseEntity<ApiResponseSuccessDto<TipoNota>> create(
+            @Valid @RequestBody TipoNotaRequestDto tipoNotaDto) {
+        
+        TipoNota entity = tipoNotaService.fromDto(tipoNotaDto);//Convierto el dto
+        
+        TipoNota created = tipoNotaService.create(entity);
+
+        
+        ApiResponseSuccessDto<TipoNota> resp = new ApiResponseSuccessDto<>(  // preparar la respuesta
                 true,
                 "TipoNota creada correctamente",
                 created
         );
-        return ResponseEntity.status(HttpStatus.CREATED).body(resp);//usamos el httpsStatus devuelve un 201 Created
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     // PUT /tiponota/{id} - actualizar existente
