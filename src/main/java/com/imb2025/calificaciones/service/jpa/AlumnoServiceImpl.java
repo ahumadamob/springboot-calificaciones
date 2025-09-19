@@ -2,7 +2,6 @@ package com.imb2025.calificaciones.service.jpa;
 
 import com.imb2025.calificaciones.dto.AlumnoRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
-import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.service.IAlumnoService;
 import java.text.SimpleDateFormat;
@@ -17,9 +16,9 @@ public class AlumnoServiceImpl implements IAlumnoService {
     private AlumnoRepository alumnoRepository;
 
     @Override
-    public Alumno update(Alumno alumno, Long id) {
+    public Alumno update(Alumno alumno, Long id) throws Exception {
         if (!alumnoRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Entidad no encontrada con id " + id);
+            throw new Exception("Estudiante no encontrado");
         }
         alumno.setId(id);
         return alumnoRepository.save(alumno);
@@ -32,8 +31,7 @@ public class AlumnoServiceImpl implements IAlumnoService {
 
     @Override
     public Alumno findById(Long id) {
-        return alumnoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
-                "Entidad no encontrada con id " + id));    
+        return alumnoRepository.findById(id).orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
     }
 
     @Override
@@ -42,11 +40,11 @@ public class AlumnoServiceImpl implements IAlumnoService {
     }
 
     @Override
-    public void deleteById(Long id) {
-          if (!alumnoRepository.existsById(id)) {
-              throw new ResourceNotFoundException("Entidad no encontrada con id " + id);
-          }
-          alumnoRepository.deleteById(id);
+    public void deleteById(Long id) throws Exception {
+        if (!alumnoRepository.existsById(id)) {
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        }
+        alumnoRepository.deleteById(id);
     }
 
     @Override
@@ -55,7 +53,7 @@ public class AlumnoServiceImpl implements IAlumnoService {
     }
 
     @Override
-    public Alumno fromDto(AlumnoRequestDto alumnoDto){
+    public Alumno fromDto(AlumnoRequestDto alumnoDto) throws Exception {
         Alumno alumno = new Alumno();
         alumno.setNombre(alumnoDto.getNombre());
         alumno.setApellido(alumnoDto.getApellido());

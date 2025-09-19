@@ -3,9 +3,9 @@ package com.imb2025.calificaciones.service.jpa;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.imb2025.calificaciones.dto.TipoNotaRequestDto;
 import com.imb2025.calificaciones.entity.TipoNota;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.TipoNotaRepository;
 import com.imb2025.calificaciones.service.ITipoNotaService;
 
@@ -22,8 +22,8 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
 
     @Override
     public TipoNota findById(Long id) {
-        return tipoNotaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("TipoNota no encontrada con id: " + id));
+    	return tipoNotaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Entidad no encontrada con id " + id));
     }
 
     @Override
@@ -36,26 +36,26 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
     }
 
     @Override
-    public TipoNota update(TipoNota tipoNota, Long id) throws Exception {
+    public TipoNota update(TipoNota tipoNota, Long id) {
         if (!tipoNotaRepository.existsById(id)) {
-            throw new Exception("TipoNota no encontrada con id: " + id);
+            throw new ResourceNotFoundException("TipoNota no encontrada con id: " + id);
         }
         tipoNota.setId(id);
         return tipoNotaRepository.save(tipoNota);
     }
 
     @Override
-    public void deleteById(Long id) throws Exception {
+    public void deleteById(Long id) {
         if (!tipoNotaRepository.existsById(id)) {
-            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+            throw new ResourceNotFoundException("No se puede eliminar el id: " + id + " porque no existe");
         }
         tipoNotaRepository.deleteById(id);
     }
 
     @Override
-    public TipoNota fromDto(TipoNotaRequestDto dto) throws Exception {
+    public TipoNota fromDto(TipoNotaRequestDto dto) {
         if (dto == null) {
-            throw new Exception("El dto de tipo nota no puede ser nulo");
+            throw new IllegalArgumentException("El dto de tipo nota no puede ser nulo");
         }
         TipoNota tipoNota = new TipoNota();
         tipoNota.setNombre(dto.getNombre());

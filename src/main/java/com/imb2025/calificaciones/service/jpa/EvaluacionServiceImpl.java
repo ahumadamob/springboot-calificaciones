@@ -4,6 +4,7 @@ import com.imb2025.calificaciones.dto.EvaluacionRequestDto;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.ComisionRepository;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.repository.TipoEvaluacionRepository;
@@ -36,17 +37,17 @@ public class EvaluacionServiceImpl implements IEvaluacionService {
 
     @Override
     public Evaluacion findById(Long id) {
-        return evaluacionRepository.findById(id).orElse(null);
+        return evaluacionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Evaluación "+id+" no encontrada"));
     }
 
     @Override
     @Transactional
-    public Evaluacion create(Evaluacion evaluacion) {
+    public Evaluacion create(Evaluacion evaluacion) throws Exception {
         try {
             return evaluacionRepository.save(evaluacion);
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al guardar la evaluación: " + e.getMessage());
+            throw new Exception("Error al guardar la evaluación: " + e.getMessage());
         }
     }
 
@@ -111,7 +112,7 @@ public class EvaluacionServiceImpl implements IEvaluacionService {
     @Override
     public void deleteById(Long id) throws Exception {
         if (!evaluacionRepository.existsById(id)) {
-            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+            throw new ResourceNotFoundException("Evaluacion "+id+" no encontrada");
         }
         evaluacionRepository.deleteById(id);
     }

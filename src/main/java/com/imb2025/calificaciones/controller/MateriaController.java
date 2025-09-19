@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.MateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.service.IMateriaService;
@@ -36,9 +37,14 @@ public class MateriaController {
         }
 
         @GetMapping("/api/materia/{id}")
-        public ResponseEntity<Materia> getMateriaById(@PathVariable Long id) {
-            Materia materia = materiaService.findById(id);
-            return materia == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(materia);
+        public ResponseEntity<ApiResponseSuccessDto <Materia>> getMateriaById(@PathVariable Long id) {
+        	
+        	Materia materia = materiaService.findById(id);
+        	ApiResponseSuccessDto<Materia> response = new ApiResponseSuccessDto<>();
+        	response.setMessage("Materia encontrada con exito");
+        	response.setData(materia);
+            
+            return ResponseEntity.ok(response);
         }
 
 

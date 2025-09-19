@@ -1,6 +1,7 @@
 package com.imb2025.calificaciones.controller;
 
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDto;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.service.IPeriodoLectivoService;
@@ -34,31 +36,30 @@ public class PeriodoLectivoController {
         }
 
         @GetMapping("/{id}")
-        public ResponseEntity<PeriodoLectivo> getById(@PathVariable Long id) {
+        public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> getById(@PathVariable Long id) {
                 PeriodoLectivo periodoLectivo = service.findById(id);
-                return periodoLectivo == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(periodoLectivo);
+                ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo encontrado con éxito", periodoLectivo); 
+                return ResponseEntity.ok(response);
         }
 
         @PostMapping
-        public ResponseEntity<PeriodoLectivo> create(@RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
+        public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> create(@RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
                 PeriodoLectivo createdPeriodoLectivo = service.create(
                                         service.fromDto(periodoLectivo)
                                 );
-                return ResponseEntity.ok(createdPeriodoLectivo);
+                ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo creado con éxito", createdPeriodoLectivo);
+                return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
 
         @PutMapping("/{id}")
-        public ResponseEntity<PeriodoLectivo> updateById(@PathVariable Long id,
+        public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> updateById(@PathVariable Long id,
                         @RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
-                PeriodoLectivo existente = service.findById(id);
-                if (existente == null) {
-                        return ResponseEntity.badRequest().build();
-                }
                 PeriodoLectivo updatedPeriodoLectivo = service.update(
                                 service.fromDto(periodoLectivo),
                                 id
                                 );
-                return ResponseEntity.ok(updatedPeriodoLectivo);
+                ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo actualizado con éxito", updatedPeriodoLectivo);
+                return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
 
         @DeleteMapping("/{id}")
