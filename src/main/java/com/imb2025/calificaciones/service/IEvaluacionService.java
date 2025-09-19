@@ -8,7 +8,7 @@ public interface IEvaluacionService {
 
     public List<Evaluacion> findAll();
 
-    public Evaluacion create(Evaluacion evaluacion);
+    public Evaluacion create(Evaluacion evaluacion) throws Exception;
 
     public Evaluacion update(Evaluacion evaluacion, Long id) throws Exception;
 

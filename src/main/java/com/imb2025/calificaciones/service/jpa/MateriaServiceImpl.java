@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.MateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.service.IMateriaService;
 
@@ -25,7 +26,10 @@ public class MateriaServiceImpl implements IMateriaService{
     @Override
     public Materia findById(Long id) {
 
-        return repo.findById(id).orElse(null);
+        
+        return repo.findById(id)
+        	    .orElseThrow(() -> new ResourceNotFoundException(
+        	        "Materia no encontrada con id " + id));
     }
 
     @Override

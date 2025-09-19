@@ -16,6 +16,7 @@ import com.imb2025.calificaciones.dto.RequisitoMateriaRequestDto;
 import com.imb2025.calificaciones.entity.RequisitoMateria;
 import com.imb2025.calificaciones.service.IRequisitoMateriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 
 import jakarta.validation.Valid;
 import java.util.List;
@@ -33,56 +34,87 @@ public class RequisitoMateriaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponseSuccessDto<RequisitoMateria>> getById(@PathVariable Long id) {
         RequisitoMateria requisito = service.findById(id);
-        if (requisito == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("El requisito con ID " + id + " no existe.");
-        }
-        return ResponseEntity.ok(requisito);
+
+        ApiResponseSuccessDto<RequisitoMateria> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(requisito);
+        resp.setMessage("RequisitoMateria encontrada correctamente");
+
+        return ResponseEntity.ok(resp);
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid RequisitoMateriaRequestDto dto) {
+    public ResponseEntity<ApiResponseSuccessDto<RequisitoMateria>> create(@RequestBody @Valid RequisitoMateriaRequestDto dto) {
         try {
             RequisitoMateria nuevo = service.create(service.fromDto(dto));
-            return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
+
+            ApiResponseSuccessDto<RequisitoMateria> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(true);
+            resp.setData(nuevo);
+            resp.setMessage("RequisitoMateria creada exitosamente");
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(resp);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error al crear requisito: " + e.getMessage());
+            ApiResponseSuccessDto<RequisitoMateria> errorResp = new ApiResponseSuccessDto<>();
+            errorResp.setSuccess(false);
+            errorResp.setMessage("Error al crear requisito: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResp);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody @Valid RequisitoMateriaRequestDto dto) {
+    public ResponseEntity<ApiResponseSuccessDto<RequisitoMateria>> update(@PathVariable Long id, @RequestBody @Valid RequisitoMateriaRequestDto dto) {
         RequisitoMateria existente = service.findById(id);
         if (existente == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No se encontró un requisito con el ID " + id + " para actualizar.");
+            ApiResponseSuccessDto<RequisitoMateria> notFoundResp = new ApiResponseSuccessDto<>();
+            notFoundResp.setSuccess(false);
+            notFoundResp.setMessage("No se encontró un requisito con el ID " + id + " para actualizar.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFoundResp);
         }
 
         try {
             RequisitoMateria actualizado = service.update(service.fromDto(dto), id);
-            return ResponseEntity.ok(actualizado);
+
+            ApiResponseSuccessDto<RequisitoMateria> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(true);
+            resp.setData(actualizado);
+            resp.setMessage("RequisitoMateria actualizada correctamente");
+
+            return ResponseEntity.ok(resp);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Error al actualizar: " + e.getMessage());
+            ApiResponseSuccessDto<RequisitoMateria> errorResp = new ApiResponseSuccessDto<>();
+            errorResp.setSuccess(false);
+            errorResp.setMessage("Error al actualizar: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResp);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponseSuccessDto<String>> delete(@PathVariable Long id) {
         RequisitoMateria existente = service.findById(id);
         if (existente == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No se encontró el requisito con ID " + id + " para eliminar.");
+            ApiResponseSuccessDto<String> notFoundResp = new ApiResponseSuccessDto<>();
+            notFoundResp.setSuccess(false);
+            notFoundResp.setMessage("No se encontró el requisito con ID " + id + " para eliminar.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFoundResp);
         }
 
         try {
             service.deleteById(id);
-            return ResponseEntity.ok("Requisito eliminado correctamente");
+
+            ApiResponseSuccessDto<String> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(true);
+            resp.setData("Requisito eliminado correctamente");
+            resp.setMessage("Eliminación exitosa");
+
+            return ResponseEntity.ok(resp);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            ApiResponseSuccessDto<String> errorResp = new ApiResponseSuccessDto<>();
+            errorResp.setSuccess(false);
+            errorResp.setMessage("Error al eliminar: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResp);
         }
     }
 }

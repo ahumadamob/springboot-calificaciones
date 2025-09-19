@@ -15,7 +15,7 @@ public class Evaluacion {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-        private Date fecha;
+    private Date fecha;
 
 	@ManyToOne
 	private TipoEvaluacion tipoEvaluacion;

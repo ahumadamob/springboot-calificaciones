@@ -6,6 +6,7 @@ import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.AsignacionDocenteRepository;
 import com.imb2025.calificaciones.repository.ComisionRepository;
 import com.imb2025.calificaciones.repository.DocenteRepository;
@@ -41,7 +42,9 @@ public class AsignacionDocenteServiceImpl implements IAsignacionDocenteService {
 
     @Override
     public AsignacionDocente findById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException(
+                "Entidad no encontrada con id " + id));
     }
 
     @Override
