@@ -15,6 +15,7 @@ public class TipoEvaluacionRequestDto {
     @Size(max = 200, message = "La descripción no debe superar los 200 caracteres")    
     private String descripcion;
 
+    //getters and setters
     public String getNombre() {
         return nombre;
     }
