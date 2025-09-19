@@ -4,7 +4,7 @@ import com.imb2025.calificaciones.dto.DocenteRequestDto;
 import com.imb2025.calificaciones.entity.Docente;
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
+
 
 public interface IDocenteService {
 
@@ -20,6 +20,6 @@ public interface IDocenteService {
 
     public Docente fromDto(DocenteRequestDto dto) throws Exception;
 
-    public ResponseEntity<Docente> existsById(Long id);
+    public boolean existsById(Long id);
 
 }

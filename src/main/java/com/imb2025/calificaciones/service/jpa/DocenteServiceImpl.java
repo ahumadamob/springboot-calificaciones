@@ -3,7 +3,7 @@ package com.imb2025.calificaciones.service.jpa;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.DocenteRequestDto;
@@ -68,11 +68,12 @@ public class DocenteServiceImpl implements IDocenteService {
         }
         repo.deleteById(id);
     }
-
-    @Override
-    public ResponseEntity<Docente> existsById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'existsById'");
+ 
+     @Override
+    public boolean existsById(Long id) {
+        return repo.existsById(id);
     }
+
+
 
 }

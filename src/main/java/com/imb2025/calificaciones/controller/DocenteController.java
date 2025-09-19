@@ -35,7 +35,7 @@ public class DocenteController {
     public ResponseEntity<Docente> getDocenteById(@PathVariable Long id) {
         Docente docente = docenteService.findById(id);
         if (docente == null) {
-            return ResponseEntity.notFound().build(); // si no lo encuentra devuelve 404
+            return ResponseEntity.notFound().build(); 
         }
         return ResponseEntity.ok(docente);
     }
