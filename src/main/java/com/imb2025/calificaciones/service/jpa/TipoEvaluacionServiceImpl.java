@@ -35,7 +35,7 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
 
     @Override
     public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id) throws Exception {
-        if (repo.existsById(id)) {
+        if (!repo.existsById(id)) {
         	throw new ResourceNotFoundException(
                     "No se puede actualizar TipoEvaluacion con ID " + id);
         }
@@ -52,7 +52,8 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     }
 
     @Override
-    public TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto) throws Exception {
+    public TipoEvaluacion fromD
+    to(TipoEvaluacionRequestDto dto) throws Exception {
         if (dto == null) {
             throw new Exception("El dto de tipo evaluación no puede ser nulo");
         }

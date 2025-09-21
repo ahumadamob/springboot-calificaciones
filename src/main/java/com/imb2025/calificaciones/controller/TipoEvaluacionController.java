@@ -18,8 +18,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import com.imb2025.calificaciones.dto.TipoEvaluacionRequestDto;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
 import com.imb2025.calificaciones.service.ITipoEvaluacionService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/tipoEvaluacion")
@@ -55,9 +58,12 @@ public class TipoEvaluacionController {
         return ResponseEntity.ok(resp);
     }
     
-    @PostMapping("/tipoEvaluacion")
-    public ResponseEntity<ApiResponseSuccessDto<TipoEvaluacion>> createTipoEvaluacion(@RequestBody TipoEvaluacion tipoEvaluacion) {
-        TipoEvaluacion creado = tipoEvaluacionService.create(tipoEvaluacion);
+    @PostMapping
+    public ResponseEntity<ApiResponseSuccessDto<TipoEvaluacion>> createTipoEvaluacion(
+    		@Valid @RequestBody TipoEvaluacionRequestDto dto)throws Exception {
+        
+        TipoEvaluacion entidad = tipoEvaluacionService.fromDto(dto);
+        TipoEvaluacion creado = tipoEvaluacionService.create(entidad);
 
         ApiResponseSuccessDto<TipoEvaluacion> resp = new ApiResponseSuccessDto<>(
                 true, "Tipo de Evaluacion creada exitosamente",
@@ -71,9 +77,11 @@ public class TipoEvaluacionController {
     @PutMapping("/tipoEvaluacion/{id}")
     public ResponseEntity<ApiResponseSuccessDto<TipoEvaluacion>> updateTipoEvaluacion(
             @PathVariable Long id,
-            @RequestBody TipoEvaluacion tipoEvaluacion) throws Exception {
+            @Valid @RequestBody TipoEvaluacionRequestDto dto)throws Exception {
 
-        TipoEvaluacion actualizado = tipoEvaluacionService.update(tipoEvaluacion, id);
+    	TipoEvaluacion entidad = tipoEvaluacionService.fromDto(dto);
+        TipoEvaluacion actualizado = tipoEvaluacionService.create(entidad);
+
 
         ApiResponseSuccessDto<TipoEvaluacion> resp = new ApiResponseSuccessDto<>(
                 true,
