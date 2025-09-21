@@ -33,7 +33,9 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
 
     @Override
     public PlanEstudio findById(Long id) {
-        return planestudiorepository.findById(id).orElse(null);
+        return planestudiorepository.findById(id)
+    .orElseThrow(() -> new ResourceNotFoundException(
+        "Entidad no encontrada con id " + id));
     }
 
     @Override
@@ -45,9 +47,15 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
     @Override
     @Transactional
     public PlanEstudio update(PlanEstudio newPlanEstudio, Long id) throws Exception {
-        PlanEstudio existente = planestudiorepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Plan de estudio con ID " + id + " no encontrado"));
+       if (id == null) {
+    	   throw new Exception ("No se pudo identificar el id");
+       }
+       PlanEstudio planestudio= planestudiorepository.findById(id)
+    		  
+    				    .orElseThrow(() -> new ResourceNotFoundException(
+    				        "Entidad no encontrada con id " + id));
 
+        
         if (newPlanEstudio.getCarrera() == null ||
                 newPlanEstudio.getCarrera().getId() == null ||
                 !carreraRepository.existsById(newPlanEstudio.getCarrera().getId())) {
@@ -55,11 +63,11 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
             throw new ResourceNotFoundException("Carrera con ID " + carreraId + " no existe");
         }
 
-        existente.setCarrera(newPlanEstudio.getCarrera());
-        existente.setNombre(newPlanEstudio.getNombre());
-        existente.setAnioVigencia(newPlanEstudio.getAnioVigencia());
+        planestudio.setCarrera(newPlanEstudio.getCarrera());
+        planestudio.setNombre(newPlanEstudio.getNombre());
+        planestudio.setAnioVigencia(newPlanEstudio.getAnioVigencia());
 
-        return planestudiorepository.save(existente);
+        return planestudiorepository.save(planestudio);
     }
 
     @Override
@@ -87,7 +95,7 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
             throw new IllegalArgumentException("El nombre no puede ser nulo o vacío");
         }
         plan.setNombre(dto.getNombre());
-        plan.setAnioVigencia(dto.getAnioVigencia());
+        
         return plan;
     }
 
