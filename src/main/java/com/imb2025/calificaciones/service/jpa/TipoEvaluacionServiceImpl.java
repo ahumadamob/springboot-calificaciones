@@ -52,8 +52,7 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     }
 
     @Override
-    public TipoEvaluacion fromD
-    to(TipoEvaluacionRequestDto dto) throws Exception {
+    public TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto) throws Exception {
         if (dto == null) {
             throw new Exception("El dto de tipo evaluación no puede ser nulo");
         }
