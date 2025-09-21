@@ -22,6 +22,8 @@ import com.imb2025.calificaciones.dto.TurnoRequestDto;
 import com.imb2025.calificaciones.entity.Turno;
 import com.imb2025.calificaciones.service.ITurnoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/turno")
 public class TurnoController {
@@ -55,7 +57,7 @@ public class TurnoController {
         }
 
          @PostMapping
-          public ResponseEntity<ApiResponseSuccessDto<Turno>> createTurno(@RequestBody TurnoRequestDto turnoRequestDto) throws Exception {
+          public ResponseEntity<ApiResponseSuccessDto<Turno>> createTurno(@Valid @RequestBody TurnoRequestDto turnoRequestDto) throws Exception {
                  Turno turno = turnoService.fromDto(turnoRequestDto);
                  turno = turnoService.create(turno);
                  
@@ -68,7 +70,7 @@ public class TurnoController {
             }
 
          @PutMapping("/{id}")
-            public ResponseEntity<ApiResponseSuccessDto<Turno>> updateTurno(@RequestBody TurnoRequestDto turnoRequestDto, @PathVariable Long id) throws Exception {
+            public ResponseEntity<ApiResponseSuccessDto<Turno>> updateTurno(@Valid @RequestBody TurnoRequestDto turnoRequestDto, @PathVariable Long id) throws Exception {
                  Turno existente = turnoService.findById(id);
                  if(existente == null){
                         return ResponseEntity.badRequest().build();
