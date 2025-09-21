@@ -1,5 +1,7 @@
 package com.imb2025.calificaciones.entity;
 
+import java.util.Optional;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -62,4 +64,9 @@ public class PlanEstudio {
     public void setAnioVigencia(int anioVigencia) {
         this.anioVigencia = anioVigencia;
     }
+
+	public static Optional<PlanEstudio> findById(Long id2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
