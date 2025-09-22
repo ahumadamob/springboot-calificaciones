@@ -42,20 +42,22 @@ public class RegistroClaseController {
         return ResponseEntity.ok(resp);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
-        RegistroClase registro = iregistroClase.findById(id);
-        if (registro == null) {
-            ApiResponseErrorDto error =
-                    new ApiResponseErrorDto(false, Collections.singletonList(
-                            new FieldErrorDto("id", "Registro no encontrado")
-                    ));
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-        }
+   @GetMapping("/{id}")
+public ResponseEntity<ApiResponseSuccessDto<RegistroClase>> getById(@PathVariable Long id) {
+    RegistroClase registro = iregistroClase.findById(id);
+
+    if (registro == null) {
         ApiResponseSuccessDto<RegistroClase> resp =
-                new ApiResponseSuccessDto<>(true, "Registro encontrado", registro);
-        return ResponseEntity.ok(resp);
+                new ApiResponseSuccessDto<>(false, "Registro no encontrado", null);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(resp);
     }
+
+    ApiResponseSuccessDto<RegistroClase> resp =
+            new ApiResponseSuccessDto<>(true, "Registro encontrado", registro);
+    return ResponseEntity.ok(resp);
+}
+
+
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody RegistroClaseRequestDto dto) {
