@@ -74,29 +74,25 @@ public class EvaluacionServiceImpl implements IEvaluacionService {
         if (evaluacionRequestDto == null) {
             throw new Exception("Evaluación no puede ser nula");
         }
+        
         Evaluacion evaluacion = new Evaluacion();
 
-        if (evaluacionRequestDto.getTipoEvaluacionId() != null) {
-            TipoEvaluacion tipoEvaluacion = tipoEvaluacionRepository
+        TipoEvaluacion tipoEvaluacion = tipoEvaluacionRepository
                     .findById(evaluacionRequestDto.getTipoEvaluacionId())
                     .orElseThrow(() -> new Exception(
                             "Tipo de evaluación no encontrado con id: " + evaluacionRequestDto.getTipoEvaluacionId()));
             evaluacion.setTipoEvaluacion(tipoEvaluacion);
-        }
 
-        if (evaluacionRequestDto.getMateriaId() != null) {
-            Materia materia = materiaRepository.findById(evaluacionRequestDto.getMateriaId())
+        Materia materia = materiaRepository.findById(evaluacionRequestDto.getMateriaId())
                     .orElseThrow(() -> new Exception(
                             "Materia no encontrada con id: " + evaluacionRequestDto.getMateriaId()));
             evaluacion.setMateria(materia);
-        }
 
-        if (evaluacionRequestDto.getComisionId() != null) {
-            Comision comision = comisionRepository.findById(evaluacionRequestDto.getComisionId())
+        Comision comision = comisionRepository.findById(evaluacionRequestDto.getComisionId())
                     .orElseThrow(() -> new Exception(
                             "Comisión no encontrada con id: " + evaluacionRequestDto.getComisionId()));
             evaluacion.setComision(comision);
-        }
+        
         evaluacion.setFecha(evaluacionRequestDto.getFechaEvaluacion());
         return evaluacion;
     }

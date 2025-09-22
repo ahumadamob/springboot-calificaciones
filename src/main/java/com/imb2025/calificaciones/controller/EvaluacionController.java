@@ -3,6 +3,7 @@ package com.imb2025.calificaciones.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.EvaluacionRequestDto;
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.entity.Evaluacion;
 import com.imb2025.calificaciones.service.IEvaluacionService;
 
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 
 import java.util.List;
 
@@ -57,7 +57,8 @@ public class EvaluacionController {
         }
 
         @PostMapping
-        public ResponseEntity<ApiResponseSuccessDto<Evaluacion>> create(@RequestBody EvaluacionRequestDto evaluacionRequestDto) throws Exception {
+        public ResponseEntity<ApiResponseSuccessDto<Evaluacion>> create(@Validated({EvaluacionRequestDto.Creacion.class, Default.class}) 
+        										@RequestBody EvaluacionRequestDto evaluacionRequestDto) throws Exception {
         	Evaluacion evaluacion = evaluacionServiceImp.create(evaluacionServiceImp.fromDto(evaluacionRequestDto));
         	ApiResponseSuccessDto<Evaluacion> response = new ApiResponseSuccessDto<>();
         	response.setMessage("Evaluacion creada exitosamente");
@@ -68,8 +69,8 @@ public class EvaluacionController {
         }
 
         @PutMapping("/{id}")
-        public ResponseEntity<ApiResponseSuccessDto<Evaluacion>> update(@PathVariable Long id,
-                        @RequestBody EvaluacionRequestDto newEvaluacionDTO) throws Exception {
+        public ResponseEntity<ApiResponseSuccessDto<Evaluacion>> update(@PathVariable Long id, @Valid
+                        						@RequestBody EvaluacionRequestDto newEvaluacionDTO) throws Exception {
             Evaluacion existente = evaluacionServiceImp.findById(id);
                 
             ApiResponseSuccessDto<Evaluacion> response = new ApiResponseSuccessDto<>();
@@ -94,9 +95,9 @@ public class EvaluacionController {
 
         }
 
-        @ExceptionHandler(Exception.class)
-        public ResponseEntity<String> handleException(Exception ex){
-                return ResponseEntity.badRequest().body(ex.getMessage());
-        }
+//        @ExceptionHandler(Exception.class)
+//        public ResponseEntity<String> handleException(Exception ex){
+//                return ResponseEntity.badRequest().body(ex.getMessage());
+//        }
 
 }
