@@ -76,8 +76,9 @@ public class TipoNotaController {
 
     // PUT /tiponota/{id} - actualizar existente
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<TipoNota>> update(@PathVariable Long id, @RequestBody TipoNota tipoNota) {
-        TipoNota updated = tipoNotaService.update(tipoNota, id);
+    public ResponseEntity<ApiResponseSuccessDto<TipoNota>> update(@PathVariable Long id, @Valid @RequestBody TipoNotaRequestDto tipoNotaDto) {
+        TipoNota entity = tipoNotaService.fromDto(tipoNotaDto);
+    	TipoNota updated = tipoNotaService.update(entity, id); 
         ApiResponseSuccessDto<TipoNota> resp = new ApiResponseSuccessDto<>(
                 true,
                 "TipoNota actualizada correctamente",
