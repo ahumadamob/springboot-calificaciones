@@ -70,7 +70,7 @@ public class ObservacionAlumnoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ApiResponseSuccessDto<ObservacionAlumno>> update(@RequestBody ObservacionAlumnoRequestDto dto, @PathVariable Long id, HttpServletRequest request) throws Exception {
+	public ResponseEntity<ApiResponseSuccessDto<ObservacionAlumno>> update(@Valid @RequestBody ObservacionAlumnoRequestDto dto, @PathVariable Long id, HttpServletRequest request) throws Exception {
 			
             ObservacionAlumno observacionAlumno = observacionAlumnoService.update(observacionAlumnoService.fromDto(dto), id);		
             ApiResponseSuccessDto<ObservacionAlumno> response = new ApiResponseSuccessDto<>();
