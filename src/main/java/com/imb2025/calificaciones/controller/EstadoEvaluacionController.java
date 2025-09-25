@@ -16,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imb2025.calificaciones.dto.ApiResponseErrorDto;
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.EstadoEvaluacionRequestDto;
+import com.imb2025.calificaciones.dto.FieldErrorDto;
 import com.imb2025.calificaciones.entity.EstadoEvaluacion;
 import com.imb2025.calificaciones.service.IEstadoEvaluacionService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/estadoevaluacion")
@@ -49,7 +53,7 @@ public class EstadoEvaluacionController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<EstadoEvaluacion>> create(@RequestBody EstadoEvaluacionRequestDto estadoEvaluacion) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<EstadoEvaluacion>> create(@Valid @RequestBody EstadoEvaluacionRequestDto estadoEvaluacion) throws Exception {
         EstadoEvaluacion creado = service.create(service.fromDto(estadoEvaluacion));
         ApiResponseSuccessDto<EstadoEvaluacion> response = new ApiResponseSuccessDto<>();
         response.setSuccess(true);
@@ -59,7 +63,7 @@ public class EstadoEvaluacionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<EstadoEvaluacion>> update(@PathVariable Long id, @RequestBody EstadoEvaluacionRequestDto estadoEvaluacion) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<EstadoEvaluacion>> update(@PathVariable Long id, @Valid @RequestBody EstadoEvaluacionRequestDto estadoEvaluacion) throws Exception {
         EstadoEvaluacion actualizado = service.update(service.fromDto(estadoEvaluacion), id);
         ApiResponseSuccessDto<EstadoEvaluacion> response = new ApiResponseSuccessDto<>();
         response.setSuccess(true);
@@ -78,9 +82,6 @@ public class EstadoEvaluacionController {
         return ResponseEntity.ok(response);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
-    }
+
 
 }
