@@ -3,8 +3,6 @@ package com.imb2025.calificaciones.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +17,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.CarreraRequestDto;
 import com.imb2025.calificaciones.entity.Carrera;
 import com.imb2025.calificaciones.service.ICarreraService;
@@ -39,9 +38,13 @@ public class CarreraController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Carrera> getById(@PathVariable Long id) {
-        Carrera carrera = carreraService.findById(id);
-        return carrera == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(carrera);
+    public ResponseEntity<ApiResponseSuccessDto <Carrera>> getById(@PathVariable Long id) {
+    	Carrera carrera = carreraService.findById(id);
+    	ApiResponseSuccessDto<Carrera> response = new ApiResponseSuccessDto<Carrera>();
+    	response.setMessage("Carrera encontrada con exito");
+    	response.setData(carrera);
+    	
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
