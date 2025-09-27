@@ -58,7 +58,7 @@ public class MateriaController {
         }
 
         @PutMapping ("/api/materia/{id}")
-        public ResponseEntity<Materia> updateMateria(@RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id) throws Exception{
+        public ResponseEntity<Materia> updateMateria(@Valid @RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id) throws Exception{
                 Materia existente = materiaService.findById(id);
                 if(existente == null){
                     return ResponseEntity.badRequest().build();
