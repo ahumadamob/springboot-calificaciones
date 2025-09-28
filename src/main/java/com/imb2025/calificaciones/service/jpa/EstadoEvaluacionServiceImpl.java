@@ -7,10 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.EstadoEvaluacionRequestDto;
 import com.imb2025.calificaciones.entity.EstadoEvaluacion;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.EstadoEvaluacionRepository;
 import com.imb2025.calificaciones.service.IEstadoEvaluacionService;
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
@@ -25,7 +24,8 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
 
     @Override
     public EstadoEvaluacion findById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("EstadoEvaluacion no encontrada con id " + id));
     }
 
     @Override
@@ -39,18 +39,18 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
     }
 
     @Override
-    public EstadoEvaluacion update(EstadoEvaluacion estadoEvaluacion, Long id) throws EntityNotFoundException {
+    public EstadoEvaluacion update(EstadoEvaluacion estadoEvaluacion, Long id) throws ResourceNotFoundException {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("EstadoEvaluacion con id " + id + " no existe");
+            throw new ResourceNotFoundException("EstadoEvaluacion con id " + id + " no existe");
         }
         estadoEvaluacion.setId(id);
         return repository.save(estadoEvaluacion);
     }
 
     @Override
-    public void deleteById(Long id) throws EntityNotFoundException {
+    public void deleteById(Long id) throws ResourceNotFoundException {
         if (!repository.existsById(id)) {
-            throw new EntityNotFoundException("EstadoEvaluacion con id " + id + " no existe");
+            throw new ResourceNotFoundException("EstadoEvaluacion con id " + id + " no existe");
         }
         repository.deleteById(id);
     }
