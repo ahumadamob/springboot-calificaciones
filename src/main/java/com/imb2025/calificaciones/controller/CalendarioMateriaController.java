@@ -2,6 +2,7 @@ package com.imb2025.calificaciones.controller;
 
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -57,7 +58,7 @@ public class CalendarioMateriaController {
     }
 	
 	@PostMapping
-	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> create(@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto) throws Exception {
+	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> create(@Valid @RequestBody CalendarioMateriaRequestDto calendarioMateriaDto) throws Exception {
 
         CalendarioMateria calendarioMateria;
         calendarioMateria = calMatSer.fromDto(calendarioMateriaDto);
@@ -72,7 +73,7 @@ public class CalendarioMateriaController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> update(@PathVariable Long id,
+	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> update(@Valid @PathVariable Long id,
 													@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto) throws Exception {
         CalendarioMateria calendarioMateria;
         calendarioMateria = calMatSer.fromDto(calendarioMateriaDto);
