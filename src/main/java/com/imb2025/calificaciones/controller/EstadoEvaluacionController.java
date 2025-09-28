@@ -1,7 +1,9 @@
 package com.imb2025.calificaciones.controller;
 
 
-import org.springframework.http.HttpStatus;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,11 +20,6 @@ import com.imb2025.calificaciones.entity.EstadoEvaluacion;
 import com.imb2025.calificaciones.service.IEstadoEvaluacionService;
 
 import jakarta.persistence.EntityNotFoundException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/estadoevaluacion")
@@ -50,13 +47,15 @@ public class EstadoEvaluacionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EstadoEvaluacion> update(@PathVariable Long id, @RequestBody EstadoEvaluacionRequestDto estadoEvaluacion) throws Exception {
-        EstadoEvaluacion existente = service.findById(id);
-        if (existente == null) {
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<EstadoEvaluacion> update(@PathVariable Long id, @RequestBody EstadoEvaluacionRequestDto estadoEvaluacion) {
+        try {
+            EstadoEvaluacion actualizado = service.update(service.fromDto(estadoEvaluacion), id);
+            return ResponseEntity.ok(actualizado);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(null);
         }
-        EstadoEvaluacion actualizado = service.update(service.fromDto(estadoEvaluacion), id);
-        return ResponseEntity.ok(actualizado);
     }
 
     @DeleteMapping("/{id}")
@@ -64,6 +63,8 @@ public class EstadoEvaluacionController {
         try {
             service.deleteById(id);
             return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
