@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.imb2025.calificaciones.dto.EstadoEvaluacionRequestDto;
 import com.imb2025.calificaciones.entity.EstadoEvaluacion;
-import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.EstadoEvaluacionRepository;
 import com.imb2025.calificaciones.service.IEstadoEvaluacionService;
 
@@ -24,13 +24,7 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
 
     @Override
     public EstadoEvaluacion findById(Long id) {
-        return repository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("EstadoEvaluacion no encontrada con id " + id));
-    }
-
-    @Override
-    public boolean existsById(Long id) {
-        return repository.existsById(id);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
@@ -39,18 +33,20 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
     }
 
     @Override
-    public EstadoEvaluacion update(EstadoEvaluacion estadoEvaluacion, Long id) throws ResourceNotFoundException {
-        if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("EstadoEvaluacion con id " + id + " no existe");
+    @Transactional
+    public EstadoEvaluacion update(EstadoEvaluacion estadoEvaluacion, Long id) throws Exception {
+        if (repository.existsById(id)) {
+            estadoEvaluacion.setId(id);
+            return repository.save(estadoEvaluacion);
+        } else {
+            throw new Exception("EstadoEvaluacion con ID " + id + " no encontrado.");
         }
-        estadoEvaluacion.setId(id);
-        return repository.save(estadoEvaluacion);
     }
 
     @Override
-    public void deleteById(Long id) throws ResourceNotFoundException {
+    public void deleteById(Long id) throws Exception {
         if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException("EstadoEvaluacion con id " + id + " no existe");
+            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
         repository.deleteById(id);
     }
