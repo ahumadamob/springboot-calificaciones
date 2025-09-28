@@ -1,9 +1,6 @@
 package com.imb2025.calificaciones.controller;
 
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,14 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.ApiResponseErrorDto;
-import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.EstadoEvaluacionRequestDto;
-import com.imb2025.calificaciones.dto.FieldErrorDto;
 import com.imb2025.calificaciones.entity.EstadoEvaluacion;
 import com.imb2025.calificaciones.service.IEstadoEvaluacionService;
 
-import jakarta.validation.Valid;
+import jakarta.persistence.EntityNotFoundException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/estadoevaluacion")
@@ -33,55 +32,46 @@ public class EstadoEvaluacionController {
     private IEstadoEvaluacionService service;
 
     @GetMapping
-    public ResponseEntity<ApiResponseSuccessDto<List<EstadoEvaluacion>>> getAll() {
+    public ResponseEntity<List<EstadoEvaluacion>> getAll() {
         List<EstadoEvaluacion> estados = service.findAll();
-        ApiResponseSuccessDto<List<EstadoEvaluacion>> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setData(estados);
-        response.setMessage(estados.isEmpty() ? "No hay registros" : "Lista de estados encontrada exitosamente");
-        return ResponseEntity.ok(response);
+        return estados.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(estados);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<EstadoEvaluacion>> getById(@PathVariable Long id) {
+    public ResponseEntity<EstadoEvaluacion> getById(@PathVariable Long id) {
         EstadoEvaluacion estado = service.findById(id);
-        ApiResponseSuccessDto<EstadoEvaluacion> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setData(estado);
-        response.setMessage("EstadoEvaluacion encontrada exitosamente");
-        return ResponseEntity.ok(response);
+        return estado == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(estado);
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<EstadoEvaluacion>> create(@Valid @RequestBody EstadoEvaluacionRequestDto estadoEvaluacion) throws Exception {
+    public ResponseEntity<EstadoEvaluacion> create(@RequestBody EstadoEvaluacionRequestDto estadoEvaluacion) throws Exception {
         EstadoEvaluacion creado = service.create(service.fromDto(estadoEvaluacion));
-        ApiResponseSuccessDto<EstadoEvaluacion> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setData(creado);
-        response.setMessage("EstadoEvaluacion creada exitosamente");
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.ok(creado);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<EstadoEvaluacion>> update(@PathVariable Long id, @Valid @RequestBody EstadoEvaluacionRequestDto estadoEvaluacion) throws Exception {
+    public ResponseEntity<EstadoEvaluacion> update(@PathVariable Long id, @RequestBody EstadoEvaluacionRequestDto estadoEvaluacion) throws Exception {
+        EstadoEvaluacion existente = service.findById(id);
+        if (existente == null) {
+            return ResponseEntity.badRequest().build();
+        }
         EstadoEvaluacion actualizado = service.update(service.fromDto(estadoEvaluacion), id);
-        ApiResponseSuccessDto<EstadoEvaluacion> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setData(actualizado);
-        response.setMessage("EstadoEvaluacion actualizada exitosamente");
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(actualizado);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<Void>> delete(@PathVariable Long id) throws Exception {
-        service.deleteById(id);
-        ApiResponseSuccessDto<Void> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setData(null);
-        response.setMessage("EstadoEvaluacion eliminada exitosamente");
-        return ResponseEntity.ok(response);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            service.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 
 }
