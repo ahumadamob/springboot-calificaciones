@@ -20,6 +20,8 @@ import com.imb2025.calificaciones.dto.MateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.service.IMateriaService;
 
+import jakarta.validation.Valid;
+
 
 
 
@@ -49,14 +51,14 @@ public class MateriaController {
 
 
         @PostMapping("/api/materia")
-        public ResponseEntity<Materia> createMateria(@RequestBody MateriaRequestDto materiaRequestDto) throws Exception{
+        public ResponseEntity<Materia> createMateria(@Valid @RequestBody MateriaRequestDto materiaRequestDto) throws Exception{
                 Materia materia = materiaService.fromDto(materiaRequestDto);
                 return ResponseEntity.ok(materiaService.create(materia));
 
         }
 
         @PutMapping ("/api/materia/{id}")
-        public ResponseEntity<Materia> updateMateria(@RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id) throws Exception{
+        public ResponseEntity<Materia> updateMateria(@Valid @RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id) throws Exception{
                 Materia existente = materiaService.findById(id);
                 if(existente == null){
                     return ResponseEntity.badRequest().build();
