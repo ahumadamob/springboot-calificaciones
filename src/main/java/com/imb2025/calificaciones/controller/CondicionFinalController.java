@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +53,9 @@ public class CondicionFinalController {
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<ApiResponseSuccessDto<CondicionFinal>> create(@RequestBody CondicionFinalRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<CondicionFinal>> create(
+            @Valid @RequestBody CondicionFinalRequestDto dto) throws Exception {
+        
         CondicionFinal condicion = service.fromDto(dto);
         condicion = service.create(condicion);
 
@@ -65,7 +68,10 @@ public class CondicionFinalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<CondicionFinal>> update(@PathVariable Long id, @RequestBody CondicionFinalRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<CondicionFinal>> update(
+            @PathVariable Long id,
+            @Valid @RequestBody CondicionFinalRequestDto dto) throws Exception {
+        
         CondicionFinal existente = service.findById(id);
         if (existente == null) {
             return ResponseEntity.badRequest().build();
@@ -94,4 +100,3 @@ public class CondicionFinalController {
         return ResponseEntity.ok(response);
     }
 }
-
