@@ -10,11 +10,11 @@ public interface IInscripcionMateriaService {
 
     public InscripcionMateria create(InscripcionMateria inscripcionMateria);
 
-    public InscripcionMateria update(InscripcionMateria inscripcionMateria, Long id) throws Exception;
+    public InscripcionMateria update(InscripcionMateria inscripcionMateria, Long id);
 
     public InscripcionMateria findById(Long id);
 
-    public void deleteById(Long id) throws Exception;
+    public void deleteById(Long id);
 
-    public InscripcionMateria fromDto(InscripcionMateriaRequestDto dto) throws Exception;
+    public InscripcionMateria fromDto(InscripcionMateriaRequestDto dto);
 }
