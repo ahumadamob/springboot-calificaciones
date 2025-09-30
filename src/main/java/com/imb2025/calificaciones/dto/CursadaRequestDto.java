@@ -1,10 +1,24 @@
 package com.imb2025.calificaciones.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 public class CursadaRequestDto {
 
-    private Long alumnoId;
+	@NotNull(message = "El ID del alumno es obligatorio")
+    @Positive(message = "El ID del alumno debe ser un número positivo")
+	private Long alumnoId;
+	
+	@NotNull(message = "El ID de la materia es obligatorio")
+	@Positive(message = "El ID de la materia debe ser un número positivo")
     private Long materiaId;
+	 
+	@NotNull(message = "El ID del año lectivo es obligatorio")
+	@Positive(message = "El ID del año lectivo debe ser un número positivo")
     private Long anioLectivoId;
+	 
+	@NotNull(message = "El ID del año lectivo es obligatorio")
+	@Positive(message = "El ID del año lectivo debe ser un número positivo")
     private Long condicionFinalId;
 
     public Long getAlumnoId() {
