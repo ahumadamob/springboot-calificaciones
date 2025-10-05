@@ -114,7 +114,7 @@ public class ObservacionAlumnoController {
 		
 		ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
 		response.setSuccess(true);
-		response.setMessage("Observaciones obtenidas correctamente por ID de docente");
+		response.setMessage("Numero de observaciones obtenidas correctamente por ID de alumno");
 		response.setData(count);
 		
 		return ResponseEntity.ok(response);
