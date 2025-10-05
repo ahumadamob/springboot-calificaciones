@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDto;
+import com.imb2025.calificaciones.entity.Alumno;
+import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
 import com.imb2025.calificaciones.service.IObservacionAlumnoService;
 
@@ -93,5 +95,31 @@ public class ObservacionAlumnoController {
 			return ResponseEntity.ok(response);
 		
 	}
+	
+	@GetMapping("docenteId/{docente}")
+	public ResponseEntity<ApiResponseSuccessDto<List<ObservacionAlumno>>> findByDocenteId(@PathVariable Docente docente){
+		List<ObservacionAlumno> observacionByDocente = observacionAlumnoService.findByDocente(docente);
+		
+		ApiResponseSuccessDto<List<ObservacionAlumno>> response = new ApiResponseSuccessDto<>();
+		response.setSuccess(true);
+		response.setMessage("Observaciones obtenidas correctamente por ID de docente");
+		response.setData(observacionByDocente);
+		
+		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping("countByAlumno/{alumno}")
+	public ResponseEntity<?> countByAlumno(@PathVariable Alumno alumno){
+		Long count = observacionAlumnoService.countByAlumno(alumno);
+		
+		ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
+		response.setSuccess(true);
+		response.setMessage("Observaciones obtenidas correctamente por ID de docente");
+		response.setData(count);
+		
+		return ResponseEntity.ok(response);
+	}
+	
+	
 }
 	
