@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,9 @@ public class TurnoController {
 	private ITurnoService turnoService;
 	
         @GetMapping
-        public ResponseEntity<ApiResponseSuccessDto<Turno>> getAll (){
+        public ResponseEntity<ApiResponseSuccessDto<List<Turno>>> getAll (){
                 List<Turno> turnos = turnoService.findAll();
-                ApiResponseSuccessDto response = new  ApiResponseSuccessDto<Turno>();
+                ApiResponseSuccessDto<List<Turno>> response = new  ApiResponseSuccessDto<>();
                 
                 response.setSuccess(true);
                 response.setData(turnos);
@@ -54,6 +55,30 @@ public class TurnoController {
                 response.setData(turno);
                 
                 return ResponseEntity.ok(response);
+        }
+        
+        @GetMapping("/nombre/{nombre}")
+        public ResponseEntity<ApiResponseSuccessDto<List<Turno>>> getTurnosByNombre (@PathVariable String nombre) {
+                List<Turno> turnos = turnoService.mostrarTurnosPorNombre(nombre);
+                ApiResponseSuccessDto<List<Turno>> response = new ApiResponseSuccessDto<>();
+                
+                response.setSuccess(true);
+                response.setMessage("Turno encontrado con el nombre: " + nombre);
+                response.setData(turnos);
+                
+                return ResponseEntity.ok(response);
+        }
+        @GetMapping("/count/despues/{hora}")
+        public ResponseEntity<ApiResponseSuccessDto<Long>> contarTurnosDespuesDe(@PathVariable String hora) {
+            LocalTime horaParametro = LocalTime.parse(hora);
+            Long cantidad = turnoService.contarTurnosQueTerminanDespuesDe(horaParametro);
+
+            ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
+            response.setSuccess(true);
+            response.setData(cantidad);
+            response.setMessage("Cantidad de turnos que terminan después de las " + hora + ": " + cantidad);
+
+            return ResponseEntity.ok(response);
         }
 
          @PostMapping

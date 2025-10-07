@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
+import java.time.LocalTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,5 +61,18 @@ public class TurnoServiceImpl implements ITurnoService {
         turno.setHoraFin(turnoRequestDto.getHoraFin());
         return turno;
     }
+
+	@Override
+	public List<Turno> mostrarTurnosPorNombre(String nombre) {
+		
+		return turnoRepository.findByNombre(nombre);
+	}
+
+	@Override
+	public Long contarTurnosQueTerminanDespuesDe(LocalTime hora) {
+		
+		return turnoRepository.countByHoraFinAfter(hora);
+	}
+	
 
 }
