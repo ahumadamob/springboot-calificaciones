@@ -4,6 +4,9 @@ import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.entity.PlanEstudio;
 import com.imb2025.calificaciones.service.IPlanEstudioService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +49,7 @@ public class PlanEstudioController {
 
     
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> createPlanEstudio(@RequestBody PlanEstudioRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> createPlanEstudio( @Valid @RequestBody PlanEstudioRequestDto dto) throws Exception {
         PlanEstudio nuevo = planEstudioService.fromDto(dto);
         PlanEstudio saved = planEstudioService.create(nuevo);
 
@@ -56,18 +59,19 @@ public class PlanEstudioController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
+    
     
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> updatePlanEstudio(
             @PathVariable Long id,
-            @RequestBody PlanEstudioRequestDto dto) throws Exception {
+            @Valid @RequestBody PlanEstudioRequestDto dto) throws Exception {
 
         PlanEstudio actualizado = planEstudioService.update(
                 planEstudioService.fromDto(dto),
                 id
         );
 
+        
         ApiResponseSuccessDto<PlanEstudio> response = new ApiResponseSuccessDto<>();
         response.setMessage("Plan de estudio actualizado con éxito");
         response.setData(actualizado);

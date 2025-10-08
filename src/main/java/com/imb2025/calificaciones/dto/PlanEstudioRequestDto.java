@@ -1,10 +1,20 @@
 package com.imb2025.calificaciones.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
 public class PlanEstudioRequestDto {
 
+	@NotNull(message = "El ID de la carrera es obligatorio")
+    @Positive(message = "El ID de la carrera debe ser un número positivo")
     private Long carreraId;
+    
     private String nombre;
-    private int anioVigencia;
+    @NotBlank(message = "El nombre no puede estar vacío")
+    @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
+    
 
     public Long getCarreraId() {
         return carreraId;
@@ -22,11 +32,5 @@ public class PlanEstudioRequestDto {
         this.nombre = nombre;
     }
 
-    public int getAnioVigencia() {
-        return anioVigencia;
-    }
-
-    public void setAnioVigencia(int anioVigencia) {
-        this.anioVigencia = anioVigencia;
-    }
+    
 }
