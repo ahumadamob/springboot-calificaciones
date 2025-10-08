@@ -38,19 +38,28 @@ public class CarreraController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto <Carrera>> getById(@PathVariable Long id) {
-    	Carrera carrera = carreraService.findById(id);
-    	ApiResponseSuccessDto<Carrera> response = new ApiResponseSuccessDto<Carrera>();
-    	response.setMessage("Carrera encontrada con exito");
-    	response.setData(carrera);
-    	
-        return ResponseEntity.ok(response);
-    }
 
+    public ResponseEntity<ApiResponseSuccessDto<Carrera>> getById(@PathVariable  Long id) {
+    Carrera carrera = carreraService.findById(id);
+    ApiResponseSuccessDto<Carrera> response = new ApiResponseSuccessDto<>();
+    response.setSuccess(true);
+    response.setMessage("Carrera encontrada con éxito");
+    response.setData(carrera);
+
+    return ResponseEntity.ok(response);
+
+    }
     @PostMapping
-    public ResponseEntity<Carrera> create(@RequestBody @Valid CarreraRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<Carrera>> create(@RequestBody @Valid CarreraRequestDto dto) throws Exception {
         Carrera carrera = carreraService.fromDto(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(carreraService.create(carrera));
+        Carrera created = carreraService.create(carrera);
+
+        ApiResponseSuccessDto<Carrera> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setMessage("Carrera creada con éxito");
+        response.setData(created);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
