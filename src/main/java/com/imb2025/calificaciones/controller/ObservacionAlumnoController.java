@@ -21,6 +21,7 @@ import com.imb2025.calificaciones.entity.ObservacionAlumno;
 import com.imb2025.calificaciones.service.IObservacionAlumnoService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/observacionAlumno")
@@ -54,7 +55,8 @@ public class ObservacionAlumnoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ApiResponseSuccessDto<ObservacionAlumno>> create(@RequestBody ObservacionAlumnoRequestDto dto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<ApiResponseSuccessDto<ObservacionAlumno>> create(@Valid @RequestBody ObservacionAlumnoRequestDto dto, 
+			HttpServletRequest request) throws Exception {
 			
             ObservacionAlumno observacionAlumno = observacionAlumnoService.create(observacionAlumnoService.fromDto(dto));
 			
@@ -68,7 +70,7 @@ public class ObservacionAlumnoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ApiResponseSuccessDto<ObservacionAlumno>> update(@RequestBody ObservacionAlumnoRequestDto dto, @PathVariable Long id, HttpServletRequest request) throws Exception {
+	public ResponseEntity<ApiResponseSuccessDto<ObservacionAlumno>> update(@Valid @RequestBody ObservacionAlumnoRequestDto dto, @PathVariable Long id, HttpServletRequest request) throws Exception {
 			
             ObservacionAlumno observacionAlumno = observacionAlumnoService.update(observacionAlumnoService.fromDto(dto), id);		
             ApiResponseSuccessDto<ObservacionAlumno> response = new ApiResponseSuccessDto<>();
