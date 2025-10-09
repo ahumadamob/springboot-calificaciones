@@ -41,6 +41,29 @@ public class TipoNotaController {
         );
         return ResponseEntity.ok(resp);
     }
+    
+    @GetMapping("/ordenado")
+    public ResponseEntity<ApiResponseSuccessDto<List<TipoNota>>> getAllNotaOrder() {
+        List<TipoNota> lista = tipoNotaService.findAllOrder();
+        ApiResponseSuccessDto<List<TipoNota>> resp = new ApiResponseSuccessDto<>(
+                true,
+                "Listado de los nombres de las notas",
+                lista
+        );
+        return ResponseEntity.ok(resp);
+    }
+    
+    @GetMapping("/cantidad/{nombre}")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countByNombre(@PathVariable String nombre) {
+        long cantidad= tipoNotaService.countByNombre(nombre);
+        ApiResponseSuccessDto<Long> resp = new ApiResponseSuccessDto<>(
+                true,
+                "Cantidad de TipoNota con nombre: " +nombre,
+                cantidad
+        );
+        return ResponseEntity.ok(resp);
+    }
+    
 
     // GET /tiponota/{id} - buscar por id
     @GetMapping("/{id}")
