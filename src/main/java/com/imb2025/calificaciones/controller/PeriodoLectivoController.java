@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.controller;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,11 +10,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDto;
@@ -31,49 +34,70 @@ public class PeriodoLectivoController {
 	@Autowired
 	private IPeriodoLectivoService service;
 	
-        @GetMapping
-        public ResponseEntity<List<PeriodoLectivo>> getAll() {
-                List<PeriodoLectivo> periodos = service.findAll();
-                return periodos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(periodos);
-        }
+	@GetMapping
+    public ResponseEntity<ApiResponseSuccessDto<List<PeriodoLectivo>>> getAll() {
+		List<PeriodoLectivo> periodos = service.findAll();
+        ApiResponseSuccessDto<List<PeriodoLectivo>> response = 
+        		new ApiResponseSuccessDto<List<PeriodoLectivo>>(true, "Periodos Lectivos encontrados con éxito", periodos);
+        return periodos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+    }
 
-        @GetMapping("/{id}")
-        public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> getById(@PathVariable Long id) {
-                PeriodoLectivo periodoLectivo = service.findById(id);
-                ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo encontrado con éxito", periodoLectivo); 
-                return ResponseEntity.ok(response);
-        }
+	@GetMapping("/{id}")
+	public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> getById(@PathVariable Long id) {
+		PeriodoLectivo periodoLectivo = service.findById(id);
+		ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo encontrado con éxito", periodoLectivo); 
+		return ResponseEntity.ok(response);
+	}
+        
+	@GetMapping("/get")
+	public ResponseEntity<ApiResponseSuccessDto<List<PeriodoLectivo>>> getByNombre(
+			@RequestParam(required = true) String nombre) {
+        List<PeriodoLectivo> periodos = service.findAllByNombre(nombre);
+ 		ApiResponseSuccessDto<List<PeriodoLectivo>> response = new ApiResponseSuccessDto<List<PeriodoLectivo>>(true, "Periodos Lectivos con el nombre "+ nombre +" encontrados con éxito", periodos);
+        return periodos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/count")
+    public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByIncioAndFin(
+    		@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio, 
+    		@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fin) {
+    	Long count = service.countByFechaInicioAndFechaFin(inicio, fin);
+  		HashMap<String, Long> hash = new HashMap<String, Long>();
+        hash.put("cantidad", count);
+        ApiResponseSuccessDto<HashMap<String, Long>> response = new ApiResponseSuccessDto<HashMap<String, Long>>(true, "", hash);
+        return ResponseEntity.ok(response);
+    }
 
-        @PostMapping
-        public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> create(
-        		@Valid @RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
-                PeriodoLectivo createdPeriodoLectivo = service.create(
-                                        service.fromDto(periodoLectivo)
-                                );
-                ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo creado con éxito", createdPeriodoLectivo);
-                return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        }
+    @PostMapping
+    public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> create(
+        @Valid @RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
+    	PeriodoLectivo createdPeriodoLectivo = service.create(
+    			service.fromDto(periodoLectivo)
+    			);
+    	ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo creado con éxito", createdPeriodoLectivo);
+    	return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
 
-        @PutMapping("/{id}")
-        public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> updateById(@PathVariable Long id,
-                        @Valid @RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
-                PeriodoLectivo updatedPeriodoLectivo = service.update(
-                                service.fromDto(periodoLectivo),
-                                id
-                                );
-                ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo actualizado con éxito", updatedPeriodoLectivo);
-                return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        }
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> updateById(@PathVariable Long id,
+    	@Valid @RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
+    	PeriodoLectivo updatedPeriodoLectivo = service.update(
+    			service.fromDto(periodoLectivo),
+    			id
+    			);
+    	ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo actualizado con éxito", updatedPeriodoLectivo);
+    	return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
 
-        @DeleteMapping("/{id}")
-        public ResponseEntity<Void> deleteById(@PathVariable Long id) throws Exception {
-                service.deleteById(id);
-                return ResponseEntity.noContent().build();
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) throws Exception {
+    	service.deleteById(id);
+    	return ResponseEntity.noContent().build();
+    }
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> handleException(Exception ex) {
-	  return ResponseEntity.badRequest().body(ex.getMessage());
+		return ResponseEntity.badRequest().body(ex.getMessage());
 	}
 	
 }
