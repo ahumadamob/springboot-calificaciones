@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDto;
@@ -53,6 +54,33 @@ public class CalendarioMateriaController {
         response.setSuccess(true);
         response.setData(calendario);
         response.setMessage("Calendario Materia encontrado con éxito");
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/materia/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> getCalendarioMateriaByMateriaId(@PathVariable Long id){
+        List<CalendarioMateria> calendarioMaterias = calMatSer.findByMateriaId(id);
+
+        ApiResponseSuccessDto response = new ApiResponseSuccessDto<CalendarioMateria>();
+
+        response.setSuccess(true);
+        response.setData(calendarioMaterias);
+        response.setMessage("Busqueda encontrada de Calendario Materia por Materia ID");
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/comision/{comisionId}")
+    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> countByComisionId(@PathVariable Long comisionId){
+
+        Long result = calMatSer.countByComisionId(comisionId);
+
+        ApiResponseSuccessDto response = new ApiResponseSuccessDto<CalendarioMateria>();
+
+        response.setSuccess(true);
+        response.setData(result);
+        response.setMessage("Contados con exito");
 
         return ResponseEntity.ok(response);
     }
