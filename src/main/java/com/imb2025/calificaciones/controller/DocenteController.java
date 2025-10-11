@@ -1,11 +1,13 @@
 package com.imb2025.calificaciones.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,11 +16,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.DocenteRequestDto;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.service.IDocenteService;
 
+import jakarta.validation.Valid;
+
 @RestController
+
 @RequestMapping("/api/docente")
 public class DocenteController {
 
@@ -32,30 +38,21 @@ public class DocenteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Docente> getDocenteById(@PathVariable Long id) {
+
+    public ResponseEntity<ApiResponseSuccessDto<Docente>> obtenerDocentePorId(@PathVariable Long id) {
         Docente docente = docenteService.findById(id);
-        if (docente == null) {
-            return ResponseEntity.notFound().build(); 
-        }
-        return ResponseEntity.ok(docente);
+        ApiResponseSuccessDto<Docente> response = new ApiResponseSuccessDto<>(true,
+                "Docente encontrado con éxito", docente);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<Docente> crear(@RequestBody DocenteRequestDto dto) throws Exception {
-        Docente docente = new Docente();
-        docente = docenteService.fromDto(dto);
-        return ResponseEntity.ok(docenteService.create(docente));
-    }
-
-    public ResponseEntity<Docente> actualizar(@PathVariable Long id, @RequestBody DocenteRequestDto dto)
+    public ResponseEntity<ApiResponseSuccessDto<Docente>> crear(@Valid @RequestBody DocenteRequestDto dto)
             throws Exception {
-        Docente existente = docenteService.findById(id);
-        if (existente != null) {
-            Docente docente = docenteService.fromDto(dto);
-            return ResponseEntity.ok(docenteService.update(docente, id));
-        } else {
-            return ResponseEntity.badRequest().body(null);
-        }
+        Docente createdDocente = docenteService.create(docenteService.fromDto(dto));
+        ApiResponseSuccessDto<Docente> response = new ApiResponseSuccessDto<>(true,
+                "Alumno creado con éxito", createdDocente);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/{id}")
@@ -66,6 +63,15 @@ public class DocenteController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<Docente>> actualizar(@PathVariable Long id,
+            @Valid @RequestBody DocenteRequestDto dto) throws Exception {
+        Docente updatedDocente = docenteService.update(docenteService.fromDto(dto), id);
+        ApiResponseSuccessDto<Docente> response = new ApiResponseSuccessDto<>(true,
+                "Docente actualizado con éxito", updatedDocente);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @ExceptionHandler(Exception.class)
