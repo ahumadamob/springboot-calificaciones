@@ -4,7 +4,7 @@ import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.entity.PlanEstudio;
 import com.imb2025.calificaciones.service.IPlanEstudioService;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +46,35 @@ public class PlanEstudioController {
 
         return ResponseEntity.ok(response);
     }
+    
+    
+    @GetMapping("/get")
+    public ResponseEntity<ApiResponseSuccessDto<List<PlanEstudio>>>  getByNombre(
+    		@RequestParam (required = true) String nombre) {
+        List<PlanEstudio> planes = planEstudioService.findAllByNombre(nombre);
+
+        ApiResponseSuccessDto<List<PlanEstudio>> response = new ApiResponseSuccessDto<List<PlanEstudio>>(true, "Plan Estudio con nombre "+ nombre +" encontrados con éxito", planes);
+        response.setMessage("Resultado del filtro por nombre");
+        response.setData(planes);
+
+        return planes.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(response);
+    }
 
     
+    @GetMapping("/count")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countByCarrera(@PathVariable Long carreraId) {
+        long cantidad = planEstudioService.countByCarrera(carreraId);
+
+        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Cantidad de planes asociados a la carrera con ID: " + carreraId);
+        response.setData(cantidad);
+
+        return ResponseEntity.ok(response);
+    }
+
+   
     @PostMapping
     public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> createPlanEstudio( @Valid @RequestBody PlanEstudioRequestDto dto) throws Exception {
         PlanEstudio nuevo = planEstudioService.fromDto(dto);

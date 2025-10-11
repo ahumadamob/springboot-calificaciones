@@ -112,4 +112,16 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public List<PlanEstudio> findAllByNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public long countByCarrera() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
