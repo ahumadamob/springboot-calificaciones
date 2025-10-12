@@ -61,4 +61,14 @@ public class EstadoCursadaServiceImpl implements IEstadoCursadaService {
         return estadoCursada;
     }
 
+    @Override
+    public List<EstadoCursada> findByNombreIgnoreCase(String nombre) {
+        return repository.findByNombreIgnoreCase(nombre);
+    }
+
+    @Override
+    public long countByDescripcionIgnoreCase(String descripcion) {
+        return repository.countByDescripcionIgnoreCase(descripcion);
+    }
+
 }
