@@ -2,16 +2,14 @@ package com.imb2025.calificaciones.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 public class InscripcionMateriaRequestDto {
-    @NotNull(message ="El id del alumno no puede estar vacío")
-    @Min(1)
+    @Positive(message = "Debe ingresar un id positivo de alumno")
     private Long alumnoId;
-    @NotNull(message = "El id de la materia no puede estar vacío")
-    @Min(1)
+    @Positive(message = "Debe ingresar un id positivo de materia")
     private Long materiaId;
-    @NotNull(message = "el id del periodo electivo no puede estar vacío")
-    @Min(1)
+    @Positive(message = "Debe ingresar un id positivo de periodo")
     private Long periodoLectivoId;
 
     public Long getAlumnoId() {

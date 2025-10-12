@@ -64,7 +64,7 @@ public class InscripcionMateriaController {
 
     @PutMapping("/{idInscripcionMateria}")
     public ResponseEntity<ApiResponseSuccessDto<InscripcionMateria>> update(
-            @PathVariable("idInscripcionMateria") Long id,
+            @PathVariable("idInscripcionMateria") Long id, @Valid
             @RequestBody InscripcionMateriaRequestDto dto) throws Exception {
 
             InscripcionMateria entity = inscripcionMateriaService.fromDto(dto);
