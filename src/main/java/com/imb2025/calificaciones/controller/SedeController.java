@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import com.imb2025.calificaciones.entity.Sede;
 import com.imb2025.calificaciones.service.ISedeService;
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import com.imb2025.calificaciones.dto.SedeRequestDto;
 
 @RestController
 public class SedeController {
@@ -44,11 +45,10 @@ public class SedeController {
         resp.setMessage("Sede encontrada");
         return ResponseEntity.ok(resp);
     }
-
     @PostMapping("/api/sede")
-    public ResponseEntity<ApiResponseSuccessDto<Sede>> createSede(@RequestBody Sede sede){
+    public ResponseEntity<ApiResponseSuccessDto<Sede>> createSede(@org.springframework.validation.annotation.Validated @RequestBody SedeRequestDto dto){
         try {
-            Sede creado = sedeService.create(sede);
+            Sede creado = sedeService.createFromDto(dto);
             ApiResponseSuccessDto<Sede> resp = new ApiResponseSuccessDto<>();
             resp.setSuccess(true);
             resp.setData(creado);
@@ -99,9 +99,8 @@ public class SedeController {
         }
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+        @ExceptionHandler(Exception.class)
+        public ResponseEntity<String> handleException(Exception ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
     }
-}
-
