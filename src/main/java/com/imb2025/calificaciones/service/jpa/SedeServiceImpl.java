@@ -58,4 +58,14 @@ public class SedeServiceImpl implements ISedeService {
         sede.setDireccion(dto.getDireccion());
         return sede;
     }
+
+    @Override
+    public Sede createFromDto(SedeRequestDto dto) throws Exception {
+        try {
+            Sede sede = fromDto(dto);
+            return create(sede);
+        } catch (Exception ex) {
+            throw new Exception("Error creando Sede desde DTO: " + ex.getMessage(), ex);
+        }
+    }
 }
