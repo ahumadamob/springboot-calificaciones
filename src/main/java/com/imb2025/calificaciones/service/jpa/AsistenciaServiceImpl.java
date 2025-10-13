@@ -128,4 +128,9 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
         asistencia.setPresente(dto.getPresente());
         return asistencia;
     }
+
+    @Override
+    public boolean existsById(Long id) {
+        return asistenciaRepository.existsById(id);
+    }
 }
