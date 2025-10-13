@@ -48,7 +48,7 @@ public class PlanEstudioController {
     }
     
     
-    @GetMapping("/get")
+    @GetMapping("/buscar")
     public ResponseEntity<ApiResponseSuccessDto<List<PlanEstudio>>>  getByNombre(
     		@RequestParam (required = true) String nombre) {
         List<PlanEstudio> planes = planEstudioService.findAllByNombre(nombre);

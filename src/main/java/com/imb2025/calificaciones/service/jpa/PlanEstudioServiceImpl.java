@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.entity.Carrera;
+
 import com.imb2025.calificaciones.entity.PlanEstudio;
 import com.imb2025.calificaciones.repository.CarreraRepository;
 import com.imb2025.calificaciones.repository.PlanEstudioRepository;
@@ -109,19 +110,22 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
 
 	@Override
 	public boolean existsById(Long id) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
 	@Override
 	public List<PlanEstudio> findAllByNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return planestudiorepository.findByNombreContainingIgnoreCase(nombre);
+    }
+	
+    
+	
+    	
+	@Override
+	public long countByCarrera(Long carreraId){
+	    return planestudiorepository.countByCarrera_Id(carreraId);
 	}
 
-	@Override
-	public long countByCarrera() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }
