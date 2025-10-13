@@ -26,18 +26,22 @@ public class SedeServiceImpl implements ISedeService {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return repo.existsById(id);
+    }
+
+    @Override
     public Sede create(Sede sede) {
         return repo.save(sede);
     }
 
     @Override
     public Sede update(Sede sede, Long id) throws Exception {
-        if (repo.existsById(id)) {
-            sede.setId(id);
-            return repo.save(sede);
-        } else {
+        if (!repo.existsById(id)) {
             throw new Exception("Sede con ID " + id + " no encontrada.");
         }
+        sede.setId(id);
+        return repo.save(sede);
     }
 
     @Override

@@ -1,72 +1,80 @@
 package com.imb2025.calificaciones.controller;
 
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import com.imb2025.calificaciones.entity.Sede;
 import com.imb2025.calificaciones.service.ISedeService;
 
-/*Al anotarlo con @Rest va a poder interpretar que es un SERVICIO REST e interpretar que vengan
- * los objetos del tipo .json y asi nosotros poder serializarlos como otra cosa ya que aca no podemos 
- * utilizar .json, debemos utilizar objetos. */
-
-
-@RestController //Aca vamos a realizar los métodos que van a representar un ENDPOINT
+@RestController
 public class SedeController {
 
-	@Autowired  
-	private ISedeService sedeService;
-	
-	@GetMapping("/api/sede")
-	public List<Sede> getAllSedes(){
-		return sedeService.findAll();
-	}
-	
-	@GetMapping("/api/sede/{idSede}")
-	public Sede getSedeById(@PathVariable("idSede") Long id){
-		return sedeService.findById(id);
-	}
-	
+    @Autowired  
+    private ISedeService sedeService;
+
+    @GetMapping("/api/sede")
+    public ResponseEntity<List<Sede>> getAllSedes(){
+        List<Sede> lista = sedeService.findAll();
+        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/api/sede/{idSede}")
+    public ResponseEntity<Sede> getSedeById(@PathVariable("idSede") Long id){
+        Sede sede = sedeService.findById(id);
+        return sede == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(sede);
+    }
+
     @PostMapping("/api/sede")
-    public Sede createSede(@RequestBody Sede sede){
+    public ResponseEntity<Sede> createSede(@RequestBody Sede sede){
         try {
-            return sedeService.create(sede);
+            Sede creado = sedeService.create(sede);
+            return ResponseEntity.ok(creado);
         } catch (Exception e) {
-            // manejar error simple, por ejemplo retornar null
-            return null;
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping("/api/sede/{idSede}")
-    public Sede updateSede(@PathVariable("idSede") Long id, @RequestBody Sede sede){
+    public ResponseEntity<Sede> updateSede(@PathVariable("idSede") Long id, @RequestBody Sede sede){
         try {
-            return sedeService.update(sede, id);
+            if (!sedeService.existsById(id)) {
+                return ResponseEntity.badRequest().build();
+            }
+            Sede actualizado = sedeService.update(sede, id);
+            return ResponseEntity.ok(actualizado);
         } catch (Exception e) {
-            // manejar error simple, por ejemplo retornar null
-            return null;
+            return ResponseEntity.badRequest().build();
         }
     }
-	
+
     @DeleteMapping("/api/sede/{idSede}")
-    public void deleteSede(@PathVariable("idSede") Long id){
+    public ResponseEntity<Void> deleteSede(@PathVariable("idSede") Long id){
         try {
+            if (!sedeService.existsById(id)) {
+                return ResponseEntity.badRequest().build();
+            }
             sedeService.deleteById(id);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
-            // manejar excepción de forma simple
+            return ResponseEntity.badRequest().build();
         }
     }
-	
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 }
 
