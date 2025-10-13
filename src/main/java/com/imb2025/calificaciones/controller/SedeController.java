@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 
 import com.imb2025.calificaciones.entity.Sede;
 import com.imb2025.calificaciones.service.ISedeService;
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 
 @RestController
 public class SedeController {
@@ -25,50 +26,76 @@ public class SedeController {
     private ISedeService sedeService;
 
     @GetMapping("/api/sede")
-    public ResponseEntity<List<Sede>> getAllSedes(){
+    public ResponseEntity<ApiResponseSuccessDto<List<Sede>>> getAllSedes(){
         List<Sede> lista = sedeService.findAll();
-        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(lista);
+        ApiResponseSuccessDto<List<Sede>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(lista);
+        resp.setMessage(lista.isEmpty() ? "No hay sedes registradas" : "Listado de sedes");
+        return ResponseEntity.ok(resp);
     }
 
     @GetMapping("/api/sede/{idSede}")
-    public ResponseEntity<Sede> getSedeById(@PathVariable("idSede") Long id){
+    public ResponseEntity<ApiResponseSuccessDto<Sede>> getSedeById(@PathVariable("idSede") Long id){
         Sede sede = sedeService.findById(id);
-        return sede == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(sede);
+        ApiResponseSuccessDto<Sede> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(sede);
+        resp.setMessage("Sede encontrada");
+        return ResponseEntity.ok(resp);
     }
 
     @PostMapping("/api/sede")
-    public ResponseEntity<Sede> createSede(@RequestBody Sede sede){
+    public ResponseEntity<ApiResponseSuccessDto<Sede>> createSede(@RequestBody Sede sede){
         try {
             Sede creado = sedeService.create(sede);
-            return ResponseEntity.ok(creado);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            ApiResponseSuccessDto<Sede> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(true);
+            resp.setData(creado);
+            resp.setMessage("Sede creada correctamente");
+            return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+        } catch (Exception ex) {
+            ApiResponseSuccessDto<Sede> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(false);
+            resp.setMessage(ex.getMessage());
+            resp.setData(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
         }
     }
 
     @PutMapping("/api/sede/{idSede}")
-    public ResponseEntity<Sede> updateSede(@PathVariable("idSede") Long id, @RequestBody Sede sede){
+    public ResponseEntity<ApiResponseSuccessDto<Sede>> updateSede(@PathVariable("idSede") Long id, @RequestBody Sede sede){
         try {
-            if (!sedeService.existsById(id)) {
-                return ResponseEntity.badRequest().build();
-            }
             Sede actualizado = sedeService.update(sede, id);
-            return ResponseEntity.ok(actualizado);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            ApiResponseSuccessDto<Sede> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(true);
+            resp.setData(actualizado);
+            resp.setMessage("Sede actualizada correctamente");
+            return ResponseEntity.ok(resp);
+        } catch (Exception ex) {
+            ApiResponseSuccessDto<Sede> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(false);
+            resp.setMessage(ex.getMessage());
+            resp.setData(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
         }
     }
 
     @DeleteMapping("/api/sede/{idSede}")
-    public ResponseEntity<Void> deleteSede(@PathVariable("idSede") Long id){
+    public ResponseEntity<ApiResponseSuccessDto<Void>> deleteSede(@PathVariable("idSede") Long id){
         try {
-            if (!sedeService.existsById(id)) {
-                return ResponseEntity.badRequest().build();
-            }
             sedeService.deleteById(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            ApiResponseSuccessDto<Void> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(true);
+            resp.setMessage("Sede eliminada correctamente");
+            resp.setData(null);
+            return ResponseEntity.ok(resp);
+        } catch (Exception ex) {
+            ApiResponseSuccessDto<Void> resp = new ApiResponseSuccessDto<>();
+            resp.setSuccess(false);
+            resp.setMessage(ex.getMessage());
+            resp.setData(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
         }
     }
 

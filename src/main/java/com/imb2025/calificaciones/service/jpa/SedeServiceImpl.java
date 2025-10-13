@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.SedeRequestDto;
 import com.imb2025.calificaciones.entity.Sede;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.SedeRepository;
 import com.imb2025.calificaciones.service.ISedeService;
 
@@ -22,7 +23,8 @@ public class SedeServiceImpl implements ISedeService {
 
     @Override
     public Sede findById(Long id) {
-        return repo.findById(id).orElse(null);
+        return repo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Entidad no encontrada con id " + id));
     }
 
     @Override
