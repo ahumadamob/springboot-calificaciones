@@ -40,7 +40,7 @@ public class SedeServiceImpl implements ISedeService {
     @Override
     public Sede update(Sede sede, Long id) throws Exception {
         if (!repo.existsById(id)) {
-            throw new Exception("Sede con ID " + id + " no encontrada.");
+            throw new ResourceNotFoundException("Sede con ID " + id + " no encontrada.");
         }
         sede.setId(id);
         return repo.save(sede);
@@ -49,7 +49,7 @@ public class SedeServiceImpl implements ISedeService {
     @Override
     public void deleteById(Long id) throws Exception {
         if (!repo.existsById(id)) {
-            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+            throw new ResourceNotFoundException("No se puede eliminar el id: " + id + " porque no existe");
         }
         repo.deleteById(id);
     }
