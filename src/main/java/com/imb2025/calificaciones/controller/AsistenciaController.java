@@ -3,6 +3,7 @@ package com.imb2025.calificaciones.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,43 +37,39 @@ public class AsistenciaController {
     @GetMapping("/{id}")
     public ResponseEntity<Asistencia> getById(@PathVariable Long id) {
         Asistencia asistencia = asistenciaService.findById(id);
-        if (asistencia == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(asistencia);
+        return asistencia == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(asistencia);
     }
 
     // POST - crear nueva asistencia
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody AsistenciaRequestDto dto) {
-        try {
-            Asistencia nueva = asistenciaService.create(dto);
-            return ResponseEntity.ok(nueva);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<Asistencia> create(@RequestBody AsistenciaRequestDto dto) throws Exception {
+        Asistencia nueva = asistenciaService.create(dto);
+        return ResponseEntity.status(201).body(nueva);
     }
 
     // PUT - actualizar asistencia existente
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody AsistenciaRequestDto dto) {
-        try {
-            Asistencia actualizada = asistenciaService.update(dto, id);
-            return ResponseEntity.ok(actualizada);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+    public ResponseEntity<Asistencia> update(@PathVariable Long id, @RequestBody AsistenciaRequestDto dto) throws Exception {
+        if (!asistenciaService.existsById(id)) {
+            return ResponseEntity.badRequest().build();
         }
+        Asistencia actualizada = asistenciaService.update(dto, id);
+        return ResponseEntity.ok(actualizada);
     }
 
     // DELETE - eliminar una asistencia
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        try {
-            asistenciaService.deleteById(id);
-            return ResponseEntity.ok("Asistencia eliminada con éxito.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
+        if (!asistenciaService.existsById(id)) {
+            return ResponseEntity.badRequest().build();
         }
+        asistenciaService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }
 
