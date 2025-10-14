@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,7 +52,7 @@ public class AsignacionDocenteController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<AsignacionDocente>> create(@RequestBody AsignacionDocenteRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<AsignacionDocente>> create(@Valid @RequestBody AsignacionDocenteRequestDto dto) throws Exception {
         AsignacionDocente asignacion = service.fromDto(dto);
         AsignacionDocente createdAsignacion = service.create(asignacion);
         ApiResponseSuccessDto<AsignacionDocente> resp = new ApiResponseSuccessDto<>();
@@ -63,7 +64,7 @@ public class AsignacionDocenteController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponseSuccessDto<AsignacionDocente>> update(@PathVariable Long id,
-            @RequestBody AsignacionDocenteRequestDto dto) throws Exception {
+            @Valid @RequestBody AsignacionDocenteRequestDto dto) throws Exception {
         AsignacionDocente asignacion = service.fromDto(dto);
         AsignacionDocente updatedAsignacion = service.update(asignacion, id);
         ApiResponseSuccessDto<AsignacionDocente> resp = new ApiResponseSuccessDto<>();

@@ -7,6 +7,10 @@ import java.util.List;
 public interface ITipoNotaService {
 
     public List<TipoNota> findAll();
+    
+    public List<TipoNota>findAllOrder();
+    
+    public long countByNombre(String nombre);
 
     public TipoNota create(TipoNota tipoNota);
 

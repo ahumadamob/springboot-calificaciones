@@ -2,6 +2,7 @@ package com.imb2025.calificaciones.service.jpa;
 
 import com.imb2025.calificaciones.dto.CondicionFinalRequestDto;
 import com.imb2025.calificaciones.entity.CondicionFinal;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.CondicionFinalRepository;
 import com.imb2025.calificaciones.service.ICondicionFinalService;
 import java.util.List;
@@ -27,7 +28,7 @@ public class CondicionFinalServiceImpl implements ICondicionFinalService {
     @Override
     public CondicionFinal update(CondicionFinal condicionFinal, Long id) throws Exception {
         if (!repository.existsById(id)) {
-            throw new Exception("CondicionFinal not found");
+            throw new ResourceNotFoundException("No se encontró Condición Final con id: " + id);
         }
         condicionFinal.setId(id);
         return repository.save(condicionFinal);
@@ -35,13 +36,15 @@ public class CondicionFinalServiceImpl implements ICondicionFinalService {
 
     @Override
     public CondicionFinal findById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(() -> 
+            new ResourceNotFoundException("Entidad no encontrada con id " + id)
+        );
     }
 
     @Override
     public void deleteById(Long id) throws Exception {
         if (!repository.existsById(id)) {
-            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+            throw new ResourceNotFoundException("No se puede eliminar el id: " + id + " porque no existe");
         }
         repository.deleteById(id);
     }
@@ -56,3 +59,4 @@ public class CondicionFinalServiceImpl implements ICondicionFinalService {
         return condicionFinal;
     }
 }
+

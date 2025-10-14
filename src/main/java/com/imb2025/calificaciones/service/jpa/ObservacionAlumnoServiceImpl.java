@@ -90,4 +90,14 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
         return observacion;
     }
 
+	@Override
+	public List<ObservacionAlumno> findByDocente(Docente docente) {
+		return observacionAlumnoRepository.findByDocente(docente);
+	}
+
+	@Override
+	public Long countByAlumno(Alumno alumno) {
+		return observacionAlumnoRepository.countByAlumno(alumno);
+	}
+
 }

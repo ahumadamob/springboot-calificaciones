@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
     public PeriodoLectivo findById(Long id) {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "Entidad no encontrada con id " + id));
+    }
+    
+    @Override
+    public List<PeriodoLectivo> findAllByNombre(String nombre) {
+    	return repository.findByNombreIgnoreCase(nombre);
     }
 
     @Override
@@ -60,5 +66,10 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 
         return periodoLectivo;
     }
+
+	@Override
+	public long countByFechaInicioAndFechaFin(LocalDate inicio, LocalDate fin) {
+		return repository.countByFechaInicioAfterAndFechaFinBefore(inicio, fin);
+	}
 
 }

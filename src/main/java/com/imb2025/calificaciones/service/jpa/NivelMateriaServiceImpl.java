@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.imb2025.calificaciones.dto.NivelMateriaRequestDto;
 import com.imb2025.calificaciones.entity.NivelMateria;
 import com.imb2025.calificaciones.repository.NivelMateriaRepository;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.service.INivelMateriaService;
 
 @Service
@@ -22,10 +23,6 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
 
     }
 
-    @Override
-    public NivelMateria findById(Long id) {
-        return repo.findById(id).orElse(null);
-    }
 
     @Override
     public NivelMateria create(NivelMateria nivelMateria) {
@@ -50,17 +47,20 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
         nivelMateria.setDescripcion(dto.getDescripcion());
         return nivelMateria;
     }
-
-	@Override
-	public NivelMateria update(NivelMateria nivelMateria, Long id) throws Exception {
-        if(repo.existsById(id)){
-        	nivelMateria.setId(id);
-            return repo.save(nivelMateria);
-        }else {
-            throw new Exception("Nivel de Materia con ID " + id + " no encontrado.");
-        }
-
+    @Override
+    public NivelMateria findById(Long id) {
+        return repo.findById(id)
+                   .orElseThrow(() -> new ResourceNotFoundException("Entidad no encontrada con id " + id));
+    }
+    @Override
+    public NivelMateria update(NivelMateria nivelMateria, Long id) throws Exception {
+        NivelMateria existing = repo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Entidad no encontrada con id " + id));
+        existing.setNombre(nivelMateria.getNombre());
+        existing.setDescripcion(nivelMateria.getDescripcion());
+        return repo.save(existing);
+    }
 	}
 
-    }
+   
 
