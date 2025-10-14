@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.imb2025.calificaciones.entity.Sede;
 import com.imb2025.calificaciones.service.ISedeService;
@@ -28,7 +30,7 @@ public class SedeController {
 	private ISedeService sedeService;
 	
 	@GetMapping("/api/sede")
-	public List<Sede>getAllSedes(){
+	public List<Sede> getAllSedes(){
 		return sedeService.findAll();
 	}
 	
@@ -37,23 +39,34 @@ public class SedeController {
 		return sedeService.findById(id);
 	}
 	
-        @PostMapping("/api/sede")
-        public Sede createSede(@RequestBody Sede sede){
-                return sedeService.create(sede);
+    @PostMapping("/api/sede")
+    public Sede createSede(@RequestBody Sede sede){
+        try {
+            return sedeService.create(sede);
+        } catch (Exception e) {
+            // manejar error simple, por ejemplo retornar null
+            return null;
         }
+    }
 
-        @PutMapping("/api/sede")
-        public Sede updateSede(@RequestBody Sede sede){
-                return sedeService.create(sede);
+    @PutMapping("/api/sede/{idSede}")
+    public Sede updateSede(@PathVariable("idSede") Long id, @RequestBody Sede sede){
+        try {
+            return sedeService.update(sede, id);
+        } catch (Exception e) {
+            // manejar error simple, por ejemplo retornar null
+            return null;
         }
+    }
 	
-        @DeleteMapping("/api/sede/{idSede}")
-        public void deleteSede(@PathVariable("idSede") Long id){
-                try {
-                        sedeService.deleteById(id);
-                } catch (Exception e) {
-                        // manejar excepción de forma simple
-                }
+    @DeleteMapping("/api/sede/{idSede}")
+    public void deleteSede(@PathVariable("idSede") Long id){
+        try {
+            sedeService.deleteById(id);
+        } catch (Exception e) {
+            // manejar excepción de forma simple
         }
+    }
 	
 }
+

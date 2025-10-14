@@ -8,7 +8,8 @@ public interface ISedeService {
 
     public List<Sede> findAll();
 
-    public Sede create(Sede sede);
+    // ahora create puede lanzar Exception para reportar validaciones/errores de existencia de relaciones
+    public Sede create(Sede sede) throws Exception;
 
     public Sede update(Sede sede, Long id) throws Exception;
 
@@ -16,5 +17,9 @@ public interface ISedeService {
 
     public void deleteById(Long id) throws Exception;
 
+
     public Sede fromDto(SedeRequestDto dto) throws Exception;
+
+    // nuevo: crear directamente desde el DTO (útil para controlador POST)
+    public Sede createFromDto(SedeRequestDto dto) throws Exception;
 }
