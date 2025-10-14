@@ -4,6 +4,7 @@ import com.imb2025.calificaciones.dto.AsistenciaRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.Asistencia;
 import com.imb2025.calificaciones.entity.RegistroClase;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.repository.AsistenciaRepository;
 import com.imb2025.calificaciones.repository.RegistroClaseRepository;
@@ -33,7 +34,8 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
 
     @Override
     public Asistencia findById(Long id) {
-        return asistenciaRepository.findById(id).orElse(null);
+        return asistenciaRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Asistencia no encontrada con id " + id));
     }
 
     @Override
