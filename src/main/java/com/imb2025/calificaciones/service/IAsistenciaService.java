@@ -14,6 +14,8 @@ public interface IAsistenciaService {
 
     public Asistencia findById(Long id);
 
+    public boolean existsById(Long id);
+
     public void deleteById(Long id) throws Exception;
 
     public Asistencia fromDto(AsistenciaRequestDto dto) throws Exception;
