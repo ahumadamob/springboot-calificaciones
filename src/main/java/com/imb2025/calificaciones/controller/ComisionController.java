@@ -80,8 +80,8 @@ public class ComisionController {
         return ResponseEntity.ok(resp);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
-    }
+    // Eliminado el manejador local de excepciones para que GlobalExceptionHandler procese
+    // los errores de validación y devuelva ApiResponseErrorDto con la lista completa.
 }
+    
+
