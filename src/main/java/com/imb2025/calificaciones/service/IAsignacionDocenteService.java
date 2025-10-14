@@ -8,6 +8,10 @@ public interface IAsignacionDocenteService {
 
     public List<AsignacionDocente> findAll();
 
+    public List<AsignacionDocente> findAllByDocenteId(Long docenteId);
+
+    public long countByMateriaIdAndComisionId(Long materiaId, Long comisionId);
+
     public AsignacionDocente create(AsignacionDocente asignacionDocente);
 
     public AsignacionDocente update(AsignacionDocente asignacionDocente, Long id) throws Exception;
