@@ -2,8 +2,7 @@ package com.imb2025.calificaciones.service.jpa;
 
 import com.imb2025.calificaciones.dto.ComisionRequestDto;
 import com.imb2025.calificaciones.entity.Comision;
-import com.imb2025.calificaciones.entity.Sede;
-import com.imb2025.calificaciones.entity.Turno;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.ComisionRepository;
 import com.imb2025.calificaciones.repository.SedeRepository;
 import com.imb2025.calificaciones.repository.TurnoRepository;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class ComisionServiceImpl implements IComisionService {
 
     @Autowired
-    private ComisionRepository repository;
+    private ComisionRepository repo;
 
     @Autowired
     private TurnoRepository turnoRepository;
@@ -26,46 +25,57 @@ public class ComisionServiceImpl implements IComisionService {
 
     @Override
     public List<Comision> findAll() {
-        return repository.findAll();
+        return repo.findAll();
     }
 
     @Override
     public Comision findById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Comision no encontrada con id " + id));
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return repo.existsById(id);
     }
 
     @Override
     public Comision create(Comision comision) {
-        return repository.save(comision);
+        return repo.save(comision);
     }
 
     @Override
     public Comision update(Comision comision, Long id) throws Exception {
-        if (repository.existsById(id)) {
-            comision.setId(id);
-            return repository.save(comision);
-        } else {
-            throw new Exception("Comision con ID " + id + " no encontrada");
+        if (!repo.existsById(id)) {
+            throw new ResourceNotFoundException("Comision con id " + id + " no existe");
         }
+        comision.setId(id);
+        return repo.save(comision);
     }
 
     @Override
     public void deleteById(Long id) throws Exception {
-        if (!repository.existsById(id)) {
-            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+        if (!repo.existsById(id)) {
+            throw new ResourceNotFoundException("No se puede eliminar el id: " + id + " porque no existe");
         }
-        repository.deleteById(id);
+        repo.deleteById(id);
     }
 
     @Override
     public Comision fromDto(ComisionRequestDto dto) throws Exception {
         if (dto == null) {
-            return null;
+            throw new IllegalArgumentException("DTO no puede ser nulo");
         }
-        Turno turno = turnoRepository.findById(dto.getTurnoId())
-                .orElseThrow(() -> new Exception("Turno no encontrado con id: " + dto.getTurnoId()));
-        Sede sede = sedeRepository.findById(dto.getSedeId())
-                .orElseThrow(() -> new Exception("Sede no encontrada con id: " + dto.getSedeId()));
-        return new Comision(dto.getNombre(), turno, sede);
+        Comision c = new Comision();
+        c.setNombre(dto.getNombre());
+        if (dto.getTurnoId() != null) {
+            c.setTurno(turnoRepository.findById(dto.getTurnoId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Turno con id " + dto.getTurnoId() + " no encontrado")));
+        }
+        if (dto.getSedeId() != null) {
+            c.setSede(sedeRepository.findById(dto.getSedeId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Sede con id " + dto.getSedeId() + " no encontrada")));
+        }
+        return c;
     }
 }

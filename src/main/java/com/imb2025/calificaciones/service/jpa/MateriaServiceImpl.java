@@ -9,6 +9,7 @@ import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.service.IMateriaService;
+import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
 
 @Service
 public class MateriaServiceImpl implements IMateriaService{
@@ -67,4 +68,30 @@ public class MateriaServiceImpl implements IMateriaService{
 
         return materia;
     }
+
+	@Override
+	public List<Materia> findAllOrder() {
+		
+		return repo.findByOrderByNombreAsc();
+	}
+
+	@Override
+	public List<Materia> findByNivelEndsWith(String sufijo) {
+		return repo.findByNivelEndingWithIgnoreCase(sufijo);
+	}
+
+	@Override
+	public Materia findByCodigo(String codigo) {
+		return repo.findByCodigo(codigo)
+        	    .orElseThrow(() -> new EntidadNoEncontradaException(
+        	        "Materia no encontrada con codigo " + codigo));
+	}
+
+	@Override
+	public long findByCargaHoraria(Integer cargaHoraria) {
+		
+		return repo.countByCargaHoraria(cargaHoraria);
+	}
+
+	
 }

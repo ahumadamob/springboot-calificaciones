@@ -2,6 +2,8 @@ package com.imb2025.calificaciones.controller;
 
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,11 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.service.IEstadoCursadaService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,14 +50,47 @@ public class EstadoCursadaController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/buscar")
+    public ResponseEntity<ApiResponseSuccessDto<List<EstadoCursada>>> findByNombre(@RequestParam String nombre) {
+        List<EstadoCursada> estados = service.findByNombreIgnoreCase(nombre);
+        ApiResponseSuccessDto<List<EstadoCursada>> response = new ApiResponseSuccessDto<>(
+            true,
+            "Estados encontrados con nombre: " + nombre,
+            estados
+        );
+        return estados.isEmpty()
+            ? ResponseEntity.noContent().build()
+            : ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/contar")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> contarPorDescripcion(@RequestParam String descripcion) {
+        long count = service.countByDescripcionIgnoreCase(descripcion);
+        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>(
+            true,
+            "Cantidad de estados con descripción: " + descripcion,
+            count
+        );
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping
-    public ResponseEntity<EstadoCursada> create(@RequestBody EstadoCursadaRequestDto dto) throws Exception {
-        EstadoCursada estadoCursada = service.fromDto(dto);
-        return ResponseEntity.ok(service.create(estadoCursada));
+    public ResponseEntity<ApiResponseSuccessDto<EstadoCursada>> create(
+            @Valid @RequestBody EstadoCursadaRequestDto dto) throws Exception {
+
+        EstadoCursada estadoCursada = service.create(service.fromDto(dto));
+
+        ApiResponseSuccessDto<EstadoCursada> response = new ApiResponseSuccessDto<EstadoCursada>(
+            true,
+            "Estado de cursada creado exitosamente",
+            estadoCursada
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EstadoCursada> update(@RequestBody EstadoCursadaRequestDto dto, @PathVariable Long id) throws Exception {
+    public ResponseEntity<EstadoCursada> update(@RequestBody EstadoCursadaRequestDto dto, @Valid @PathVariable Long id) throws Exception {
         EstadoCursada existente = service.findById(id);
         if (existente == null) {
             return ResponseEntity.badRequest().build();

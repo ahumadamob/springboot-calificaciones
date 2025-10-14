@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.SedeRequestDto;
 import com.imb2025.calificaciones.entity.Sede;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.SedeRepository;
 import com.imb2025.calificaciones.service.ISedeService;
 
@@ -22,7 +23,13 @@ public class SedeServiceImpl implements ISedeService {
 
     @Override
     public Sede findById(Long id) {
-        return repo.findById(id).orElse(null);
+        return repo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Entidad no encontrada con id " + id));
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return repo.existsById(id);
     }
 
     @Override
@@ -32,12 +39,11 @@ public class SedeServiceImpl implements ISedeService {
 
     @Override
     public Sede update(Sede sede, Long id) throws Exception {
-        if (repo.existsById(id)) {
-            sede.setId(id);
-            return repo.save(sede);
-        } else {
+        if (!repo.existsById(id)) {
             throw new Exception("Sede con ID " + id + " no encontrada.");
         }
+        sede.setId(id);
+        return repo.save(sede);
     }
 
     @Override
@@ -57,5 +63,15 @@ public class SedeServiceImpl implements ISedeService {
         sede.setNombre(dto.getNombre());
         sede.setDireccion(dto.getDireccion());
         return sede;
+    }
+
+    @Override
+    public Sede createFromDto(SedeRequestDto dto) throws Exception {
+        try {
+            Sede sede = fromDto(dto);
+            return create(sede);
+        } catch (Exception ex) {
+            throw new Exception("Error creando Sede desde DTO: " + ex.getMessage(), ex);
+        }
     }
 }
