@@ -52,6 +52,26 @@ public class EstadoEvaluacionController {
         return ResponseEntity.ok(response);
     }
 
+        @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<ApiResponseSuccessDto<List<EstadoEvaluacion>>> getByNombre(@PathVariable String nombre) {
+        List<EstadoEvaluacion> estados = service.findByNombre(nombre);
+        ApiResponseSuccessDto<List<EstadoEvaluacion>> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(estados);
+        response.setMessage(estados.isEmpty() ? "No hay registros con ese nombre" : "Lista de estados encontrada exitosamente");
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/count/descripcion/{descripcion}")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> getCountByDescripcion(@PathVariable String descripcion) {
+        long count = service.countByDescripcion(descripcion);
+        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(count);
+        response.setMessage("Conteo de estados por descripción exitoso");
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping
     public ResponseEntity<ApiResponseSuccessDto<EstadoEvaluacion>> create(@Valid @RequestBody EstadoEvaluacionRequestDto estadoEvaluacion) throws Exception {
         EstadoEvaluacion creado = service.create(service.fromDto(estadoEvaluacion));
