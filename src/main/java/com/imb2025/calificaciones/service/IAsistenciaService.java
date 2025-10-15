@@ -19,4 +19,8 @@ public interface IAsistenciaService {
     public void deleteById(Long id) throws Exception;
 
     public Asistencia fromDto(AsistenciaRequestDto dto) throws Exception;
+
+    long countByPresente(boolean presente);
+
+    List<Asistencia> findByAlumnoNombreIgnoreCase(String nombre);
 }

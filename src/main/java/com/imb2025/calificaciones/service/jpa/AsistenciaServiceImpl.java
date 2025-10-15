@@ -108,4 +108,14 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
     public boolean existsById(Long id) {
         return asistenciaRepository.existsById(id);
     }
+
+    @Override
+    public long countByPresente(boolean presente) {
+        return asistenciaRepository.countByPresente(presente);
+    }
+
+    @Override
+    public List<Asistencia> findByAlumnoNombreIgnoreCase(String nombre) {
+        return asistenciaRepository.findByAlumno_NombreIgnoreCase(nombre);
+    }
 }
