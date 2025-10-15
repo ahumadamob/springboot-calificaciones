@@ -74,4 +74,14 @@ public class SedeServiceImpl implements ISedeService {
             throw new Exception("Error creando Sede desde DTO: " + ex.getMessage(), ex);
         }
     }
+
+    @Override
+    public List<Sede> findByNombreIgnoreCase(String nombre) {
+        return repo.findByNombreIgnoreCase(nombre);
+    }
+
+    @Override
+    public long countByDireccionIgnoreCase(String direccion) {
+        return repo.countByDireccionIgnoreCase(direccion);
+    }
 }
