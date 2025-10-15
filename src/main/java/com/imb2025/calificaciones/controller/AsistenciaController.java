@@ -63,7 +63,7 @@ public class AsistenciaController {
 
     // PUT - actualizar asistencia existente
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<Asistencia>> update(@PathVariable Long id, @RequestBody AsistenciaRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<Asistencia>> update(@PathVariable Long id, @RequestBody @Valid AsistenciaRequestDto dto) throws Exception {
         if (!asistenciaService.existsById(id)) {
             return ResponseEntity.badRequest().build();
         }
