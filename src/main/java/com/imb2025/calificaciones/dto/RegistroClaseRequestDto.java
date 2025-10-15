@@ -21,7 +21,8 @@ public class RegistroClaseRequestDto {
     @Positive(message = "El comisionId debe ser un número positivo")
     private Long comisionId;
 
-    // Getters y Setters
+    // --- Getters y Setters ---
+
     public LocalDate getFecha() {
         return fecha;
     }

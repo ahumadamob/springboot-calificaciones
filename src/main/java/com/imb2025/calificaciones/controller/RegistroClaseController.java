@@ -52,7 +52,7 @@ public class RegistroClaseController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody RegistroClaseRequestDto dto) {
+    public ResponseEntity<?> create(@Valid @RequestBody RegistroClaseRequestDto dto) throws Exception {
         RegistroClase registro = iregistroClase.fromDto(dto);
         RegistroClase creado = iregistroClase.create(registro);
         ApiResponseSuccessDto<RegistroClase> resp =
@@ -61,7 +61,7 @@ public class RegistroClaseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody RegistroClaseRequestDto dto) {
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody RegistroClaseRequestDto dto) throws Exception {
         RegistroClase registro = iregistroClase.fromDto(dto);
         RegistroClase actualizado = iregistroClase.update(registro, id);
         ApiResponseSuccessDto<RegistroClase> resp =
@@ -70,7 +70,7 @@ public class RegistroClaseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) throws Exception {
         iregistroClase.deleteById(id);
         ApiResponseSuccessDto<Void> resp =
                 new ApiResponseSuccessDto<>(true, "Registro eliminado con éxito", null);
