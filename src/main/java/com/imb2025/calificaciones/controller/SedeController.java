@@ -19,6 +19,7 @@ import com.imb2025.calificaciones.service.ISedeService;
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.SedeRequestDto;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
+import jakarta.validation.Valid;
 
 @RestController
 public class SedeController {
@@ -47,7 +48,7 @@ public class SedeController {
     }
 
     @PostMapping("/api/sede")
-    public ResponseEntity<ApiResponseSuccessDto<Sede>> createSede(@org.springframework.validation.annotation.Validated @RequestBody SedeRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<Sede>> createSede(@Valid @RequestBody SedeRequestDto dto) throws Exception {
         Sede creado = sedeService.createFromDto(dto);
         ApiResponseSuccessDto<Sede> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
@@ -57,7 +58,7 @@ public class SedeController {
     }
 
     @PutMapping("/api/sede/{idSede}")
-    public ResponseEntity<ApiResponseSuccessDto<Sede>> updateSede(@PathVariable("idSede") Long id, @RequestBody Sede sede) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<Sede>> updateSede(@PathVariable("idSede") Long id, @Valid @RequestBody Sede sede) throws Exception {
         if (!sedeService.existsById(id)) {
             throw new Exception("Sede con ID " + id + " no encontrada.");
         }
