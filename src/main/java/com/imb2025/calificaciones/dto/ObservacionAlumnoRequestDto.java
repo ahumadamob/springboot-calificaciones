@@ -2,11 +2,19 @@ package com.imb2025.calificaciones.dto;
 
 import java.util.Date;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+
 public class ObservacionAlumnoRequestDto {
 
+	@NotNull
     private Long alumnoId;
+	@NotNull
     private Long docenteId;
+	@NotBlank
     private String texto;
+	@PastOrPresent
     private Date fecha;
 
     public Long getAlumnoId() {

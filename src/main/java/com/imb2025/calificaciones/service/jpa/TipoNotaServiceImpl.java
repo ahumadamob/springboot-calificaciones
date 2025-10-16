@@ -62,4 +62,16 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
         tipoNota.setDescripcion(dto.getDescripcion());
         return tipoNota;
     }
+
+	@Override
+	public List<TipoNota> findAllOrder() {
+		
+		return tipoNotaRepository.findByOrderByNombreAscDescripcion();
+	}
+	@Override
+	public long countByNombre(String nombre) {
+		
+		return tipoNotaRepository.countByNombre(nombre);
+	}
+
 }

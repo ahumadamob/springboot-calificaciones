@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import com.imb2025.calificaciones.dto.TipoNotaRequestDto;
 import com.imb2025.calificaciones.entity.TipoNota;
 import com.imb2025.calificaciones.service.ITipoNotaService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,6 +41,29 @@ public class TipoNotaController {
         );
         return ResponseEntity.ok(resp);
     }
+    
+    @GetMapping("/ordenado")
+    public ResponseEntity<ApiResponseSuccessDto<List<TipoNota>>> getAllNotaOrder() {
+        List<TipoNota> lista = tipoNotaService.findAllOrder();
+        ApiResponseSuccessDto<List<TipoNota>> resp = new ApiResponseSuccessDto<>(
+                true,
+                "Listado de los nombres de las notas",
+                lista
+        );
+        return ResponseEntity.ok(resp);
+    }
+    
+    @GetMapping("/cantidad/{nombre}")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countByNombre(@PathVariable String nombre) {
+        long cantidad= tipoNotaService.countByNombre(nombre);
+        ApiResponseSuccessDto<Long> resp = new ApiResponseSuccessDto<>(
+                true,
+                "Cantidad de TipoNota con nombre: " +nombre,
+                cantidad
+        );
+        return ResponseEntity.ok(resp);
+    }
+    
 
     // GET /tiponota/{id} - buscar por id
     @GetMapping("/{id}")
@@ -54,20 +80,28 @@ public class TipoNotaController {
 
     // POST /tiponota - crear nuevo
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<TipoNota>> create(@RequestBody TipoNota tipoNota) {
-        TipoNota created = tipoNotaService.create(tipoNota);
-        ApiResponseSuccessDto<TipoNota> resp = new ApiResponseSuccessDto<>(
+    public ResponseEntity<ApiResponseSuccessDto<TipoNota>> create(
+            @Valid @RequestBody TipoNotaRequestDto tipoNotaDto) {
+        
+        TipoNota entity = tipoNotaService.fromDto(tipoNotaDto);//Convierto el dto
+        
+        TipoNota created = tipoNotaService.create(entity);
+
+        
+        ApiResponseSuccessDto<TipoNota> resp = new ApiResponseSuccessDto<>(  // preparar la respuesta
                 true,
                 "TipoNota creada correctamente",
                 created
         );
-        return ResponseEntity.status(HttpStatus.CREATED).body(resp);//usamos el httpsStatus devuelve un 201 Created
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     // PUT /tiponota/{id} - actualizar existente
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<TipoNota>> update(@PathVariable Long id, @RequestBody TipoNota tipoNota) {
-        TipoNota updated = tipoNotaService.update(tipoNota, id);
+    public ResponseEntity<ApiResponseSuccessDto<TipoNota>> update(@PathVariable Long id, @Valid @RequestBody TipoNotaRequestDto tipoNotaDto) {
+        TipoNota entity = tipoNotaService.fromDto(tipoNotaDto);
+    	TipoNota updated = tipoNotaService.update(entity, id); 
         ApiResponseSuccessDto<TipoNota> resp = new ApiResponseSuccessDto<>(
                 true,
                 "TipoNota actualizada correctamente",

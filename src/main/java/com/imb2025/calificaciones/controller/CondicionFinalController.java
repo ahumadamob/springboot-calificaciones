@@ -1,97 +1,85 @@
 package com.imb2025.calificaciones.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.CondicionFinalRequestDto;
 import com.imb2025.calificaciones.entity.CondicionFinal;
 import com.imb2025.calificaciones.service.ICondicionFinalService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/condicionFinal")
+@RequestMapping("/api/condicion-final")
 public class CondicionFinalController {
 
     @Autowired
     private ICondicionFinalService service;
 
     @GetMapping
-    public ResponseEntity<ApiResponseSuccessDto<List<CondicionFinal>>> getAll() {
+    public ResponseEntity<List<CondicionFinal>> getAll() {
         List<CondicionFinal> condiciones = service.findAll();
-
-        if (condiciones.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        ApiResponseSuccessDto<List<CondicionFinal>> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setMessage("Condiciones finales encontradas con éxito");
-        response.setData(condiciones);
-
-        return ResponseEntity.ok(response);
+        return condiciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(condiciones);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<CondicionFinal>> getById(@PathVariable Long id) {
+    public ResponseEntity<CondicionFinal> getById(@PathVariable Long id) {
         CondicionFinal condicion = service.findById(id);
-
-        if (condicion == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        ApiResponseSuccessDto<CondicionFinal> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setMessage("Condición final encontrada con éxito");
-        response.setData(condicion);
-
-        return ResponseEntity.ok(response);
+        return condicion == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(condicion);
     }
 
-    @PostMapping("/crear")
-    public ResponseEntity<ApiResponseSuccessDto<CondicionFinal>> create(@RequestBody CondicionFinalRequestDto dto) throws Exception {
+    @PostMapping
+    public ResponseEntity<CondicionFinal> create(@RequestBody CondicionFinalRequestDto dto) throws Exception {
         CondicionFinal condicion = service.fromDto(dto);
-        condicion = service.create(condicion);
-
-        ApiResponseSuccessDto<CondicionFinal> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setMessage("Condición final creada con éxito");
-        response.setData(condicion);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.ok(service.create(condicion));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<CondicionFinal>> update(@PathVariable Long id, @RequestBody CondicionFinalRequestDto dto) throws Exception {
+    public ResponseEntity<CondicionFinal> update(@PathVariable Long id, @RequestBody CondicionFinalRequestDto dto) throws Exception {
         CondicionFinal existente = service.findById(id);
         if (existente == null) {
             return ResponseEntity.badRequest().build();
         }
-
         CondicionFinal condicion = service.fromDto(dto);
-        condicion = service.update(condicion, id);
-
-        ApiResponseSuccessDto<CondicionFinal> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setMessage("Condición final actualizada con éxito");
-        response.setData(condicion);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(service.update(condicion, id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<Void>> delete(@PathVariable Long id) throws Exception {
-        service.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            service.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
-        ApiResponseSuccessDto<Void> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setMessage("La condición final con id " + id + " fue eliminada con éxito");
-        response.setData(null);
+    // endpoint: buscar por nombre
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<List<CondicionFinal>> getByNombre(@PathVariable String nombre) {
+        List<CondicionFinal> lista = service.findByNombre(nombre);
+        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(lista);
+    }
 
-        return ResponseEntity.ok(response);
+    // endpoint: contar por nombre
+    @GetMapping("/count/{nombre}")
+    public ResponseEntity<Long> countByNombre(@PathVariable String nombre) {
+        Long cantidad = service.countByNombre(nombre);
+        return ResponseEntity.ok(cantidad);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }
-

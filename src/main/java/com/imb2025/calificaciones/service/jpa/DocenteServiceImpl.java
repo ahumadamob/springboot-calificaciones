@@ -1,3 +1,4 @@
+
 package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;

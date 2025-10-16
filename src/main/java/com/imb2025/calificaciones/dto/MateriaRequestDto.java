@@ -1,10 +1,23 @@
 package com.imb2025.calificaciones.dto;
 
-public class MateriaRequestDto {
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
+public class MateriaRequestDto {
+	
+    @NotBlank(message="el nombre no puede estar vacio")
     private String nombre;
+    
+    @Size(min = 1, max = 4, message = "La materia debe tener entre 1 y 4 caracteres")
     private String codigo;
-    private String cargaHoraria;
+    
+    @Min(value = 1, message = "La carga horaria debe tener minimo 1 horas catedras")
+    @Max(value = 10, message = "La carga horaria debe tener como maximo 10 horas catedras")
+    private Integer cargaHoraria;
+    
+    @NotBlank(message="el nivel debe ser especificado")
     private String nivel;
 
     public MateriaRequestDto() {
@@ -26,11 +39,11 @@ public class MateriaRequestDto {
         this.codigo = codigo;
     }
 
-    public String getCargaHoraria() {
+    public Integer getCargaHoraria() {
         return cargaHoraria;
     }
 
-    public void setCargaHoraria(String cargaHoraria) {
+    public void setCargaHoraria(Integer cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
 

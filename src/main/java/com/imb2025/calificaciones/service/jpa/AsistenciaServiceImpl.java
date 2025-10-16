@@ -4,6 +4,7 @@ import com.imb2025.calificaciones.dto.AsistenciaRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.Asistencia;
 import com.imb2025.calificaciones.entity.RegistroClase;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.repository.AsistenciaRepository;
 import com.imb2025.calificaciones.repository.RegistroClaseRepository;
@@ -33,81 +34,55 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
 
     @Override
     public Asistencia findById(Long id) {
-        return asistenciaRepository.findById(id).orElse(null);
+        return asistenciaRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Asistencia no encontrada con id " + id));
     }
 
     @Override
     public Asistencia create(AsistenciaRequestDto dto) throws Exception {
-        try {
-            Asistencia asistencia = new Asistencia();
-            if(dto.getAlumnoId() != null) {
-                Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
-                    .orElse(null);
-                if(alumno == null) {
-                    throw new RuntimeException("Alumno no encontrado");
-                }
-                asistencia.setAlumno(alumno);
-            }
-
-            System.out.println("Despues de alumno");
-            if(dto.getRegistroClaseId() != null) {
-                RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
-                    .orElse(null);
-                if(registro == null) {
-                    throw new RuntimeException("Registro no encontrado");
-                }
-                asistencia.setRegistroClase(registro);
-            }
-            asistencia.setPresente(dto.getPresente());
-
-            return asistenciaRepository.save(asistencia);
-            }
-            catch (Exception e) {
-            throw new Exception("Error al guardar la asistencia: " + e.getMessage());
+        Asistencia asistencia = new Asistencia();
+        if(dto.getAlumnoId() != null) {
+            Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
+                .orElseThrow(() -> new ResourceNotFoundException("Alumno no encontrado con ID: " + dto.getAlumnoId()));
+            asistencia.setAlumno(alumno);
         }
+
+        if(dto.getRegistroClaseId() != null) {
+            RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
+                .orElseThrow(() -> new ResourceNotFoundException("Registro de clase no encontrado con ID: " + dto.getRegistroClaseId()));
+            asistencia.setRegistroClase(registro);
+        }
+        asistencia.setPresente(dto.getPresente());
+
+        return asistenciaRepository.save(asistencia);
     }
 
     @Override
     public Asistencia update(AsistenciaRequestDto dto, Long id) throws Exception {
-        Optional<Asistencia> asistenciaOpt = asistenciaRepository.findById(id);
+        Asistencia asistencia = asistenciaRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("No se encontró la asistencia con ID: " + id));
 
-        if (asistenciaOpt.isEmpty()) {
-            throw new Exception("No se encontró la asistencia con ID: " + id);
+        if(dto.getAlumnoId() != null) {
+            Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
+                .orElseThrow(() -> new ResourceNotFoundException("Alumno no encontrado con ID: " + dto.getAlumnoId()));
+            asistencia.setAlumno(alumno);
         }
 
-        try {
-            Asistencia asistencia = asistenciaOpt.get();
-            if(dto.getAlumnoId() != null) {
-                Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
-                    .orElse(null);
-                if(alumno == null) {
-                    throw new RuntimeException("Alumno no encontrado");
-                }
-                asistencia.setAlumno(alumno);
-            }
-
-            System.out.println("Despues de alumno");
-            if(dto.getRegistroClaseId() != null) {
-                RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
-                    .orElse(null);
-                if(registro == null) {
-                    throw new RuntimeException("Registro no encontrado");
-                }
-                asistencia.setRegistroClase(registro);
-            }
-
-            asistencia.setPresente(dto.getPresente());
-
-            return asistenciaRepository.save(asistencia);
-        } catch (Exception e) {
-            throw new Exception("Error al actualizar la asistencia: " + e.getMessage());
+        if(dto.getRegistroClaseId() != null) {
+            RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
+                .orElseThrow(() -> new ResourceNotFoundException("Registro de clase no encontrado con ID: " + dto.getRegistroClaseId()));
+            asistencia.setRegistroClase(registro);
         }
+
+        asistencia.setPresente(dto.getPresente());
+
+        return asistenciaRepository.save(asistencia);
     }
 
     @Override
     public void deleteById(Long id) throws Exception {
         if (!asistenciaRepository.existsById(id)) {
-            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+            throw new ResourceNotFoundException("No se puede eliminar el id: " + id + " porque no existe");
         }
         asistenciaRepository.deleteById(id);
     }
@@ -127,5 +102,10 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
         }
         asistencia.setPresente(dto.getPresente());
         return asistencia;
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return asistenciaRepository.existsById(id);
     }
 }
