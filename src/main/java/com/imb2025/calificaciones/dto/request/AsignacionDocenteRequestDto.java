@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.dto;
+package com.imb2025.calificaciones.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
