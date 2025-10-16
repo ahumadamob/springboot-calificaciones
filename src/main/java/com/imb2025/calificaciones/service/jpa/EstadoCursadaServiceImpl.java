@@ -1,7 +1,7 @@
 package com.imb2025.calificaciones.service.jpa;
 
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
-import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
+import com.imb2025.calificaciones.dto.request.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.repository.EstadoCursadaRepository;
 import com.imb2025.calificaciones.service.IEstadoCursadaService;
@@ -53,13 +53,6 @@ public class EstadoCursadaServiceImpl implements IEstadoCursadaService {
         repository.deleteById(id);
     }
 
-    @Override
-    public EstadoCursada fromDto(EstadoCursadaRequestDto estadoCursadaRequestDto) throws Exception {
-        EstadoCursada estadoCursada = new EstadoCursada();
-        estadoCursada.setNombre(estadoCursadaRequestDto.getNombre());
-        estadoCursada.setDescripcion(estadoCursadaRequestDto.getDescripcion());
-        return estadoCursada;
-    }
 
     @Override
     public List<EstadoCursada> findByNombreIgnoreCase(String nombre) {

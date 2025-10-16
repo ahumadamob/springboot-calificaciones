@@ -2,6 +2,10 @@ package com.imb2025.calificaciones.controller;
 
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import com.imb2025.calificaciones.dto.mapper.EstadoCursadaMapper;
+import com.imb2025.calificaciones.dto.request.EstadoCursadaRequestDto;
+import com.imb2025.calificaciones.dto.response.EstadoCursadaResponseDto;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.service.IEstadoCursadaService;
 
@@ -24,6 +27,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,9 +39,18 @@ public class EstadoCursadaController {
 
 
     @GetMapping
-    public ResponseEntity<List<EstadoCursada>> getAll() {
+    public ResponseEntity<ApiResponseSuccessDto<List<EstadoCursadaResponseDto>>> getAll() {
         List<EstadoCursada> estados = service.findAll();
-        return estados.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(estados);
+        List<EstadoCursadaResponseDto> estadoCursadaDtoList= new ArrayList<EstadoCursadaResponseDto>();
+        EstadoCursadaMapper mapper = new EstadoCursadaMapper();
+        for(EstadoCursada n : estados) {
+        	estadoCursadaDtoList.add(mapper.toResponseDto(n));
+        }
+        ApiResponseSuccessDto<List<EstadoCursadaResponseDto>> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(estadoCursadaDtoList);
+        response.setMessage("Listado de Estados de Cursada");
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
@@ -77,8 +90,8 @@ public class EstadoCursadaController {
     @PostMapping
     public ResponseEntity<ApiResponseSuccessDto<EstadoCursada>> create(
             @Valid @RequestBody EstadoCursadaRequestDto dto) throws Exception {
-
-        EstadoCursada estadoCursada = service.create(service.fromDto(dto));
+    	EstadoCursadaMapper mapper = new EstadoCursadaMapper();
+        EstadoCursada estadoCursada = service.create(mapper.fromDto(dto));
 
         ApiResponseSuccessDto<EstadoCursada> response = new ApiResponseSuccessDto<EstadoCursada>(
             true,
@@ -91,11 +104,12 @@ public class EstadoCursadaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<EstadoCursada> update(@RequestBody EstadoCursadaRequestDto dto, @Valid @PathVariable Long id) throws Exception {
-        EstadoCursada existente = service.findById(id);
+        EstadoCursadaMapper mapper = new EstadoCursadaMapper();
+    	EstadoCursada existente = service.findById(id);
         if (existente == null) {
             return ResponseEntity.badRequest().build();
         }
-        EstadoCursada estadoCursada = service.fromDto(dto);
+        EstadoCursada estadoCursada = mapper.fromDto(dto);
         return ResponseEntity.ok(service.update(estadoCursada, id));
     }
 
