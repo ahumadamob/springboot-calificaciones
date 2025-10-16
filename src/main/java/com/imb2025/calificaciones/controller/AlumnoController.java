@@ -68,16 +68,22 @@ public class AlumnoController {
         );
         return ResponseEntity.ok(response);
     }
- // GET http://localhost:8080/alumno/contar?email=pepe@gmail.com
-
-    @GetMapping("/contar")
-    public ResponseEntity<ApiResponseSuccessDto<Long>> contarPorEmail(@RequestParam String email) {
-        long count = alumnoService.countByEmail(email);
-        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>(
-                true,
-                "Cantidad de alumnos con email: " + email,
-                count);
-        return ResponseEntity.ok(response);
+    
+    @GetMapping("/contar/{email}")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> contarPorEmail(@PathVariable String email) {
+    // La lógica de servicio es la misma
+    long count = alumnoService.countByEmail(email);
+    
+    // Preparación de la respuesta
+    String message = String.format("Se encontraron %d alumnos con el email: %s", count, email);
+    
+    ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>(
+            true,
+            message,
+            count
+    );
+    
+    return ResponseEntity.ok(response);
     }
 
     @ExceptionHandler(Exception.class)
