@@ -1,15 +1,12 @@
-package com.imb2025.calificaciones.entity;
+package com.imb2025.calificaciones.dto.request;
 
-import jakarta.persistence.Entity;
-
-@Entity
-public class CondicionFinal extends BaseEntity {
+public class CondicionFinalRequestDto {
 
     private String nombre;
 
-    public CondicionFinal() {}
+    public CondicionFinalRequestDto() {}
 
-    public CondicionFinal(String nombre) {
+    public CondicionFinalRequestDto(String nombre) {
         this.nombre = nombre;
     }
 
