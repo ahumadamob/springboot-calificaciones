@@ -20,4 +20,8 @@ public interface IEstadoEvaluacionService {
     public void deleteById(Long id) throws Exception;
 
     public EstadoEvaluacion fromDto(EstadoEvaluacionRequestDto dto) throws Exception;
+
+    public List<EstadoEvaluacion> findByNombre(String nombre);
+
+    public long countByDescripcion(String descripcion);
 }
