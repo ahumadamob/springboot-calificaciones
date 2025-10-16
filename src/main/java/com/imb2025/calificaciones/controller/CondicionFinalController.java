@@ -1,23 +1,16 @@
 package com.imb2025.calificaciones.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import com.imb2025.calificaciones.dto.CondicionFinalRequestDto;
+import com.imb2025.calificaciones.dto.request.CondicionFinalRequestDto;
+import com.imb2025.calificaciones.dto.response.CondicionFinalResponseDto;
+import com.imb2025.calificaciones.dto.mapper.CondicionFinalMapper;
 import com.imb2025.calificaciones.entity.CondicionFinal;
 import com.imb2025.calificaciones.service.ICondicionFinalService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/condicion-final")
@@ -26,32 +19,43 @@ public class CondicionFinalController {
     @Autowired
     private ICondicionFinalService service;
 
+    @Autowired
+    private CondicionFinalMapper mapper;
+
     @GetMapping
-    public ResponseEntity<List<CondicionFinal>> getAll() {
+    public ResponseEntity<List<CondicionFinalResponseDto>> getAll() {
         List<CondicionFinal> condiciones = service.findAll();
-        return condiciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(condiciones);
+        if (condiciones.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        List<CondicionFinalResponseDto> respuesta = condiciones.stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(respuesta);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CondicionFinal> getById(@PathVariable Long id) {
+    public ResponseEntity<CondicionFinalResponseDto> getById(@PathVariable Long id) {
         CondicionFinal condicion = service.findById(id);
-        return condicion == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(condicion);
+        return condicion == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(mapper.toResponse(condicion));
     }
 
     @PostMapping
-    public ResponseEntity<CondicionFinal> create(@RequestBody CondicionFinalRequestDto dto) throws Exception {
-        CondicionFinal condicion = service.fromDto(dto);
-        return ResponseEntity.ok(service.create(condicion));
+    public ResponseEntity<CondicionFinalResponseDto> create(@RequestBody CondicionFinalRequestDto dto) {
+        CondicionFinal condicion = mapper.fromDto(dto);
+        CondicionFinal guardada = service.create(condicion);
+        return ResponseEntity.ok(mapper.toResponse(guardada));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CondicionFinal> update(@PathVariable Long id, @RequestBody CondicionFinalRequestDto dto) throws Exception {
+    public ResponseEntity<CondicionFinalResponseDto> update(@PathVariable Long id, @RequestBody CondicionFinalRequestDto dto) throws Exception {
         CondicionFinal existente = service.findById(id);
         if (existente == null) {
             return ResponseEntity.badRequest().build();
         }
-        CondicionFinal condicion = service.fromDto(dto);
-        return ResponseEntity.ok(service.update(condicion, id));
+        CondicionFinal condicion = mapper.fromDto(dto);
+        CondicionFinal actualizada = service.update(condicion, id);
+        return ResponseEntity.ok(mapper.toResponse(actualizada));
     }
 
     @DeleteMapping("/{id}")
@@ -64,14 +68,18 @@ public class CondicionFinalController {
         }
     }
 
-    // endpoint: buscar por nombre
     @GetMapping("/nombre/{nombre}")
-    public ResponseEntity<List<CondicionFinal>> getByNombre(@PathVariable String nombre) {
+    public ResponseEntity<List<CondicionFinalResponseDto>> getByNombre(@PathVariable String nombre) {
         List<CondicionFinal> lista = service.findByNombre(nombre);
-        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(lista);
+        if (lista.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        List<CondicionFinalResponseDto> respuesta = lista.stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(respuesta);
     }
 
-    // endpoint: contar por nombre
     @GetMapping("/count/{nombre}")
     public ResponseEntity<Long> countByNombre(@PathVariable String nombre) {
         Long cantidad = service.countByNombre(nombre);
@@ -83,3 +91,4 @@ public class CondicionFinalController {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }
+

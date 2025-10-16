@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Version;
 
 @Entity
 public class CondicionFinal {
@@ -14,8 +15,10 @@ public class CondicionFinal {
 
     private String nombre;
 
-    public CondicionFinal() {
-    }
+    @Version
+    private Long version; // ✅ este campo faltaba
+
+    public CondicionFinal() {}
 
     public CondicionFinal(Long id, String nombre) {
         this.id = id;
@@ -40,5 +43,13 @@ public class CondicionFinal {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }
