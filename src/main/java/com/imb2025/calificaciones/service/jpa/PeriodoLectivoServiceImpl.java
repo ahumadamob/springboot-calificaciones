@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDto;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.PeriodoLectivoRepository;
@@ -54,17 +53,6 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
             throw new ResourceNotFoundException("Entidad no encontrada con id " + id);
         }
         repository.deleteById(id);
-    }
-
-    @Override
-    public PeriodoLectivo fromDto(PeriodoLectivoRequestDto requestDTO) {
-        PeriodoLectivo periodoLectivo = new PeriodoLectivo();
-
-        periodoLectivo.setNombre(requestDTO.getNombre());
-        periodoLectivo.setFechaInicio(requestDTO.getFechaInicio());
-        periodoLectivo.setFechaFin(requestDTO.getFechaFin());
-
-        return periodoLectivo;
     }
 
 	@Override

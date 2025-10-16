@@ -22,6 +22,8 @@ import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDto;
 import com.imb2025.calificaciones.entity.InscripcionMateria;
 import com.imb2025.calificaciones.service.IInscripcionMateriaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("api/v1/inscripcion-materia")
 public class InscripcionMateriaController {
@@ -54,7 +56,7 @@ public class InscripcionMateriaController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<InscripcionMateria>> create(@RequestBody InscripcionMateriaRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<InscripcionMateria>> create(@Valid @RequestBody InscripcionMateriaRequestDto dto) throws Exception {
             InscripcionMateria inscripcionMateria = inscripcionMateriaService.create(inscripcionMateriaService.fromDto(dto));
             ApiResponseSuccessDto<InscripcionMateria> response = new ApiResponseSuccessDto<InscripcionMateria>(true, "Incripcion creada con exito", inscripcionMateria);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -62,7 +64,7 @@ public class InscripcionMateriaController {
 
     @PutMapping("/{idInscripcionMateria}")
     public ResponseEntity<ApiResponseSuccessDto<InscripcionMateria>> update(
-            @PathVariable("idInscripcionMateria") Long id,
+            @PathVariable("idInscripcionMateria") Long id, @Valid
             @RequestBody InscripcionMateriaRequestDto dto) throws Exception {
 
             InscripcionMateria entity = inscripcionMateriaService.fromDto(dto);

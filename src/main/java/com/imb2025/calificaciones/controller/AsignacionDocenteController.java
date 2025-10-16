@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.dto.AsignacionDocenteRequestDto;
@@ -22,6 +23,7 @@ import com.imb2025.calificaciones.service.IAsignacionDocenteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -49,6 +51,25 @@ public class AsignacionDocenteController {
         resp.setData(asignacionDocente);
         resp.setMessage("Asignación docente obtenida exitosamente");
         return ResponseEntity.ok(resp);
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<ApiResponseSuccessDto<List<AsignacionDocente>>> getByDocenteId(
+            @RequestParam(required = true) Long docenteId) {
+        List<AsignacionDocente> asignaciones = service.findAllByDocenteId(docenteId);
+        ApiResponseSuccessDto<List<AsignacionDocente>> response = new ApiResponseSuccessDto<List<AsignacionDocente>>(true, "Asignaciones Docentes con el docenteId " + docenteId + " encontradas con éxito", asignaciones);
+        return asignaciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByMateriaIdAndComisionId(
+            @RequestParam Long materiaId,
+            @RequestParam Long comisionId) {
+        Long count = service.countByMateriaIdAndComisionId(materiaId, comisionId);
+        HashMap<String, Long> hash = new HashMap<String, Long>();
+        hash.put("cantidad", count);
+        ApiResponseSuccessDto<HashMap<String, Long>> response = new ApiResponseSuccessDto<HashMap<String, Long>>(true, "", hash);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
