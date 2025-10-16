@@ -16,4 +16,8 @@ public interface ITipoEvaluacionService {
 
     List<TipoEvaluacion> buscarNombre(String q);
     long contarNombre(String q);
+<<<<<<< HEAD
+=======
+    
+>>>>>>> f92b8fc (TP07: métodos mágicos)
 }
