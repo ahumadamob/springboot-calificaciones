@@ -19,4 +19,9 @@ public interface IComisionService {
     public Comision fromDto(ComisionRequestDto dto) throws Exception;
 
     public boolean existsById(Long id);
+
+    // Métodos
+    public List<Comision> findByNombreContainingIgnoreCase(String nombre);
+
+    public long countBySedeId(Long sedeId);
 }
