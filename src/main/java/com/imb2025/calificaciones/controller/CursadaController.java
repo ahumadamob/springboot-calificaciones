@@ -52,6 +52,30 @@ public class CursadaController {
 
         return ResponseEntity.ok(resp);
     }
+    
+    @GetMapping("/alumno/{nombre}")
+    public ResponseEntity<ApiResponseSuccessDto<List<Cursada>>> getCursadasByAlumno(@PathVariable String nombre) {
+        List<Cursada> data = cursadaService.findByNombreAlumno(nombre);
+
+        ApiResponseSuccessDto<List<Cursada>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(data);
+        resp.setMessage("Listado de cursadas del alumno: " + nombre);
+
+        return ResponseEntity.ok(resp);
+    }
+    
+    @GetMapping("/materia/{nombreMateria}/count")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countCursadasByMateria(@PathVariable String nombreMateria) {
+        Long cantidad = cursadaService.countByNombreMateria(nombreMateria);
+
+        ApiResponseSuccessDto<Long> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(cantidad);
+        resp.setMessage("Cantidad de cursadas de la materia: " + nombreMateria);
+
+        return ResponseEntity.ok(resp);
+    }
 
     @PostMapping
     public ResponseEntity<ApiResponseSuccessDto<Cursada>> createCursada(@Valid @RequestBody CursadaRequestDto dto) throws Exception {
