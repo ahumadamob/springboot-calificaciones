@@ -88,5 +88,15 @@ public class AsistenciaController {
         resp.setMessage("Asistencia eliminada correctamente");
         return ResponseEntity.ok(resp);
     }
+
+    @GetMapping("/count/presentes")
+    public long countPresentes(@RequestParam boolean presente) {
+        return asistenciaService.countByPresente(presente);
+    }
+
+    @GetMapping("/by-nombre")
+    public List<Asistencia> findByNombre(@RequestParam String nombre) {
+        return asistenciaService.findByAlumnoNombreIgnoreCase(nombre);
+    }
 }
 
