@@ -3,8 +3,6 @@ package com.imb2025.calificaciones.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +17,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.CarreraRequestDto;
 import com.imb2025.calificaciones.entity.Carrera;
 import com.imb2025.calificaciones.service.ICarreraService;
@@ -39,15 +38,28 @@ public class CarreraController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Carrera> getById(@PathVariable Long id) {
-        Carrera carrera = carreraService.findById(id);
-        return carrera == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(carrera);
-    }
 
+    public ResponseEntity<ApiResponseSuccessDto<Carrera>> getById(@PathVariable  Long id) {
+    Carrera carrera = carreraService.findById(id);
+    ApiResponseSuccessDto<Carrera> response = new ApiResponseSuccessDto<>();
+    response.setSuccess(true);
+    response.setMessage("Carrera encontrada con éxito");
+    response.setData(carrera);
+
+    return ResponseEntity.ok(response);
+
+    }
     @PostMapping
-    public ResponseEntity<Carrera> create(@RequestBody @Valid CarreraRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<Carrera>> create(@RequestBody @Valid CarreraRequestDto dto) throws Exception {
         Carrera carrera = carreraService.fromDto(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(carreraService.create(carrera));
+        Carrera created = carreraService.create(carrera);
+
+        ApiResponseSuccessDto<Carrera> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setMessage("Carrera creada con éxito");
+        response.setData(created);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")

@@ -17,10 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDto;
+import com.imb2025.calificaciones.entity.Alumno;
+import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
 import com.imb2025.calificaciones.service.IObservacionAlumnoService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/observacionAlumno")
@@ -54,7 +57,8 @@ public class ObservacionAlumnoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ApiResponseSuccessDto<ObservacionAlumno>> create(@RequestBody ObservacionAlumnoRequestDto dto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<ApiResponseSuccessDto<ObservacionAlumno>> create(@Valid @RequestBody ObservacionAlumnoRequestDto dto, 
+			HttpServletRequest request) throws Exception {
 			
             ObservacionAlumno observacionAlumno = observacionAlumnoService.create(observacionAlumnoService.fromDto(dto));
 			
@@ -68,7 +72,7 @@ public class ObservacionAlumnoController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ApiResponseSuccessDto<ObservacionAlumno>> update(@RequestBody ObservacionAlumnoRequestDto dto, @PathVariable Long id, HttpServletRequest request) throws Exception {
+	public ResponseEntity<ApiResponseSuccessDto<ObservacionAlumno>> update(@Valid @RequestBody ObservacionAlumnoRequestDto dto, @PathVariable Long id, HttpServletRequest request) throws Exception {
 			
             ObservacionAlumno observacionAlumno = observacionAlumnoService.update(observacionAlumnoService.fromDto(dto), id);		
             ApiResponseSuccessDto<ObservacionAlumno> response = new ApiResponseSuccessDto<>();
@@ -91,5 +95,31 @@ public class ObservacionAlumnoController {
 			return ResponseEntity.ok(response);
 		
 	}
+	
+	@GetMapping("docenteId/{docente}")
+	public ResponseEntity<ApiResponseSuccessDto<List<ObservacionAlumno>>> findByDocenteId(@PathVariable Docente docente){
+		List<ObservacionAlumno> observacionByDocente = observacionAlumnoService.findByDocente(docente);
+		
+		ApiResponseSuccessDto<List<ObservacionAlumno>> response = new ApiResponseSuccessDto<>();
+		response.setSuccess(true);
+		response.setMessage("Observaciones obtenidas correctamente por ID de docente");
+		response.setData(observacionByDocente);
+		
+		return ResponseEntity.ok(response);
+	}
+	
+	@GetMapping("countByAlumno/{alumno}")
+	public ResponseEntity<?> countByAlumno(@PathVariable Alumno alumno){
+		Long count = observacionAlumnoService.countByAlumno(alumno);
+		
+		ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
+		response.setSuccess(true);
+		response.setMessage("Numero de observaciones obtenidas correctamente por ID de alumno");
+		response.setData(count);
+		
+		return ResponseEntity.ok(response);
+	}
+	
+	
 }
 	

@@ -20,6 +20,8 @@ import com.imb2025.calificaciones.dto.MateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.service.IMateriaService;
 
+import jakarta.validation.Valid;
+
 
 
 
@@ -35,6 +37,18 @@ public class MateriaController {
                 List<Materia> materias = materiaService.findAll();
                 return materias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(materias);
         }
+        
+        @GetMapping("/api/materia/ordenado")
+        public ResponseEntity<List<Materia>> getAllOrder(){
+                List<Materia> materias = materiaService.findAllOrder();
+                return materias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(materias);
+        }
+        
+        @GetMapping("/api/materia/nivel/{nombreNivel}")
+        public ResponseEntity<List<Materia>> getAllMateriaByNivelDomain(@PathVariable String nombreNivel){
+                List<Materia> materias = materiaService.findByNivelEndsWith(nombreNivel);
+                return materias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(materias);
+        }
 
         @GetMapping("/api/materia/{id}")
         public ResponseEntity<ApiResponseSuccessDto <Materia>> getMateriaById(@PathVariable Long id) {
@@ -46,17 +60,35 @@ public class MateriaController {
             
             return ResponseEntity.ok(response);
         }
+        
+        @GetMapping("/api/materia/codigo/{numeroCodigo}")
+        public ResponseEntity<ApiResponseSuccessDto <Materia>> getMateriaByCodigo(@PathVariable String numeroCodigo) {
+        	
+        	Materia materia = materiaService.findByCodigo(numeroCodigo);
+        	ApiResponseSuccessDto<Materia> response = new ApiResponseSuccessDto<>();
+        	response.setMessage("Materia encontrada con exito");
+        	response.setData(materia);
+            
+            return ResponseEntity.ok(response);
+        }
+        
+        @GetMapping("/api/materia/contador/{cargaHoraria}")
+        public ResponseEntity<Long> contarPorCargaHoraria(@PathVariable Integer cargaHoraria) {
+            long contador = materiaService.findByCargaHoraria(cargaHoraria);
+            return ResponseEntity.ok(contador);
+        
+        };
 
 
         @PostMapping("/api/materia")
-        public ResponseEntity<Materia> createMateria(@RequestBody MateriaRequestDto materiaRequestDto) throws Exception{
+        public ResponseEntity<Materia> createMateria(@Valid @RequestBody MateriaRequestDto materiaRequestDto) throws Exception{
                 Materia materia = materiaService.fromDto(materiaRequestDto);
                 return ResponseEntity.ok(materiaService.create(materia));
 
         }
 
         @PutMapping ("/api/materia/{id}")
-        public ResponseEntity<Materia> updateMateria(@RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id) throws Exception{
+        public ResponseEntity<Materia> updateMateria(@Valid @RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id) throws Exception{
                 Materia existente = materiaService.findById(id);
                 if(existente == null){
                     return ResponseEntity.badRequest().build();

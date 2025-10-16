@@ -12,13 +12,13 @@ public class Materia {
 	private Long id;
 	private String nombre;
         private String codigo;
-        private String cargaHoraria;
+        private Integer cargaHoraria;
         private String nivel;
 
         public Materia() {
         }
 
-        public Materia(Long id, String nombre, String codigo, String cargaHoraria, String nivel) {
+        public Materia(Long id, String nombre, String codigo, Integer cargaHoraria, String nivel) {
                 this.id = id;
                 this.nombre = nombre;
                 this.codigo = codigo;
@@ -26,7 +26,7 @@ public class Materia {
                 this.nivel = nivel;
         }
 
-        public Materia(String nombre, String codigo, String cargaHoraria, String nivel) {
+        public Materia(String nombre, String codigo, Integer cargaHoraria, String nivel) {
                 this.nombre = nombre;
                 this.codigo = codigo;
                 this.cargaHoraria = cargaHoraria;
@@ -58,10 +58,10 @@ public class Materia {
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
-	public String getCargaHoraria() {
+	public Integer getCargaHoraria() {
 		return cargaHoraria;
 	}
-	public void setCargaHoraria(String cargaHoraria) {
+	public void setCargaHoraria(Integer cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
 	}
 	public void setId(Long id) {

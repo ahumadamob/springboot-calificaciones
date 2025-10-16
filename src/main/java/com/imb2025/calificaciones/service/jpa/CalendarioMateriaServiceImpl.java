@@ -9,7 +9,9 @@ import com.imb2025.calificaciones.repository.ComisionRepository;
 import com.imb2025.calificaciones.repository.ICalendarioMateriaRepository;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.service.ICalendarioMateriaService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,6 +58,18 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService {
                 .orElseThrow(() -> new ResourceNotFoundException("Calendario materia no encontrado con id: " + id));
         calMatRepo.deleteById(id);
     }
+
+    @Override
+    public List<CalendarioMateria> findByMateriaId(Long materiaId) {
+        return calMatRepo.findByMateriaId(materiaId);
+    }
+
+    @Override
+    public Long countByComisionId(Long comisionId) {
+        return calMatRepo.countByComisionId(comisionId).orElseThrow(() -> new EntityNotFoundException("No hay calendarios" +
+                "materias para la comision: " + comisionId));
+    }
+
 
     @Override
     public CalendarioMateria fromDto(CalendarioMateriaRequestDto calMatDto) throws Exception {

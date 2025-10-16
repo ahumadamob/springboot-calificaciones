@@ -17,6 +17,10 @@ public interface IAlumnoService {
     public void deleteById(Long id) throws Exception;
 
     public boolean existsById(Long id);
+    
+    List<Alumno> findByApellido(String apellido);
+
+    long countByEmail(String email);
 
     public Alumno fromDto(AlumnoRequestDto dto) throws Exception;
 }
