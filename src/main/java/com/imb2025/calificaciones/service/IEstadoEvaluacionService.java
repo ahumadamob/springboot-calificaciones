@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.EstadoEvaluacionRequestDto;
 import com.imb2025.calificaciones.entity.EstadoEvaluacion;
 import java.util.List;
 
@@ -16,5 +15,7 @@ public interface IEstadoEvaluacionService {
 
     public void deleteById(Long id) throws Exception;
 
-    public EstadoEvaluacion fromDto(EstadoEvaluacionRequestDto dto) throws Exception;
+    public List<EstadoEvaluacion> findByNombre(String nombre);
+
+    public long countByDescripcion(String descripcion);
 }
