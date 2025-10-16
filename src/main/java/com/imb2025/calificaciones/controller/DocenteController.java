@@ -46,6 +46,30 @@ public class DocenteController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/apellido/{apellido}")
+    public ResponseEntity<ApiResponseSuccessDto<List<Docente>>> getDocentesByApellido(@PathVariable String apellido) {
+        List<Docente> docentes = docenteService.findByApellido(apellido);
+
+        ApiResponseSuccessDto<List<Docente>> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(docentes);
+        response.setMessage("Búsqueda de docentes por apellido realizada con éxito");
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/titulo/{titulo}/count")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countDocentesByTitulo(@PathVariable String titulo) {
+        long cantidad = docenteService.countByTitulo(titulo);
+
+        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(cantidad);
+        response.setMessage("Conteo de docentes por título realizado con éxito");
+
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping
     public ResponseEntity<ApiResponseSuccessDto<Docente>> crear(@Valid @RequestBody DocenteRequestDto dto)
             throws Exception {
