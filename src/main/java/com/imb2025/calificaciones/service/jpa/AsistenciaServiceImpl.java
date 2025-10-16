@@ -1,31 +1,19 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.AsistenciaRequestDto;
-import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.Asistencia;
-import com.imb2025.calificaciones.entity.RegistroClase;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
-import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.repository.AsistenciaRepository;
-import com.imb2025.calificaciones.repository.RegistroClaseRepository;
 import com.imb2025.calificaciones.service.IAsistenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AsistenciaServiceImpl implements IAsistenciaService {
 
     @Autowired
     private AsistenciaRepository asistenciaRepository;
-
-    @Autowired
-    private AlumnoRepository alumnoRepository;
-
-    @Autowired
-    private RegistroClaseRepository registroClaseRepository;
 
     @Override
     public List<Asistencia> findAll() {
@@ -39,43 +27,16 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
     }
 
     @Override
-    public Asistencia create(AsistenciaRequestDto dto) throws Exception {
-        Asistencia asistencia = new Asistencia();
-        if(dto.getAlumnoId() != null) {
-            Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
-                .orElseThrow(() -> new ResourceNotFoundException("Alumno no encontrado con ID: " + dto.getAlumnoId()));
-            asistencia.setAlumno(alumno);
-        }
-
-        if(dto.getRegistroClaseId() != null) {
-            RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
-                .orElseThrow(() -> new ResourceNotFoundException("Registro de clase no encontrado con ID: " + dto.getRegistroClaseId()));
-            asistencia.setRegistroClase(registro);
-        }
-        asistencia.setPresente(dto.getPresente());
-
+    public Asistencia create(Asistencia asistencia) {
         return asistenciaRepository.save(asistencia);
     }
 
     @Override
-    public Asistencia update(AsistenciaRequestDto dto, Long id) throws Exception {
-        Asistencia asistencia = asistenciaRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("No se encontró la asistencia con ID: " + id));
-
-        if(dto.getAlumnoId() != null) {
-            Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
-                .orElseThrow(() -> new ResourceNotFoundException("Alumno no encontrado con ID: " + dto.getAlumnoId()));
-            asistencia.setAlumno(alumno);
+    public Asistencia update(Asistencia asistencia, Long id) throws Exception {
+        if (!asistenciaRepository.existsById(id)) {
+            throw new ResourceNotFoundException("No se encontró la asistencia con ID: " + id);
         }
-
-        if(dto.getRegistroClaseId() != null) {
-            RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
-                .orElseThrow(() -> new ResourceNotFoundException("Registro de clase no encontrado con ID: " + dto.getRegistroClaseId()));
-            asistencia.setRegistroClase(registro);
-        }
-
-        asistencia.setPresente(dto.getPresente());
-
+        asistencia.setId(id);
         return asistenciaRepository.save(asistencia);
     }
 
@@ -85,23 +46,6 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
             throw new ResourceNotFoundException("No se puede eliminar el id: " + id + " porque no existe");
         }
         asistenciaRepository.deleteById(id);
-    }
-
-    @Override
-    public Asistencia fromDto(AsistenciaRequestDto dto) throws Exception {
-        Asistencia asistencia = new Asistencia();
-        if (dto.getAlumnoId() != null) {
-            Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
-                    .orElseThrow(() -> new Exception("Alumno no encontrado con ID: " + dto.getAlumnoId()));
-            asistencia.setAlumno(alumno);
-        }
-        if (dto.getRegistroClaseId() != null) {
-            RegistroClase registro = registroClaseRepository.findById(dto.getRegistroClaseId())
-                    .orElseThrow(() -> new Exception("Registro de clase no encontrado con ID: " + dto.getRegistroClaseId()));
-            asistencia.setRegistroClase(registro);
-        }
-        asistencia.setPresente(dto.getPresente());
-        return asistencia;
     }
 
     @Override
