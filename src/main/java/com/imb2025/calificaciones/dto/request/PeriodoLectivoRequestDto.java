@@ -1,11 +1,20 @@
-package com.imb2025.calificaciones.dto;
+package com.imb2025.calificaciones.dto.request;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+
 public class PeriodoLectivoRequestDto {
 
+	@NotBlank(message = "El nombre no puede estar vacio.")
     private String nombre;
+	
+	@PastOrPresent(message = "La fecha debe ser pasada o actual.")
     private LocalDate fechaInicio;
+	
+	@FutureOrPresent(message = "La fecha debe ser futura o actual.")
     private LocalDate fechaFin;
 
     public PeriodoLectivoRequestDto() {

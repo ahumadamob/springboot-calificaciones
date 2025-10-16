@@ -17,4 +17,8 @@ public interface ICondicionFinalService {
     public void deleteById(Long id) throws Exception;
 
     public CondicionFinal fromDto(CondicionFinalRequestDto dto) throws Exception;
+
+    public List<CondicionFinal> findByNombre(String nombre);
+
+    public Long countByNombre(String nombre);
 }

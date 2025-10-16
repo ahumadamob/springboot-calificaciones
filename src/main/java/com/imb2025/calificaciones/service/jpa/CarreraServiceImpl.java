@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.CarreraRequestDto;
 import com.imb2025.calificaciones.entity.Carrera;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.CarreraRepository;
 import com.imb2025.calificaciones.service.ICarreraService;
 
@@ -24,8 +25,9 @@ public class CarreraServiceImpl implements ICarreraService {
 
     @Override
     public Carrera findById(Long id) {
-
-        return repo.findById(id).orElse(null);
+        return repo.findById(id)
+        	    .orElseThrow(() -> new ResourceNotFoundException(
+        	        "Carrera no encontrada con id " + id));
     }
 
     @Override

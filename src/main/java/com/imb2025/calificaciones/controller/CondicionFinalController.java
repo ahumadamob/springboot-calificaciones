@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.controller;
 
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -63,6 +62,20 @@ public class CondicionFinalController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    // endpoint: buscar por nombre
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<List<CondicionFinal>> getByNombre(@PathVariable String nombre) {
+        List<CondicionFinal> lista = service.findByNombre(nombre);
+        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(lista);
+    }
+
+    // endpoint: contar por nombre
+    @GetMapping("/count/{nombre}")
+    public ResponseEntity<Long> countByNombre(@PathVariable String nombre) {
+        Long cantidad = service.countByNombre(nombre);
+        return ResponseEntity.ok(cantidad);
     }
 
     @ExceptionHandler(Exception.class)

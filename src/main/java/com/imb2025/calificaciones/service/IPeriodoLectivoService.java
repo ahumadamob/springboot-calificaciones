@@ -1,12 +1,17 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDto;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IPeriodoLectivoService {
 
     public List<PeriodoLectivo> findAll();
+    
+    public List<PeriodoLectivo> findAllByNombre(String nombre);
+    
+    public long countByFechaInicioAndFechaFin(LocalDate inicio, LocalDate fin);
 
     public PeriodoLectivo create(PeriodoLectivo periodoLectivo);
 
@@ -15,6 +20,4 @@ public interface IPeriodoLectivoService {
     public PeriodoLectivo findById(Long id);
 
     public void deleteById(Long id) throws Exception;
-
-    public PeriodoLectivo fromDto(PeriodoLectivoRequestDto dto) throws Exception;
 }

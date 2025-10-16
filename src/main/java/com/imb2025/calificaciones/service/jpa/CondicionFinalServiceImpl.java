@@ -27,7 +27,7 @@ public class CondicionFinalServiceImpl implements ICondicionFinalService {
     @Override
     public CondicionFinal update(CondicionFinal condicionFinal, Long id) throws Exception {
         if (!repository.existsById(id)) {
-            throw new Exception("CondicionFinal not found");
+            throw new Exception("CondicionFinal no encontrada con id: " + id);
         }
         condicionFinal.setId(id);
         return repository.save(condicionFinal);
@@ -54,5 +54,15 @@ public class CondicionFinalServiceImpl implements ICondicionFinalService {
         CondicionFinal condicionFinal = new CondicionFinal();
         condicionFinal.setNombre(dto.getNombre());
         return condicionFinal;
+    }
+
+    @Override
+    public List<CondicionFinal> findByNombre(String nombre) {
+        return repository.findByNombre(nombre);
+    }
+
+    @Override
+    public Long countByNombre(String nombre) {
+        return repository.countByNombre(nombre);
     }
 }

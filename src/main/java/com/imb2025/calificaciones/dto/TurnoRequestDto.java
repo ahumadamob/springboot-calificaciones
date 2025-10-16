@@ -2,9 +2,13 @@ package com.imb2025.calificaciones.dto;
 
 import java.time.LocalTime;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class TurnoRequestDto {
 
+	@NotBlank(message = "El nombre no puede estar vacio")
     private String nombre;
+	
     private LocalTime horaInicio;
     private LocalTime horaFin;
 

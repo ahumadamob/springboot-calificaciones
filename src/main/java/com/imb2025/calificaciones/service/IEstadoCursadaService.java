@@ -17,4 +17,8 @@ public interface IEstadoCursadaService {
     public void deleteById(Long id) throws Exception;
 
     public EstadoCursada fromDto(EstadoCursadaRequestDto dto) throws Exception;
+    
+    List<EstadoCursada> findByNombreIgnoreCase(String nombre);
+    long countByDescripcionIgnoreCase(String descripcion);
+
 }

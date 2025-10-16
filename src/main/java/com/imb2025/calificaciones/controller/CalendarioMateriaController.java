@@ -2,6 +2,7 @@ package com.imb2025.calificaciones.controller;
 
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDto;
@@ -55,9 +57,36 @@ public class CalendarioMateriaController {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/materia/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> getCalendarioMateriaByMateriaId(@PathVariable Long id){
+        List<CalendarioMateria> calendarioMaterias = calMatSer.findByMateriaId(id);
+
+        ApiResponseSuccessDto response = new ApiResponseSuccessDto<CalendarioMateria>();
+
+        response.setSuccess(true);
+        response.setData(calendarioMaterias);
+        response.setMessage("Busqueda encontrada de Calendario Materia por Materia ID");
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/comision/{comisionId}")
+    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> countByComisionId(@PathVariable Long comisionId){
+
+        Long result = calMatSer.countByComisionId(comisionId);
+
+        ApiResponseSuccessDto response = new ApiResponseSuccessDto<CalendarioMateria>();
+
+        response.setSuccess(true);
+        response.setData(result);
+        response.setMessage("Contados con exito");
+
+        return ResponseEntity.ok(response);
+    }
 	
 	@PostMapping
-	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> create(@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto) throws Exception {
+	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> create(@Valid @RequestBody CalendarioMateriaRequestDto calendarioMateriaDto) throws Exception {
 
         CalendarioMateria calendarioMateria;
         calendarioMateria = calMatSer.fromDto(calendarioMateriaDto);
@@ -72,7 +101,7 @@ public class CalendarioMateriaController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> update(@PathVariable Long id,
+	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateria>> update(@Valid @PathVariable Long id,
 													@RequestBody CalendarioMateriaRequestDto calendarioMateriaDto) throws Exception {
         CalendarioMateria calendarioMateria;
         calendarioMateria = calMatSer.fromDto(calendarioMateriaDto);

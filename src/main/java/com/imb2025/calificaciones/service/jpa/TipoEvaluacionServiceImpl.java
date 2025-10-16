@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.TipoEvaluacionRequestDto;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.TipoEvaluacionRepository;
 import com.imb2025.calificaciones.service.ITipoEvaluacionService;
 
@@ -24,7 +25,7 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     @Override
     public TipoEvaluacion findById(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("No se encontró el Tipo de Evaluacion con ID " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró el Tipo de Evaluacion con ID " + id));
     }
 
     @Override
@@ -34,12 +35,12 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
 
     @Override
     public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id) throws Exception {
-        if (repo.existsById(id)) {
-            tipoEvaluacion.setId(id);
-            return repo.save(tipoEvaluacion);
-        } else {
-            throw new Exception("TipoEvaluacion con ID " + id + " no encontrado.");
+        if (!repo.existsById(id)) {
+        	throw new ResourceNotFoundException(
+                    "No se puede actualizar TipoEvaluacion con ID " + id);
         }
+        tipoEvaluacion.setId(id);
+        return repo.save(tipoEvaluacion);
     }
 
     @Override

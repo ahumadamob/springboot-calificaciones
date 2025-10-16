@@ -41,6 +41,16 @@ public class AsignacionDocenteServiceImpl implements IAsignacionDocenteService {
     }
 
     @Override
+    public List<AsignacionDocente> findAllByDocenteId(Long docenteId) {
+        return repository.findByDocenteId(docenteId);
+    }
+
+    @Override
+    public long countByMateriaIdAndComisionId(Long materiaId, Long comisionId) {
+        return repository.countByMateriaIdAndComisionId(materiaId, comisionId);
+    }
+
+    @Override
     public AsignacionDocente findById(Long id) {
         return repository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(

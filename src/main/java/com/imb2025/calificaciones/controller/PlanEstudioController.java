@@ -1,147 +1,120 @@
 package com.imb2025.calificaciones.controller;
 
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.entity.PlanEstudio;
 import com.imb2025.calificaciones.service.IPlanEstudioService;
+import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/planestudio")
-
-
+@RequestMapping("/planestudios")
 public class PlanEstudioController {
-	
-@Autowired
 
-private IPlanEstudioService planestudioserviceimp;
+    @Autowired
+    private IPlanEstudioService planEstudioService;
 
-@GetMapping
-public ResponseEntity<List<PlanEstudio>> getAllPlanesEstudio() {
-    List<PlanEstudio> planes = planestudioserviceimp.findAll();
-    return ResponseEntity.ok(planes);
-}
+    
+    @GetMapping
+    public ResponseEntity<ApiResponseSuccessDto<List<PlanEstudio>>> getAllPlanesEstudio() {
+        List<PlanEstudio> planes = planEstudioService.findAll();
 
+        ApiResponseSuccessDto<List<PlanEstudio>> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Listado de planes de estudio obtenido con éxito");
+        response.setData(planes);
 
-@GetMapping("/{id}")
-public ResponseEntity<?> getPlanEstudioById(@PathVariable Long id) {
-    Optional<PlanEstudio> plan = Optional.ofNullable(planestudioserviceimp.findById(id));
-
-    if (plan.isPresent()) {
-        return ResponseEntity.ok(plan.get());
-    } else {
-        Map<String, Object> message = new HashMap<>();
-        message.put("error", "Plan de estudio con ID " + id + " no encontrado");
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        return planes.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(response);
     }
-}
 
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> getPlanEstudioById(@PathVariable Long id) {
+        PlanEstudio plan = planEstudioService.findById(id);
 
-@PostMapping
-public ResponseEntity<?> createPlanEstudio(@RequestBody PlanEstudioRequestDto planestudioRequestDto) {
-    try {
+        ApiResponseSuccessDto<PlanEstudio> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Plan de estudio encontrado con éxito");
+        response.setData(plan);
+
+        return ResponseEntity.ok(response);
+    }
+    
+    
+    @GetMapping("/buscar")
+    public ResponseEntity<ApiResponseSuccessDto<List<PlanEstudio>>>  getByNombre(
+    		@RequestParam (required = true) String nombre) {
+        List<PlanEstudio> planes = planEstudioService.findAllByNombre(nombre);
+
+        ApiResponseSuccessDto<List<PlanEstudio>> response = new ApiResponseSuccessDto<List<PlanEstudio>>(true, "Plan Estudio con nombre "+ nombre +" encontrados con éxito", planes);
+        response.setMessage("Resultado del filtro por nombre");
+        response.setData(planes);
+
+        return planes.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(response);
+    }
+
+    
+    @GetMapping("/count")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countByCarrera(@PathVariable Long carreraId) {
+        long cantidad = planEstudioService.countByCarrera(carreraId);
+
+        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Cantidad de planes asociados a la carrera con ID: " + carreraId);
+        response.setData(cantidad);
+
+        return ResponseEntity.ok(response);
+    }
+
+   
+    @PostMapping
+    public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> createPlanEstudio( @Valid @RequestBody PlanEstudioRequestDto dto) throws Exception {
+        PlanEstudio nuevo = planEstudioService.fromDto(dto);
+        PlanEstudio saved = planEstudioService.create(nuevo);
+
+        ApiResponseSuccessDto<PlanEstudio> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Plan de estudio creado con éxito");
+        response.setData(saved);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+    
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> updatePlanEstudio(
+            @PathVariable Long id,
+            @Valid @RequestBody PlanEstudioRequestDto dto) throws Exception {
+
+        PlanEstudio actualizado = planEstudioService.update(
+                planEstudioService.fromDto(dto),
+                id
+        );
+
         
-        PlanEstudio planestudio = planestudioserviceimp.fromDto(planestudioRequestDto);
+        ApiResponseSuccessDto<PlanEstudio> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Plan de estudio actualizado con éxito");
+        response.setData(actualizado);
 
-        PlanEstudio saved = planestudioserviceimp.create(planestudio);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-
-    } catch (EntidadNoEncontradaException e) {
-        Map<String, Object> message = new HashMap<>();
-        message.put("mensaje", e.getMessage());
-        message.put("error", "Entidad relacionada no encontrada");
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-
-    } catch (Exception e) {
-        Map<String, Object> message = new HashMap<>();
-        message.put("mensaje", e.getMessage());
-        message.put("error", "Error al crear el plan de estudio");
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        return ResponseEntity.ok(response);
     }
-}
 
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<Void>> deletePlanEstudio(@PathVariable Long id) {
+        planEstudioService.deleteById(id);
 
-        @PutMapping("/{id}")
-        public ResponseEntity<?> updatePlanEstudio(@PathVariable Long id, @RequestBody PlanEstudioRequestDto newPlanEstudioDto) {
-            try {
-                
-                Optional<PlanEstudio> existing = Optional.ofNullable(planestudioserviceimp.findById(id));
-                if (existing.isEmpty()) {
-                    Map<String, Object> message = new HashMap<>();
-                    message.put("error", "Plan de estudio con ID " + id + " no encontrado");
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-                }
+        ApiResponseSuccessDto<Void> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Plan de estudio eliminado con éxito");
+        response.setData(null);
 
-                
-                PlanEstudio planestudio = planestudioserviceimp.fromDto(newPlanEstudioDto);
-
-                PlanEstudio updated = planestudioserviceimp.update(planestudio, id);
-                return ResponseEntity.ok(updated);
-
-            } catch (EntidadNoEncontradaException e) {
-                Map<String, Object> message = new HashMap<>();
-                message.put("mensaje", e.getMessage());
-                message.put("error", "Entidad relacionada no encontrada");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-
-            } catch (Exception e) {
-                Map<String, Object> message = new HashMap<>();
-                message.put("mensaje", e.getMessage());
-                message.put("error", "Error al actualizar el plan de estudio");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
-            }
-        }
-
-
-
-
-
-
-
-
-        @DeleteMapping("/{id}")
-        public ResponseEntity<?> deletePlanEstudio(@PathVariable Long id) {
-            try {
-                Optional<PlanEstudio> existing = Optional.ofNullable(planestudioserviceimp.findById(id));
-                if (existing.isEmpty()) {
-                    Map<String, Object> message = new HashMap<>();
-                    message.put("error", "Plan de estudio con ID " + id + " no encontrado");
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-                }
-
-                planestudioserviceimp.deleteById(id);
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
-            } catch (Exception e) {
-                Map<String, Object> message = new HashMap<>();
-                message.put("error", "Error al eliminar el plan de estudio");
-                message.put("mensaje", e.getMessage());
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message);
-            }
-        }
-
-
-
-	
-
+        return ResponseEntity.ok(response);
+    }
 }
