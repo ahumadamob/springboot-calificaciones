@@ -8,6 +8,10 @@ public interface IInscripcionMateriaService {
 
     public List<InscripcionMateria> findAll();
 
+    public List<InscripcionMateria> findByAlumno_Id(Long idAlumno);
+
+    public long countByAlumno_Id(Long idAlumno);
+
     public InscripcionMateria create(InscripcionMateria inscripcionMateria);
 
     public InscripcionMateria update(InscripcionMateria inscripcionMateria, Long id) throws Exception;
