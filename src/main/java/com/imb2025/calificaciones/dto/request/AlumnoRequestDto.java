@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.dto;
+package com.imb2025.calificaciones.dto.request;
 
 import jakarta.validation.constraints.*;
 
@@ -21,9 +21,8 @@ public class AlumnoRequestDto {
     private int dni;
 
     @NotBlank(message = "La fecha de nacimiento es obligatoria")
-    // Si luego lo cambias a LocalDate:
-    // @Past(message = "La fecha de nacimiento debe ser en el pasado")
     private String fechaNacimiento;
+
 
     public AlumnoRequestDto() {
     }

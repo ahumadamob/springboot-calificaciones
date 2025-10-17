@@ -1,10 +1,7 @@
 package com.imb2025.calificaciones.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 @Entity
@@ -12,6 +9,8 @@ public class Alumno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id ;
+    @Version
+    private Long version;
     private String nombre;
     private String apellido;
     private int dni;
@@ -39,7 +38,13 @@ public class Alumno {
     }
 
 
+    public Long getVersion() {
+        return version;
+    }
 
+    public void setVersion(Long version) {
+        this.version = version;
+    }
     public Long getId() {
         return id;
     }

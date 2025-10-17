@@ -8,7 +8,9 @@ import com.imb2025.calificaciones.service.IAlumnoService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
-import com.imb2025.calificaciones.dto.AlumnoRequestDto;
+import com.imb2025.calificaciones.dto.request.AlumnoRequestDto;
+import com.imb2025.calificaciones.dto.response.AlumnoResponseDto;
+import com.imb2025.calificaciones.dto.mapper.AlumnoMapper;
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.entity.Alumno;
 
@@ -24,66 +26,89 @@ public class AlumnoController {
     @Autowired
     private IAlumnoService alumnoService;
 
+    @Autowired
+    private AlumnoMapper alumnoMapper;
+
     @GetMapping
-    public ResponseEntity<List<Alumno>> obtenerTodos() {
+    public ResponseEntity<List<AlumnoResponseDto>> obtenerTodos() {
         List<Alumno> alumnos = alumnoService.findAll();
-        return alumnos.isEmpty()
+        List<AlumnoResponseDto> responseDtos = alumnoMapper.toResponseDtoList(alumnos);
+
+        return responseDtos.isEmpty()
                 ? ResponseEntity.noContent().build()
-                : ResponseEntity.ok(alumnos);
+                : ResponseEntity.ok(responseDtos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<Alumno>> obtenerAlumnoPorId(@PathVariable Long id) {
+    public ResponseEntity<ApiResponseSuccessDto<AlumnoResponseDto>> obtenerAlumnoPorId(@PathVariable Long id) {
         Alumno alumno = alumnoService.findById(id);
-        ApiResponseSuccessDto<Alumno> response = new ApiResponseSuccessDto<>(true,
-                "Alumno encontrado con éxito", alumno);
+
+        AlumnoResponseDto responseDto = alumnoMapper.toResponseDto(alumno);
+
+        ApiResponseSuccessDto<AlumnoResponseDto> response = new ApiResponseSuccessDto<>(
+                true, "Alumno encontrado con éxito", responseDto);
+
         return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<Alumno>> crear(@Valid @RequestBody AlumnoRequestDto dto)
+    public ResponseEntity<ApiResponseSuccessDto<AlumnoResponseDto>> crear(@Valid @RequestBody AlumnoRequestDto dto)
             throws Exception {
-        Alumno createdAlumno = alumnoService.create(alumnoService.fromDto(dto));
-        ApiResponseSuccessDto<Alumno> response = new ApiResponseSuccessDto<>(true,
-                "Alumno creado con éxito", createdAlumno);
+
+        Alumno alumnoToCreate = alumnoMapper.fromDto(dto);
+
+        Alumno createdAlumno = alumnoService.create(alumnoToCreate);
+
+        // 4.2) El controller debe retornar EntidadResponseDto
+        AlumnoResponseDto responseDto = alumnoMapper.toResponseDto(createdAlumno);
+
+        ApiResponseSuccessDto<AlumnoResponseDto> response = new ApiResponseSuccessDto<>(
+                true, "Alumno creado con éxito", responseDto);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<Alumno>> actualizar(@PathVariable Long id,
-            @Valid @RequestBody AlumnoRequestDto dto) throws Exception {
-        Alumno updatedAlumno = alumnoService.update(alumnoService.fromDto(dto), id);
-        ApiResponseSuccessDto<Alumno> response = new ApiResponseSuccessDto<>(true,
-                "Alumno actualizado con éxito", updatedAlumno);
+    public ResponseEntity<ApiResponseSuccessDto<AlumnoResponseDto>> actualizar(@PathVariable Long id,
+                                                                               @Valid @RequestBody AlumnoRequestDto dto) throws Exception {
+
+        Alumno alumnoToUpdate = alumnoMapper.fromDto(dto);
+
+        Alumno updatedAlumno = alumnoService.update(alumnoToUpdate, id);
+
+        AlumnoResponseDto responseDto = alumnoMapper.toResponseDto(updatedAlumno);
+
+        ApiResponseSuccessDto<AlumnoResponseDto> response = new ApiResponseSuccessDto<>(
+                true, "Alumno actualizado con éxito", responseDto);
+
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
-    
+
     @GetMapping("/buscar/{apellido}")
-    public ResponseEntity<ApiResponseSuccessDto<List<Alumno>>> findByApellido(@PathVariable String apellido) {
+    public ResponseEntity<ApiResponseSuccessDto<List<AlumnoResponseDto>>> findByApellido(@PathVariable String apellido) {
         List<Alumno> alumnos = alumnoService.findByApellido(apellido);
-        ApiResponseSuccessDto<List<Alumno>> response = new ApiResponseSuccessDto<>(
+
+        List<AlumnoResponseDto> responseDtos = alumnoMapper.toResponseDtoList(alumnos);
+
+        ApiResponseSuccessDto<List<AlumnoResponseDto>> response = new ApiResponseSuccessDto<>(
                 true,
                 "Alumnos encontrados con apellido: " + apellido,
-                alumnos
+                responseDtos
         );
         return ResponseEntity.ok(response);
     }
-    
+
     @GetMapping("/contar/{email}")
     public ResponseEntity<ApiResponseSuccessDto<Long>> contarPorEmail(@PathVariable String email) {
-    // La lógica de servicio es la misma
-    long count = alumnoService.countByEmail(email);
-    
-    // Preparación de la respuesta
-    String message = String.format("Se encontraron %d alumnos con el email: %s", count, email);
-    
-    ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>(
-            true,
-            message,
-            count
-    );
-    
-    return ResponseEntity.ok(response);
+        long count = alumnoService.countByEmail(email);
+        String message = String.format("Se encontraron %d alumnos con el email: %s", count, email);
+
+        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>(
+                true,
+                message,
+                count
+        );
+        return ResponseEntity.ok(response);
     }
 
     @ExceptionHandler(Exception.class)
