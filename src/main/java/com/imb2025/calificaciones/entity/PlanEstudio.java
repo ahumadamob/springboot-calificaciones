@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class PlanEstudio {
+public class PlanEstudio extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +66,11 @@ public class PlanEstudio {
     }
 
 	public static Optional<PlanEstudio> findById(Long id2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Long getVersion() {
 		// TODO Auto-generated method stub
 		return null;
 	}
