@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.dto.TurnoRequestDto;
+import com.imb2025.calificaciones.dto.mapper.TurnoMapper;
+import com.imb2025.calificaciones.dto.request.TurnoRequestDto;
+import com.imb2025.calificaciones.dto.response.TurnoResponseDto;
 import com.imb2025.calificaciones.entity.Turno;
 import com.imb2025.calificaciones.service.ITurnoService;
 
@@ -32,39 +35,60 @@ public class TurnoController {
 	@Autowired
 	private ITurnoService turnoService;
 	
+	@Autowired
+	private TurnoMapper turnoMapper;
+	
         @GetMapping
-        public ResponseEntity<ApiResponseSuccessDto<List<Turno>>> getAll (){
-                List<Turno> turnos = turnoService.findAll();
-                ApiResponseSuccessDto<List<Turno>> response = new  ApiResponseSuccessDto<>();
-                
-                response.setSuccess(true);
-                response.setData(turnos);
-                response.setMessage("Turnos encontrados con éxito");
-                return turnos.isEmpty()
+        public ResponseEntity<ApiResponseSuccessDto<List<TurnoResponseDto>>> getAll (){
+        	List<Turno> turnos = turnoService.findAll();
+        	List<TurnoResponseDto> turnosDto = turnos.stream()
+        	    .map(turno -> {
+        	        try {
+        	            return turnoMapper.toResponseDto(turno);
+        	        } catch (Exception e) {
+        	            throw new RuntimeException(e);
+        	        }
+        	    }).toList();
+
+        	ApiResponseSuccessDto<List<TurnoResponseDto>> response = new ApiResponseSuccessDto<>();
+        	response.setSuccess(true);
+        	response.setData(turnosDto);
+        	response.setMessage("Turnos encontrados con éxito");
+                return turnosDto.isEmpty()
                                 ? ResponseEntity.noContent().build()
                                 : ResponseEntity.ok(response);
         }
 
         @GetMapping("/{id}")
-        public ResponseEntity<ApiResponseSuccessDto<Turno>> getById (@PathVariable Long id) {
+        public ResponseEntity<ApiResponseSuccessDto<TurnoResponseDto>> getById (@PathVariable Long id) throws Exception {
                 Turno turno = turnoService.findById(id);
-                ApiResponseSuccessDto<Turno> response = new ApiResponseSuccessDto<>();
+                TurnoResponseDto turnoDto = turnoMapper.toResponseDto(turno);
+                ApiResponseSuccessDto<TurnoResponseDto> response = new ApiResponseSuccessDto<>();
                 
                 response.setSuccess(true);
                 response.setMessage("Turno encontrado con éxito");
-                response.setData(turno);
+                response.setData(turnoDto);
                 
                 return ResponseEntity.ok(response);
         }
         
         @GetMapping("/nombre/{nombre}")
-        public ResponseEntity<ApiResponseSuccessDto<List<Turno>>> getTurnosByNombre (@PathVariable String nombre) {
-                List<Turno> turnos = turnoService.mostrarTurnosPorNombre(nombre);
-                ApiResponseSuccessDto<List<Turno>> response = new ApiResponseSuccessDto<>();
-                
-                response.setSuccess(true);
+        public ResponseEntity<ApiResponseSuccessDto<List<TurnoResponseDto>>> getTurnosByNombre (@PathVariable String nombre) {
+        	List<Turno> turnos = turnoService.mostrarTurnosPorNombre(nombre);
+            List<TurnoResponseDto> turnosDto = turnos.stream()
+                    .map(t -> {
+                        try {
+                            return turnoMapper.toResponseDto(t);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .toList();
+
+            ApiResponseSuccessDto<List<TurnoResponseDto>> response = new ApiResponseSuccessDto<>();
+            response.setSuccess(true);
                 response.setMessage("Turno encontrado con el nombre: " + nombre);
-                response.setData(turnos);
+                response.setData(turnosDto);
                 
                 return ResponseEntity.ok(response);
         }
@@ -82,31 +106,34 @@ public class TurnoController {
         }
 
          @PostMapping
-          public ResponseEntity<ApiResponseSuccessDto<Turno>> createTurno(@Valid @RequestBody TurnoRequestDto turnoRequestDto) throws Exception {
-                 Turno turno = turnoService.fromDto(turnoRequestDto);
-                 turno = turnoService.create(turno);
+          public ResponseEntity<ApiResponseSuccessDto<TurnoResponseDto>> createTurno(@Valid @RequestBody TurnoRequestDto turnoRequestDto) throws Exception {
+                 Turno turno = turnoMapper.fromDto(turnoRequestDto);
+                 Turno turnoCreado = turnoService.create(turno);
                  
-                 ApiResponseSuccessDto<Turno> response = new ApiResponseSuccessDto<>();
+                 TurnoResponseDto turnoDto = turnoMapper.toResponseDto(turnoCreado);
+                 ApiResponseSuccessDto<TurnoResponseDto> response = new ApiResponseSuccessDto<>();
                  response.setSuccess(true);
-                 response.setData(turno);
+                 response.setData(turnoDto);
                  response.setMessage("El turno ha sido creado con éxito");
                  
                  return ResponseEntity.status(HttpStatus.CREATED).body(response);
             }
 
          @PutMapping("/{id}")
-            public ResponseEntity<ApiResponseSuccessDto<Turno>> updateTurno(@Valid @RequestBody TurnoRequestDto turnoRequestDto, @PathVariable Long id) throws Exception {
+            public ResponseEntity<ApiResponseSuccessDto<TurnoResponseDto>> updateTurno(@Valid @RequestBody TurnoRequestDto turnoRequestDto, @PathVariable Long id) throws Exception {
                  Turno existente = turnoService.findById(id);
                  if(existente == null){
                         return ResponseEntity.badRequest().build();
                  }
-                 Turno turno = turnoService.fromDto(turnoRequestDto);
-                 turno = turnoService.update(turno, id);
+                 Turno turno = turnoMapper.fromDto(turnoRequestDto);
+                 Turno turnoActualizado= turnoService.update(turno, id);
                  
-                 ApiResponseSuccessDto<Turno> response = new ApiResponseSuccessDto<>();
+                 TurnoResponseDto turnoDto = turnoMapper.toResponseDto(turnoActualizado);
+                 
+                 ApiResponseSuccessDto<TurnoResponseDto> response = new ApiResponseSuccessDto<>();
                  response.setSuccess(true);
-                 response.setData(turno);
-                 response.setMessage("El turno ha sido actulizado con éxito");
+                 response.setData(turnoDto);
+                 response.setMessage("El turno ha sido actualizado con éxito");
                  return ResponseEntity.ok(response);
          }
 

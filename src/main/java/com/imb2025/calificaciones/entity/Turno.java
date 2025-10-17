@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Turno {
+public class Turno extends BaseEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +16,7 @@ public class Turno {
 	
         private String nombre;
 
+        
         private LocalTime horaInicio;
 
         private LocalTime horaFin;
@@ -23,26 +24,13 @@ public class Turno {
         public Turno() {
         }
 
-        public Turno(Long id, String nombre, LocalTime horaInicio, LocalTime horaFin) {
-                this.id = id;
-                this.nombre = nombre;
-                this.horaInicio = horaInicio;
-                this.horaFin = horaFin;
-        }
-
         public Turno(String nombre, LocalTime horaInicio, LocalTime horaFin) {
+                
                 this.nombre = nombre;
                 this.horaInicio = horaInicio;
                 this.horaFin = horaFin;
         }
 	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getNombre() {
 		return nombre;
