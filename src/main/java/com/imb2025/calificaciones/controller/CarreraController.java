@@ -81,10 +81,22 @@ public class CarreraController {
             return ResponseEntity.badRequest().build();
         }
     }
+    @GetMapping("/buscar/nombre/{fragmento}")
+    public ResponseEntity<ApiResponseSuccessDto<List<Carrera>>> buscarPorNombre(@PathVariable String fragmento) {
+        List<Carrera> carreras = carreraService.buscarPorNombre(fragmento);
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+        if (carreras.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        ApiResponseSuccessDto<List<Carrera>> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setMessage("Carreras encontradas con éxito");
+        response.setData(carreras);
+
+        return ResponseEntity.ok(response);
     }
+
+
 
 }
