@@ -17,4 +17,14 @@ public interface ICarreraService {
     public void deleteById(Long id) throws Exception;
 
     public Carrera fromDto(CarreraRequestDto dto) throws Exception;
+    // 1️⃣ findBy... → búsqueda por condición exacta o parcial
+    List<Carrera> buscarPorNombre(String nombre);
+    
+    List<Carrera> buscarPorFragmentoNombre(String fragmento);
+
+    // 4️⃣ existsBy... → validación de duplicados
+    boolean existePorNombre(String nombre);
 }
+
+
+
