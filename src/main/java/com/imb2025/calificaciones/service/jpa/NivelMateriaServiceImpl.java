@@ -60,7 +60,24 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
         existing.setDescripcion(nivelMateria.getDescripcion());
         return repo.save(existing);
     }
-	}
 
+    @Override
+    public List<NivelMateria> findAllByNombre(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            return repo.findAll();
+        }
+        return repo.findByNombreContainingIgnoreCase(nombre.trim());
+    }
+
+    @Override
+    public long countByNombre(String nombre) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            return repo.count();
+        }
+        return repo.countByNombreContainingIgnoreCase(nombre.trim());
+    }
+    
+   
+}
    
 
