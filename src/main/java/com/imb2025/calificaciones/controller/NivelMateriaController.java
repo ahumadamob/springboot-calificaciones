@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.dto.NivelMateriaRequestDto;
+import com.imb2025.calificaciones.dto.request.NivelMateriaRequestDto;
+import com.imb2025.calificaciones.dto.response.NivelMateriaResponseDto;
+import com.imb2025.calificaciones.dto.mapper.NivelMateriaMapper;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -29,14 +32,49 @@ public class NivelMateriaController {
 private INivelMateriaService nivelMateriaService;
 
 @GetMapping("/api/nivelmateria")
-public ResponseEntity<ApiResponseSuccessDto<List<NivelMateria>>> getAllNivelMateria() {
+public ResponseEntity<ApiResponseSuccessDto<List<NivelMateriaResponseDto>>> getAllNivelMateria() {
     List<NivelMateria> nivelMaterias = nivelMateriaService.findAll();
-    ApiResponseSuccessDto<List<NivelMateria>> response = new ApiResponseSuccessDto<>();
+    
+    List<NivelMateriaResponseDto> dtos = nivelMaterias.stream()
+            .map(NivelMateriaMapper::toResponseDto)
+            .collect(Collectors.toList());
+    
+    ApiResponseSuccessDto<List<NivelMateriaResponseDto>> response = new ApiResponseSuccessDto<>();
     response.setSuccess(true);
-    response.setData(nivelMaterias);
+    response.setData(dtos);
     response.setMessage("Lista de NivelMateria");
     return ResponseEntity.ok(response);
 }
+
+
+@GetMapping("/api/nivelmateria/{id}")
+public ResponseEntity<ApiResponseSuccessDto<NivelMateriaResponseDto>> getNivelMateriaById(@PathVariable Long id) {
+    try {
+        NivelMateria nivel = nivelMateriaService.findById(id); 
+
+        if (nivel == null) {
+            ApiResponseSuccessDto<NivelMateriaResponseDto> responseNotFound = new ApiResponseSuccessDto<>();
+            responseNotFound.setSuccess(false);
+            responseNotFound.setMessage("NivelMateria no encontrada con id: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseNotFound);
+        }
+
+        NivelMateriaResponseDto dto = NivelMateriaMapper.toResponseDto(nivel);
+        
+        ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(dto);
+        response.setMessage("NivelMateria encontrada");
+        return ResponseEntity.ok(response);
+    } catch (Exception e) {
+        ApiResponseSuccessDto<NivelMateriaResponseDto> responseError = new ApiResponseSuccessDto<>();
+        responseError.setSuccess(false);
+        responseError.setMessage("Error al obtener NivelMateria: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError);
+    }
+}
+
+
 @GetMapping("/count")
 public ResponseEntity<Long> contar(@RequestParam(required = false) String nombre) {
     long cantidad = nivelMateriaService.countByNombre(nombre);
@@ -44,30 +82,41 @@ public ResponseEntity<Long> contar(@RequestParam(required = false) String nombre
     
 }
 @PostMapping("/api/nivelmateria")
-public ResponseEntity<ApiResponseSuccessDto<NivelMateria>> createNivelMateria(@RequestBody @Valid NivelMateriaRequestDto nivelDto) {
-    NivelMateria nivel = new NivelMateria();
-    nivel.setNombre(nivelDto.getNombre());
-    nivel.setDescripcion(nivelDto.getDescripcion());
+public ResponseEntity<ApiResponseSuccessDto<NivelMateriaResponseDto>> createNivelMateria(@RequestBody @Valid NivelMateriaRequestDto nivelDto) {
+    try {
+        NivelMateria nivel = NivelMateriaMapper.fromDto(nivelDto);
+        
+        NivelMateria created = nivelMateriaService.create(nivel);
 
-    NivelMateria created = nivelMateriaService.create(nivel);
+        NivelMateriaResponseDto responseDto = NivelMateriaMapper.toResponseDto(created);
+        
+        ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(responseDto);
+        response.setMessage("NivelMateria creada exitosamente");
 
-    ApiResponseSuccessDto<NivelMateria> response = new ApiResponseSuccessDto<>();
-    response.setSuccess(true);
-    response.setData(created);
-    response.setMessage("NivelMateria creada exitosamente");
-
-    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    } catch (Exception e) {
+        ApiResponseSuccessDto<NivelMateriaResponseDto> responseError = new ApiResponseSuccessDto<>();
+        responseError.setSuccess(false);
+        responseError.setMessage("Error al crear NivelMateria: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError);
+    }
 }
-
 @PutMapping("/api/nivelmateria/{id}")
-public ResponseEntity<ApiResponseSuccessDto<NivelMateria>> updateNivelMateria(@PathVariable Long id, @RequestBody @Valid NivelMateriaRequestDto nivelDto) {
+public ResponseEntity<ApiResponseSuccessDto<NivelMateriaResponseDto>> updateNivelMateria(@PathVariable Long id, @RequestBody @Valid NivelMateriaRequestDto nivelDto) {
     try {
         NivelMateria nivel = nivelMateriaService.fromDto(nivelDto);
         NivelMateria updated = nivelMateriaService.update(nivel, id);
-        ApiResponseSuccessDto<NivelMateria> response = new ApiResponseSuccessDto<NivelMateria>(true, "NivelMateria actualizada exitosamente", updated);
+        
+        NivelMateriaResponseDto responseDto = NivelMateriaMapper.toResponseDto(updated);
+        
+        ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>(true, "NivelMateria actualizada exitosamente", responseDto);
         return ResponseEntity.ok(response);
     } catch (Exception e) {
-    	ApiResponseSuccessDto<NivelMateria> response = new ApiResponseSuccessDto<NivelMateria>();
+    	ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(false);
+        response.setMessage("Error al actualizar: " + e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }
