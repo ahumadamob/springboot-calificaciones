@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.dto.MateriaRequestDto;
+import com.imb2025.calificaciones.dto.request.MateriaRequestDto;
+import com.imb2025.calificaciones.dto.response.MateriaResponseDto;
 import com.imb2025.calificaciones.entity.Materia;
+import com.imb2025.calificaciones.mapper.MateriaMapper;
 import com.imb2025.calificaciones.service.IMateriaService;
 
 import jakarta.validation.Valid;
-
-
-
 
 
 @RestController
@@ -33,30 +33,51 @@ public class MateriaController {
 	private IMateriaService materiaService;
 	
         @GetMapping("/api/materia")
-        public ResponseEntity<List<Materia>> getAllMateria(){
+        public ResponseEntity<List<MateriaResponseDto>> getAllMateria(){
                 List<Materia> materias = materiaService.findAll();
-                return materias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(materias);
+                List<MateriaResponseDto> materiaDtoList = new ArrayList<MateriaResponseDto>();
+                
+                MateriaMapper mapper= new MateriaMapper();
+                for(Materia n: materias) {
+                	materiaDtoList.add(mapper.toResponseDto(n));
+                }
+                
+                
+                return materias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(materiaDtoList);
         }
         
         @GetMapping("/api/materia/ordenado")
-        public ResponseEntity<List<Materia>> getAllOrder(){
-                List<Materia> materias = materiaService.findAllOrder();
-                return materias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(materias);
+        public ResponseEntity<List<MateriaResponseDto>> getAllOrder(){ 
+            List<Materia> materias = materiaService.findAllOrder();
+            MateriaMapper mapper = new MateriaMapper();
+            List<MateriaResponseDto> dtoList = new ArrayList<>();
+            for (Materia m : materias) {
+                dtoList.add(mapper.toResponseDto(m));
+            }
+            
+            return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(dtoList);
         }
         
         @GetMapping("/api/materia/nivel/{nombreNivel}")
-        public ResponseEntity<List<Materia>> getAllMateriaByNivelDomain(@PathVariable String nombreNivel){
+        public ResponseEntity<List<MateriaResponseDto>> getAllMateriaByNivelDomain(@PathVariable String nombreNivel){
                 List<Materia> materias = materiaService.findByNivelEndsWith(nombreNivel);
-                return materias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(materias);
+                MateriaMapper mapper = new MateriaMapper();
+                List<MateriaResponseDto> dtoList = new ArrayList<>();
+                for (Materia m : materias) {
+                    dtoList.add(mapper.toResponseDto(m));
+                }
+                return materias.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(dtoList);
         }
 
         @GetMapping("/api/materia/{id}")
-        public ResponseEntity<ApiResponseSuccessDto <Materia>> getMateriaById(@PathVariable Long id) {
-        	
-        	Materia materia = materiaService.findById(id);
-        	ApiResponseSuccessDto<Materia> response = new ApiResponseSuccessDto<>();
-        	response.setMessage("Materia encontrada con exito");
-        	response.setData(materia);
+        public ResponseEntity<ApiResponseSuccessDto <MateriaResponseDto>> getMateriaById(@PathVariable Long id) { 
+            
+            Materia materia = materiaService.findById(id); 
+            MateriaMapper mapper = new MateriaMapper();
+            MateriaResponseDto materiaDto = mapper.toResponseDto(materia);
+            ApiResponseSuccessDto<MateriaResponseDto> response = new ApiResponseSuccessDto<>(); 
+            response.setMessage("Materia encontrada con exito");
+            response.setData(materiaDto);
             
             return ResponseEntity.ok(response);
         }
@@ -81,19 +102,26 @@ public class MateriaController {
 
 
         @PostMapping("/api/materia")
-        public ResponseEntity<Materia> createMateria(@Valid @RequestBody MateriaRequestDto materiaRequestDto) throws Exception{
-                Materia materia = materiaService.fromDto(materiaRequestDto);
-                return ResponseEntity.ok(materiaService.create(materia));
+     
+     public ResponseEntity<MateriaResponseDto> createMateria(@Valid @RequestBody MateriaRequestDto materiaRequestDto) throws Exception {
+         
+         MateriaMapper mapper = new MateriaMapper(); 
+         Materia materia = mapper.fromDto(materiaRequestDto);
+         Materia materiaGuardada = materiaService.create(materia); 
+         MateriaResponseDto respuestaDto = mapper.toResponseDto(materiaGuardada);
+         return ResponseEntity.ok(respuestaDto);
+     }
 
-        }
+        
 
         @PutMapping ("/api/materia/{id}")
-        public ResponseEntity<Materia> updateMateria(@Valid @RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id) throws Exception{
-                Materia existente = materiaService.findById(id);
+        public ResponseEntity<Materia> updateMateria(@Valid @RequestBody MateriaRequestDto materiaRequestDto, @PathVariable("id") Long id) throws Exception{   
+        	MateriaMapper mapper =new MateriaMapper();
+        	Materia existente = materiaService.findById(id);
                 if(existente == null){
                     return ResponseEntity.badRequest().build();
                 }
-                Materia materia = materiaService.fromDto(materiaRequestDto);
+                Materia materia = mapper.fromDto(materiaRequestDto);
                 return ResponseEntity.ok(materiaService.update(materia,id));
         }
         @DeleteMapping("/api/materia/{id}")

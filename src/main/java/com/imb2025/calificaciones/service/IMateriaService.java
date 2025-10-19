@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.MateriaRequestDto;
+
 import com.imb2025.calificaciones.entity.Materia;
 import java.util.List;
 
@@ -22,5 +22,5 @@ public interface IMateriaService {
 
     public void deleteById(Long id) throws Exception;
 
-    public Materia fromDto(MateriaRequestDto dto) throws Exception;
+ 
 }
