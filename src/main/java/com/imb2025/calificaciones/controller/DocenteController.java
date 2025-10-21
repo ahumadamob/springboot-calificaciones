@@ -17,7 +17,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.dto.DocenteRequestDto;
+import com.imb2025.calificaciones.dto.request.DocenteRequestDto;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.service.IDocenteService;
 
