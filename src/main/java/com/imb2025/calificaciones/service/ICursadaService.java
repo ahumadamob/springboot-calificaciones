@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.CursadaRequestDto;
 import com.imb2025.calificaciones.entity.Cursada;
 import java.util.List;
 
@@ -15,8 +14,6 @@ public interface ICursadaService {
     public Cursada findById(Long id);
 
     public void deleteById(Long id) throws Exception;
-
-    public Cursada fromDto(CursadaRequestDto dto) throws Exception;
     
     public List<Cursada> findByNombreAlumno(String nombre);
 
