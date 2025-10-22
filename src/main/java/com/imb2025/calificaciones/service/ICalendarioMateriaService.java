@@ -1,9 +1,8 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDto;
+import com.imb2025.calificaciones.dto.request.CalendarioMateriaRequestDto;
 import com.imb2025.calificaciones.entity.CalendarioMateria;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface ICalendarioMateriaService {
@@ -22,5 +21,4 @@ public interface ICalendarioMateriaService {
 
     public Long countByComisionId(Long comisionId);
 
-    public CalendarioMateria fromDto(CalendarioMateriaRequestDto dto) throws Exception;
 }
