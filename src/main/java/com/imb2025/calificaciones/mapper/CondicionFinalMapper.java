@@ -1,4 +1,4 @@
-package com.imb2025.calificaciones.dto.mapper;
+package com.imb2025.calificaciones.mapper;
 
 import org.springframework.stereotype.Component;
 
