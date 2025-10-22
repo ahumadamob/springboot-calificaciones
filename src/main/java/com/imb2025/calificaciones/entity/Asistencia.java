@@ -1,17 +1,10 @@
 package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Asistencia {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Asistencia extends BaseEntity {
 
     @ManyToOne
     private Alumno alumno;
@@ -21,28 +14,16 @@ public class Asistencia {
 
     private Boolean presente;
 
+    private String observaciones;
+
     public Asistencia() {
     }
 
-    public Asistencia(Long id, Alumno alumno, RegistroClase registroClase, Boolean presente) {
-        this.id = id;
+    public Asistencia(Alumno alumno, RegistroClase registroClase, Boolean presente, String observaciones) {
         this.alumno = alumno;
         this.registroClase = registroClase;
         this.presente = presente;
-    }
-
-    public Asistencia(Alumno alumno, RegistroClase registroClase, Boolean presente) {
-        this.alumno = alumno;
-        this.registroClase = registroClase;
-        this.presente = presente;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.observaciones = observaciones;
     }
 
     public Alumno getAlumno() {
@@ -67,5 +48,13 @@ public class Asistencia {
 
     public void setPresente(Boolean presente) {
         this.presente = presente;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
     }
 }
