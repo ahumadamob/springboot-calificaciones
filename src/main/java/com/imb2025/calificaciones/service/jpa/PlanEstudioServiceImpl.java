@@ -2,10 +2,11 @@ package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.PlanEstudioRequestDto;
+import com.imb2025.calificaciones.dto.request.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.entity.Carrera;
 
 import com.imb2025.calificaciones.entity.PlanEstudio;
@@ -127,5 +128,6 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
 	public long countByCarrera(Long carreraId){
 	    return planestudiorepository.countByCarrera_Id(carreraId);
 	}
-
+	
+	
 }

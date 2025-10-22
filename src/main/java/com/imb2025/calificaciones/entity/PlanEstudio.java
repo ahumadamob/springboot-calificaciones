@@ -1,20 +1,15 @@
 package com.imb2025.calificaciones.entity;
 
-import java.util.Optional;
+
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 public class PlanEstudio extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+   
 
     @ManyToOne
     @JoinColumn(name = "carrera_id")
@@ -33,13 +28,7 @@ public class PlanEstudio extends BaseEntity {
         this.anioVigencia = anioVigencia;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+   
 
     public Carrera getCarrera() {
         return carrera;
@@ -65,13 +54,7 @@ public class PlanEstudio extends BaseEntity {
         this.anioVigencia = anioVigencia;
     }
 
-	public static Optional<PlanEstudio> findById(Long id2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
-	public Long getVersion() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

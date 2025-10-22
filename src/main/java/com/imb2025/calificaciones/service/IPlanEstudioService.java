@@ -1,7 +1,6 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.PlanEstudioRequestDto;
-
+import com.imb2025.calificaciones.dto.request.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.entity.PlanEstudio;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 
