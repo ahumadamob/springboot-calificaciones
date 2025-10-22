@@ -76,4 +76,13 @@ public class CursadaServiceImpl implements ICursadaService{
         cursada.setCondicionFinal(condicionFinal);
         return cursada;
     }
+    @Override
+    public List<Cursada> findByNombreAlumno(String nombre) {
+        return repo.findByAlumno_Nombre(nombre);
+    }
+
+    @Override
+    public Long countByNombreMateria(String nombreMateria) {
+        return repo.countByMateria_Nombre(nombreMateria);
+    }
 }

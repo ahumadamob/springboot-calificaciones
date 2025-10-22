@@ -36,7 +36,7 @@ public class InscripcionMateriaServiceImpl implements IInscripcionMateriaService
     public List<InscripcionMateria> findAll() {
         return repository.findAll();
     }
-
+    
     @Override
     public InscripcionMateria findById(Long id) {
         return repository.findById(id)
@@ -44,6 +44,16 @@ public class InscripcionMateriaServiceImpl implements IInscripcionMateriaService
                         "Entidad no encontrada con id " + id));
     }
 
+    @Override
+    public List<InscripcionMateria> findByAlumno_Id(Long idAlumno) {
+        return repository.findByAlumno_Id(idAlumno);
+    }
+
+    @Override
+    public long countByAlumno_Id(Long idAlumno) {
+        return repository.countByAlumno_Id(idAlumno);
+    }
+    
     @Override
     public InscripcionMateria create(InscripcionMateria inscripcionMateria) {
         return repository.save(inscripcionMateria);
@@ -88,4 +98,6 @@ public class InscripcionMateriaServiceImpl implements IInscripcionMateriaService
 
         return inscripcionMateria;
     }
+
+    
 }

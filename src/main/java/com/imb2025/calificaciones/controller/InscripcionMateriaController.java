@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDto;
 import com.imb2025.calificaciones.entity.InscripcionMateria;
 import com.imb2025.calificaciones.service.IInscripcionMateriaService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/inscripcion-materia")
@@ -45,6 +43,38 @@ public class InscripcionMateriaController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/AlumnosInscriptos/{idAlumno}")
+    public ResponseEntity<ApiResponseSuccessDto<List<InscripcionMateria>>> getByAlumno(@PathVariable Long idAlumno) {
+        List<InscripcionMateria> inscripciones = inscripcionMateriaService.findByAlumno_Id(idAlumno);
+        ApiResponseSuccessDto<List<InscripcionMateria>> response = new ApiResponseSuccessDto<>();
+        if(inscripciones.isEmpty()){
+            response.setData(inscripciones);
+            response.setMessage("Lista Vacía"); 
+            response.setSuccess(false);
+        }else{
+            response.setData(inscripciones);
+            response.setMessage("Lista de Inscripciones del alumno");
+            response.setSuccess(true);
+        }
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/count/{idAlumno}")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> getMethodName(@PathVariable long idAlumno) {
+        Long cantidad = inscripcionMateriaService.countByAlumno_Id(idAlumno);
+        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
+        response.setData(cantidad);
+        if(cantidad == 0){
+            response.setMessage("Alumno no inscripto en ninguna materia"); 
+            response.setSuccess(false);
+        }else{
+            response.setMessage("Cantidad de inscripciones del alumno");
+            response.setSuccess(true);
+        }
+        return ResponseEntity.ok(response);
+    }
+    
+
+
     @GetMapping("/{idInscripcionMateria}")
     public ResponseEntity<ApiResponseSuccessDto<InscripcionMateria>> getById(@PathVariable("idInscripcionMateria") Long id) {
         InscripcionMateria inscripcionMateria = inscripcionMateriaService.findById(id);
@@ -54,7 +84,7 @@ public class InscripcionMateriaController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<InscripcionMateria>> create(@RequestBody InscripcionMateriaRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<InscripcionMateria>> create(@Valid @RequestBody InscripcionMateriaRequestDto dto) throws Exception {
             InscripcionMateria inscripcionMateria = inscripcionMateriaService.create(inscripcionMateriaService.fromDto(dto));
             ApiResponseSuccessDto<InscripcionMateria> response = new ApiResponseSuccessDto<InscripcionMateria>(true, "Incripcion creada con exito", inscripcionMateria);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -62,7 +92,7 @@ public class InscripcionMateriaController {
 
     @PutMapping("/{idInscripcionMateria}")
     public ResponseEntity<ApiResponseSuccessDto<InscripcionMateria>> update(
-            @PathVariable("idInscripcionMateria") Long id,
+            @PathVariable("idInscripcionMateria") Long id, @Valid
             @RequestBody InscripcionMateriaRequestDto dto) throws Exception {
 
             InscripcionMateria entity = inscripcionMateriaService.fromDto(dto);
