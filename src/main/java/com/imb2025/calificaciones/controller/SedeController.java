@@ -82,4 +82,24 @@ public class SedeController {
         resp.setData(null);
         return ResponseEntity.ok(resp);
     }
+
+    @GetMapping("/api/sede/nombre/{nombre}")
+    public ResponseEntity<ApiResponseSuccessDto<List<Sede>>> getSedesByNombre(@PathVariable String nombre) {
+        List<Sede> lista = sedeService.findByNombreIgnoreCase(nombre);
+        ApiResponseSuccessDto<List<Sede>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(lista);
+        resp.setMessage(lista.isEmpty() ? "No hay sedes con ese nombre" : "Listado filtrado por nombre");
+        return ResponseEntity.ok(resp);
+    }
+
+    @GetMapping("/api/sede/count/direccion/{direccion}")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countSedesByDireccion(@PathVariable String direccion) {
+        long cantidad = sedeService.countByDireccionIgnoreCase(direccion);
+        ApiResponseSuccessDto<Long> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(cantidad);
+        resp.setMessage("Cantidad de sedes con esa dirección");
+        return ResponseEntity.ok(resp);
+    }
 }

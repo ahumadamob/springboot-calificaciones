@@ -21,4 +21,8 @@ public interface ISedeService {
     Sede createFromDto(SedeRequestDto dto) throws Exception;
 
     boolean existsById(Long id);
+
+    List<Sede> findByNombreIgnoreCase(String nombre);
+
+    long countByDireccionIgnoreCase(String direccion);
 }
