@@ -25,7 +25,8 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     @Override
     public TipoEvaluacion findById(Long id) {
         return repo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No se encontró el Tipo de Evaluacion con ID " + id));
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "No se encontró el Tipo de Evaluacion con ID " + id));
     }
 
     @Override
@@ -34,32 +35,46 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     }
 
     @Override
-    public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id) throws Exception {
+    public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id) {
         if (!repo.existsById(id)) {
-        	throw new ResourceNotFoundException(
-                    "No se puede actualizar TipoEvaluacion con ID " + id);
+            throw new ResourceNotFoundException("No se puede actualizar: TipoEvaluacion con ID " + id + " no existe");
         }
         tipoEvaluacion.setId(id);
         return repo.save(tipoEvaluacion);
     }
 
     @Override
-    public void deleteById(Long id) throws Exception {
+    public void deleteById(Long id) {
         if (!repo.existsById(id)) {
-            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+            throw new ResourceNotFoundException(
+                    "No se puede eliminar: TipoEvaluacion con ID " + id + " no existe");
         }
         repo.deleteById(id);
     }
 
     @Override
-    public TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto) throws Exception {
+    public TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto) {
         if (dto == null) {
-            throw new Exception("El dto de tipo evaluación no puede ser nulo");
+            throw new IllegalArgumentException("El  DATO de tipo evaluación no puede ser nulo");
         }
+
         TipoEvaluacion tipo = new TipoEvaluacion();
         tipo.setNombre(dto.getNombre());
         tipo.setDescripcion(dto.getDescripcion());
         return tipo;
     }
 
+    @Override
+    public List<TipoEvaluacion> buscarNombre(String q) {
+        return repo.findByNombreContainingIgnoreCase(q);
+    }
+
+    @Override
+    public long contarNombre(String q) {
+        return repo.countByNombreContainingIgnoreCase(q);
+    }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> f92b8fc (TP07: métodos mágicos)
 }
