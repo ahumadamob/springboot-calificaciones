@@ -6,20 +6,21 @@ public class CondicionFinalResponseDto {
 
     private Long id;
     private String nombre;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private Boolean esVigente; // Nuevo atributo
+    
+    // Eliminados: createdAt y updatedAt (según consigna del TP Parcial)
     private Long version;
 
     public CondicionFinalResponseDto() {}
 
-    public CondicionFinalResponseDto(Long id, String nombre, LocalDateTime createdAt, LocalDateTime updatedAt, Long version) {
+    public CondicionFinalResponseDto(Long id, String nombre, Boolean esVigente, Long version) { // Constructor actualizado
         this.id = id;
         this.nombre = nombre;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.esVigente = esVigente;
         this.version = version;
     }
 
+    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -35,23 +36,17 @@ public class CondicionFinalResponseDto {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    
+    public Boolean getEsVigente() { // Nuevo
+        return esVigente;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setEsVigente(Boolean esVigente) { // Nuevo
+        this.esVigente = esVigente;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
+    // Eliminados: getCreatedAt() y getUpdatedAt()
+    
     public Long getVersion() {
         return version;
     }

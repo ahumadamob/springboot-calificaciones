@@ -11,17 +11,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// Import corregido: se asume que moviste CondicionFinalRequestDto a este paquete
+// Importar la anotación @Valid
+import jakarta.validation.Valid; // <--- ¡NUEVO IMPORT!
+
 import com.imb2025.calificaciones.dto.request.CondicionFinalRequestDto; 
-import com.imb2025.calificaciones.dto.response.CondicionFinalResponseDto; // Nuevo: DTO de respuesta
+import com.imb2025.calificaciones.dto.response.CondicionFinalResponseDto; 
 import com.imb2025.calificaciones.entity.CondicionFinal;
 import com.imb2025.calificaciones.service.ICondicionFinalService;
-import com.imb2025.calificaciones.mapper.CondicionFinalMapper; // Nuevo: Importar el Mapper
+import com.imb2025.calificaciones.mapper.CondicionFinalMapper; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.stream.Collectors; // Nuevo: Para mapear listas
+import java.util.stream.Collectors; 
 
 @RestController
 @RequestMapping("/api/condicion-final")
@@ -30,16 +32,18 @@ public class CondicionFinalController {
     @Autowired
     private ICondicionFinalService service;
 
-    @Autowired // Inyección del Mapper
+    @Autowired 
     private CondicionFinalMapper mapper;
 
+    // Métodos CRUD existentes
+    // =========================================================================
+    
     @GetMapping
-    public ResponseEntity<List<CondicionFinalResponseDto>> getAll() { // Devuelve lista de DTOs
+    public ResponseEntity<List<CondicionFinalResponseDto>> getAll() { 
         List<CondicionFinal> condiciones = service.findAll();
         if (condiciones.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        // Mapear de entidad a ResponseDto
         List<CondicionFinalResponseDto> dtos = condiciones.stream()
             .map(mapper::toResponseDto)
             .collect(Collectors.toList());
@@ -47,31 +51,28 @@ public class CondicionFinalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CondicionFinalResponseDto> getById(@PathVariable Long id) { // Devuelve DTO
+    public ResponseEntity<CondicionFinalResponseDto> getById(@PathVariable Long id) { 
         CondicionFinal condicion = service.findById(id);
-        // Mapear de entidad a ResponseDto
         return condicion == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(mapper.toResponseDto(condicion));
     }
 
     @PostMapping
-    public ResponseEntity<CondicionFinalResponseDto> create(@RequestBody CondicionFinalRequestDto dto) throws Exception { // Recibe Request DTO, devuelve Response DTO
-        // Reemplazar service.fromDto(dto) con mapper.toEntity(dto)
+    // Se añade @Valid para activar la validación del DTO (para el caso de error 400)
+    public ResponseEntity<CondicionFinalResponseDto> create(@Valid @RequestBody CondicionFinalRequestDto dto) throws Exception { 
         CondicionFinal condicion = mapper.toEntity(dto);
         CondicionFinal created = service.create(condicion);
-        // Devolver la entidad mapeada a ResponseDto
         return ResponseEntity.ok(mapper.toResponseDto(created));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CondicionFinalResponseDto> update(@PathVariable Long id, @RequestBody CondicionFinalRequestDto dto) throws Exception { // Recibe Request DTO, devuelve Response DTO
+    // Se añade @Valid para activar la validación del DTO (para el caso de error 400)
+    public ResponseEntity<CondicionFinalResponseDto> update(@PathVariable Long id, @Valid @RequestBody CondicionFinalRequestDto dto) throws Exception { 
         CondicionFinal existente = service.findById(id);
         if (existente == null) {
             return ResponseEntity.badRequest().build();
         }
-        // Reemplazar service.fromDto(dto) con mapper.toEntity(dto)
         CondicionFinal condicion = mapper.toEntity(dto);
         CondicionFinal updated = service.update(condicion, id);
-        // Devolver la entidad mapeada a ResponseDto
         return ResponseEntity.ok(mapper.toResponseDto(updated));
     }
 
@@ -85,29 +86,64 @@ public class CondicionFinalController {
         }
     }
 
-    // endpoint: buscar por nombre
+    // Otros endpoints existentes
+    // =========================================================================
+
     @GetMapping("/nombre/{nombre}")
-    public ResponseEntity<List<CondicionFinalResponseDto>> getByNombre(@PathVariable String nombre) { // Devuelve lista de DTOs
+    public ResponseEntity<List<CondicionFinalResponseDto>> getByNombre(@PathVariable String nombre) { 
         List<CondicionFinal> lista = service.findByNombre(nombre);
         if (lista.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        // Mapear de entidad a ResponseDto
         List<CondicionFinalResponseDto> dtos = lista.stream()
             .map(mapper::toResponseDto)
             .collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
     }
 
-    // endpoint: contar por nombre
     @GetMapping("/count/{nombre}")
     public ResponseEntity<Long> countByNombre(@PathVariable String nombre) {
         Long cantidad = service.countByNombre(nombre);
         return ResponseEntity.ok(cantidad);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
+    // Nuevos Endpoints del Ejercicio 1 (Atributo Booleano: esVigente)
+    // =========================================================================
+
+    /**
+     * Listado True: Registros donde esVigente es true.
+     * Responde 200 con la lista.
+     */
+    @GetMapping("/vigentes")
+    public ResponseEntity<List<CondicionFinalResponseDto>> getVigentes() {
+        List<CondicionFinal> condiciones = service.findVigentes();
+        if (condiciones.isEmpty()) {
+            return ResponseEntity.ok(List.of()); // Devuelve 200 con lista vacía
+        }
+        List<CondicionFinalResponseDto> dtos = condiciones.stream()
+            .map(mapper::toResponseDto)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos); 
     }
+
+    /**
+     * Listado False: Registros donde esVigente es false.
+     * Responde 200 con la lista.
+     */
+    @GetMapping("/no-vigentes")
+    public ResponseEntity<List<CondicionFinalResponseDto>> getNoVigentes() {
+        List<CondicionFinal> condiciones = service.findNoVigentes();
+        if (condiciones.isEmpty()) {
+            return ResponseEntity.ok(List.of()); // Devuelve 200 con lista vacía
+        }
+        List<CondicionFinalResponseDto> dtos = condiciones.stream()
+            .map(mapper::toResponseDto)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos); 
+    }
+
+    // Manejador de Excepciones
+    // =========================================================================
+    
+   
 }

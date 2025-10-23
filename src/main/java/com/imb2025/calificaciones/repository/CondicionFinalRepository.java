@@ -13,4 +13,10 @@ public interface CondicionFinalRepository extends JpaRepository<CondicionFinal, 
 
     // 2) Contar cuántas condiciones finales existen con ese nombre
     long countByNombre(String nombre);
+    
+    // 3) Nuevo: Listado de condiciones finales vigentes (True)
+    List<CondicionFinal> findByEsVigenteTrue(); // findByAtributoBooleanoTrue()
+    
+    // 4) Nuevo: Listado de condiciones finales no vigentes (False)
+    List<CondicionFinal> findByEsVigenteFalse(); // findByAtributoBooleanoFalse()
 }

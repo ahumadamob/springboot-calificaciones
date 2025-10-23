@@ -13,6 +13,8 @@ public class CondicionFinalServiceImpl implements ICondicionFinalService {
     @Autowired
     private CondicionFinalRepository repository;
 
+    // ... (Métodos existentes: findAll, create, update, findById, deleteById)
+    
     @Override
     public List<CondicionFinal> findAll() {
         return repository.findAll();
@@ -53,5 +55,16 @@ public class CondicionFinalServiceImpl implements ICondicionFinalService {
     @Override
     public Long countByNombre(String nombre) {
         return repository.countByNombre(nombre);
+    }
+    
+    // Implementación de los nuevos métodos (Ejercicio 1)
+    @Override
+    public List<CondicionFinal> findVigentes() {
+        return repository.findByEsVigenteTrue();
+    }
+    
+    @Override
+    public List<CondicionFinal> findNoVigentes() {
+        return repository.findByEsVigenteFalse();
     }
 }

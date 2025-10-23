@@ -18,4 +18,9 @@ public interface ICondicionFinalService {
     List<CondicionFinal> findByNombre(String nombre);
 
     Long countByNombre(String nombre);
+    
+    // Nuevos métodos del Ejercicio 1
+    List<CondicionFinal> findVigentes();
+    
+    List<CondicionFinal> findNoVigentes();
 }
