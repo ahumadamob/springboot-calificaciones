@@ -71,15 +71,19 @@ public class TipoEvaluacionController {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<ApiResponseSuccessDto<List<TipoEvaluacion>>> search(@RequestParam String q) {
-        var lista = tipoEvaluacionService.buscarNombre(q);
-        return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "OK", lista));
+    public ResponseEntity<ApiResponseSuccessDto<List<TipoEvaluacion>>> search(@PathVariable String q) {
+        
+    	var lista = tipoEvaluacionService.buscarNombre(q);
+    	
+    	
+        return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "se realizo la busqueda correctamente", lista));
     }
 
     @GetMapping("/contar")
-    public ResponseEntity<ApiResponseSuccessDto<Long>> count(@RequestParam String q) {
-        long total = tipoEvaluacionService.contarNombre(q);
-        return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "Se contó", total));
+    public ResponseEntity<ApiResponseSuccessDto<Long>> count(@PathVariable String q) {
+       
+    	long total = tipoEvaluacionService.contarNombre(q);
+        return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "Total: ", total));
     }
 <<<<<<< HEAD
 =======
