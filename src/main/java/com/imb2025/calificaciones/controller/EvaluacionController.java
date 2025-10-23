@@ -102,7 +102,7 @@ public class EvaluacionController {
         public ResponseEntity<ApiResponseSuccessDto<List<Evaluacion>>> getByRangoFechas(
         		@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaInicio,
         		@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaFinal) {
-            
+            //Uso de DateTimeFormat para que Spring tome un mejor formato de fechas yyyy-mm-dd
             List<Evaluacion> evaluaciones = evaluacionServiceImp.findByFechaBetween(fechaInicio, fechaFinal);
 
             ApiResponseSuccessDto<List<Evaluacion>> response = new ApiResponseSuccessDto<>();
