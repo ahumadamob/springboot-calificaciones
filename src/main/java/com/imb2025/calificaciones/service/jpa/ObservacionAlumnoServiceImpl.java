@@ -69,6 +69,7 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 
         existente.setTexto(observacionAlumno.getTexto());
         existente.setFecha(observacionAlumno.getFecha());
+        existente.setRevisada(observacionAlumno.getRevisada());
         existente.setAlumno(alumno);
         existente.setDocente(docente);
 
@@ -95,5 +96,17 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 	public Long countByAlumno(Alumno alumno) {
 		return observacionAlumnoRepository.countByAlumno(alumno);
 	}
+
+	@Override
+	public List<ObservacionAlumno> findByRevisadaTrue() {
+		return observacionAlumnoRepository.findByRevisadaTrue();
+	}
+
+	@Override
+	public List<ObservacionAlumno> findByRevisadaFalse() {
+		return observacionAlumnoRepository.findByRevisadaFalse();
+	}
+	
+	
 
 }

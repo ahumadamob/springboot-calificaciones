@@ -14,5 +14,7 @@ public interface ObservacionAlumnoRepository extends JpaRepository<ObservacionAl
 	
 		List<ObservacionAlumno> findByDocente(Docente docente);
 		Long countByAlumno(Alumno alumno);
+		List<ObservacionAlumno> findByRevisadaTrue();
+		List<ObservacionAlumno> findByRevisadaFalse();
 }
 

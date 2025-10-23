@@ -16,6 +16,8 @@ public class ObservacionAlumnoRequestDto {
     private String texto;
 	@PastOrPresent
     private Date fecha;
+	@NotNull
+	private Boolean revisada;
 
     public Long getAlumnoId() {
         return alumnoId;
@@ -23,9 +25,17 @@ public class ObservacionAlumnoRequestDto {
 
     public void setAlumnoId(Long alumnoId) {
         this.alumnoId = alumnoId;
-    }
+    }    
 
-    public Long getDocenteId() {
+	public Boolean getRevisada() {
+		return revisada;
+	}
+
+	public void setRevisada(Boolean revisada) {
+		this.revisada = revisada;
+	}
+
+	public Long getDocenteId() {
         return docenteId;
     }
 

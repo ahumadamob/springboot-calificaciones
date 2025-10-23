@@ -22,5 +22,9 @@ public interface IObservacionAlumnoService {
     
     public Long countByAlumno(Alumno alumno);
     
+    public List<ObservacionAlumno> findByRevisadaTrue();
+    
+    public List<ObservacionAlumno> findByRevisadaFalse();
+    
      
 }

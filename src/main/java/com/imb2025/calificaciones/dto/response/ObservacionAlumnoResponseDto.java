@@ -11,6 +11,8 @@ public class ObservacionAlumnoResponseDto {
 	
 	private Long id;
 	
+	private Boolean revisada;
+	
     private Alumno alumno;
 	
     private Docente docente;
@@ -25,10 +27,11 @@ public class ObservacionAlumnoResponseDto {
 		super();
 	}
 
-	public ObservacionAlumnoResponseDto(Long id, Alumno alumno, Docente docente, String texto, Date fecha,
+	public ObservacionAlumnoResponseDto(Long id, Boolean revisada, Alumno alumno, Docente docente, String texto, Date fecha,
 			Long version) {
 		super();
 		this.id = id;
+		this.revisada = revisada;
 		this.alumno = alumno;
 		this.docente = docente;
 		this.texto = texto;
@@ -42,6 +45,14 @@ public class ObservacionAlumnoResponseDto {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Boolean getRevisada() {
+		return revisada;
+	}
+
+	public void setRevisada(Boolean revisada) {
+		this.revisada = revisada;
 	}
 
 	public Alumno getAlumno() {

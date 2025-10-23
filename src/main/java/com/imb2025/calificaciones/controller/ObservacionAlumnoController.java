@@ -141,6 +141,39 @@ public class ObservacionAlumnoController {
 		return ResponseEntity.ok(response);
 	}
 	
+	@GetMapping("/revisadas")
+	public ResponseEntity<ApiResponseSuccessDto<List<ObservacionAlumnoResponseDto>>> findByObservacionesRevisadas(){
+        
+		List<ObservacionAlumno> observacion = observacionAlumnoService.findByRevisadaTrue();
+		
+		List<ObservacionAlumnoResponseDto> lista = observacion.stream()
+				.map(mapper::toResponseDto)
+				.collect(Collectors.toList());
+		
+		ApiResponseSuccessDto<List<ObservacionAlumnoResponseDto>> response = new ApiResponseSuccessDto<>();
+		response.setSuccess(true);
+		response.setMessage("Observaciones revisadas obtenidas correctamente");
+		response.setData(lista);
+		
+		return ResponseEntity.ok(response);		
+	}
 	
+	@GetMapping("/no-revisadas")
+	public ResponseEntity<ApiResponseSuccessDto<List<ObservacionAlumnoResponseDto>>> findByObservacionesNoRevisadas(){
+        
+		List<ObservacionAlumno> observacion = observacionAlumnoService.findByRevisadaFalse();
+		
+		List<ObservacionAlumnoResponseDto> lista = observacion.stream()
+				.map(mapper::toResponseDto)
+				.collect(Collectors.toList());
+		
+		ApiResponseSuccessDto<List<ObservacionAlumnoResponseDto>> response = new ApiResponseSuccessDto<>();
+		response.setSuccess(true);
+		response.setMessage("Observaciones pendientes obtenidas correctamente");
+		response.setData(lista);
+		
+		return ResponseEntity.ok(response);		
+	}
+
 }
 	

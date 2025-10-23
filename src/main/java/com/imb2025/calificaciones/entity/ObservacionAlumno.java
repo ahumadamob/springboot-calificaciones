@@ -10,6 +10,7 @@ public class ObservacionAlumno extends BaseEntity{
 	
     private String texto;
     private Date fecha;
+    private Boolean revisada;
     
     @ManyToOne
     private Docente docente;
@@ -21,11 +22,12 @@ public class ObservacionAlumno extends BaseEntity{
     }
 
 
-    public ObservacionAlumno(String texto, Date fecha, Docente docente, Alumno alumno) {
+    public ObservacionAlumno(String texto, Date fecha, Boolean revisada, Docente docente, Alumno alumno) {
         this.texto = texto;
         this.fecha = fecha;
         this.docente = docente;
         this.alumno = alumno;
+        this.revisada = revisada;
     }
 	
 
@@ -44,6 +46,16 @@ public class ObservacionAlumno extends BaseEntity{
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+
+	public Boolean getRevisada() {
+		return revisada;
+	}
+
+
+	public void setRevisada(Boolean revisada) {
+		this.revisada = revisada;
+	}
+
 
 	public Docente getDocente() {
 		return docente;
