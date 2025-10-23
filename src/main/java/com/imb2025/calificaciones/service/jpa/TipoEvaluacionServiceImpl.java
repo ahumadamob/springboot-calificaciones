@@ -73,8 +73,5 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     public long contarNombre(String q) {
         return repo.countByNombreContainingIgnoreCase(q);
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> f92b8fc (TP07: métodos mágicos)
+
 }
