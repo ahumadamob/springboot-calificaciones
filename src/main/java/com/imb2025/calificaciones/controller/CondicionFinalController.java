@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// Importar la anotación @Valid
-import jakarta.validation.Valid; // <--- ¡NUEVO IMPORT!
+
+import jakarta.validation.Valid; 
 
 import com.imb2025.calificaciones.dto.request.CondicionFinalRequestDto; 
 import com.imb2025.calificaciones.dto.response.CondicionFinalResponseDto; 
@@ -35,8 +35,6 @@ public class CondicionFinalController {
     @Autowired 
     private CondicionFinalMapper mapper;
 
-    // Métodos CRUD existentes
-    // =========================================================================
     
     @GetMapping
     public ResponseEntity<List<CondicionFinalResponseDto>> getAll() { 
@@ -57,7 +55,6 @@ public class CondicionFinalController {
     }
 
     @PostMapping
-    // Se añade @Valid para activar la validación del DTO (para el caso de error 400)
     public ResponseEntity<CondicionFinalResponseDto> create(@Valid @RequestBody CondicionFinalRequestDto dto) throws Exception { 
         CondicionFinal condicion = mapper.toEntity(dto);
         CondicionFinal created = service.create(condicion);
@@ -65,7 +62,6 @@ public class CondicionFinalController {
     }
 
     @PutMapping("/{id}")
-    // Se añade @Valid para activar la validación del DTO (para el caso de error 400)
     public ResponseEntity<CondicionFinalResponseDto> update(@PathVariable Long id, @Valid @RequestBody CondicionFinalRequestDto dto) throws Exception { 
         CondicionFinal existente = service.findById(id);
         if (existente == null) {
@@ -86,8 +82,6 @@ public class CondicionFinalController {
         }
     }
 
-    // Otros endpoints existentes
-    // =========================================================================
 
     @GetMapping("/nombre/{nombre}")
     public ResponseEntity<List<CondicionFinalResponseDto>> getByNombre(@PathVariable String nombre) { 
@@ -107,18 +101,12 @@ public class CondicionFinalController {
         return ResponseEntity.ok(cantidad);
     }
 
-    // Nuevos Endpoints del Ejercicio 1 (Atributo Booleano: esVigente)
-    // =========================================================================
 
-    /**
-     * Listado True: Registros donde esVigente es true.
-     * Responde 200 con la lista.
-     */
     @GetMapping("/vigentes")
     public ResponseEntity<List<CondicionFinalResponseDto>> getVigentes() {
         List<CondicionFinal> condiciones = service.findVigentes();
         if (condiciones.isEmpty()) {
-            return ResponseEntity.ok(List.of()); // Devuelve 200 con lista vacía
+            return ResponseEntity.ok(List.of()); 
         }
         List<CondicionFinalResponseDto> dtos = condiciones.stream()
             .map(mapper::toResponseDto)
@@ -126,15 +114,12 @@ public class CondicionFinalController {
         return ResponseEntity.ok(dtos); 
     }
 
-    /**
-     * Listado False: Registros donde esVigente es false.
-     * Responde 200 con la lista.
-     */
+   
     @GetMapping("/no-vigentes")
     public ResponseEntity<List<CondicionFinalResponseDto>> getNoVigentes() {
         List<CondicionFinal> condiciones = service.findNoVigentes();
         if (condiciones.isEmpty()) {
-            return ResponseEntity.ok(List.of()); // Devuelve 200 con lista vacía
+            return ResponseEntity.ok(List.of());
         }
         List<CondicionFinalResponseDto> dtos = condiciones.stream()
             .map(mapper::toResponseDto)
@@ -142,8 +127,5 @@ public class CondicionFinalController {
         return ResponseEntity.ok(dtos); 
     }
 
-    // Manejador de Excepciones
-    // =========================================================================
-    
    
 }

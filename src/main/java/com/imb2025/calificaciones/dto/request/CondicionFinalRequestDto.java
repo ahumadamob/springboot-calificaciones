@@ -5,18 +5,15 @@ import jakarta.validation.constraints.NotNull;
 
 public class CondicionFinalRequestDto {
 
-    // Se añade @NotBlank para asegurar que el nombre no sea vacío o solo espacios.
     @NotBlank(message = "El nombre de la condición es obligatorio y no puede estar vacío.")
     private String nombre;
     
-    // Se añade @NotNull. Si este campo es omitido o enviado como null,
-    // se activará el GlobalExceptionHandler para devolver el error 400 con la lista de errores.
     @NotNull(message = "El atributo 'esVigente' es obligatorio.")
-    private Boolean esVigente; // Nuevo atributo
+    private Boolean esVigente; 
 
     public CondicionFinalRequestDto() {}
 
-    public CondicionFinalRequestDto(String nombre, Boolean esVigente) { // Actualizar constructor
+    public CondicionFinalRequestDto(String nombre, Boolean esVigente) { 
         this.nombre = nombre;
         this.esVigente = esVigente;
     }
@@ -29,7 +26,7 @@ public class CondicionFinalRequestDto {
         this.nombre = nombre;
     }
     
-    // Nuevo Getter y Setter
+   
     public Boolean getEsVigente() {
         return esVigente;
     }

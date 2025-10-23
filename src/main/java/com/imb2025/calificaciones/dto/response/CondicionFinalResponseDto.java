@@ -6,21 +6,21 @@ public class CondicionFinalResponseDto {
 
     private Long id;
     private String nombre;
-    private Boolean esVigente; // Nuevo atributo
+    private Boolean esVigente; 
     
-    // Eliminados: createdAt y updatedAt (según consigna del TP Parcial)
+   
     private Long version;
 
     public CondicionFinalResponseDto() {}
 
-    public CondicionFinalResponseDto(Long id, String nombre, Boolean esVigente, Long version) { // Constructor actualizado
+    public CondicionFinalResponseDto(Long id, String nombre, Boolean esVigente, Long version) { 
         this.id = id;
         this.nombre = nombre;
         this.esVigente = esVigente;
         this.version = version;
     }
 
-    // Getters y Setters
+   
     public Long getId() {
         return id;
     }
@@ -37,15 +37,13 @@ public class CondicionFinalResponseDto {
         this.nombre = nombre;
     }
     
-    public Boolean getEsVigente() { // Nuevo
+    public Boolean getEsVigente() { 
         return esVigente;
     }
 
-    public void setEsVigente(Boolean esVigente) { // Nuevo
+    public void setEsVigente(Boolean esVigente) { 
         this.esVigente = esVigente;
     }
-
-    // Eliminados: getCreatedAt() y getUpdatedAt()
     
     public Long getVersion() {
         return version;

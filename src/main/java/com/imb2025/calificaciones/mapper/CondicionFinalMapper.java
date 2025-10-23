@@ -15,7 +15,7 @@ public class CondicionFinalMapper {
         }
         CondicionFinal entity = new CondicionFinal();
         entity.setNombre(dto.getNombre());
-        entity.setEsVigente(dto.getEsVigente()); // Nuevo mapeo
+        entity.setEsVigente(dto.getEsVigente()); 
         return entity;
     }
 
@@ -26,9 +26,7 @@ public class CondicionFinalMapper {
         CondicionFinalResponseDto dto = new CondicionFinalResponseDto();
         dto.setId(entity.getId());
         dto.setNombre(entity.getNombre());
-        dto.setEsVigente(entity.getEsVigente()); // Nuevo mapeo
-        // Se eliminan: dto.setCreatedAt(entity.getCreatedAt());
-        // Se eliminan: dto.setUpdatedAt(entity.getUpdatedAt());
+        dto.setEsVigente(entity.getEsVigente()); 
         dto.setVersion(entity.getVersion());
         return dto;
     }

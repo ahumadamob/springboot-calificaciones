@@ -6,13 +6,13 @@ import jakarta.persistence.Entity;
 public class CondicionFinal extends BaseEntity {
 
     private String nombre;
-    private Boolean esVigente; // Nuevo atributo booleano
+    private Boolean esVigente; 
 
     public CondicionFinal() {}
 
     public CondicionFinal(String nombre, Boolean esVigente) {
         this.nombre = nombre;
-        this.esVigente = esVigente; // Actualizar constructor
+        this.esVigente = esVigente; 
     }
 
     public String getNombre() {
@@ -23,7 +23,7 @@ public class CondicionFinal extends BaseEntity {
         this.nombre = nombre;
     }
     
-    // Nuevo Getter y Setter
+    
     public Boolean getEsVigente() {
         return esVigente;
     }
