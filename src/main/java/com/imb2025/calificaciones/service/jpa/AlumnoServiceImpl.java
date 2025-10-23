@@ -8,8 +8,10 @@ import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.service.IAlumnoService;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AlumnoServiceImpl implements IAlumnoService {
@@ -18,14 +20,18 @@ public class AlumnoServiceImpl implements IAlumnoService {
     private AlumnoRepository alumnoRepository;
 
     @Override
-    public Alumno update(Alumno alumno, Long id) {
-        if (!alumnoRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Entidad no encontrada con id " + id);
-        }
+    @Transactional
+    public Alumno update(Alumno alumnoDto, Long id) {
+        Alumno alumnoExistente = alumnoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Alumno no encontrado con id " + id));
 
-        alumno.setId(id);
+        alumnoExistente.setNombre(alumnoDto.getNombre());
+        alumnoExistente.setApellido(alumnoDto.getApellido());
+        alumnoExistente.setEmail(alumnoDto.getEmail());
+        alumnoExistente.setDni(alumnoDto.getDni());
+        alumnoExistente.setFechaNacimiento(alumnoDto.getFechaNacimiento());
 
-         return alumnoRepository.save(alumno);
+        return alumnoRepository.save(alumnoExistente);
     }
 
     @Override

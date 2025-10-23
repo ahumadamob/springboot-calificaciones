@@ -5,12 +5,8 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 @Entity
-public class Alumno {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
-    @Version
-    private Long version;
+public class Alumno extends BaseEntity {
+     
     private String nombre;
     private String apellido;
     private int dni;
@@ -28,30 +24,9 @@ public class Alumno {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Alumno(Long id, String nombre, String apellido, int dni, String email, Date fechaNacimiento) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.email = email;
-        this.fechaNacimiento = fechaNacimiento;
-    }
+    
 
 
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNombre() {
         return nombre;
