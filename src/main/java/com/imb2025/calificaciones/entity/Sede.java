@@ -1,16 +1,10 @@
 package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
-public class Sede {
+public class Sede extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String nombre;
     private String direccion;
 
@@ -18,7 +12,7 @@ public class Sede {
     }
 
     public Sede(Long id, String nombre, String direccion) {
-        this.id = id;
+        this.setId(id);
         this.nombre = nombre;
         this.direccion = direccion;
     }
@@ -26,14 +20,6 @@ public class Sede {
     public Sede(String nombre, String direccion) {
         this.nombre = nombre;
         this.direccion = direccion;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {

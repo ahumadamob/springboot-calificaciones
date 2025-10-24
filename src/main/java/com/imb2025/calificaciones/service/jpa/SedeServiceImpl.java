@@ -55,27 +55,6 @@ public class SedeServiceImpl implements ISedeService {
     }
 
     @Override
-    public Sede fromDto(SedeRequestDto dto) throws Exception {
-        if (dto == null) {
-            throw new Exception("El dto de sede no puede ser nulo");
-        }
-        Sede sede = new Sede();
-        sede.setNombre(dto.getNombre());
-        sede.setDireccion(dto.getDireccion());
-        return sede;
-    }
-
-    @Override
-    public Sede createFromDto(SedeRequestDto dto) throws Exception {
-        try {
-            Sede sede = fromDto(dto);
-            return create(sede);
-        } catch (Exception ex) {
-            throw new Exception("Error creando Sede desde DTO: " + ex.getMessage(), ex);
-        }
-    }
-
-    @Override
     public List<Sede> findByNombreIgnoreCase(String nombre) {
         return repo.findByNombreIgnoreCase(nombre);
     }
