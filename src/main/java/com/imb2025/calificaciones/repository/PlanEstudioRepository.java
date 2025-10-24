@@ -10,5 +10,8 @@ public interface PlanEstudioRepository extends JpaRepository<PlanEstudio, Long> 
 	
 	List<PlanEstudio> findByNombreContainingIgnoreCase(String nombre);
     long countByCarrera_Id(Long carreraId);
+    
+    List<PlanEstudio> findByActivoTrue();
+    List<PlanEstudio> findByActivoFalse();
 }
 

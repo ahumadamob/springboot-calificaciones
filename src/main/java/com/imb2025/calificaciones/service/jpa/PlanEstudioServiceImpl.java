@@ -129,5 +129,14 @@ public class PlanEstudioServiceImpl implements IPlanEstudioService {
 	    return planestudiorepository.countByCarrera_Id(carreraId);
 	}
 	
-	
+	@Override
+	public List<PlanEstudio> findActivos() {
+	    return planestudiorepository.findByActivoTrue();
+	}
+
+	@Override
+	public List<PlanEstudio> findInactivos() {
+	    return planestudiorepository.findByActivoFalse();
+	}
+
 }

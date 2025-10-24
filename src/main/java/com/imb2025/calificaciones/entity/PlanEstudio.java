@@ -19,13 +19,16 @@ public class PlanEstudio extends BaseEntity {
 
     private int anioVigencia;
 
+    private boolean activo; 
+    
     public PlanEstudio() {
     }
 
-    public PlanEstudio(Carrera carrera, String nombre, int anioVigencia) {
+    public PlanEstudio(Carrera carrera, String nombre, int anioVigencia, boolean activo) {
         this.carrera = carrera;
         this.nombre = nombre;
         this.anioVigencia = anioVigencia;
+        this.activo = activo; 
     }
 
    
@@ -55,6 +58,12 @@ public class PlanEstudio extends BaseEntity {
     }
 
 	
+    public boolean isActivo() {
+        return activo;
+    }
 
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 	
 }

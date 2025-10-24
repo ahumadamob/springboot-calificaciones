@@ -118,4 +118,31 @@ public class PlanEstudioController {
 
         return ResponseEntity.ok(response);
     }
+    
+    @GetMapping("/activos")
+    public ResponseEntity<ApiResponseSuccessDto<List<PlanEstudioResponseDto>>> getPlanesActivos() {
+        List<PlanEstudio> activos = planEstudioService.findActivos();
+        List<PlanEstudioResponseDto> dtos = activos.stream()
+                .map(PlanEstudioMapper::toResponseDto)
+                .toList();
+
+        ApiResponseSuccessDto<List<PlanEstudioResponseDto>> response =
+                new ApiResponseSuccessDto<>(true, "Listado de planes activos", dtos);
+
+        return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+    }
+
+    // 🔹 Listado de inactivos
+    @GetMapping("/inactivos")
+    public ResponseEntity<ApiResponseSuccessDto<List<PlanEstudioResponseDto>>> getPlanesInactivos() {
+        List<PlanEstudio> inactivos = planEstudioService.findInactivos();
+        List<PlanEstudioResponseDto> dtos = inactivos.stream()
+                .map(PlanEstudioMapper::toResponseDto)
+                .toList();
+
+        ApiResponseSuccessDto<List<PlanEstudioResponseDto>> response =
+                new ApiResponseSuccessDto<>(true, "Listado de planes inactivos", dtos);
+
+        return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+    }
 }

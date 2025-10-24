@@ -16,7 +16,7 @@ public class PlanEstudioMapper {
 	    public static PlanEstudio fromDto(PlanEstudioRequestDto dto) {
 	        PlanEstudio plan = new PlanEstudio();
 	        plan.setNombre(dto.getNombre());
-	        
+	        plan.setActivo(dto.isActivo());
 	        return plan;
 	    }
 
@@ -26,6 +26,8 @@ public class PlanEstudioMapper {
 	        dto.setID(plan.getId());
 	        dto.setNombre(plan.getNombre());
 	        dto.setVersion(plan.getVersion());
+	        dto.setActivo(plan.isActivo());
+	        
 	        return dto;
 }
 

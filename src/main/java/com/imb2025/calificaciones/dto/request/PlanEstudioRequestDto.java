@@ -15,7 +15,8 @@ public class PlanEstudioRequestDto {
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     
-
+    private boolean activo;
+    
     public Long getCarreraId() {
         return carreraId;
     }
@@ -32,5 +33,11 @@ public class PlanEstudioRequestDto {
         this.nombre = nombre;
     }
 
-    
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
 }

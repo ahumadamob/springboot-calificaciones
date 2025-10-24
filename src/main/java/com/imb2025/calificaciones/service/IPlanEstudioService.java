@@ -27,5 +27,9 @@ public interface IPlanEstudioService {
     
     public long countByCarrera(Long carreraId);
     
+    List<PlanEstudio> findActivos();
+    List<PlanEstudio> findInactivos();
+
+    
 }
 

@@ -8,6 +8,7 @@ public class PlanEstudioResponseDto {
 	private String nombre;
 	private Long carreraId;
 	private Long version;
+	private boolean activo;
 	
 	public PlanEstudioResponseDto() {
     }
@@ -46,5 +47,13 @@ public class PlanEstudioResponseDto {
 	public void setVersion(Long version) {
 		this.version = version;
 	}
+	
+	public boolean isActivo() {
+		return activo;
+	}
+	
+    public void setActivo(boolean activo) {
+    	this.activo = activo; 
+    	}
 
 }
