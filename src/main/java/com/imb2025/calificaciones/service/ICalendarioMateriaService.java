@@ -21,4 +21,5 @@ public interface ICalendarioMateriaService {
 
     public Long countByComisionId(Long comisionId);
 
+    public Long countByEstadoCalendarioMateria(CalendarioMateria.EstadoCalendarioMateria estadoCalendarioMateria);
 }

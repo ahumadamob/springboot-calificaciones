@@ -13,6 +13,6 @@ public interface ICalendarioMateriaRepository extends JpaRepository<CalendarioMa
 
     List<CalendarioMateria> findByMateriaId(Long materiaId);
     Optional<Long> countByComisionId(Long comisionId);
-
+    Optional<Long> countByEstado(CalendarioMateria.EstadoCalendarioMateria estadoCalendarioMateria);
 }
 

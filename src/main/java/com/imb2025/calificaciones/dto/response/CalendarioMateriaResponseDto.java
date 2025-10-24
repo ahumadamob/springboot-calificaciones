@@ -1,5 +1,7 @@
 package com.imb2025.calificaciones.dto.response;
 
+import com.imb2025.calificaciones.entity.CalendarioMateria;
+
 import java.time.LocalDate;
 
 public class CalendarioMateriaResponseDto {
@@ -9,14 +11,16 @@ public class CalendarioMateriaResponseDto {
     private Long materia;
     private Long comision;
     private Long version;
+    private CalendarioMateria.EstadoCalendarioMateria estado;
 
-    public CalendarioMateriaResponseDto(Long id, Long version, Long comision, Long materia, LocalDate fechaFin, LocalDate fechaInicio) {
+    public CalendarioMateriaResponseDto(Long id, LocalDate fechaInicio, LocalDate fechaFin, Long materia, Long comision, Long version, CalendarioMateria.EstadoCalendarioMateria estado) {
         this.id = id;
-        this.version = version;
-        this.comision = comision;
-        this.materia = materia;
-        this.fechaFin = fechaFin;
         this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.materia = materia;
+        this.comision = comision;
+        this.version = version;
+        this.estado = estado;
     }
 
     public CalendarioMateriaResponseDto() {
@@ -68,5 +72,13 @@ public class CalendarioMateriaResponseDto {
 
     public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
+    }
+
+    public CalendarioMateria.EstadoCalendarioMateria getEstado() {
+        return estado;
+    }
+
+    public void setEstado(CalendarioMateria.EstadoCalendarioMateria estado) {
+        this.estado = estado;
     }
 }

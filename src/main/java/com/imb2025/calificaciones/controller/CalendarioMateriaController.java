@@ -98,7 +98,33 @@ public class CalendarioMateriaController {
 
         return ResponseEntity.ok(response);
     }
-	
+
+    @GetMapping("/recurso/stats/activos")
+    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateriaResponseDto>> countByEstadoActivo (){
+        Long result = calMatSer.countByEstadoCalendarioMateria(CalendarioMateria.EstadoCalendarioMateria.ACTIVO);
+
+        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+
+        response.setSuccess(true);
+        response.setData(result);
+        response.setMessage("Contados con exito");
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/recurso/stats/inactivos")
+    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateriaResponseDto>> countByEstadoInactivo (){
+        Long result = calMatSer.countByEstadoCalendarioMateria(CalendarioMateria.EstadoCalendarioMateria.INACTIVO);
+
+        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+
+        response.setSuccess(true);
+        response.setData(result);
+        response.setMessage("Contados con exito");
+
+        return ResponseEntity.ok(response);
+    }
+
 	@PostMapping
 	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateriaResponseDto>> create(@Valid @RequestBody CalendarioMateriaRequestDto calendarioMateriaDto) throws Exception {
 

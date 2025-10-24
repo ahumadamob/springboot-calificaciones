@@ -70,5 +70,11 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService {
                 "materias para la comision: " + comisionId));
     }
 
+    @Override
+    public Long countByEstadoCalendarioMateria(CalendarioMateria.EstadoCalendarioMateria estadoCalendarioMateria) {
+        return calMatRepo.countByEstado(estadoCalendarioMateria).orElseThrow(() -> new ResourceNotFoundException
+                ("No hay Calendarios Materia ACTIVOS o INACTIVOS"));
+    }
+
 
 }

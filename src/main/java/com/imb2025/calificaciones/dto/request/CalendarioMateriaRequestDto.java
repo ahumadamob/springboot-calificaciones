@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.dto.request;
 
+import com.imb2025.calificaciones.entity.CalendarioMateria;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -24,6 +25,8 @@ public class CalendarioMateriaRequestDto {
     @NotNull(message = "El ID de la comisión es obligatorio")
     @Positive(message = "El ID de la comisión debe ser un número positivo")
     private Long comisionId;
+
+    private CalendarioMateria.EstadoCalendarioMateria estado;
 
     public LocalDate getFechaInicio() {
         return fechaInicio;
@@ -55,5 +58,13 @@ public class CalendarioMateriaRequestDto {
 
     public void setComisionId(Long comisionId) {
         this.comisionId = comisionId;
+    }
+
+    public CalendarioMateria.EstadoCalendarioMateria getEstado() {
+        return estado;
+    }
+
+    public void setEstado(CalendarioMateria.EstadoCalendarioMateria estado) {
+        this.estado = estado;
     }
 }

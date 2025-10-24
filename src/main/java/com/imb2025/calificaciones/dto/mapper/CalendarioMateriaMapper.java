@@ -35,6 +35,7 @@ public class CalendarioMateriaMapper {
         calendarioMateria.setFechaFin(calMatDto.getFechaFin());
         calendarioMateria.setMateria(materia);
         calendarioMateria.setComision(comision);
+        calendarioMateria.setEstado(calMatDto.getEstado());
 
         return calendarioMateria;
     }
@@ -49,6 +50,7 @@ public class CalendarioMateriaMapper {
         response.setMateria(calendarioMateria.getMateria().getId());
         response.setComision(calendarioMateria.getComision().getId());
         response.setVersion(calendarioMateria.getVersion());
+        response.setEstado(calendarioMateria.getEstado());
 
         return response;
     }
