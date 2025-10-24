@@ -1,5 +1,7 @@
 package com.imb2025.calificaciones.dto.response;
 
+import com.imb2025.calificaciones.enums.EstadoInscripcionMateria;
+
 public class InscripcionMateriaResponseDto {
     private Long id;
     private Long version;
@@ -7,7 +9,10 @@ public class InscripcionMateriaResponseDto {
     private AlumnoResponseDto alumno;
     private MateriaResponseDto materia;
     private PeriodoLectivoResponseDto periodoLectivo;
-
+    private Boolean inscripto;
+    private String identificadorLegible; 
+    private EstadoInscripcionMateria estado;
+    
     public Long getId() {
         return id;
     }
@@ -38,4 +43,23 @@ public class InscripcionMateriaResponseDto {
     public void setPeriodoLectivo(PeriodoLectivoResponseDto periodoLectivo) {
         this.periodoLectivo = periodoLectivo;
     }
+    public Boolean getInscripto() {
+        return inscripto;
+    }
+    public void setInscripto(Boolean inscripto) {
+        this.inscripto = inscripto;
+    }
+    public String getIdentificadorLegible() {
+        return identificadorLegible;
+    }
+    public void setIdentificadorLegible(String identificadorLegible) {
+        this.identificadorLegible = identificadorLegible;
+    }
+    public EstadoInscripcionMateria getEstado() {
+        return estado;
+    }
+    public void setEstado(EstadoInscripcionMateria estado) {
+        this.estado = estado;
+    }
+    
 }

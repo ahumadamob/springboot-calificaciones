@@ -12,6 +12,8 @@ import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.repository.PeriodoLectivoRepository;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class InscripcionMateriaMapper {
@@ -32,17 +34,24 @@ public class InscripcionMateriaMapper {
         InscripcionMateria inscripcionMateria = new InscripcionMateria();
 
         Alumno alumno = alumnoRepository.findById(inscripcionMateriaDto.getAlumnoId())
-                .orElseThrow(() -> new Exception("Alumno no encontrado con ID: " + inscripcionMateriaDto.getAlumnoId()));
+                .orElseThrow(
+                        () -> new Exception("Alumno no encontrado con ID: " + inscripcionMateriaDto.getAlumnoId()));
         inscripcionMateria.setAlumno(alumno);
 
         Materia materia = materiaRepository.findById(inscripcionMateriaDto.getMateriaId())
-                .orElseThrow(() -> new Exception("Materia no encontrada con ID: " + inscripcionMateriaDto.getMateriaId()));
+                .orElseThrow(
+                        () -> new Exception("Materia no encontrada con ID: " + inscripcionMateriaDto.getMateriaId()));
         inscripcionMateria.setMateria(materia);
 
         PeriodoLectivo periodoLectivo = periodoLectivoRepository.findById(inscripcionMateriaDto.getPeriodoLectivoId())
-                .orElseThrow(() -> new Exception("Periodo Lectivo no encontrado con ID: " + inscripcionMateriaDto.getPeriodoLectivoId()));
+                .orElseThrow(() -> new Exception(
+                        "Periodo Lectivo no encontrado con ID: " + inscripcionMateriaDto.getPeriodoLectivoId()));
         inscripcionMateria.setPeriodoLectivo(periodoLectivo);
 
+        inscripcionMateria.setInscripto(inscripcionMateriaDto.getInscripto());
+        inscripcionMateria.setIdentificadorLegible(inscripcionMateriaDto.getIdentificadorLegible());
+        inscripcionMateria.setFechaVigencia(inscripcionMateriaDto.getFechaVigencia());
+        inscripcionMateria.setEstado(inscripcionMateriaDto.getEstado());
         return inscripcionMateria;
     }
 
@@ -55,6 +64,9 @@ public class InscripcionMateriaMapper {
         dto.setAlumno(null);
         dto.setMateria(null);
         dto.setPeriodoLectivo(periodoLectivoMapper.toResponse(inscripcionMateria.getPeriodoLectivo()));
+        dto.setInscripto(inscripcionMateria.isInscripto());
+        dto.setIdentificadorLegible(inscripcionMateria.getIdentificadorLegible());
+        dto.setEstado(inscripcionMateria.getEstado());
         return dto;
     }
 }
