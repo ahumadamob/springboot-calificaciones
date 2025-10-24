@@ -60,4 +60,9 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
 		return repository.countByFechaInicioAfterAndFechaFinBefore(inicio, fin);
 	}
 
+	@Override
+	public List<PeriodoLectivo> findByActivo(boolean activo) {
+		return activo? repository.findByActivoTrue() : repository.findByActivoFalse();
+	}
+
 }

@@ -9,13 +9,15 @@ public class PeriodoLectivo extends BaseEntity {
 	private String nombre;
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
+	private boolean activo;
 
 	public PeriodoLectivo() {}
 
-	public PeriodoLectivo(String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
+	public PeriodoLectivo(String nombre, LocalDate fechaInicio, LocalDate fechaFin, boolean activo) {
 		this.nombre = nombre;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
+		this.activo = activo;
 	}
 
 	public String getNombre() {
@@ -40,6 +42,14 @@ public class PeriodoLectivo extends BaseEntity {
 
 	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
+	}
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 	
 }

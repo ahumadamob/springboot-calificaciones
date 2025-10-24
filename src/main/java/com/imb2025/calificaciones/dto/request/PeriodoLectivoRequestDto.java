@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 
 public class PeriodoLectivoRequestDto {
@@ -16,14 +17,18 @@ public class PeriodoLectivoRequestDto {
 	
 	@FutureOrPresent(message = "La fecha debe ser futura o actual.")
     private LocalDate fechaFin;
+	
+	@NotNull(message = "El estado activo del periodo es obligatorio.")
+	private boolean activo;
 
     public PeriodoLectivoRequestDto() {
     }
 
-    public PeriodoLectivoRequestDto(String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
+    public PeriodoLectivoRequestDto(String nombre, LocalDate fechaInicio, LocalDate fechaFin, boolean activo) {
         this.nombre = nombre;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.activo = activo;
     }
 
     public String getNombre() {
@@ -49,4 +54,14 @@ public class PeriodoLectivoRequestDto {
     public void setFechaFin(LocalDate fechaFin) {
         this.fechaFin = fechaFin;
     }
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+    
 }
+

@@ -8,16 +8,18 @@ public class PeriodoLectivoResponseDto {
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
     private Long version;
+    private boolean activo;
     
     public PeriodoLectivoResponseDto() {
     }
     
-	public PeriodoLectivoResponseDto(Long id, String nombre, LocalDate fechaInicio, LocalDate fechaFin, Long version) {
+	public PeriodoLectivoResponseDto(Long id, String nombre, LocalDate fechaInicio, LocalDate fechaFin, Long version, boolean activo) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.version = version;
+		this.activo = activo;
 	}
 	
 	public Long getId() {
@@ -59,5 +61,13 @@ public class PeriodoLectivoResponseDto {
 	public void setVersion(Long version) {
 		this.version = version;
 	}
-    
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+	
 }

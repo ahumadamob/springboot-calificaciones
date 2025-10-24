@@ -12,6 +12,8 @@ public interface IPeriodoLectivoService {
     public List<PeriodoLectivo> findAllByNombre(String nombre);
     
     public long countByFechaInicioAndFechaFin(LocalDate inicio, LocalDate fin);
+    
+    public List<PeriodoLectivo> findByActivo(boolean activo);
 
     public PeriodoLectivo create(PeriodoLectivo periodoLectivo);
 

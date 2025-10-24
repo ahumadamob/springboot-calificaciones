@@ -49,6 +49,28 @@ public class PeriodoLectivoController {
         		new ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>(true, "Periodos Lectivos encontrados con éxito", periodos);
         return periodos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
+	
+	@GetMapping("/get/activos")
+    public ResponseEntity<ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>> getAllByActivoTrue() {
+		List<PeriodoLectivo> resultados = service.findByActivo(true);
+		
+		List<PeriodoLectivoResponseDto> periodos = resultados.stream().map(p -> mapper.toResponse(p)).toList();
+		
+        ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>> response = 
+        		new ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>(true, "Periodos Lectivos Activos encontrados con éxito", periodos);
+        return periodos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+    }
+	
+	@GetMapping("/get/inactivos")
+    public ResponseEntity<ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>> getAllByActivoFalse() {
+		List<PeriodoLectivo> resultados = service.findByActivo(true);
+		
+		List<PeriodoLectivoResponseDto> periodos = resultados.stream().map(p -> mapper.toResponse(p)).toList();
+		
+        ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>> response = 
+        		new ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>(true, "Periodos Lectivos Inactivos encontrados con éxito", periodos);
+        return periodos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+    }
 
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivoResponseDto>> getById(@PathVariable Long id) {
