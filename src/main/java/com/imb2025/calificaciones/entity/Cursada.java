@@ -23,6 +23,8 @@ public class Cursada extends BaseEntity {
     @JoinColumn(name = "condicion_final_id")
     private CondicionFinal condicionFinal;
 
+    private boolean regular;
+    
     public Cursada() {
     }
 
@@ -65,5 +67,12 @@ public class Cursada extends BaseEntity {
 
     public void setCondicionFinal(CondicionFinal condicionFinal) {
         this.condicionFinal = condicionFinal;
+    }
+    public boolean isRegular() {
+        return regular;
+    }
+
+    public void setRegular(boolean regular) {
+        this.regular = regular;
     }
 }

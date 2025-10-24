@@ -61,4 +61,14 @@ public class CursadaServiceImpl implements ICursadaService {
     public Long countByNombreMateria(String nombreMateria) {
         return repo.countByMateria_Nombre(nombreMateria);
     }
+    
+    @Override
+    public List<Cursada> findByRegularTrue() {
+        return repo.findByRegularTrue();
+    }
+
+    @Override
+    public List<Cursada> findByRegularFalse() {
+        return repo.findByRegularFalse();
+    }
 }

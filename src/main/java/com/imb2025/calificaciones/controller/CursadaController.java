@@ -10,7 +10,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 //import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/cursada")
@@ -31,6 +36,40 @@ public class CursadaController {
 
     @Autowired
     private CursadaMapper cursadaMapper;
+    
+    @GetMapping("/regular")
+    public ResponseEntity<ApiResponseSuccessDto<List<CursadaResponseDto>>> getCursadasRegulares() {
+        List<Cursada> data = cursadaService.findByRegularTrue();
+
+        List<CursadaResponseDto> dtoList = data.stream()
+                .map(cursadaMapper::toResponseDto)
+                .toList();
+
+        ApiResponseSuccessDto<List<CursadaResponseDto>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(dtoList);
+        resp.setMessage("Listado de cursadas regulares");
+
+        return ResponseEntity.ok(resp);
+        
+    }
+    
+    
+    @GetMapping("/no-regular")
+    public ResponseEntity<ApiResponseSuccessDto<List<CursadaResponseDto>>> getCursadasNoRegulares() {
+        List<Cursada> data = cursadaService.findByRegularFalse();
+
+        List<CursadaResponseDto> dtoList = data.stream()
+                .map(cursadaMapper::toResponseDto)
+                .toList();
+
+        ApiResponseSuccessDto<List<CursadaResponseDto>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(dtoList);
+        resp.setMessage("Listado de cursadas no regulares");
+
+        return ResponseEntity.ok(resp);
+    }
 
     @GetMapping
     public ResponseEntity<ApiResponseSuccessDto<List<CursadaResponseDto>>> getAllCursada() {
@@ -131,6 +170,24 @@ public class CursadaController {
         resp.setMessage("Eliminación exitosa");
 
         return ResponseEntity.ok(resp);
+    }
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, List<String>>> handleValidationErrors(MethodArgumentNotValidException ex) {
+        List<String> errors = ex.getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(error -> {
+                    if (error instanceof FieldError fieldError) {
+                        return fieldError.getField() + ": " + fieldError.getDefaultMessage();
+                    } else {
+                        return error.getDefaultMessage();
+                    }
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.badRequest().body(Map.of("errors", errors));
+
     }
 }
 

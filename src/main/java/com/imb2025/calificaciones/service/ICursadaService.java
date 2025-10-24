@@ -18,4 +18,9 @@ public interface ICursadaService {
     public List<Cursada> findByNombreAlumno(String nombre);
 
     public Long countByNombreMateria(String nombreMateria);
+    
+    public List<Cursada> findByRegularTrue();
+    
+    public List<Cursada> findByRegularFalse();
+
 }

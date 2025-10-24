@@ -37,8 +37,12 @@ public class CursadaMapper {
 	     
 	        CondicionFinal condicionFinal = condicionFinalRepository.findById(dto.getCondicionFinalId())
 	                .orElseThrow(() -> new Exception("Condición final no encontrada con id: " + dto.getCondicionFinalId()));
+	        
+	        Cursada cursada = new Cursada(alumno, materia, anioLectivo, condicionFinal);
+	        cursada.setRegular(dto.isRegular());
+	        return cursada;
 
-	        return new Cursada(null, alumno, materia, anioLectivo, condicionFinal);
+	        //return new Cursada(null, alumno, materia, anioLectivo, condicionFinal);
 	    }
 
 	    public CursadaResponseDto toResponseDto(Cursada cursada) {
@@ -49,8 +53,8 @@ public class CursadaMapper {
 	        dto.setMateriaId(cursada.getMateria().getId());
 	        dto.setAnioLectivoId(cursada.getAnioLectivo().getId());
 	        dto.setCondicionFinalId(cursada.getCondicionFinal().getId());
+	        dto.setRegular(cursada.isRegular()); 
 
 	        return dto;
 	    }
 	}
-

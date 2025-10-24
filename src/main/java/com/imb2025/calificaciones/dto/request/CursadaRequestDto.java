@@ -20,6 +20,8 @@ public class CursadaRequestDto {
 	@NotNull(message = "El ID del año lectivo es obligatorio")
 	@Positive(message = "El ID del año lectivo debe ser un número positivo")
     private Long condicionFinalId;
+	
+	private boolean regular;
 
     public Long getAlumnoId() {
         return alumnoId;
@@ -52,4 +54,7 @@ public class CursadaRequestDto {
     public void setCondicionFinalId(Long condicionFinalId) {
         this.condicionFinalId = condicionFinalId;
     }
+    
+    public boolean isRegular() { return regular; }
+    public void setRegular(boolean regular) { this.regular = regular; }
 }
