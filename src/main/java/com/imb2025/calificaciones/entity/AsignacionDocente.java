@@ -23,6 +23,8 @@ public class AsignacionDocente extends BaseEntity {
     @JoinColumn(name = "periodo_lectivo_id", nullable = false)
     private PeriodoLectivo periodoLectivo;
 
+    private Boolean activa;
+
     public AsignacionDocente() {
     }
 
@@ -63,5 +65,13 @@ public class AsignacionDocente extends BaseEntity {
 
     public void setPeriodoLectivo(PeriodoLectivo periodoLectivo) {
         this.periodoLectivo = periodoLectivo;
+    }
+
+    public Boolean getActiva() {
+        return activa;
+    }
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
     }
 }

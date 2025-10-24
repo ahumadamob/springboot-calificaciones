@@ -85,6 +85,32 @@ public class AsignacionDocenteController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/activas")
+    public ResponseEntity<ApiResponseSuccessDto<List<AsignacionDocenteResponseDto>>> getActivas() {
+        List<AsignacionDocente> asignaciones = service.findByActivaTrue();
+        List<AsignacionDocenteResponseDto> asignacionesDto = asignaciones.stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+        ApiResponseSuccessDto<List<AsignacionDocenteResponseDto>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(asignacionesDto);
+        resp.setMessage(asignacionesDto.isEmpty() ? "No se encontraron asignaciones docentes activas" : "Asignaciones docentes activas obtenidas exitosamente");
+        return ResponseEntity.ok(resp);
+    }
+
+    @GetMapping("/inactivas")
+    public ResponseEntity<ApiResponseSuccessDto<List<AsignacionDocenteResponseDto>>> getInactivas() {
+        List<AsignacionDocente> asignaciones = service.findByActivaFalse();
+        List<AsignacionDocenteResponseDto> asignacionesDto = asignaciones.stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+        ApiResponseSuccessDto<List<AsignacionDocenteResponseDto>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(asignacionesDto);
+        resp.setMessage(asignacionesDto.isEmpty() ? "No se encontraron asignaciones docentes inactivas" : "Asignaciones docentes inactivas obtenidas exitosamente");
+        return ResponseEntity.ok(resp);
+    }
+
     @PostMapping
     public ResponseEntity<ApiResponseSuccessDto<AsignacionDocenteResponseDto>> create(@Valid @RequestBody AsignacionDocenteRequestDto dto) throws Exception {
         AsignacionDocente asignacion = mapper.fromDto(dto);

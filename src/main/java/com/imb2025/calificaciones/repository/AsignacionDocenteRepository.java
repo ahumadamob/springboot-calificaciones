@@ -10,5 +10,7 @@ import com.imb2025.calificaciones.entity.AsignacionDocente;
 public interface AsignacionDocenteRepository extends JpaRepository<AsignacionDocente, Long> {
     List<AsignacionDocente> findByDocenteId(Long docenteId);
     long countByMateriaIdAndComisionId(Long materiaId, Long comisionId);
+    List<AsignacionDocente> findByActivaTrue();
+    List<AsignacionDocente> findByActivaFalse();
 }
 

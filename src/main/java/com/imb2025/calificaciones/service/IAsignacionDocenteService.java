@@ -18,4 +18,8 @@ public interface IAsignacionDocenteService {
     public AsignacionDocente findById(Long id);
 
     public void deleteById(Long id) throws Exception;
+
+    public List<AsignacionDocente> findByActivaTrue();
+
+    public List<AsignacionDocente> findByActivaFalse();
 }

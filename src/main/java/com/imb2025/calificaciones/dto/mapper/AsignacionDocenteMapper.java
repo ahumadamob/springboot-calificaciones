@@ -39,7 +39,9 @@ public class AsignacionDocenteMapper {
 				.orElseThrow(() -> new Exception("Comision no encontrada con id: " + dto.getComisionId()));
 		PeriodoLectivo periodoLectivo = periodoLectivoRepository.findById(dto.getPeriodoLectivoId())
 				.orElseThrow(() -> new Exception("Periodo lectivo no encontrado con id: " + dto.getPeriodoLectivoId()));
-		return new AsignacionDocente(docente, materia, comision, periodoLectivo);
+		AsignacionDocente asignacion = new AsignacionDocente(docente, materia, comision, periodoLectivo);
+		asignacion.setActiva(dto.getActiva());
+		return asignacion;
 	}
 
 	public AsignacionDocenteResponseDto toResponse(AsignacionDocente asignacion) {
@@ -51,6 +53,7 @@ public class AsignacionDocenteMapper {
 		dto.setComisionId(asignacion.getComision().getId());
 		dto.setPeriodoLectivoId(asignacion.getPeriodoLectivo().getId());
 		dto.setVersion(asignacion.getVersion());
+		dto.setActiva(asignacion.getActiva());
 
 		return dto;
 	}

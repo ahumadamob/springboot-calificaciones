@@ -58,4 +58,14 @@ public class AsignacionDocenteServiceImpl implements IAsignacionDocenteService {
         }
         repository.deleteById(id);
     }
+
+    @Override
+    public List<AsignacionDocente> findByActivaTrue() {
+        return repository.findByActivaTrue();
+    }
+
+    @Override
+    public List<AsignacionDocente> findByActivaFalse() {
+        return repository.findByActivaFalse();
+    }
 }

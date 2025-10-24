@@ -7,18 +7,20 @@ public class AsignacionDocenteResponseDto {
 	private Long comisionId;
 	private Long periodoLectivoId;
 	private Long version;
+	private Boolean activa;
 
 	public AsignacionDocenteResponseDto() {
 	}
 
 	public AsignacionDocenteResponseDto(Long id, Long docenteId, Long materiaId, Long comisionId,
-			Long periodoLectivoId, Long version) {
+			Long periodoLectivoId, Long version, Boolean activa) {
 		this.id = id;
 		this.docenteId = docenteId;
 		this.materiaId = materiaId;
 		this.comisionId = comisionId;
 		this.periodoLectivoId = periodoLectivoId;
 		this.version = version;
+		this.activa = activa;
 	}
 
 	public Long getId() {
@@ -67,5 +69,13 @@ public class AsignacionDocenteResponseDto {
 
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+	public Boolean getActiva() {
+		return activa;
+	}
+
+	public void setActiva(Boolean activa) {
+		this.activa = activa;
 	}
 }

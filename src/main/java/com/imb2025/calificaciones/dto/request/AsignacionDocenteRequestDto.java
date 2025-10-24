@@ -21,6 +21,9 @@ public class AsignacionDocenteRequestDto {
     @Positive(message = "El ID del período lectivo debe ser un número positivo")
     private Long periodoLectivoId;
 
+    @NotNull(message = "El campo activa es obligatorio")
+    private Boolean activa;
+
     public Long getDocenteId() {
         return docenteId;
     }
@@ -51,5 +54,13 @@ public class AsignacionDocenteRequestDto {
 
     public void setPeriodoLectivoId(Long periodoLectivoId) {
         this.periodoLectivoId = periodoLectivoId;
+    }
+
+    public Boolean getActiva() {
+        return activa;
+    }
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
     }
 }
