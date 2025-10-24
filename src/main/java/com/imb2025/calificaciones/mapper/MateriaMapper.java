@@ -13,6 +13,7 @@ public class MateriaMapper {
 	        materia.setCargaHoraria(materiaRequestDto.getCargaHoraria());
 	        materia.setCodigo(materiaRequestDto.getCodigo());
 	        materia.setNivel(materiaRequestDto.getNivel());
+	        materia.setEstado(materiaRequestDto.getEstado());
 	      
 
 	        return materia;
@@ -24,6 +25,7 @@ public class MateriaMapper {
 	    	dto.setNombre(materia.getNombre());
 	    	dto.setNivel(materia.getNivel());
 	    	dto.setVersion(materia.getVersion());
+	    	dto.setEstado(materia.getEstado());
 	    	
 	    	return dto;
 	    	

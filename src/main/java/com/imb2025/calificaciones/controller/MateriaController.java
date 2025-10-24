@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -99,6 +100,20 @@ public class MateriaController {
             return ResponseEntity.ok(contador);
         
         };
+        
+        //parcial 
+        
+        @GetMapping("/api/materia/estado/activos")
+        public ResponseEntity<Map<String, Long>> getEstadoActivos() {
+            long total = materiaService.contarMateriasActivas();
+            return ResponseEntity.ok(Map.of("total", total));
+        }
+        
+        @GetMapping("/api/materia/estado/inactivos")
+        public ResponseEntity<Map<String, Long>> getEstadoInactivos() {
+            long total = materiaService.contarMateriasInactivas();
+            return ResponseEntity.ok(Map.of("total", total));
+        }
 
 
         @PostMapping("/api/materia")

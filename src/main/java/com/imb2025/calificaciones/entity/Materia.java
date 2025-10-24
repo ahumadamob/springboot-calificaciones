@@ -1,6 +1,13 @@
 package com.imb2025.calificaciones.entity;
 
+import com.imb2025.calificaciones.entity.enums.Estado;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.PrePersist;
+
 
 
 @Entity 
@@ -10,6 +17,12 @@ public class Materia extends BaseEntity {
         private String codigo;
         private Integer cargaHoraria;
         private String nivel;
+        
+        
+        @Enumerated(EnumType.STRING) // 
+        @Column(nullable = false)
+        private Estado estado;
+ 
 
         public Materia() {
         }
@@ -50,7 +63,21 @@ public class Materia extends BaseEntity {
 		this.cargaHoraria = cargaHoraria;
 	}
 	
-	
-	
+	public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+    @PrePersist
+    @Override
+    protected void onCreate() {
+        super.onCreate(); 
+        if (this.estado == null) {
+            this.estado = Estado.ACTIVO;
+        }
+    }
+
 
 }

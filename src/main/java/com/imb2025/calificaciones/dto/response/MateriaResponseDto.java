@@ -1,11 +1,14 @@
 package com.imb2025.calificaciones.dto.response;
 
+import com.imb2025.calificaciones.entity.enums.Estado;
+
 public class MateriaResponseDto {
 	
 	private Long id;
 	private String nombre;
 	private String nivel;
 	private Long version;
+	private Estado estado;
 	
 	public Long getVersion() {
 		return version;
@@ -30,6 +33,13 @@ public class MateriaResponseDto {
 	}
 	public void setNivel(String nivel) {
 		this.nivel = nivel;
+	}
+	
+	public Estado getEstado() {
+		return estado;
+	}
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 	
 }
