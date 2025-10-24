@@ -12,21 +12,27 @@ public class Alumno extends BaseEntity {
     private int dni;
     private String email;
     private Date fechaNacimiento ;
+    private Boolean atributoBooleano = false;
 
     public Alumno() {
     }
 
-    public Alumno(String nombre, String apellido, int dni, String email, Date fechaNacimiento) {
+    public Alumno(String nombre, String apellido, int dni, String email, Date fechaNacimiento, Boolean atributoBooleano) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.email = email;
         this.fechaNacimiento = fechaNacimiento;
+        this.atributoBooleano = atributoBooleano;
     }
 
-    
+    public Boolean getAtributoBooleano() {
+        return atributoBooleano;
+    }
 
-
+    public void setAtributoBooleano(Boolean atributoBooleano) {
+        this.atributoBooleano = atributoBooleano;
+    }
 
     public String getNombre() {
         return nombre;

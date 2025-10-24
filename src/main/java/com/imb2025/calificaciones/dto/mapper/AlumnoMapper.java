@@ -19,6 +19,9 @@ public class AlumnoMapper {
         alumno.setApellido(alumnoDto.getApellido());
         alumno.setEmail(alumnoDto.getEmail());
         alumno.setDni(alumnoDto.getDni());
+        if (alumnoDto.getAtributoBooleano() != null) {
+            alumno.setAtributoBooleano(alumnoDto.getAtributoBooleano());
+        }
 
         try {
             Date fechaNacimiento = new SimpleDateFormat("yyyy-MM-dd").parse(alumnoDto.getFechaNacimiento());
@@ -38,6 +41,7 @@ public class AlumnoMapper {
         dto.setEmail(alumno.getEmail());
         dto.setDni(alumno.getDni());
         dto.setVersion(alumno.getVersion());
+        dto.setAtributoBooleano(alumno.getAtributoBooleano());
         return dto;
     }
 

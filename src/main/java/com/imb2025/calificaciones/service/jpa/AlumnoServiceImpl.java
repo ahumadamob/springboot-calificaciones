@@ -30,8 +30,17 @@ public class AlumnoServiceImpl implements IAlumnoService {
         alumnoExistente.setEmail(alumnoDto.getEmail());
         alumnoExistente.setDni(alumnoDto.getDni());
         alumnoExistente.setFechaNacimiento(alumnoDto.getFechaNacimiento());
-
+        alumnoExistente.setAtributoBooleano(alumnoDto.getAtributoBooleano());
         return alumnoRepository.save(alumnoExistente);
+    }
+    @Override
+    public List<Alumno> findByAtributoBooleanoTrue() {
+        return alumnoRepository.findByAtributoBooleanoTrue();
+    }
+
+    @Override
+    public List<Alumno> findByAtributoBooleanoFalse() {
+        return alumnoRepository.findByAtributoBooleanoFalse();
     }
 
     @Override

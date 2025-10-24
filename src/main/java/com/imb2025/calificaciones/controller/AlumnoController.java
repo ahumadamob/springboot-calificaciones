@@ -110,6 +110,24 @@ public class AlumnoController {
         );
         return ResponseEntity.ok(response);
     }
+    @Operation(summary = "Obtiene alumnos donde el atributoBooleano es TRUE")
+    @GetMapping("/listado/true")
+    public ResponseEntity<List<AlumnoResponseDto>> obtenerListadoTrue() {
+        List<Alumno> alumnos = alumnoService.findByAtributoBooleanoTrue();
+
+        List<AlumnoResponseDto> responseDtos = alumnoMapper.toResponseDtoList(alumnos);
+
+        return ResponseEntity.ok(responseDtos);
+    }
+    @Operation(summary = "Obtiene alumnos donde el atributoBooleano es FALSE")
+    @GetMapping("/listado/false")
+    public ResponseEntity<List<AlumnoResponseDto>> obtenerListadoFalse() {
+        List<Alumno> alumnos = alumnoService.findByAtributoBooleanoFalse();
+
+        List<AlumnoResponseDto> responseDtos = alumnoMapper.toResponseDtoList(alumnos);
+
+        return ResponseEntity.ok(responseDtos);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception ex) {
