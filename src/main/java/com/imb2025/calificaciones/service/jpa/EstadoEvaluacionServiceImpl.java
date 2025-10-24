@@ -60,4 +60,9 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
     public long countByDescripcion(String descripcion) {
         return repository.countByDescripcion(descripcion);
     }
+
+    @Override
+    public long countByResultado(EstadoEvaluacion.ResultadoEvaluacion resultado) {
+        return repository.countByResultado(resultado);
+    }
 }

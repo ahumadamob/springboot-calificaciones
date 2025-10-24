@@ -106,4 +106,22 @@ public class EstadoEvaluacionController {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 
+    @GetMapping("/count/promocionado")
+    public ResponseEntity<Long> countPromocionado() {
+        Long count = service.countByResultado(EstadoEvaluacion.ResultadoEvaluacion.PROMOCIONADO);
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/count/aprobado")
+    public ResponseEntity<Long> countAprobado() {
+        Long count = service.countByResultado(EstadoEvaluacion.ResultadoEvaluacion.APROBADO);
+        return ResponseEntity.ok(count);
+    }
+
+    @GetMapping("/count/desaprobado")
+    public ResponseEntity<Long> countDesaprobado() {
+        Long count = service.countByResultado(EstadoEvaluacion.ResultadoEvaluacion.DESAPROBADO);
+        return ResponseEntity.ok(count);
+    }
+
 }

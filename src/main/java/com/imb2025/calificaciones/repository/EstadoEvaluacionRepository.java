@@ -10,5 +10,6 @@ public interface EstadoEvaluacionRepository extends JpaRepository<EstadoEvaluaci
 
     List<EstadoEvaluacion> findByNombreIgnoreCase(String nombre);
     long countByDescripcion(String descripcion);
+    long countByResultado(EstadoEvaluacion.ResultadoEvaluacion resultado);
 }
 

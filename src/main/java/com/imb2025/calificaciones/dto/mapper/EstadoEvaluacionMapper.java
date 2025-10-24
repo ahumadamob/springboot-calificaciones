@@ -12,6 +12,7 @@ public class EstadoEvaluacionMapper {
         EstadoEvaluacion estado = new EstadoEvaluacion();
         estado.setNombre(dto.getNombre());
         estado.setDescripcion(dto.getDescripcion());
+        estado.setResultado(dto.getResultado()); 
         return estado;
     }
 
@@ -24,6 +25,7 @@ public class EstadoEvaluacionMapper {
         dto.setNombre(entity.getNombre());
         dto.setDescripcion(entity.getDescripcion());
         dto.setVersion(entity.getVersion().longValue());
+        dto.setResultado(entity.getResultado()); 
         return dto;
     }
 }

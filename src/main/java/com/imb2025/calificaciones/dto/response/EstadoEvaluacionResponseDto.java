@@ -1,10 +1,13 @@
 package com.imb2025.calificaciones.dto.response;
 
+import com.imb2025.calificaciones.entity.EstadoEvaluacion;
+
 public class EstadoEvaluacionResponseDto {
     private Long id;
     private String nombre;
     private String descripcion;
     private Long version;
+    private EstadoEvaluacion.ResultadoEvaluacion resultado; 
 
     public EstadoEvaluacionResponseDto() {
     }
@@ -48,5 +51,13 @@ public class EstadoEvaluacionResponseDto {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public EstadoEvaluacion.ResultadoEvaluacion getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(EstadoEvaluacion.ResultadoEvaluacion resultado) {
+        this.resultado = resultado;
     }
 }

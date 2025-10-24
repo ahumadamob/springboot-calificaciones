@@ -18,4 +18,6 @@ public interface IEstadoEvaluacionService {
     public List<EstadoEvaluacion> findByNombre(String nombre);
 
     public long countByDescripcion(String descripcion);
+
+    public long countByResultado(EstadoEvaluacion.ResultadoEvaluacion resultado);
 }
