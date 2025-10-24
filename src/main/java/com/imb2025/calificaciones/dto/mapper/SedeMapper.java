@@ -26,7 +26,7 @@ public class SedeMapper {
         r.setNombre(sede.getNombre());
         r.setDireccion(sede.getDireccion());
         r.setLocalidadId(localidadId);
-        r.setVersion(null);
+        r.setVersion(sede.getVersion());
         r.setActiva(sede.getActiva());
         return r;
     }
