@@ -13,4 +13,10 @@ public interface DocenteRepository extends JpaRepository<Docente, Long> {
     List<Docente> findByApellido(String apellido);
 
     Long countByTitulo(String titulo);
+
+    Docente findByLegajo(Long legajo);
+
+    List<Docente> findByActivoTrue();
+
+    List<Docente> findByActivoFalse();
 }

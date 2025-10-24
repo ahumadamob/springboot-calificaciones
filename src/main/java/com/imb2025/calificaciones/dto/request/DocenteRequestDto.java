@@ -1,5 +1,5 @@
 
-package com.imb2025.calificaciones.dto;
+package com.imb2025.calificaciones.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -29,14 +29,10 @@ public class DocenteRequestDto {
     @Size(min = 2, max = 100, message = "El título debe tener entre 2 y 100 caracteres")
     private String titulo;
 
-
-    
     private boolean activo;
-
 
     public DocenteRequestDto() {
     }
-
 
     public String getNombre() {
         return nombre;
@@ -77,8 +73,6 @@ public class DocenteRequestDto {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
-
 
     public boolean isActivo() {
         return activo;

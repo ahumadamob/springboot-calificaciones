@@ -1,6 +1,7 @@
 package com.imb2025.calificaciones.service;
 
 import com.imb2025.calificaciones.dto.DocenteRequestDto;
+import com.imb2025.calificaciones.dto.response.DocenteResponseDto;
 import com.imb2025.calificaciones.entity.Docente;
 import java.util.List;
 
@@ -23,4 +24,9 @@ public interface IDocenteService {
     List<Docente> findByApellido(String apellido);
 
     Long countByTitulo(String titulo);
+
+    List<DocenteResponseDto> listarActivos();
+
+    List<DocenteResponseDto> listarInactivos();
+
 }

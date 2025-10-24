@@ -2,6 +2,8 @@ package com.imb2025.calificaciones.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.DocenteRequestDto;
+import com.imb2025.calificaciones.dto.response.DocenteResponseDto;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.service.IDocenteService;
 
@@ -102,4 +107,41 @@ public class DocenteController {
     public ResponseEntity<String> handleException(Exception ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
+
+    @GetMapping("/activos")
+    public ResponseEntity<ApiResponseSuccessDto<List<DocenteResponseDto>>> listarDocentesActivos() {
+        List<DocenteResponseDto> activos = docenteService.listarActivos();
+        ApiResponseSuccessDto<List<DocenteResponseDto>> response = new ApiResponseSuccessDto<>(
+                true, "Listado de docentes activos obtenido con éxito", activos);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/inactivos")
+    public ResponseEntity<ApiResponseSuccessDto<List<DocenteResponseDto>>> listarDocentesInactivos() {
+        List<DocenteResponseDto> inactivos = docenteService.listarInactivos();
+        ApiResponseSuccessDto<List<DocenteResponseDto>> response = new ApiResponseSuccessDto<>(
+                true, "Listado de docentes inactivos obtenido con éxito", inactivos);
+        return ResponseEntity.ok(response);
+    }
+
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, List<String>>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        List<String> errors = ex.getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(error -> {
+                    if (error instanceof FieldError fieldError) {
+                        return fieldError.getField() + ": " + fieldError.getDefaultMessage();
+                    } else {
+                        return error.getDefaultMessage();
+                    }
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("errors", errors));
+    }
+
 }

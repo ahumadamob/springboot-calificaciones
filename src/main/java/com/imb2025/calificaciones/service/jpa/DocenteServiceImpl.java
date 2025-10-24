@@ -2,12 +2,15 @@
 package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.DocenteRequestDto;
+import com.imb2025.calificaciones.dto.mapper.DocenteMapper;
+import com.imb2025.calificaciones.dto.response.DocenteResponseDto;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.repository.DocenteRepository;
 import com.imb2025.calificaciones.service.IDocenteService;
@@ -84,5 +87,27 @@ public class DocenteServiceImpl implements IDocenteService {
     public Long countByTitulo(String titulo) {
         return repo.countByTitulo(titulo);
     }
+
+    @Autowired
+    private DocenteMapper docenteMapper; // ya debería existir si no, agregalo
+
+
+    @Override
+public List<DocenteResponseDto> listarActivos() {
+    List<Docente> docentesActivos = repo.findByActivoTrue();
+
+    return docentesActivos.stream()
+            .map(docenteMapper::toResponseDto)
+            .collect(Collectors.toList());
+}
+
+@Override
+public List<DocenteResponseDto> listarInactivos() {
+    List<Docente> docentesInactivos = repo.findByActivoFalse();
+
+    return docentesInactivos.stream()
+            .map(docenteMapper::toResponseDto)
+            .collect(Collectors.toList());
+}
 
 }
