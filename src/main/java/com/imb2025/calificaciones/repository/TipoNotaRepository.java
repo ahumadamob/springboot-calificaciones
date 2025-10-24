@@ -11,5 +11,7 @@ public interface TipoNotaRepository extends JpaRepository<TipoNota, Long> {
 	public List<TipoNota>findByOrderByNombreAscDescripcion();
 	public long countByNombre(String nombre);
 	
+	List<TipoNota> findByActivoTrue();
+	List<TipoNota> findByActivoFalse();
+	
 }
-

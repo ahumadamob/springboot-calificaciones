@@ -99,6 +99,43 @@ public class TipoNotaController {
     }
 
 
+    @GetMapping("/activos")
+    public ResponseEntity<ApiResponseSuccessDto<List<TipoNotaResponseDto>>> getAllActivos() {
+        List<TipoNota> lista = tipoNotaService.findAllActivoTrue();
+        
+        List<TipoNotaResponseDto> listaDto = new ArrayList<>();
+        for (TipoNota n : lista) {
+            listaDto.add(tipoNotaMapper.toResponse(n));
+        }
+
+        ApiResponseSuccessDto<List<TipoNotaResponseDto>> resp = new ApiResponseSuccessDto<>(
+                true,
+                lista.isEmpty() ? "No se encontraron tipos de nota activos" : "Listado de tipos de nota activos",
+                listaDto
+        );
+
+        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
+    }
+    
+    
+    @GetMapping("/inactivos")
+    public ResponseEntity<ApiResponseSuccessDto<List<TipoNotaResponseDto>>> getAllInactivos() {
+        List<TipoNota> lista = tipoNotaService.findAllActivoFalse();
+        
+        List<TipoNotaResponseDto> listaDto = new ArrayList<>();
+        for (TipoNota n : lista) {
+            listaDto.add(tipoNotaMapper.toResponse(n));
+        }
+
+        ApiResponseSuccessDto<List<TipoNotaResponseDto>> resp = new ApiResponseSuccessDto<>(
+                true,
+                lista.isEmpty() ? "No se encontraron tipos de nota inactivos" : "Listado de tipos de nota inactivos",
+                listaDto
+        );
+
+        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
+    }
+
     // POST /tiponota - crear nuevo
 
     @PostMapping

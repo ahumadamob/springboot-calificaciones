@@ -5,6 +5,8 @@ public class TipoNotaResponseDto {
 	private Long id;
 	private String nombre;
 	private Long version;
+	private boolean activo;
+	
 	
 	
 	public Long getId() {
@@ -24,6 +26,12 @@ public class TipoNotaResponseDto {
 	}
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+	public boolean isActivo() {
+		return activo;
+	}
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 	
 	

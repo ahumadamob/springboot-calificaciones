@@ -16,6 +16,7 @@ public class TipoNotaMapper {
 	        TipoNota tipoNota = new TipoNota();
 	        tipoNota.setNombre(dto.getNombre());
 	        tipoNota.setDescripcion(dto.getDescripcion());
+	        tipoNota.setActivo(dto.getActivo() != null && dto.getActivo());
 	        return tipoNota;
 	    }
 	
@@ -27,6 +28,7 @@ public class TipoNotaMapper {
         dto.setId(tipoNota.getId());
         dto.setNombre(tipoNota.getNombre());
         dto.setVersion(tipoNota.getVersion());
+        dto.setActivo(tipoNota.isActivo());
         return dto;
     }
 }

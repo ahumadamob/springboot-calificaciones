@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.service;
 
+import com.imb2025.calificaciones.dto.request.TipoNotaRequestDto;
 import com.imb2025.calificaciones.entity.TipoNota;
 import java.util.List;
 
@@ -18,5 +19,12 @@ public interface ITipoNotaService {
     public TipoNota findById(Long id);
 
     public void deleteById(Long id);
+    
+    public TipoNota fromDto(TipoNotaRequestDto dto);
+    
+    List<TipoNota> findAllActivoTrue();
+    
+    List<TipoNota> findAllActivoFalse();
+    
 
 }

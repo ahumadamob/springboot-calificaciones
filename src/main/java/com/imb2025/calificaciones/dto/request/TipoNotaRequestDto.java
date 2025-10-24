@@ -1,6 +1,7 @@
 package com.imb2025.calificaciones.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class TipoNotaRequestDto {
@@ -12,6 +13,9 @@ public class TipoNotaRequestDto {
     @Size(min = 5, max = 200, message = "La descripción debe tener entre 5 y 200 caracteres")
     private String descripcion;
 
+	@NotNull(message = "El campo 'activo' es obligatorio")
+    private Boolean activo;
+	
     public String getNombre() {
         return nombre;
     }
@@ -27,4 +31,14 @@ public class TipoNotaRequestDto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+    
+    
 }
