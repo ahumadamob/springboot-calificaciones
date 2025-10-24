@@ -61,6 +61,17 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
         TipoEvaluacion tipo = new TipoEvaluacion();
         tipo.setNombre(dto.getNombre());
         tipo.setDescripcion(dto.getDescripcion());
+    
+        
+        if(dto.getEstado() != null && !dto.getEstado().isBlank()) {
+        	try {
+        		tipo.setEstado(TipoEvaluacion.Estado.valueOf(dto.getEstado().trim().toUpperCase()));
+        	}catch(IllegalArgumentException e) {
+        		throw new IllegalArgumentException("El estado debe ser ACTIVO o INACTIVO");
+        	}
+        }else {
+        	tipo.setEstado(TipoEvaluacion.Estado.ACTIVO);        
+    }
         return tipo;
     }
 
@@ -72,6 +83,16 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     @Override
     public long contarNombre(String q) {
         return repo.countByNombreContainingIgnoreCase(q);
+    }
+    
+    @Override
+    public long contarActivos() {
+    	return repo.countByEstado(TipoEvaluacion.Estado.ACTIVO);
+    }
+    
+    @Override
+    public long contarInactivos() {
+    	return repo.countByEstado(TipoEvaluacion.Estado.INACTIVO);
     }
 
 }

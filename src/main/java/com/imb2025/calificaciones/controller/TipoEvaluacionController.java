@@ -81,5 +81,18 @@ public class TipoEvaluacionController {
       	long total = tipoEvaluacionService.contarNombre(q);
         return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "Total: ", total));
     }
+    
+    @GetMapping("/contar/activos")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> totalActivos(){
+    	long total = tipoEvaluacionService.contarActivos();
+    	return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "Total de Activos: ", total));  	
+    }
+    
+    @GetMapping("/contar/inactivos")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> totalInactivos(){
+    	long total = tipoEvaluacionService.contarInactivos();
+    	return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "Total de Inactivos: ", total));
+    }
+    
 
 }

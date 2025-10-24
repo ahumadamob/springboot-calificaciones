@@ -9,12 +9,20 @@ public interface ITipoEvaluacionService {
     List<TipoEvaluacion> findAll();
 
     TipoEvaluacion create(TipoEvaluacion tipoEvaluacion);
+    
     TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id);
+   
     TipoEvaluacion findById(Long id);
+   
     void deleteById(Long id);
+   
     TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto);
 
     List<TipoEvaluacion> buscarNombre(String q);
     long contarNombre(String q);
+    
+    long contarActivos();
+    
+    long contarInactivos();
 
 }

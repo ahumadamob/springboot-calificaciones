@@ -1,6 +1,8 @@
 package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,14 +15,20 @@ public class TipoEvaluacion {
         private long id;
         private String nombre;
         private String descripcion;
-
+        
+        @Enumerated(EnumType.STRING)
+        private Estado estado = Estado.ACTIVO;
+        
+        
+//Getter and Setter - Constructores
         public TipoEvaluacion() {
         }
 
-        public TipoEvaluacion(long id, String nombre, String descripcion) {
+        public TipoEvaluacion(long id, String nombre, String descripcion, Estado estado) {
                 this.id = id;
                 this.nombre = nombre;
                 this.descripcion = descripcion;
+                this.estado = estado;
         }
 
         public TipoEvaluacion(String nombre, String descripcion) {
@@ -46,4 +54,20 @@ public class TipoEvaluacion {
         public void setDescripcion(String descripcion) {
                 this.descripcion = descripcion;
         }
+        
+        public Estado getEstado() { 
+        		return estado;
+        }
+        public void setEstado(Estado estado) {
+        		this.estado = estado; 
+        }
+        
+//TP PARCIAL Generamos ENUM
+public enum Estado{
+	
+		ACTIVO, INACTIVO;
+        	 
+         }
+        
+        
 }
