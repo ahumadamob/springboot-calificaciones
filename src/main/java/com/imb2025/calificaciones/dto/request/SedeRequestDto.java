@@ -19,6 +19,9 @@ public class SedeRequestDto {
     @Positive(message = "El id de localidad debe ser positivo")
     private Long localidadId;
 
+    
+    private Boolean activa = Boolean.TRUE;
+
     public String getNombre() {
         return nombre;
     }
@@ -41,5 +44,13 @@ public class SedeRequestDto {
 
     public void setLocalidadId(Long localidadId) {
         this.localidadId = localidadId;
+    }
+
+    public Boolean getActiva() {
+        return activa;
+    }
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
     }
 }

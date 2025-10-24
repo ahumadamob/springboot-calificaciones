@@ -7,5 +7,9 @@ import java.util.List;
 public interface SedeRepository extends JpaRepository<Sede, Long> {
     List<Sede> findByNombreIgnoreCase(String nombre);
     long countByDireccionIgnoreCase(String direccion);
+
+
+    List<Sede> findByActivaTrue();
+    List<Sede> findByActivaFalse();
 }
 

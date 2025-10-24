@@ -20,4 +20,8 @@ public interface ISedeService {
     List<Sede> findByNombreIgnoreCase(String nombre);
 
     long countByDireccionIgnoreCase(String direccion);
+
+    // Nuevos para listar sedes activas e inactivas
+    List<Sede> findByActivaTrue();
+    List<Sede> findByActivaFalse();
 }
