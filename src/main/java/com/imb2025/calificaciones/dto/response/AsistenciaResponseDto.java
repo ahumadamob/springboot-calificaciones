@@ -8,6 +8,9 @@ public class AsistenciaResponseDto {
     private String observaciones;
     private Long version;
 
+    
+    private Boolean tardanza;
+
     // Getters y Setters
     public Long getId() {
         return id;
@@ -55,5 +58,13 @@ public class AsistenciaResponseDto {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public Boolean getTardanza() {
+        return tardanza;
+    }
+
+    public void setTardanza(Boolean tardanza) {
+        this.tardanza = tardanza;
     }
 }

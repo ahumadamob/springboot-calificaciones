@@ -20,6 +20,9 @@ public class AsistenciaRequestDto {
     @Size(max = 255, message = "Las observaciones no pueden superar 255 caracteres")
     private String observaciones;
 
+    @NotNull(message = "El campo tardanza es obligatorio")
+    private Boolean tardanza;
+
 
     public Long getAlumnoId() {
         return alumnoId;
@@ -51,5 +54,13 @@ public class AsistenciaRequestDto {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public Boolean getTardanza() {
+        return tardanza;
+    }
+
+    public void setTardanza(Boolean tardanza) {
+        this.tardanza = tardanza;
     }
 }

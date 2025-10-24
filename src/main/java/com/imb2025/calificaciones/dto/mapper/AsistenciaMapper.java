@@ -13,6 +13,7 @@ public class AsistenciaMapper {
         Asistencia asistencia = new Asistencia();
         asistencia.setPresente(dto.getPresente());
         asistencia.setObservaciones(dto.getObservaciones());
+        asistencia.setTardanza(dto.getTardanza());
         return asistencia;
     }
 
@@ -24,6 +25,7 @@ public class AsistenciaMapper {
         dto.setPresente(asistencia.getPresente());
         dto.setObservaciones(asistencia.getObservaciones());
         dto.setVersion(asistencia.getVersion());
+        dto.setTardanza(asistencia.getTardanza());
         return dto;
     }
 }

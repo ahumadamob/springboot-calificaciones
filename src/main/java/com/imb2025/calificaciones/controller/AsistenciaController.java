@@ -74,7 +74,8 @@ public class AsistenciaController {
         asistencia.setRegistroClase(registroClaseService.findById(dto.getRegistroClaseId()));
         asistencia.setPresente(dto.getPresente());
         asistencia.setObservaciones(dto.getObservaciones());
-        
+        asistencia.setTardanza(dto.getTardanza()); 
+
         Asistencia nueva = asistenciaService.create(asistencia);
         AsistenciaResponseDto respDto = asistenciaMapper.toResponse(nueva);
         ApiResponseSuccessDto<AsistenciaResponseDto> resp = new ApiResponseSuccessDto<>(true, "Asistencia creada correctamente", respDto);
@@ -89,6 +90,7 @@ public class AsistenciaController {
         asistencia.setRegistroClase(registroClaseService.findById(dto.getRegistroClaseId()));
         asistencia.setPresente(dto.getPresente());
         asistencia.setObservaciones(dto.getObservaciones());
+        asistencia.setTardanza(dto.getTardanza());
 
         Asistencia actualizada = asistenciaService.update(asistencia, id);
         AsistenciaResponseDto respDto = asistenciaMapper.toResponse(actualizada);
@@ -117,6 +119,23 @@ public class AsistenciaController {
         
         ApiResponseSuccessDto<List<AsistenciaResponseDto>> resp = new ApiResponseSuccessDto<>(true, "Asistencias encontradas", dtos);
 
+        return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
+    }
+
+    // Nuevos endpoints: listar por tardanza true / false
+    @GetMapping("/tardanza/true")
+    public ResponseEntity<ApiResponseSuccessDto<List<AsistenciaResponseDto>>> listTardanzaTrue() {
+        List<Asistencia> lista = asistenciaService.findByTardanzaTrue();
+        List<AsistenciaResponseDto> dtos = lista.stream().map(asistenciaMapper::toResponse).collect(Collectors.toList());
+        ApiResponseSuccessDto<List<AsistenciaResponseDto>> resp = new ApiResponseSuccessDto<>(true, "Asistencias con tardanza=true", dtos);
+        return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
+    }
+
+    @GetMapping("/tardanza/false")
+    public ResponseEntity<ApiResponseSuccessDto<List<AsistenciaResponseDto>>> listTardanzaFalse() {
+        List<Asistencia> lista = asistenciaService.findByTardanzaFalse();
+        List<AsistenciaResponseDto> dtos = lista.stream().map(asistenciaMapper::toResponse).collect(Collectors.toList());
+        ApiResponseSuccessDto<List<AsistenciaResponseDto>> resp = new ApiResponseSuccessDto<>(true, "Asistencias con tardanza=false", dtos);
         return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
     }
 }

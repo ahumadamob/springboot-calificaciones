@@ -16,6 +16,8 @@ public class Asistencia extends BaseEntity {
 
     private String observaciones;
 
+    private Boolean tardanza;
+
     public Asistencia() {
     }
 
@@ -56,5 +58,13 @@ public class Asistencia extends BaseEntity {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public Boolean getTardanza() {
+        return tardanza;
+    }
+
+    public void setTardanza(Boolean tardanza) {
+        this.tardanza = tardanza;
     }
 }

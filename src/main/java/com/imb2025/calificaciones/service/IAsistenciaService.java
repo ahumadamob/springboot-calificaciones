@@ -20,4 +20,8 @@ public interface IAsistenciaService {
     long countByPresente(boolean presente);
 
     List<Asistencia> findByAlumnoNombreIgnoreCase(String nombre);
+
+    
+    List<Asistencia> findByTardanzaTrue();
+    List<Asistencia> findByTardanzaFalse();
 }

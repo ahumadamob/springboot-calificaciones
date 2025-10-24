@@ -11,5 +11,9 @@ import com.imb2025.calificaciones.entity.Asistencia;
 public interface AsistenciaRepository extends JpaRepository<Asistencia, Long> {
     long countByPresente(boolean presente);
     List<Asistencia> findByAlumno_NombreIgnoreCase(String nombre);
+
+
+    List<Asistencia> findByTardanzaTrue();
+    List<Asistencia> findByTardanzaFalse();
 }
 

@@ -62,4 +62,16 @@ public class AsistenciaServiceImpl implements IAsistenciaService {
     public List<Asistencia> findByAlumnoNombreIgnoreCase(String nombre) {
         return asistenciaRepository.findByAlumno_NombreIgnoreCase(nombre);
     }
+
+    
+
+    @Override
+    public List<Asistencia> findByTardanzaTrue() {
+        return asistenciaRepository.findByTardanzaTrue();
+    }
+
+    @Override
+    public List<Asistencia> findByTardanzaFalse() {
+        return asistenciaRepository.findByTardanzaFalse();
+    }
 }
