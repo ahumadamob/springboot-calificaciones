@@ -11,6 +11,7 @@ public class TurnoRequestDto {
 	
     private LocalTime horaInicio;
     private LocalTime horaFin;
+    private boolean activo;
 
     public String getNombre() {
         return nombre;
@@ -35,4 +36,14 @@ public class TurnoRequestDto {
     public void setHoraFin(LocalTime horaFin) {
         this.horaFin = horaFin;
     }
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+    
+    
 }

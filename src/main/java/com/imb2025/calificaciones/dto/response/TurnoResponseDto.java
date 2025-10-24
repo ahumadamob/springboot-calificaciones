@@ -9,19 +9,21 @@ public class TurnoResponseDto {
 	private LocalTime horaInicio;
     private LocalTime horaFin;
     private Long version;
+    private boolean activo;
     
 	public TurnoResponseDto() {
 		
 	}
 
 	
-	public TurnoResponseDto(Long id, String nombre, LocalTime horaInicio, LocalTime horaFin, Long version) {
+	public TurnoResponseDto(Long id, String nombre, LocalTime horaInicio, LocalTime horaFin, Long version, boolean activo) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
 		this.version = version;
+		this.activo = activo;
 	}
 
 
@@ -65,6 +67,16 @@ public class TurnoResponseDto {
 
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 
 

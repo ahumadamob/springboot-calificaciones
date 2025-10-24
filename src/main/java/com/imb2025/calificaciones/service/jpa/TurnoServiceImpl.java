@@ -67,5 +67,15 @@ public class TurnoServiceImpl implements ITurnoService {
 		return turnoRepository.countByHoraFinAfter(hora);
 	}
 	
+	 @Override
+	    public List<Turno> listarActivos() {
+	        return turnoRepository.findByActivoTrue();
+	    }
+
+	 @Override
+	    public List<Turno> listarInactivos() {
+	        return turnoRepository.findByActivoFalse();
+	    }
+	
 
 }

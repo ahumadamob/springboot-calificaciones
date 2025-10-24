@@ -21,5 +21,9 @@ public interface ITurnoService {
     public Turno findById(Long id);
 
     public void deleteById(Long id) throws Exception;
+    
+    List<Turno> listarActivos();
+    
+    List<Turno> listarInactivos();
 
 }

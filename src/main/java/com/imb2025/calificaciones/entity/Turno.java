@@ -10,9 +10,6 @@ import jakarta.persistence.Id;
 @Entity
 public class Turno extends BaseEntity {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	
         private String nombre;
 
@@ -20,15 +17,18 @@ public class Turno extends BaseEntity {
         private LocalTime horaInicio;
 
         private LocalTime horaFin;
+        
+        private boolean activo;
 
         public Turno() {
         }
 
-        public Turno(String nombre, LocalTime horaInicio, LocalTime horaFin) {
+        public Turno(String nombre, LocalTime horaInicio, LocalTime horaFin, boolean activo) {
                 
                 this.nombre = nombre;
                 this.horaInicio = horaInicio;
                 this.horaFin = horaFin;
+                this.activo = activo;
         }
 	
 
@@ -55,5 +55,15 @@ public class Turno extends BaseEntity {
 	public void setHoraFin(LocalTime horaFin) {
 		this.horaFin = horaFin;
 	}
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+	
+	
 
 }

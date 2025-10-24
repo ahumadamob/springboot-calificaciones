@@ -11,5 +11,8 @@ public interface TurnoRepository extends JpaRepository<Turno, Long> {
 	
 	List<Turno> findByNombre(String nombre);
 	Long countByHoraFinAfter(LocalTime hora);
+	List<Turno> findByActivoTrue();
+    List<Turno> findByActivoFalse();
+	
 }
 

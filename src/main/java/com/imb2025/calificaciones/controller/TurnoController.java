@@ -104,6 +104,46 @@ public class TurnoController {
 
             return ResponseEntity.ok(response);
         }
+        
+        @GetMapping("/activos")
+        public ResponseEntity<ApiResponseSuccessDto<List<TurnoResponseDto>>> listarActivos() {
+            List<Turno> turnos = turnoService.listarActivos();
+            List<TurnoResponseDto> turnosDto = turnos.stream()
+                    .map(t -> {
+                        try {
+                            return turnoMapper.toResponseDto(t);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .toList();
+
+            ApiResponseSuccessDto<List<TurnoResponseDto>> response = new ApiResponseSuccessDto<>();
+            response.setSuccess(true);
+            response.setData(turnosDto);
+            response.setMessage("Turnos activos listados con éxito");
+            return ResponseEntity.ok(response);
+        }
+
+        @GetMapping("/inactivos")
+        public ResponseEntity<ApiResponseSuccessDto<List<TurnoResponseDto>>> listarInactivos() {
+            List<Turno> turnos = turnoService.listarInactivos();
+            List<TurnoResponseDto> turnosDto = turnos.stream()
+                    .map(t -> {
+                        try {
+                            return turnoMapper.toResponseDto(t);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .toList();
+
+            ApiResponseSuccessDto<List<TurnoResponseDto>> response = new ApiResponseSuccessDto<>();
+            response.setSuccess(true);
+            response.setData(turnosDto);
+            response.setMessage("Turnos inactivos listados con éxito");
+            return ResponseEntity.ok(response);
+        }
 
          @PostMapping
           public ResponseEntity<ApiResponseSuccessDto<TurnoResponseDto>> createTurno(@Valid @RequestBody TurnoRequestDto turnoRequestDto) throws Exception {
