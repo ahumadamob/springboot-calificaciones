@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.controller;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -15,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.dto.EvaluacionRequestDto;
+import com.imb2025.calificaciones.dto.mapper.EvaluacionMapper;
+import com.imb2025.calificaciones.dto.request.EvaluacionRequestDto;
+import com.imb2025.calificaciones.dto.response.EvaluacionResponseDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,128 +30,195 @@ import jakarta.validation.groups.Default;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/evaluacion")
 public class EvaluacionController {
 
-	@Autowired
-        private IEvaluacionService evaluacionServiceImp;
+    @Autowired
+    private IEvaluacionService evaluacionServiceImp;
+    @Autowired
+    private EvaluacionMapper evaluacionMapper;
 
-        @GetMapping
-        public ResponseEntity<ApiResponseSuccessDto<List<Evaluacion>>> getAll() {
-            List<Evaluacion> evaluaciones = evaluacionServiceImp.findAll();
-            
-            ApiResponseSuccessDto<List<Evaluacion>> response = new ApiResponseSuccessDto<>();
-            response.setData(evaluaciones);
-            response.setMessage("Lista Evaluaciones encontrada exitosamente");
-            response.setSuccess(true);
-            
-            return ResponseEntity.ok(response);
-        }
+    @GetMapping
+    public ResponseEntity<ApiResponseSuccessDto<List<EvaluacionResponseDto>>> getAll() {
+        List<Evaluacion> evaluaciones = evaluacionServiceImp.findAll();
+        List<EvaluacionResponseDto> evaluacionesDto = evaluaciones.stream()
+                .map(evaluacionMapper::toResponseDto)
+                .collect(Collectors.toList());
 
-        @GetMapping("/{id}")
-        public ResponseEntity<ApiResponseSuccessDto<Evaluacion>> gitById(@PathVariable Long id) {
-                Evaluacion evaluacion = evaluacionServiceImp.findById(id);
-            ApiResponseSuccessDto<Evaluacion> response = new ApiResponseSuccessDto<>();
-            response.setMessage("Evaluacion encontrada exitosamente");
-            response.setData(evaluacion);
-            response.setSuccess(true);
-               
-            return ResponseEntity.ok(response);
-        }
+        ApiResponseSuccessDto<List<EvaluacionResponseDto>> response = new ApiResponseSuccessDto<>();
+        response.setData(evaluacionesDto);
+        response.setMessage(evaluacionesDto.isEmpty()
+                ? "No se encontraron evaluaciones"
+                : "Lista de evaluaciones obtenida exitosamente");
+        response.setSuccess(true);
 
-        @PostMapping
-        public ResponseEntity<ApiResponseSuccessDto<Evaluacion>> create(@Validated({EvaluacionRequestDto.Creacion.class, Default.class}) 
-        										@RequestBody EvaluacionRequestDto evaluacionRequestDto) throws Exception {
-        	Evaluacion evaluacion = evaluacionServiceImp.create(evaluacionServiceImp.fromDto(evaluacionRequestDto));
-        	ApiResponseSuccessDto<Evaluacion> response = new ApiResponseSuccessDto<>();
-        	response.setMessage("Evaluacion creada exitosamente");
-        	response.setData(evaluacion);
-        	response.setSuccess(true);
-        	
-        	return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        }
+        return ResponseEntity.ok(response);
+    }
 
-        @PutMapping("/{id}")
-        public ResponseEntity<ApiResponseSuccessDto<Evaluacion>> update(@PathVariable Long id, @Valid
-                        						@RequestBody EvaluacionRequestDto newEvaluacionDTO) throws Exception {
-            Evaluacion existente = evaluacionServiceImp.findById(id);
-                
-            ApiResponseSuccessDto<Evaluacion> response = new ApiResponseSuccessDto<>();
-            response.setMessage("Evaluacion actualizada exitosamente");
-            response.setData(existente);
-            response.setSuccess(true);
-              
-            evaluacionServiceImp.update(evaluacionServiceImp.fromDto(newEvaluacionDTO), id);
-            return ResponseEntity.ok(response);
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<EvaluacionResponseDto>> getById(@PathVariable Long id)
+            throws Exception {
+        Evaluacion evaluacion = evaluacionServiceImp.findById(id);
+        EvaluacionResponseDto evaluacionDto = evaluacionMapper.toResponseDto(evaluacion);
 
-        @DeleteMapping("/{id}")
-        public ResponseEntity<ApiResponseSuccessDto<Evaluacion>> delete(@PathVariable Long id) throws Exception {
-        	evaluacionServiceImp.deleteById(id);
-        	ApiResponseSuccessDto<Evaluacion> response = new ApiResponseSuccessDto<>();
-        	response.setMessage("Evaluacion eliminada exitosamente");
-        	response.setData(null);
-        	response.setSuccess(true);
-        	
-        	
-        	return ResponseEntity.ok(response);
+        ApiResponseSuccessDto<EvaluacionResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Evaluación encontrada exitosamente");
+        response.setData(evaluacionDto);
+        response.setSuccess(true);
 
-        }
-        
-        @GetMapping("/{fechaInicio}/{fechaFinal}")
-        public ResponseEntity<ApiResponseSuccessDto<List<Evaluacion>>> getByRangoFechas(
-        		@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaInicio,
-        		@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaFinal) {
-            //Uso de DateTimeFormat para que Spring tome un mejor formato de fechas yyyy-mm-dd
-            List<Evaluacion> evaluaciones = evaluacionServiceImp.findByFechaBetween(fechaInicio, fechaFinal);
+        return ResponseEntity.ok(response);
+    }
 
-            ApiResponseSuccessDto<List<Evaluacion>> response = new ApiResponseSuccessDto<>();
-            response.setMessage("Evaluaciones encontradas entre las fechas indicadas");
-            response.setData(evaluaciones);
-            response.setSuccess(true);
+    @PostMapping
+    public ResponseEntity<ApiResponseSuccessDto<EvaluacionResponseDto>> create(
+            @Validated({ EvaluacionRequestDto.Creacion.class,
+                    Default.class }) @RequestBody EvaluacionRequestDto evaluacionRequestDto)
+            throws Exception {
 
-            return ResponseEntity.ok(response);
-        }
-        
-        @GetMapping("/materia/{materiaId}/comision/{comisionId}")
-        public ResponseEntity<ApiResponseSuccessDto<List<Evaluacion>>> getByMateriaAndComision(
-                @PathVariable long materiaId,
-                @PathVariable long comisionId) {
+        Evaluacion evaluacion = evaluacionServiceImp.create(evaluacionMapper.fromDto(evaluacionRequestDto));
+        EvaluacionResponseDto evaluacionDto = evaluacionMapper.toResponseDto(evaluacion);
 
-            List<Evaluacion> evaluaciones = evaluacionServiceImp.findByMateriaIdAndComisionId(materiaId, comisionId);
+        ApiResponseSuccessDto<EvaluacionResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Evaluación creada exitosamente");
+        response.setData(evaluacionDto);
+        response.setSuccess(true);
 
-            ApiResponseSuccessDto<List<Evaluacion>> response = new ApiResponseSuccessDto<>();
-            response.setMessage("Evaluaciones encontradas por materia:"+materiaId+" y comisión: "+comisionId);
-            response.setData(evaluaciones);
-            response.setSuccess(true);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
 
-            return ResponseEntity.ok(response);
-        }
-        
-        @GetMapping("/count/materia/{materiaId}/comision/{comisionId}")
-        public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByMateriaAndComision(
-                @PathVariable Long materiaId,
-                @PathVariable Long comisionId) {
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<EvaluacionResponseDto>> update(
+            @PathVariable Long id,
+            @Valid @RequestBody EvaluacionRequestDto newEvaluacionDTO) throws Exception {
 
-            Long count = evaluacionServiceImp.countByMateriaIdAndComisionId(materiaId, comisionId);
+        Evaluacion updatedEvaluacion = evaluacionServiceImp.update(
+                evaluacionMapper.fromDto(newEvaluacionDTO), id);
+        EvaluacionResponseDto evaluacionDto = evaluacionMapper.toResponseDto(updatedEvaluacion);
 
-            HashMap<String, Long> hash = new HashMap<>();
-            hash.put("cantidad", count);
+        ApiResponseSuccessDto<EvaluacionResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Evaluación actualizada exitosamente");
+        response.setData(evaluacionDto);
+        response.setSuccess(true);
 
-            ApiResponseSuccessDto<HashMap<String, Long>> response = new ApiResponseSuccessDto<>();
-            response.setData(hash);
-            response.setMessage("Cantidad de evaluaciones encontradas");
-            response.setSuccess(true);
+        return ResponseEntity.ok(response);
+    }
 
-            return ResponseEntity.ok(response);
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<EvaluacionResponseDto>> delete(@PathVariable Long id) throws Exception {
+        evaluacionServiceImp.deleteById(id);
+        ApiResponseSuccessDto<EvaluacionResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Evaluacion eliminada exitosamente");
+        response.setData(null);
+        response.setSuccess(true);
 
+        return ResponseEntity.ok(response);
 
-//        @ExceptionHandler(Exception.class)
-//        public ResponseEntity<String> handleException(Exception ex){
-//                return ResponseEntity.badRequest().body(ex.getMessage());
-//        }
+    }
+
+    @GetMapping("/{fechaInicio}/{fechaFinal}")
+    public ResponseEntity<ApiResponseSuccessDto<List<EvaluacionResponseDto>>> getByRangoFechas(
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaInicio,
+            @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaFinal) {
+
+        List<Evaluacion> evaluaciones = evaluacionServiceImp.findByFechaBetween(fechaInicio, fechaFinal);
+        List<EvaluacionResponseDto> evaluacionesDto = evaluaciones.stream()
+                .map(evaluacionMapper::toResponseDto)
+                .collect(Collectors.toList());
+
+        ApiResponseSuccessDto<List<EvaluacionResponseDto>> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Evaluaciones encontradas entre las fechas indicadas");
+        response.setData(evaluacionesDto);
+        response.setSuccess(true);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/materia/{materiaId}/comision/{comisionId}")
+    public ResponseEntity<ApiResponseSuccessDto<List<EvaluacionResponseDto>>> getByMateriaAndComision(
+            @PathVariable long materiaId,
+            @PathVariable long comisionId) {
+
+        List<Evaluacion> evaluaciones = evaluacionServiceImp.findByMateriaIdAndComisionId(materiaId, comisionId);
+        List<EvaluacionResponseDto> evaluacionesDto = evaluaciones.stream()
+                .map(evaluacionMapper::toResponseDto)
+                .collect(Collectors.toList());
+
+        ApiResponseSuccessDto<List<EvaluacionResponseDto>> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Evaluaciones encontradas por materia: " + materiaId + " y comisión: " + comisionId);
+        response.setData(evaluacionesDto);
+        response.setSuccess(true);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/count/materia/{materiaId}/comision/{comisionId}")
+    public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByMateriaAndComision(
+            @PathVariable Long materiaId,
+            @PathVariable Long comisionId) {
+
+        Long count = evaluacionServiceImp.countByMateriaIdAndComisionId(materiaId, comisionId);
+        HashMap<String, Long> hash = new HashMap<>();
+        hash.put("cantidad", count);
+
+        ApiResponseSuccessDto<HashMap<String, Long>> response = new ApiResponseSuccessDto<>();
+        response.setData(hash);
+        response.setMessage("Cantidad de evaluaciones encontradas");
+        response.setSuccess(true);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/count/activos")
+    public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByActivos() {
+
+        Long count = evaluacionServiceImp.countByEstado(Evaluacion.Estado.ACTIVO);
+        HashMap<String, Long> hash = new HashMap<>();
+        hash.put("total activos: ", count);
+
+        ApiResponseSuccessDto<HashMap<String, Long>> response = new ApiResponseSuccessDto<>();
+        response.setData(hash);
+        response.setMessage("Cantidad de evaluaciones ACTIVAS");
+        response.setSuccess(true);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/count/inactivos")
+    public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByInactivos() {
+
+        Long count = evaluacionServiceImp.countByEstado(Evaluacion.Estado.INACTIVO);
+        HashMap<String, Long> hash = new HashMap<>();
+        hash.put("total inactivos: ", count);
+
+        ApiResponseSuccessDto<HashMap<String, Long>> response = new ApiResponseSuccessDto<>();
+        response.setData(hash);
+        response.setMessage("Cantidad de evaluaciones INACTIVAS");
+        response.setSuccess(true);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/count/pendientes")
+    public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByPendientes() {
+
+        Long count = evaluacionServiceImp.countByEstado(Evaluacion.Estado.PENDIENTE);
+        HashMap<String, Long> hash = new HashMap<>();
+        hash.put("total pendientes: ", count);
+
+        ApiResponseSuccessDto<HashMap<String, Long>> response = new ApiResponseSuccessDto<>();
+        response.setData(hash);
+        response.setMessage("Cantidad de evaluaciones PENDIENTES");
+        response.setSuccess(true);
+
+        return ResponseEntity.ok(response);
+    }
+
+    // @ExceptionHandler(Exception.class)
+    // public ResponseEntity<String> handleException(Exception ex){
+    // return ResponseEntity.badRequest().body(ex.getMessage());
+    // }
 
 }

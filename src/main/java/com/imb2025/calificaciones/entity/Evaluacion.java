@@ -4,18 +4,13 @@ import jakarta.persistence.ManyToOne;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
-public class Evaluacion {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-    private Date fecha;
+public class Evaluacion extends BaseEntity {
+
+	private Date fecha;
 
 	@ManyToOne
 	private TipoEvaluacion tipoEvaluacion;
@@ -26,41 +21,41 @@ public class Evaluacion {
 	@ManyToOne
 	private Comision comision;
 
-	
-        public Evaluacion() {
-                super();
-        }
+	@Enumerated(EnumType.STRING)
+	private Estado estado = Estado.INACTIVO;
 
-        public Evaluacion(Long id, Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia, Comision comision) {
-                this.id = id;
-                this.fecha = fecha;
-                this.tipoEvaluacion = tipoEvaluacion;
-                this.materia = materia;
-                this.comision = comision;
-        }
-
-        public Evaluacion(Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia, Comision comision) {
-                this.fecha = fecha;
-                this.tipoEvaluacion = tipoEvaluacion;
-                this.materia = materia;
-                this.comision = comision;
-        }
-
-	public Long getId() {
-		return id;
+	public enum Estado {
+		ACTIVO, INACTIVO, PENDIENTE
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Evaluacion() {
+		super();
 	}
 
-        public Date getFecha() {
-                return fecha;
-        }
+	public Evaluacion(Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia, Comision comision) {
+		this.fecha = fecha;
+		this.tipoEvaluacion = tipoEvaluacion;
+		this.materia = materia;
+		this.comision = comision;
+	}
 
-        public void setFecha(Date fecha) {
-                this.fecha = fecha;
-        }
+	public Evaluacion(Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia, Comision comision,
+			Estado estado) {
+		super();
+		this.fecha = fecha;
+		this.tipoEvaluacion = tipoEvaluacion;
+		this.materia = materia;
+		this.comision = comision;
+		this.estado = estado;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 
 	public TipoEvaluacion getTipoEvaluacion() {
 		return tipoEvaluacion;
@@ -84,5 +79,13 @@ public class Evaluacion {
 
 	public void setComision(Comision comision) {
 		this.comision = comision;
+	}
+
+	public Estado getEstado() {
+		return estado;
+	}
+
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 }

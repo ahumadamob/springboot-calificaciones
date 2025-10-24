@@ -11,7 +11,10 @@ import com.imb2025.calificaciones.entity.Evaluacion;
 @Repository
 public interface EvaluacionRepository extends JpaRepository<Evaluacion, Long> {
 	List<Evaluacion> findByFechaBetween(Date fechaInicio, Date fechaFin);
-	List<Evaluacion> findByMateriaIdAndComisionId(long materiaId, long comisionId);
-	long countByMateriaIdAndComisionId(long materiaId, long comisionId);
-}
 
+	List<Evaluacion> findByMateriaIdAndComisionId(long materiaId, long comisionId);
+
+	long countByMateriaIdAndComisionId(long materiaId, long comisionId);
+
+	long countByEstado(Evaluacion.Estado estado);
+}
