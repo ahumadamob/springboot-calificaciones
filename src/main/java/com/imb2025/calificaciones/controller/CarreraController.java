@@ -13,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.CarreraRequestDto;
+import com.imb2025.calificaciones.dto.response.CarreraResponseDto;
 import com.imb2025.calificaciones.entity.Carrera;
 import com.imb2025.calificaciones.service.ICarreraService;
 import jakarta.validation.Valid;
@@ -115,6 +116,30 @@ public class CarreraController {
             ? "La carrera '" + nombre + "' ya existe en el sistema" 
             : "La carrera '" + nombre + "' no existe en el sistema");
         response.setData(existe);
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/activas")
+    public ResponseEntity<ApiResponseSuccessDto<List<CarreraResponseDto>>> obtenerCarrerasActivas() {
+        List<CarreraResponseDto> carreras = carreraService.obtenerCarrerasActivas();
+        
+        ApiResponseSuccessDto<List<CarreraResponseDto>> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setMessage("Listado de carreras activas");
+        response.setData(carreras);
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/inactivas")
+    public ResponseEntity<ApiResponseSuccessDto<List<CarreraResponseDto>>> obtenerCarrerasInactivas() {
+        List<CarreraResponseDto> carreras = carreraService.obtenerCarrerasInactivas();
+        
+        ApiResponseSuccessDto<List<CarreraResponseDto>> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setMessage("Listado de carreras inactivas");
+        response.setData(carreras);
         
         return ResponseEntity.ok(response);
     }

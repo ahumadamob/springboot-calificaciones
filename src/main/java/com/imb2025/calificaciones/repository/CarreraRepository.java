@@ -22,4 +22,10 @@ public interface CarreraRepository extends JpaRepository<Carrera, Long> {
     // Verifica si existe una carrera con cierto nombre
     boolean existsByNombreIgnoreCase(String nombre);
     
+    List<Carrera> findByActivaTrue();
+    
+    List<Carrera> findByActivaFalse();
+    
+}
+    
   

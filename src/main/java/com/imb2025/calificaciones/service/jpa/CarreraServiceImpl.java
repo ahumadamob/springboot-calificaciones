@@ -1,10 +1,13 @@
 package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.CarreraRequestDto;
+import com.imb2025.calificaciones.dto.response.CarreraResponseDto;
 import com.imb2025.calificaciones.entity.Carrera;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.CarreraRepository;
@@ -30,8 +33,12 @@ public class CarreraServiceImpl implements ICarreraService {
         	        "Carrera no encontrada con id " + id));
     }
 
+    
     @Override
-    public Carrera create(Carrera carrera) {
+    public Carrera create(Carrera carrera) throws Exception {
+        if(carrera.getActiva() == null) {
+            throw new Exception("activa no puede ser nulo");
+        }
         return repo.save(carrera);
     }
 
@@ -62,7 +69,21 @@ public class CarreraServiceImpl implements ICarreraService {
         Carrera carrera = new Carrera();
         carrera.setNombre(dto.getNombre());
         carrera.setTituloOtorgado(dto.getTituloOtorgado());
+        carrera.setActiva(dto.getActiva());
         return carrera;
+    }
+    
+    @Override
+    public CarreraResponseDto toResponseDto(Carrera carrera) {
+        if (carrera == null) {
+            return null;
+        }
+        CarreraResponseDto dto = new CarreraResponseDto();
+        dto.setId(carrera.getId());
+        dto.setNombre(carrera.getNombre());
+        dto.setTituloOtorgado(carrera.getTituloOtorgado());
+        dto.setActiva(carrera.getActiva());
+        return dto;
     }
     
     @Override
@@ -85,6 +106,21 @@ public class CarreraServiceImpl implements ICarreraService {
     public boolean existePorNombre(String nombre) {
         return repo.existsByNombreIgnoreCase(nombre);
     }
-   
+    
+    @Override
+    public List<CarreraResponseDto> obtenerCarrerasActivas() {
+        List<Carrera> carreras = repo.findByActivaTrue();
+        return carreras.stream()
+            .map(this::toResponseDto)
+            .collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<CarreraResponseDto> obtenerCarrerasInactivas() {
+        List<Carrera> carreras = repo.findByActivaFalse();
+        return carreras.stream()
+            .map(this::toResponseDto)
+            .collect(Collectors.toList());
+    }
 }
 

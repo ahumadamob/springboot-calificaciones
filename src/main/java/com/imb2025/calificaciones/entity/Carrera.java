@@ -16,6 +16,8 @@ public class Carrera {
 
     private String tituloOtorgado;
 
+    private Boolean activa;
+    
     public Carrera() {
     }
 
@@ -53,4 +55,12 @@ public class Carrera {
     public void setTituloOtorgado(String tituloOtorgado) {
         this.tituloOtorgado = tituloOtorgado;
     }
+    public Boolean getActiva() {
+        return activa;
+    }
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
+    }
+   
 }

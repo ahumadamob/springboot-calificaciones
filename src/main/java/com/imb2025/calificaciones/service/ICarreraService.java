@@ -1,6 +1,7 @@
 package com.imb2025.calificaciones.service;
 
 import com.imb2025.calificaciones.dto.CarreraRequestDto;
+import com.imb2025.calificaciones.dto.response.CarreraResponseDto;
 import com.imb2025.calificaciones.entity.Carrera;
 import java.util.List;
 
@@ -8,13 +9,15 @@ public interface ICarreraService {
 
     public List<Carrera> findAll();
 
-    public Carrera create(Carrera carrera);
+    public Carrera create(Carrera carrera) throws Exception;
 
     public Carrera update(Carrera carrera, Long id) throws Exception;
 
     public Carrera findById(Long id);
 
     public void deleteById(Long id) throws Exception;
+    
+    public CarreraResponseDto toResponseDto(Carrera carrera);
 
     public Carrera fromDto(CarreraRequestDto dto) throws Exception;
     // 1️⃣ findBy... → búsqueda por condición exacta o parcial
@@ -24,6 +27,10 @@ public interface ICarreraService {
 
     // 4️⃣ existsBy... → validación de duplicados
     boolean existePorNombre(String nombre);
+    
+    List<CarreraResponseDto> obtenerCarrerasActivas();
+    
+    List<CarreraResponseDto> obtenerCarrerasInactivas();
 }
 
 
