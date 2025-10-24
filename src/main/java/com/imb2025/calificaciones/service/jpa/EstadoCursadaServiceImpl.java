@@ -31,6 +31,13 @@ public class EstadoCursadaServiceImpl implements IEstadoCursadaService {
 
     @Override
     public EstadoCursada create(EstadoCursada estadoCursada) {
+    	boolean existeDuplicado = repository
+    	        .findByIdentificadorLegibleIgnoreCase(estadoCursada.getIdentificadorLegible())
+    	        .isPresent();
+    	    
+    	    if (existeDuplicado) {
+    	        throw new RuntimeException("identificadorLegible duplicado"); 
+    	    }
         return repository.save(estadoCursada);
     }
 
