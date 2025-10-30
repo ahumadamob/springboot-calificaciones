@@ -1,9 +1,13 @@
 package com.imb2025.calificaciones.dto;
 
-public class InscripcionMateriaRequestDto {
+import jakarta.validation.constraints.Positive;
 
+public class InscripcionMateriaRequestDto {
+    @Positive(message = "Debe ingresar un id positivo de alumno")
     private Long alumnoId;
+    @Positive(message = "Debe ingresar un id positivo de materia")
     private Long materiaId;
+    @Positive(message = "Debe ingresar un id positivo de periodo")
     private Long periodoLectivoId;
 
     public Long getAlumnoId() {

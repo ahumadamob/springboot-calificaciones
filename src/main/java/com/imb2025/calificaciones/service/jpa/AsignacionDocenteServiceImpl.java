@@ -1,17 +1,8 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.AsignacionDocenteRequestDto;
 import com.imb2025.calificaciones.entity.AsignacionDocente;
-import com.imb2025.calificaciones.entity.Comision;
-import com.imb2025.calificaciones.entity.Docente;
-import com.imb2025.calificaciones.entity.Materia;
-import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.AsignacionDocenteRepository;
-import com.imb2025.calificaciones.repository.ComisionRepository;
-import com.imb2025.calificaciones.repository.DocenteRepository;
-import com.imb2025.calificaciones.repository.MateriaRepository;
-import com.imb2025.calificaciones.repository.PeriodoLectivoRepository;
 import com.imb2025.calificaciones.service.IAsignacionDocenteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +14,19 @@ public class AsignacionDocenteServiceImpl implements IAsignacionDocenteService {
     @Autowired
     private AsignacionDocenteRepository repository;
 
-    @Autowired
-    private DocenteRepository docenteRepository;
-
-    @Autowired
-    private MateriaRepository materiaRepository;
-
-    @Autowired
-    private ComisionRepository comisionRepository;
-
-    @Autowired
-    private PeriodoLectivoRepository periodoLectivoRepository;
-
     @Override
     public List<AsignacionDocente> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public List<AsignacionDocente> findAllByDocenteId(Long docenteId) {
+        return repository.findByDocenteId(docenteId);
+    }
+
+    @Override
+    public long countByMateriaIdAndComisionId(Long materiaId, Long comisionId) {
+        return repository.countByMateriaIdAndComisionId(materiaId, comisionId);
     }
 
     @Override
@@ -68,18 +57,5 @@ public class AsignacionDocenteServiceImpl implements IAsignacionDocenteService {
             throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
         repository.deleteById(id);
-    }
-
-    @Override
-    public AsignacionDocente fromDto(AsignacionDocenteRequestDto dto) throws Exception {
-        Docente docente = docenteRepository.findById(dto.getDocenteId())
-                .orElseThrow(() -> new Exception("Docente no encontrado con id: " + dto.getDocenteId()));
-        Materia materia = materiaRepository.findById(dto.getMateriaId())
-                .orElseThrow(() -> new Exception("Materia no encontrada con id: " + dto.getMateriaId()));
-        Comision comision = comisionRepository.findById(dto.getComisionId())
-                .orElseThrow(() -> new Exception("Comision no encontrada con id: " + dto.getComisionId()));
-        PeriodoLectivo periodoLectivo = periodoLectivoRepository.findById(dto.getPeriodoLectivoId())
-                .orElseThrow(() -> new Exception("Periodo lectivo no encontrado con id: " + dto.getPeriodoLectivoId()));
-        return new AsignacionDocente(docente, materia, comision, periodoLectivo);
     }
 }

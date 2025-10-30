@@ -17,4 +17,8 @@ public interface ICursadaService {
     public void deleteById(Long id) throws Exception;
 
     public Cursada fromDto(CursadaRequestDto dto) throws Exception;
+    
+    public List<Cursada> findByNombreAlumno(String nombre);
+
+    public Long countByNombreMateria(String nombreMateria);
 }

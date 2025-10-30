@@ -21,7 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.dto.PeriodoLectivoRequestDto;
+import com.imb2025.calificaciones.dto.mapper.PeriodoLectivoMapper;
+import com.imb2025.calificaciones.dto.request.PeriodoLectivoRequestDto;
+import com.imb2025.calificaciones.dto.response.PeriodoLectivoResponseDto;
 import com.imb2025.calificaciones.entity.PeriodoLectivo;
 import com.imb2025.calificaciones.service.IPeriodoLectivoService;
 
@@ -34,26 +36,36 @@ public class PeriodoLectivoController {
 	@Autowired
 	private IPeriodoLectivoService service;
 	
+	@Autowired
+	private PeriodoLectivoMapper mapper;
+	
 	@GetMapping
-    public ResponseEntity<ApiResponseSuccessDto<List<PeriodoLectivo>>> getAll() {
-		List<PeriodoLectivo> periodos = service.findAll();
-        ApiResponseSuccessDto<List<PeriodoLectivo>> response = 
-        		new ApiResponseSuccessDto<List<PeriodoLectivo>>(true, "Periodos Lectivos encontrados con éxito", periodos);
+    public ResponseEntity<ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>> getAll() {
+		List<PeriodoLectivo> resultados = service.findAll();
+		
+		List<PeriodoLectivoResponseDto> periodos = resultados.stream().map(p -> mapper.toResponse(p)).toList();
+		
+        ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>> response = 
+        		new ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>(true, "Periodos Lectivos encontrados con éxito", periodos);
         return periodos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> getById(@PathVariable Long id) {
-		PeriodoLectivo periodoLectivo = service.findById(id);
-		ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo encontrado con éxito", periodoLectivo); 
+	public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivoResponseDto>> getById(@PathVariable Long id) {
+		PeriodoLectivo resultado = service.findById(id);
+		PeriodoLectivoResponseDto periodoLectivo = mapper.toResponse(resultado);
+		ApiResponseSuccessDto<PeriodoLectivoResponseDto> response = new ApiResponseSuccessDto<PeriodoLectivoResponseDto>(true, "Periodo Lectivo encontrado con éxito", periodoLectivo); 
 		return ResponseEntity.ok(response);
 	}
         
 	@GetMapping("/get")
-	public ResponseEntity<ApiResponseSuccessDto<List<PeriodoLectivo>>> getByNombre(
+	public ResponseEntity<ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>> getByNombre(
 			@RequestParam(required = true) String nombre) {
-        List<PeriodoLectivo> periodos = service.findAllByNombre(nombre);
- 		ApiResponseSuccessDto<List<PeriodoLectivo>> response = new ApiResponseSuccessDto<List<PeriodoLectivo>>(true, "Periodos Lectivos con el nombre "+ nombre +" encontrados con éxito", periodos);
+        List<PeriodoLectivo> resultados = service.findAllByNombre(nombre);
+        
+		List<PeriodoLectivoResponseDto> periodos = resultados.stream().map(p -> mapper.toResponse(p)).toList();
+        
+ 		ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>> response = new ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>(true, "Periodos Lectivos con el nombre "+ nombre +" encontrados con éxito", periodos);
         return periodos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
     
@@ -69,23 +81,25 @@ public class PeriodoLectivoController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> create(
+    public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivoResponseDto>> create(
         @Valid @RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
-    	PeriodoLectivo createdPeriodoLectivo = service.create(
-    			service.fromDto(periodoLectivo)
+    	PeriodoLectivo resultado = service.create(
+    			mapper.fromDto(periodoLectivo)
     			);
-    	ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo creado con éxito", createdPeriodoLectivo);
+    	PeriodoLectivoResponseDto createdPeriodoLectivo = mapper.toResponse(resultado);
+    	ApiResponseSuccessDto<PeriodoLectivoResponseDto> response = new ApiResponseSuccessDto<PeriodoLectivoResponseDto>(true, "Periodo Lectivo creado con éxito", createdPeriodoLectivo);
     	return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivo>> updateById(@PathVariable Long id,
+    public ResponseEntity<ApiResponseSuccessDto<PeriodoLectivoResponseDto>> updateById(@PathVariable Long id,
     	@Valid @RequestBody PeriodoLectivoRequestDto periodoLectivo) throws Exception {
-    	PeriodoLectivo updatedPeriodoLectivo = service.update(
-    			service.fromDto(periodoLectivo),
+    	PeriodoLectivo resultado = service.update(
+    			mapper.fromDto(periodoLectivo),
     			id
     			);
-    	ApiResponseSuccessDto<PeriodoLectivo> response = new ApiResponseSuccessDto<PeriodoLectivo>(true, "Periodo Lectivo actualizado con éxito", updatedPeriodoLectivo);
+    	PeriodoLectivoResponseDto updatedPeriodoLectivo = mapper.toResponse(resultado);
+    	ApiResponseSuccessDto<PeriodoLectivoResponseDto> response = new ApiResponseSuccessDto<PeriodoLectivoResponseDto>(true, "Periodo Lectivo actualizado con éxito", updatedPeriodoLectivo);
     	return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

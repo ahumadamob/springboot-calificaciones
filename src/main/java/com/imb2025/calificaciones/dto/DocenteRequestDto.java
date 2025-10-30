@@ -1,22 +1,35 @@
+
 package com.imb2025.calificaciones.dto;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class DocenteRequestDto {
 
+    @NotBlank(message = "El nombre no puede estar vacío")
+    @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     private String nombre;
+
+    @NotBlank(message = "El apellido no puede estar vacío")
+    @Size(min = 2, max = 50, message = "El apellido debe tener entre 2 y 50 caracteres")
     private String apellido;
+
+    @Min(value = 1000000, message = "El legajo debe tener al menos 7 dígitos")
+    @Max(value = 99999999, message = "El legajo no puede tener más de 8 dígitos")
     private Long legajo;
+
+    @NotBlank(message = "El email no puede estar vacío")
+    @Email(message = "El correo debe tener un formato válido")
     private String email;
+
+    @NotBlank(message = "El título no puede estar vacío")
+    @Size(min = 2, max = 100, message = "El título debe tener entre 2 y 100 caracteres")
     private String titulo;
 
     public DocenteRequestDto() {
-    }
-
-    public DocenteRequestDto(String nombre, String apellido, Long legajo, String email, String titulo) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.legajo = legajo;
-        this.email = email;
-        this.titulo = titulo;
     }
 
     public String getNombre() {

@@ -16,6 +16,7 @@ import com.imb2025.calificaciones.entity.Evaluacion;
 import com.imb2025.calificaciones.repository.EvaluacionRepository;
 import com.imb2025.calificaciones.service.IEvaluacionService;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -113,4 +114,18 @@ public class EvaluacionServiceImpl implements IEvaluacionService {
         evaluacionRepository.deleteById(id);
     }
 
+	@Override
+	public List<Evaluacion> findByMateriaIdAndComisionId(long materiaId, long comisionId) {
+		return evaluacionRepository.findByMateriaIdAndComisionId(materiaId, comisionId);
+	}
+
+	@Override
+	public long countByMateriaIdAndComisionId(long materiaId, long comisionId) {
+		return evaluacionRepository.countByMateriaIdAndComisionId(materiaId, comisionId);
+	}
+
+	@Override
+	public List<Evaluacion> findByFechaBetween(Date fechaInicio, Date fechaFin){
+		return evaluacionRepository.findByFechaBetween(fechaInicio, fechaFin);
+	}
 }

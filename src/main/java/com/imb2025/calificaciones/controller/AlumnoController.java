@@ -5,6 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.imb2025.calificaciones.service.IAlumnoService;
+
+import io.swagger.v3.oas.annotations.Operation;
+
 import com.imb2025.calificaciones.dto.AlumnoRequestDto;
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.entity.Alumno;
@@ -53,6 +56,34 @@ public class AlumnoController {
         ApiResponseSuccessDto<Alumno> response = new ApiResponseSuccessDto<>(true,
                 "Alumno actualizado con éxito", updatedAlumno);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    
+    @GetMapping("/buscar/{apellido}")
+    public ResponseEntity<ApiResponseSuccessDto<List<Alumno>>> findByApellido(@PathVariable String apellido) {
+        List<Alumno> alumnos = alumnoService.findByApellido(apellido);
+        ApiResponseSuccessDto<List<Alumno>> response = new ApiResponseSuccessDto<>(
+                true,
+                "Alumnos encontrados con apellido: " + apellido,
+                alumnos
+        );
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/contar/{email}")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> contarPorEmail(@PathVariable String email) {
+    // La lógica de servicio es la misma
+    long count = alumnoService.countByEmail(email);
+    
+    // Preparación de la respuesta
+    String message = String.format("Se encontraron %d alumnos con el email: %s", count, email);
+    
+    ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>(
+            true,
+            message,
+            count
+    );
+    
+    return ResponseEntity.ok(response);
     }
 
     @ExceptionHandler(Exception.class)
