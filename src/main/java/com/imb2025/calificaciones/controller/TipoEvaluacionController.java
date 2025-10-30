@@ -70,19 +70,16 @@ public class TipoEvaluacionController {
         return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "Tipo de Evaluacion eliminada correctamente", null));
     }
 
-    @GetMapping("/buscar")
+    @GetMapping("/buscar/{q}")
     public ResponseEntity<ApiResponseSuccessDto<List<TipoEvaluacion>>> search(@PathVariable String q) {
-        
-    	var lista = tipoEvaluacionService.buscarNombre(q);
-    	
-    	
+       	var lista = tipoEvaluacionService.buscarNombre(q);  	
         return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "se realizo la busqueda correctamente", lista));
     }
 
-    @GetMapping("/contar")
+    @GetMapping("/contar/{q}")
     public ResponseEntity<ApiResponseSuccessDto<Long>> count(@PathVariable String q) {
-       
-    	long total = tipoEvaluacionService.contarNombre(q);
+      	long total = tipoEvaluacionService.contarNombre(q);
         return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "Total: ", total));
     }
+
 }

@@ -15,6 +15,6 @@ public interface ITipoEvaluacionService {
     TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto);
 
     List<TipoEvaluacion> buscarNombre(String q);
-    long contarNombre(String q);  
+    long contarNombre(String q);
 
 }
