@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.AsignacionDocenteRequestDto;
+import com.imb2025.calificaciones.dto.request.AsignacionDocenteRequestDto;
+import com.imb2025.calificaciones.dto.response.AsignacionDocenteResponseDto;
+import com.imb2025.calificaciones.dto.mapper.AsignacionDocenteMapper;
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.ApiResponseErrorDto;
 import com.imb2025.calificaciones.entity.AsignacionDocente;
@@ -25,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/asignacion-docente")
@@ -33,32 +36,42 @@ public class AsignacionDocenteController {
     @Autowired
     private IAsignacionDocenteService service;
 
+    @Autowired
+    private AsignacionDocenteMapper mapper;
+
     @GetMapping
-    public ResponseEntity<ApiResponseSuccessDto<List<AsignacionDocente>>> getAll() {
+    public ResponseEntity<ApiResponseSuccessDto<List<AsignacionDocenteResponseDto>>> getAll() {
         List<AsignacionDocente> asignaciones = service.findAll();
-        ApiResponseSuccessDto<List<AsignacionDocente>> resp = new ApiResponseSuccessDto<>();
+        List<AsignacionDocenteResponseDto> asignacionesDto = asignaciones.stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+        ApiResponseSuccessDto<List<AsignacionDocenteResponseDto>> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
-        resp.setData(asignaciones);
-        resp.setMessage(asignaciones.isEmpty() ? "No se encontraron asignaciones docentes" : "Asignaciones docentes obtenidas exitosamente");
+        resp.setData(asignacionesDto);
+        resp.setMessage(asignacionesDto.isEmpty() ? "No se encontraron asignaciones docentes" : "Asignaciones docentes obtenidas exitosamente");
         return ResponseEntity.ok(resp);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<AsignacionDocente>> getById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<AsignacionDocenteResponseDto>> getById(@PathVariable Long id) throws Exception {
         AsignacionDocente asignacionDocente = service.findById(id);
-        ApiResponseSuccessDto<AsignacionDocente> resp = new ApiResponseSuccessDto<>();
+        AsignacionDocenteResponseDto asignacionDto = mapper.toResponse(asignacionDocente);
+        ApiResponseSuccessDto<AsignacionDocenteResponseDto> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
-        resp.setData(asignacionDocente);
+        resp.setData(asignacionDto);
         resp.setMessage("Asignación docente obtenida exitosamente");
         return ResponseEntity.ok(resp);
     }
 
     @GetMapping("/get")
-    public ResponseEntity<ApiResponseSuccessDto<List<AsignacionDocente>>> getByDocenteId(
+    public ResponseEntity<ApiResponseSuccessDto<List<AsignacionDocenteResponseDto>>> getByDocenteId(
             @RequestParam(required = true) Long docenteId) {
         List<AsignacionDocente> asignaciones = service.findAllByDocenteId(docenteId);
-        ApiResponseSuccessDto<List<AsignacionDocente>> response = new ApiResponseSuccessDto<List<AsignacionDocente>>(true, "Asignaciones Docentes con el docenteId " + docenteId + " encontradas con éxito", asignaciones);
-        return asignaciones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+        List<AsignacionDocenteResponseDto> asignacionesDto = asignaciones.stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+        ApiResponseSuccessDto<List<AsignacionDocenteResponseDto>> response = new ApiResponseSuccessDto<List<AsignacionDocenteResponseDto>>(true, "Asignaciones Docentes con el docenteId " + docenteId + " encontradas con éxito", asignacionesDto);
+        return asignacionesDto.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
 
     @GetMapping("/count")
@@ -73,24 +86,26 @@ public class AsignacionDocenteController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<AsignacionDocente>> create(@Valid @RequestBody AsignacionDocenteRequestDto dto) throws Exception {
-        AsignacionDocente asignacion = service.fromDto(dto);
+    public ResponseEntity<ApiResponseSuccessDto<AsignacionDocenteResponseDto>> create(@Valid @RequestBody AsignacionDocenteRequestDto dto) throws Exception {
+        AsignacionDocente asignacion = mapper.fromDto(dto);
         AsignacionDocente createdAsignacion = service.create(asignacion);
-        ApiResponseSuccessDto<AsignacionDocente> resp = new ApiResponseSuccessDto<>();
+        AsignacionDocenteResponseDto asignacionDto = mapper.toResponse(createdAsignacion);
+        ApiResponseSuccessDto<AsignacionDocenteResponseDto> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
-        resp.setData(createdAsignacion);
+        resp.setData(asignacionDto);
         resp.setMessage("Asignación docente creada exitosamente");
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<AsignacionDocente>> update(@PathVariable Long id,
+    public ResponseEntity<ApiResponseSuccessDto<AsignacionDocenteResponseDto>> update(@PathVariable Long id,
             @Valid @RequestBody AsignacionDocenteRequestDto dto) throws Exception {
-        AsignacionDocente asignacion = service.fromDto(dto);
+        AsignacionDocente asignacion = mapper.fromDto(dto);
         AsignacionDocente updatedAsignacion = service.update(asignacion, id);
-        ApiResponseSuccessDto<AsignacionDocente> resp = new ApiResponseSuccessDto<>();
+        AsignacionDocenteResponseDto asignacionDto = mapper.toResponse(updatedAsignacion);
+        ApiResponseSuccessDto<AsignacionDocenteResponseDto> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
-        resp.setData(updatedAsignacion);
+        resp.setData(asignacionDto);
         resp.setMessage("Asignación docente actualizada exitosamente");
         return ResponseEntity.ok(resp);
     }

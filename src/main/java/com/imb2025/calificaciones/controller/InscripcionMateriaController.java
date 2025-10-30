@@ -13,15 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDto;
 import com.imb2025.calificaciones.entity.InscripcionMateria;
 import com.imb2025.calificaciones.service.IInscripcionMateriaService;
-
 import jakarta.validation.Valid;
 
 @RestController
@@ -46,6 +42,38 @@ public class InscripcionMateriaController {
         }
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/AlumnosInscriptos/{idAlumno}")
+    public ResponseEntity<ApiResponseSuccessDto<List<InscripcionMateria>>> getByAlumno(@PathVariable Long idAlumno) {
+        List<InscripcionMateria> inscripciones = inscripcionMateriaService.findByAlumno_Id(idAlumno);
+        ApiResponseSuccessDto<List<InscripcionMateria>> response = new ApiResponseSuccessDto<>();
+        if(inscripciones.isEmpty()){
+            response.setData(inscripciones);
+            response.setMessage("Lista Vacía"); 
+            response.setSuccess(false);
+        }else{
+            response.setData(inscripciones);
+            response.setMessage("Lista de Inscripciones del alumno");
+            response.setSuccess(true);
+        }
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/count/{idAlumno}")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> getMethodName(@PathVariable long idAlumno) {
+        Long cantidad = inscripcionMateriaService.countByAlumno_Id(idAlumno);
+        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
+        response.setData(cantidad);
+        if(cantidad == 0){
+            response.setMessage("Alumno no inscripto en ninguna materia"); 
+            response.setSuccess(false);
+        }else{
+            response.setMessage("Cantidad de inscripciones del alumno");
+            response.setSuccess(true);
+        }
+        return ResponseEntity.ok(response);
+    }
+    
+
 
     @GetMapping("/{idInscripcionMateria}")
     public ResponseEntity<ApiResponseSuccessDto<InscripcionMateria>> getById(@PathVariable("idInscripcionMateria") Long id) {

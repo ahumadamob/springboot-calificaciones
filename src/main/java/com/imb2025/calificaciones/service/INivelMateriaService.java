@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.NivelMateriaRequestDto;
+import com.imb2025.calificaciones.dto.request.NivelMateriaRequestDto;
 import com.imb2025.calificaciones.entity.NivelMateria;
 import java.util.List;
 
