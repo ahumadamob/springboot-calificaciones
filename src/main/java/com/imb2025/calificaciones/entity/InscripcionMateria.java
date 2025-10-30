@@ -1,18 +1,12 @@
 package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class InscripcionMateria {
+public class InscripcionMateria extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    
     @ManyToOne
     private Alumno alumno;
     @ManyToOne
@@ -23,23 +17,10 @@ public class InscripcionMateria {
     public InscripcionMateria() {
     }
 
-    public InscripcionMateria(Long id, Alumno alumno, Materia materia, PeriodoLectivo periodoLectivo) {
-        this.id = id;
-        this.alumno = alumno;
-        this.materia = materia;
-        this.periodoLectivo = periodoLectivo;
-    }
-
     public InscripcionMateria(Alumno alumno, Materia materia, PeriodoLectivo periodoLectivo) {
         this.alumno = alumno;
         this.materia = materia;
         this.periodoLectivo = periodoLectivo;
-    }
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
     }
     public Alumno getAlumno() {
         return alumno;
