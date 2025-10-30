@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.EvaluacionRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.imb2025.calificaciones.entity.Evaluacion;
 import com.imb2025.calificaciones.service.IEvaluacionService;
@@ -24,6 +25,8 @@ import com.imb2025.calificaciones.service.IEvaluacionService;
 import jakarta.validation.Valid;
 import jakarta.validation.groups.Default;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -94,6 +97,55 @@ public class EvaluacionController {
         	return ResponseEntity.ok(response);
 
         }
+        
+        @GetMapping("/{fechaInicio}/{fechaFinal}")
+        public ResponseEntity<ApiResponseSuccessDto<List<Evaluacion>>> getByRangoFechas(
+        		@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaInicio,
+        		@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaFinal) {
+            //Uso de DateTimeFormat para que Spring tome un mejor formato de fechas yyyy-mm-dd
+            List<Evaluacion> evaluaciones = evaluacionServiceImp.findByFechaBetween(fechaInicio, fechaFinal);
+
+            ApiResponseSuccessDto<List<Evaluacion>> response = new ApiResponseSuccessDto<>();
+            response.setMessage("Evaluaciones encontradas entre las fechas indicadas");
+            response.setData(evaluaciones);
+            response.setSuccess(true);
+
+            return ResponseEntity.ok(response);
+        }
+        
+        @GetMapping("/materia/{materiaId}/comision/{comisionId}")
+        public ResponseEntity<ApiResponseSuccessDto<List<Evaluacion>>> getByMateriaAndComision(
+                @PathVariable long materiaId,
+                @PathVariable long comisionId) {
+
+            List<Evaluacion> evaluaciones = evaluacionServiceImp.findByMateriaIdAndComisionId(materiaId, comisionId);
+
+            ApiResponseSuccessDto<List<Evaluacion>> response = new ApiResponseSuccessDto<>();
+            response.setMessage("Evaluaciones encontradas por materia:"+materiaId+" y comisión: "+comisionId);
+            response.setData(evaluaciones);
+            response.setSuccess(true);
+
+            return ResponseEntity.ok(response);
+        }
+        
+        @GetMapping("/count/materia/{materiaId}/comision/{comisionId}")
+        public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByMateriaAndComision(
+                @PathVariable Long materiaId,
+                @PathVariable Long comisionId) {
+
+            Long count = evaluacionServiceImp.countByMateriaIdAndComisionId(materiaId, comisionId);
+
+            HashMap<String, Long> hash = new HashMap<>();
+            hash.put("cantidad", count);
+
+            ApiResponseSuccessDto<HashMap<String, Long>> response = new ApiResponseSuccessDto<>();
+            response.setData(hash);
+            response.setMessage("Cantidad de evaluaciones encontradas");
+            response.setSuccess(true);
+
+            return ResponseEntity.ok(response);
+        }
+
 
 //        @ExceptionHandler(Exception.class)
 //        public ResponseEntity<String> handleException(Exception ex){
