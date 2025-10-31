@@ -10,10 +10,6 @@ import jakarta.persistence.Id;
 @Entity
 public class Turno extends BaseEntity {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	
         private String nombre;
 
         
