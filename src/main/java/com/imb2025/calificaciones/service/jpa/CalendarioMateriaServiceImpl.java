@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDto;
+import com.imb2025.calificaciones.dto.request.CalendarioMateriaRequestDto;
 import com.imb2025.calificaciones.entity.CalendarioMateria;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.entity.Materia;
@@ -9,7 +9,9 @@ import com.imb2025.calificaciones.repository.ComisionRepository;
 import com.imb2025.calificaciones.repository.ICalendarioMateriaRepository;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.service.ICalendarioMateriaService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,25 +60,15 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService {
     }
 
     @Override
-    public CalendarioMateria fromDto(CalendarioMateriaRequestDto calMatDto) throws Exception {
-
-        CalendarioMateria calendarioMateria = new CalendarioMateria();
-
-        if (calMatDto.getFechaInicio().isAfter(calMatDto.getFechaFin())){
-            throw new Exception("La fecha de inicio no puede ser posterior a la fecha de fin");
-        }
-        Materia materia = materiaRepository.findById(calMatDto.getMateriaId())
-                .orElseThrow(() -> new Exception ("Materia no encontrada con el id: " + calMatDto.getMateriaId()));
-
-        Comision comision = comisionRepository.findById(calMatDto.getComisionId())
-                .orElseThrow(() -> new Exception ("Comision no encontrada con el id: " + calMatDto.getComisionId()));
-
-        calendarioMateria.setFechaInicio(calMatDto.getFechaInicio());
-        calendarioMateria.setFechaFin(calMatDto.getFechaFin());
-        calendarioMateria.setMateria(materia);
-        calendarioMateria.setComision(comision);
-
-        return calendarioMateria;
+    public List<CalendarioMateria> findByMateriaId(Long materiaId) {
+        return calMatRepo.findByMateriaId(materiaId);
     }
+
+    @Override
+    public Long countByComisionId(Long comisionId) {
+        return calMatRepo.countByComisionId(comisionId).orElseThrow(() -> new EntityNotFoundException("No hay calendarios" +
+                "materias para la comision: " + comisionId));
+    }
+
 
 }

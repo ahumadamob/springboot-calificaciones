@@ -1,97 +1,113 @@
 package com.imb2025.calificaciones.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.dto.CondicionFinalRequestDto;
+// Import corregido: se asume que moviste CondicionFinalRequestDto a este paquete
+import com.imb2025.calificaciones.dto.request.CondicionFinalRequestDto; 
+import com.imb2025.calificaciones.dto.response.CondicionFinalResponseDto; // Nuevo: DTO de respuesta
 import com.imb2025.calificaciones.entity.CondicionFinal;
 import com.imb2025.calificaciones.service.ICondicionFinalService;
+import com.imb2025.calificaciones.mapper.CondicionFinalMapper; // Nuevo: Importar el Mapper
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors; // Nuevo: Para mapear listas
 
 @RestController
-@RequestMapping("/api/condicionFinal")
+@RequestMapping("/api/condicion-final")
 public class CondicionFinalController {
 
     @Autowired
     private ICondicionFinalService service;
 
-    @GetMapping
-    public ResponseEntity<ApiResponseSuccessDto<List<CondicionFinal>>> getAll() {
-        List<CondicionFinal> condiciones = service.findAll();
+    @Autowired // Inyección del Mapper
+    private CondicionFinalMapper mapper;
 
+    @GetMapping
+    public ResponseEntity<List<CondicionFinalResponseDto>> getAll() { // Devuelve lista de DTOs
+        List<CondicionFinal> condiciones = service.findAll();
         if (condiciones.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-
-        ApiResponseSuccessDto<List<CondicionFinal>> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setMessage("Condiciones finales encontradas con éxito");
-        response.setData(condiciones);
-
-        return ResponseEntity.ok(response);
+        // Mapear de entidad a ResponseDto
+        List<CondicionFinalResponseDto> dtos = condiciones.stream()
+            .map(mapper::toResponseDto)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<CondicionFinal>> getById(@PathVariable Long id) {
+    public ResponseEntity<CondicionFinalResponseDto> getById(@PathVariable Long id) { // Devuelve DTO
         CondicionFinal condicion = service.findById(id);
-
-        if (condicion == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        ApiResponseSuccessDto<CondicionFinal> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setMessage("Condición final encontrada con éxito");
-        response.setData(condicion);
-
-        return ResponseEntity.ok(response);
+        // Mapear de entidad a ResponseDto
+        return condicion == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(mapper.toResponseDto(condicion));
     }
 
-    @PostMapping("/crear")
-    public ResponseEntity<ApiResponseSuccessDto<CondicionFinal>> create(@RequestBody CondicionFinalRequestDto dto) throws Exception {
-        CondicionFinal condicion = service.fromDto(dto);
-        condicion = service.create(condicion);
-
-        ApiResponseSuccessDto<CondicionFinal> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setMessage("Condición final creada con éxito");
-        response.setData(condicion);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    @PostMapping
+    public ResponseEntity<CondicionFinalResponseDto> create(@RequestBody CondicionFinalRequestDto dto) throws Exception { // Recibe Request DTO, devuelve Response DTO
+        // Reemplazar service.fromDto(dto) con mapper.toEntity(dto)
+        CondicionFinal condicion = mapper.toEntity(dto);
+        CondicionFinal created = service.create(condicion);
+        // Devolver la entidad mapeada a ResponseDto
+        return ResponseEntity.ok(mapper.toResponseDto(created));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<CondicionFinal>> update(@PathVariable Long id, @RequestBody CondicionFinalRequestDto dto) throws Exception {
+    public ResponseEntity<CondicionFinalResponseDto> update(@PathVariable Long id, @RequestBody CondicionFinalRequestDto dto) throws Exception { // Recibe Request DTO, devuelve Response DTO
         CondicionFinal existente = service.findById(id);
         if (existente == null) {
             return ResponseEntity.badRequest().build();
         }
-
-        CondicionFinal condicion = service.fromDto(dto);
-        condicion = service.update(condicion, id);
-
-        ApiResponseSuccessDto<CondicionFinal> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setMessage("Condición final actualizada con éxito");
-        response.setData(condicion);
-
-        return ResponseEntity.ok(response);
+        // Reemplazar service.fromDto(dto) con mapper.toEntity(dto)
+        CondicionFinal condicion = mapper.toEntity(dto);
+        CondicionFinal updated = service.update(condicion, id);
+        // Devolver la entidad mapeada a ResponseDto
+        return ResponseEntity.ok(mapper.toResponseDto(updated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<Void>> delete(@PathVariable Long id) throws Exception {
-        service.deleteById(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            service.deleteById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
-        ApiResponseSuccessDto<Void> response = new ApiResponseSuccessDto<>();
-        response.setSuccess(true);
-        response.setMessage("La condición final con id " + id + " fue eliminada con éxito");
-        response.setData(null);
+    // endpoint: buscar por nombre
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<List<CondicionFinalResponseDto>> getByNombre(@PathVariable String nombre) { // Devuelve lista de DTOs
+        List<CondicionFinal> lista = service.findByNombre(nombre);
+        if (lista.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        // Mapear de entidad a ResponseDto
+        List<CondicionFinalResponseDto> dtos = lista.stream()
+            .map(mapper::toResponseDto)
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
 
-        return ResponseEntity.ok(response);
+    // endpoint: contar por nombre
+    @GetMapping("/count/{nombre}")
+    public ResponseEntity<Long> countByNombre(@PathVariable String nombre) {
+        Long cantidad = service.countByNombre(nombre);
+        return ResponseEntity.ok(cantidad);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }
-

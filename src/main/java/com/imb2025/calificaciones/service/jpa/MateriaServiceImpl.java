@@ -3,12 +3,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.imb2025.calificaciones.dto.MateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.MateriaRepository;
 import com.imb2025.calificaciones.service.IMateriaService;
+import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
 
 @Service
 public class MateriaServiceImpl implements IMateriaService{
@@ -57,14 +56,31 @@ public class MateriaServiceImpl implements IMateriaService{
         repo.deleteById(id);
     }
 
-    @Override
-    public Materia fromDto(MateriaRequestDto materiaRequestDto) throws Exception {
-        Materia materia = new Materia();
-        materia.setNombre(materiaRequestDto.getNombre());
-        materia.setCargaHoraria(materiaRequestDto.getCargaHoraria());
-        materia.setCodigo(materiaRequestDto.getCodigo());
-        materia.setNivel(materiaRequestDto.getNivel());
+   
 
-        return materia;
-    }
+	@Override
+	public List<Materia> findAllOrder() {
+		
+		return repo.findByOrderByNombreAsc();
+	}
+
+	@Override
+	public List<Materia> findByNivelEndsWith(String sufijo) {
+		return repo.findByNivelEndingWithIgnoreCase(sufijo);
+	}
+
+	@Override
+	public Materia findByCodigo(String codigo) {
+		return repo.findByCodigo(codigo)
+        	    .orElseThrow(() -> new EntidadNoEncontradaException(
+        	        "Materia no encontrada con codigo " + codigo));
+	}
+
+	@Override
+	public long findByCargaHoraria(Integer cargaHoraria) {
+		
+		return repo.countByCargaHoraria(cargaHoraria);
+	}
+
+	
 }

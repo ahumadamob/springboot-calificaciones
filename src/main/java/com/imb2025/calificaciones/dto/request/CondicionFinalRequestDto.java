@@ -1,8 +1,14 @@
-package com.imb2025.calificaciones.dto;
+package com.imb2025.calificaciones.dto.request;
 
 public class CondicionFinalRequestDto {
 
     private String nombre;
+
+    public CondicionFinalRequestDto() {}
+
+    public CondicionFinalRequestDto(String nombre) {
+        this.nombre = nombre;
+    }
 
     public String getNombre() {
         return nombre;

@@ -1,12 +1,10 @@
 package com.imb2025.calificaciones.service.jpa;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.ObservacionAlumnoRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
@@ -21,12 +19,12 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 
     @Autowired
     private ObservacionAlumnoRepository observacionAlumnoRepository;
+	@Autowired
+	private AlumnoRepository alumnoRepository;
 
-    @Autowired
-    private AlumnoRepository alumnoRepository;
+	@Autowired
+	private DocenteRepository docenteRepository;
 
-    @Autowired
-    private DocenteRepository docenteRepository;
 
     @Override
     public ObservacionAlumno findById(Long id) {
@@ -41,29 +39,43 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
     }
 
     @Override
-    public ObservacionAlumno create(ObservacionAlumno observacionAlumno) {
-        try {
-            return observacionAlumnoRepository.save(observacionAlumno);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al crear la observación del alumno: " + e.getMessage());
-        }
+    public ObservacionAlumno create(ObservacionAlumno observacionAlumno, Long alumnoId, Long docenteId) {
+        
+        Alumno alumno = alumnoRepository.findById(alumnoId)
+                .orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
 
+        Docente docente = docenteRepository.findById(docenteId)
+                .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
+
+        observacionAlumno.setAlumno(alumno);
+        observacionAlumno.setDocente(docente);
+
+        return observacionAlumnoRepository.save(observacionAlumno);
+       
     }
 
+    
     @Override
-    public ObservacionAlumno update(ObservacionAlumno observacionAlumno, Long id) throws Exception {
-        try {
-            Optional<ObservacionAlumno> obs = observacionAlumnoRepository.findById(id);
-            if (obs.isPresent()) {
-                observacionAlumno.setId(id);
-                return observacionAlumnoRepository.save(observacionAlumno);
-            } else {
-                throw new Exception("La observación de alumno no existe");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Error al actualizar la observación del alumno: " + e.getMessage());
-        }
+    public ObservacionAlumno update(ObservacionAlumno observacionAlumno, Long id, Long alumnoId, Long docenteId) {
+
+        ObservacionAlumno existente = observacionAlumnoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Observación no encontrada"));
+
+        Alumno alumno = alumnoRepository.findById(alumnoId)
+                .orElseThrow(() -> new RuntimeException("Alumno no encontrado"));
+
+        Docente docente = docenteRepository.findById(docenteId)
+                .orElseThrow(() -> new RuntimeException("Docente no encontrado"));
+
+        existente.setTexto(observacionAlumno.getTexto());
+        existente.setFecha(observacionAlumno.getFecha());
+        existente.setAlumno(alumno);
+        existente.setDocente(docente);
+
+        return observacionAlumnoRepository.save(existente);
     }
+
+
 
     @Override
     public void deleteById(Long id) throws Exception {
@@ -72,22 +84,16 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
         }
         observacionAlumnoRepository.deleteById(id);
     }
+    
 
-    @Override
-    public ObservacionAlumno fromDto(ObservacionAlumnoRequestDto dto) throws Exception {
-        Docente docente = docenteRepository.findById(dto.getDocenteId())
-                .orElseThrow(() -> new Exception("docente no encontrado"));
+	@Override
+	public List<ObservacionAlumno> findByDocente(Docente docente) {
+		return observacionAlumnoRepository.findByDocente(docente);
+	}
 
-        Alumno alumno = alumnoRepository.findById(dto.getAlumnoId())
-                .orElseThrow(() -> new Exception("alumno no encontrado"));
-
-        ObservacionAlumno observacion = new ObservacionAlumno();
-        observacion.setFecha(dto.getFecha());
-        observacion.setTexto(dto.getTexto());
-        observacion.setDocente(docente);
-        observacion.setAlumno(alumno);
-
-        return observacion;
-    }
+	@Override
+	public Long countByAlumno(Alumno alumno) {
+		return observacionAlumnoRepository.countByAlumno(alumno);
+	}
 
 }

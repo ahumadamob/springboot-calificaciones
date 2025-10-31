@@ -4,11 +4,14 @@ import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.CursadaRequestDto;
 import com.imb2025.calificaciones.entity.Cursada;
 import com.imb2025.calificaciones.service.ICursadaService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+//import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,9 +52,33 @@ public class CursadaController {
 
         return ResponseEntity.ok(resp);
     }
+    
+    @GetMapping("/alumno/{nombre}")
+    public ResponseEntity<ApiResponseSuccessDto<List<Cursada>>> getCursadasByAlumno(@PathVariable String nombre) {
+        List<Cursada> data = cursadaService.findByNombreAlumno(nombre);
+
+        ApiResponseSuccessDto<List<Cursada>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(data);
+        resp.setMessage("Listado de cursadas del alumno: " + nombre);
+
+        return ResponseEntity.ok(resp);
+    }
+    
+    @GetMapping("/materia/{nombreMateria}/count")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countCursadasByMateria(@PathVariable String nombreMateria) {
+        Long cantidad = cursadaService.countByNombreMateria(nombreMateria);
+
+        ApiResponseSuccessDto<Long> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(cantidad);
+        resp.setMessage("Cantidad de cursadas de la materia: " + nombreMateria);
+
+        return ResponseEntity.ok(resp);
+    }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<Cursada>> createCursada(@RequestBody CursadaRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<Cursada>> createCursada(@Valid @RequestBody CursadaRequestDto dto) throws Exception {
         Cursada cursada = cursadaService.fromDto(dto);
         Cursada createdCursada = cursadaService.create(cursada);
 
@@ -64,7 +91,7 @@ public class CursadaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<Cursada>> updateCursada(@PathVariable Long id, @RequestBody CursadaRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<Cursada>> updateCursada(@PathVariable Long id, @Valid @RequestBody CursadaRequestDto dto) throws Exception {
         Cursada cursada = cursadaService.fromDto(dto);
         Cursada updatedCursada = cursadaService.update(cursada, id);
 
@@ -88,9 +115,10 @@ public class CursadaController {
         return ResponseEntity.ok(resp);
         
 
-        }
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex){
-            return ResponseEntity.badRequest().body(ex.getMessage());
+        } 
     }
-    }
+   // @ExceptionHandler(Exception.class)
+    //public ResponseEntity<String> handleException(Exception ex){
+    //        return ResponseEntity.badRequest().body(ex.getMessage());
+   // }
+   

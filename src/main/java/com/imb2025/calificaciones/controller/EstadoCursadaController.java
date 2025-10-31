@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
@@ -46,6 +47,30 @@ public class EstadoCursadaController {
     	response.setMessage("Estado de la Materia fue encontrada con exito");
     	response.setData(estado);
 
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<ApiResponseSuccessDto<List<EstadoCursada>>> findByNombre(@RequestParam String nombre) {
+        List<EstadoCursada> estados = service.findByNombreIgnoreCase(nombre);
+        ApiResponseSuccessDto<List<EstadoCursada>> response = new ApiResponseSuccessDto<>(
+            true,
+            "Estados encontrados con nombre: " + nombre,
+            estados
+        );
+        return estados.isEmpty()
+            ? ResponseEntity.noContent().build()
+            : ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/contar")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> contarPorDescripcion(@RequestParam String descripcion) {
+        long count = service.countByDescripcionIgnoreCase(descripcion);
+        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>(
+            true,
+            "Cantidad de estados con descripción: " + descripcion,
+            count
+        );
         return ResponseEntity.ok(response);
     }
 

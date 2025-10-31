@@ -1,12 +1,15 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.AsignacionDocenteRequestDto;
 import com.imb2025.calificaciones.entity.AsignacionDocente;
 import java.util.List;
 
 public interface IAsignacionDocenteService {
 
     public List<AsignacionDocente> findAll();
+
+    public List<AsignacionDocente> findAllByDocenteId(Long docenteId);
+
+    public long countByMateriaIdAndComisionId(Long materiaId, Long comisionId);
 
     public AsignacionDocente create(AsignacionDocente asignacionDocente);
 
@@ -15,6 +18,4 @@ public interface IAsignacionDocenteService {
     public AsignacionDocente findById(Long id);
 
     public void deleteById(Long id) throws Exception;
-
-    public AsignacionDocente fromDto(AsignacionDocenteRequestDto dto) throws Exception;
 }

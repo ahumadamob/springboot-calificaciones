@@ -4,8 +4,6 @@ import com.imb2025.calificaciones.dto.DocenteRequestDto;
 import com.imb2025.calificaciones.entity.Docente;
 import java.util.List;
 
-
-
 public interface IDocenteService {
 
     public List<Docente> findAll();
@@ -22,4 +20,7 @@ public interface IDocenteService {
 
     public boolean existsById(Long id);
 
+    List<Docente> findByApellido(String apellido);
+
+    Long countByTitulo(String titulo);
 }

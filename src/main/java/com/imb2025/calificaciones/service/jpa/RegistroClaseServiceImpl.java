@@ -3,12 +3,12 @@ package com.imb2025.calificaciones.service.jpa;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import com.imb2025.calificaciones.exception.EntidadNoEncontradaException;
+
 import com.imb2025.calificaciones.dto.RegistroClaseRequestDto;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.entity.RegistroClase;
-
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.ComisionRepository;
 import com.imb2025.calificaciones.repository.DocenteRepository;
 import com.imb2025.calificaciones.repository.RegistroClaseRepository;
@@ -37,7 +37,8 @@ public class RegistroClaseServiceImpl implements IRegistroClaseService {
     @Override
     public RegistroClase findById(Long id) {
         return registroClaseRepository.findById(id)
-                .orElseThrow(() -> new EntidadNoEncontradaException("RegistroClase no encontrado con ID: " + id));
+               .orElseThrow(() -> new ResourceNotFoundException(
+        "Entidad no encontrada con id " + id));
     }
 
     @Override
