@@ -85,8 +85,5 @@ public class TipoEvaluacionController {
     	long total = tipoEvaluacionService.contarNombre(q);
         return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "Total: ", total));
     }
-<<<<<<< HEAD
-=======
     
->>>>>>> f92b8fc (TP07: métodos mágicos)
 }

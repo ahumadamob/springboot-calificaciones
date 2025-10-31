@@ -15,9 +15,10 @@ public class SedeRequestDto {
     @Size(min = 5, max = 150, message = "La dirección debe tener entre 5 y 150 caracteres")
     private String direccion;
 
-    @NotNull(message = "Debe indicar la localidad")
-    @Positive(message = "El id de localidad debe ser positivo")
-    private Long localidadId;
+    @NotBlank(message = "Debe indicar la localidad")
+    private String localidad;
+
+    private Boolean activa = Boolean.TRUE;
 
     public String getNombre() {
         return nombre;
@@ -35,11 +36,19 @@ public class SedeRequestDto {
         this.direccion = direccion;
     }
 
-    public Long getLocalidadId() {
-        return localidadId;
+    public String getLocalidad() {
+        return localidad;
     }
 
-    public void setLocalidadId(Long localidadId) {
-        this.localidadId = localidadId;
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public Boolean getActiva() {
+        return activa;
+    }
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
     }
 }

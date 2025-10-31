@@ -5,17 +5,19 @@ public class SedeResponseDto {
     private Long id;
     private String nombre;
     private String direccion;
-    private Long localidadId;
+    private String localidad;
     private Long version;
+    private Boolean activa;
 
     public SedeResponseDto() {}
 
-    public SedeResponseDto(Long id, String nombre, String direccion, Long localidadId, Long version) {
+    public SedeResponseDto(Long id, String nombre, String direccion, String localidad, Long version, Boolean activa) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.localidadId = localidadId;
+        this.localidad = localidad;
         this.version = version;
+        this.activa = activa;
     }
 
     public Long getId() {
@@ -30,12 +32,16 @@ public class SedeResponseDto {
         return direccion;
     }
 
-    public Long getLocalidadId() {
-        return localidadId;
+    public String getLocalidad() {
+        return localidad;
     }
 
     public Long getVersion() {
         return version;
+    }
+
+    public Boolean getActiva() {
+        return activa;
     }
 
     public void setId(Long id) {
@@ -50,11 +56,15 @@ public class SedeResponseDto {
         this.direccion = direccion;
     }
 
-    public void setLocalidadId(Long localidadId) {
-        this.localidadId = localidadId;
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
     }
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
     }
 }

@@ -107,4 +107,26 @@ public class SedeController {
         resp.setMessage("Cantidad de sedes con esa dirección");
         return ResponseEntity.ok(resp);
     }
+
+    @GetMapping("/api/sede/activas")
+    public ResponseEntity<ApiResponseSuccessDto<List<SedeResponseDto>>> getSedesActivas() {
+        List<Sede> lista = sedeService.findByActivaTrue();
+        List<SedeResponseDto> datos = lista.stream().map(sedeMapper::toResponse).collect(Collectors.toList());
+        ApiResponseSuccessDto<List<SedeResponseDto>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(datos);
+        resp.setMessage(datos.isEmpty() ? "No hay sedes activas" : "Listado de sedes activas");
+        return ResponseEntity.ok(resp);
+    }
+
+    @GetMapping("/api/sede/inactivas")
+    public ResponseEntity<ApiResponseSuccessDto<List<SedeResponseDto>>> getSedesInactivas() {
+        List<Sede> lista = sedeService.findByActivaFalse();
+        List<SedeResponseDto> datos = lista.stream().map(sedeMapper::toResponse).collect(Collectors.toList());
+        ApiResponseSuccessDto<List<SedeResponseDto>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(datos);
+        resp.setMessage(datos.isEmpty() ? "No hay sedes inactivas" : "Listado de sedes inactivas");
+        return ResponseEntity.ok(resp);
+    }
 }
