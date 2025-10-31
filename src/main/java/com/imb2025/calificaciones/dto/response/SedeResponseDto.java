@@ -8,6 +8,7 @@ public class SedeResponseDto {
     private String localidad;
     private Long version;
     private Boolean activa;
+    
 
     public SedeResponseDto() {}
 

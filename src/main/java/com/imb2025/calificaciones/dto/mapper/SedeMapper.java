@@ -1,10 +1,10 @@
 package com.imb2025.calificaciones.dto.mapper;
 
 import org.springframework.stereotype.Component;
-
 import com.imb2025.calificaciones.dto.request.SedeRequestDto;
 import com.imb2025.calificaciones.dto.response.SedeResponseDto;
 import com.imb2025.calificaciones.entity.Sede;
+
 
 @Component
 public class SedeMapper {

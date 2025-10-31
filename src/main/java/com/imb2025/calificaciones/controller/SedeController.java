@@ -36,6 +36,7 @@ public class SedeController {
         return ResponseEntity.ok(resp);
     }
 
+    
     @GetMapping("/api/sede/{idSede}")
     public ResponseEntity<ApiResponseSuccessDto<SedeResponseDto>> getSedeById(@PathVariable("idSede") Long id){
         Sede sede = sedeService.findById(id);
