@@ -3,8 +3,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.imb2025.calificaciones.dto.MateriaRequestDto;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.MateriaRepository;
@@ -58,16 +56,7 @@ public class MateriaServiceImpl implements IMateriaService{
         repo.deleteById(id);
     }
 
-    @Override
-    public Materia fromDto(MateriaRequestDto materiaRequestDto) throws Exception {
-        Materia materia = new Materia();
-        materia.setNombre(materiaRequestDto.getNombre());
-        materia.setCargaHoraria(materiaRequestDto.getCargaHoraria());
-        materia.setCodigo(materiaRequestDto.getCodigo());
-        materia.setNivel(materiaRequestDto.getNivel());
-
-        return materia;
-    }
+   
 
 	@Override
 	public List<Materia> findAllOrder() {
