@@ -14,18 +14,18 @@ public class SedeMapper {
         Sede s = new Sede();
         s.setNombre(dto.getNombre());
         s.setDireccion(dto.getDireccion());
+        s.setLocalidad(dto.getLocalidad());
         s.setActiva(dto.getActiva());
         return s;
     }
 
     public SedeResponseDto toResponse(Sede sede) {
         if (sede == null) return null;
-        Long localidadId = null;
         SedeResponseDto r = new SedeResponseDto();
         r.setId(sede.getId());
         r.setNombre(sede.getNombre());
         r.setDireccion(sede.getDireccion());
-        r.setLocalidadId(localidadId);
+        r.setLocalidad(sede.getLocalidad());
         r.setVersion(sede.getVersion());
         r.setActiva(sede.getActiva());
         return r;
