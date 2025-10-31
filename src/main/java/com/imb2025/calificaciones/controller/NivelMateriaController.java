@@ -19,7 +19,7 @@ import com.imb2025.calificaciones.service.INivelMateriaService;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.dto.NivelMateriaRequestDto;
+import com.imb2025.calificaciones.dto.request.NivelMateriaRequestDto;
 
 
 @RestController
@@ -81,3 +81,4 @@ public ResponseEntity<ApiResponseSuccessDto<Void>> deleteNivelMateria(@PathVaria
     }
 }
 }
+

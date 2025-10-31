@@ -69,12 +69,20 @@ public class DocenteServiceImpl implements IDocenteService {
         }
         repo.deleteById(id);
     }
- 
-     @Override
+
+    @Override
     public boolean existsById(Long id) {
         return repo.existsById(id);
     }
 
+    @Override
+    public List<Docente> findByApellido(String apellido) {
+        return repo.findByApellido(apellido);
+    }
 
+    @Override
+    public Long countByTitulo(String titulo) {
+        return repo.countByTitulo(titulo);
+    }
 
 }

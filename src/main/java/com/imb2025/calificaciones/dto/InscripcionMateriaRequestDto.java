@@ -1,7 +1,5 @@
 package com.imb2025.calificaciones.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public class InscripcionMateriaRequestDto {

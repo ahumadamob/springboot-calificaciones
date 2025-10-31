@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface ITipoEvaluacionService {
 
-    public List<TipoEvaluacion> findAll();
+    List<TipoEvaluacion> findAll();
 
-    public TipoEvaluacion create(TipoEvaluacion tipoEvaluacion);
+    TipoEvaluacion create(TipoEvaluacion tipoEvaluacion);
+    TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id);
+    TipoEvaluacion findById(Long id);
+    void deleteById(Long id);
+    TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto);
 
-    public TipoEvaluacion update(TipoEvaluacion tipoEvaluacion, Long id) throws Exception;
+    List<TipoEvaluacion> buscarNombre(String q);
+    long contarNombre(String q);
 
-    public TipoEvaluacion findById(Long id);
-
-    public void deleteById(Long id) throws Exception;
-
-    public TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto) throws Exception;
 }

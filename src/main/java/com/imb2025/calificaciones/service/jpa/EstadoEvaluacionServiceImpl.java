@@ -62,4 +62,14 @@ public class EstadoEvaluacionServiceImpl implements IEstadoEvaluacionService {
         estado.setDescripcion(dto.getDescripcion());
         return estado;
     }
+
+    @Override
+    public List<EstadoEvaluacion> findByNombre(String nombre) {
+        return repository.findByNombreIgnoreCase(nombre);
+    }
+
+    @Override
+    public long countByDescripcion(String descripcion) {
+        return repository.countByDescripcion(descripcion);
+    }
 }

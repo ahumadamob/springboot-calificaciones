@@ -42,6 +42,27 @@ public class ComisionController {
         return ResponseEntity.ok(resp);
     }
 
+    // filtrar por nombre (TP07)
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<ApiResponseSuccessDto<List<Comision>>> getByNombre(@PathVariable String nombre) {
+        List<Comision> lista = service.findByNombreContainingIgnoreCase(nombre);
+        ApiResponseSuccessDto<List<Comision>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(lista);
+        resp.setMessage("Comisiones filtradas por nombre: " + nombre);
+        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
+    }
+
+    @GetMapping("/count/sede/{sedeId}")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countBySede(@PathVariable Long sedeId) {
+        long cantidad = service.countBySedeId(sedeId);
+        ApiResponseSuccessDto<Long> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(cantidad);
+        resp.setMessage("Cantidad de comisiones en la sede: " + sedeId);
+        return ResponseEntity.ok(resp);
+    }
+
     @PostMapping
     public ResponseEntity<ApiResponseSuccessDto<Comision>> create(@Valid @RequestBody ComisionRequestDto dto) throws Exception {
         Comision c = service.fromDto(dto);
@@ -83,5 +104,5 @@ public class ComisionController {
     // Eliminado el manejador local de excepciones para que GlobalExceptionHandler procese
     // los errores de validación y devuelva ApiResponseErrorDto con la lista completa.
 }
-    
+
 

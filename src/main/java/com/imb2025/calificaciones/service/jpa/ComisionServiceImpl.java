@@ -78,4 +78,14 @@ public class ComisionServiceImpl implements IComisionService {
         }
         return c;
     }
+
+    @Override
+    public List<Comision> findByNombreContainingIgnoreCase(String nombre) {
+        return repo.findByNombreContainingIgnoreCase(nombre);
+    }
+
+    @Override
+    public long countBySedeId(Long sedeId) {
+        return repo.countBySedeId(sedeId);
+    }
 }
