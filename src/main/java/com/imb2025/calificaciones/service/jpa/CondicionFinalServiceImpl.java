@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.CondicionFinalRequestDto;
 import com.imb2025.calificaciones.entity.CondicionFinal;
 import com.imb2025.calificaciones.repository.CondicionFinalRepository;
 import com.imb2025.calificaciones.service.ICondicionFinalService;
@@ -44,16 +43,6 @@ public class CondicionFinalServiceImpl implements ICondicionFinalService {
             throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
         repository.deleteById(id);
-    }
-
-    @Override
-    public CondicionFinal fromDto(CondicionFinalRequestDto dto) throws Exception {
-        if (dto == null) {
-            return null;
-        }
-        CondicionFinal condicionFinal = new CondicionFinal();
-        condicionFinal.setNombre(dto.getNombre());
-        return condicionFinal;
     }
 
     @Override
