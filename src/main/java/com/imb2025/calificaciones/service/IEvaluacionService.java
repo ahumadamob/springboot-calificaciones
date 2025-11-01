@@ -25,6 +25,4 @@ public interface IEvaluacionService {
 
     public List<Evaluacion> findByFechaBetween(Date fechaInicio, Date fechaFin);
 
-    public long countByEstado(Evaluacion.Estado estado);
-
 }

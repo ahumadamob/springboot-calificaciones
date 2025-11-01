@@ -4,8 +4,6 @@ import jakarta.persistence.ManyToOne;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 @Entity
 public class Evaluacion extends BaseEntity {
@@ -21,13 +19,6 @@ public class Evaluacion extends BaseEntity {
 	@ManyToOne
 	private Comision comision;
 
-	@Enumerated(EnumType.STRING)
-	private Estado estado = Estado.INACTIVO;
-
-	public enum Estado {
-		ACTIVO, INACTIVO, PENDIENTE
-	}
-
 	public Evaluacion() {
 		super();
 	}
@@ -37,16 +28,6 @@ public class Evaluacion extends BaseEntity {
 		this.tipoEvaluacion = tipoEvaluacion;
 		this.materia = materia;
 		this.comision = comision;
-	}
-
-	public Evaluacion(Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia, Comision comision,
-			Estado estado) {
-		super();
-		this.fecha = fecha;
-		this.tipoEvaluacion = tipoEvaluacion;
-		this.materia = materia;
-		this.comision = comision;
-		this.estado = estado;
 	}
 
 	public Date getFecha() {
@@ -79,13 +60,5 @@ public class Evaluacion extends BaseEntity {
 
 	public void setComision(Comision comision) {
 		this.comision = comision;
-	}
-
-	public Estado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Estado estado) {
-		this.estado = estado;
 	}
 }

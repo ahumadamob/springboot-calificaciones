@@ -171,50 +171,6 @@ public class EvaluacionController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/count/activos")
-    public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByActivos() {
-
-        Long count = evaluacionServiceImp.countByEstado(Evaluacion.Estado.ACTIVO);
-        HashMap<String, Long> hash = new HashMap<>();
-        hash.put("total activos: ", count);
-
-        ApiResponseSuccessDto<HashMap<String, Long>> response = new ApiResponseSuccessDto<>();
-        response.setData(hash);
-        response.setMessage("Cantidad de evaluaciones ACTIVAS");
-        response.setSuccess(true);
-
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/count/inactivos")
-    public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByInactivos() {
-
-        Long count = evaluacionServiceImp.countByEstado(Evaluacion.Estado.INACTIVO);
-        HashMap<String, Long> hash = new HashMap<>();
-        hash.put("total inactivos: ", count);
-
-        ApiResponseSuccessDto<HashMap<String, Long>> response = new ApiResponseSuccessDto<>();
-        response.setData(hash);
-        response.setMessage("Cantidad de evaluaciones INACTIVAS");
-        response.setSuccess(true);
-
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/count/pendientes")
-    public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByPendientes() {
-
-        Long count = evaluacionServiceImp.countByEstado(Evaluacion.Estado.PENDIENTE);
-        HashMap<String, Long> hash = new HashMap<>();
-        hash.put("total pendientes: ", count);
-
-        ApiResponseSuccessDto<HashMap<String, Long>> response = new ApiResponseSuccessDto<>();
-        response.setData(hash);
-        response.setMessage("Cantidad de evaluaciones PENDIENTES");
-        response.setSuccess(true);
-
-        return ResponseEntity.ok(response);
-    }
 
     // @ExceptionHandler(Exception.class)
     // public ResponseEntity<String> handleException(Exception ex){

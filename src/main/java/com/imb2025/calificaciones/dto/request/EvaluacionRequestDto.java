@@ -25,9 +25,6 @@ public class EvaluacionRequestDto {
     @NotNull(message = "Debe asignar a cual Comisión pertenece")
     private Long comisionId;
 
-    @NotNull(message = "El estado de la evaluacion no puede ser nulo")
-    private Evaluacion.Estado estado;
-
     public EvaluacionRequestDto() {
     }
 
@@ -63,11 +60,4 @@ public class EvaluacionRequestDto {
         this.comisionId = comisionId;
     }
 
-    public Evaluacion.Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Evaluacion.Estado estado) {
-        this.estado = estado;
-    }
 }

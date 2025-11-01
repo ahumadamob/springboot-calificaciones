@@ -3,7 +3,6 @@ package com.imb2025.calificaciones.dto.response;
 import java.util.Date;
 
 import com.imb2025.calificaciones.entity.Comision;
-import com.imb2025.calificaciones.entity.Evaluacion;
 import com.imb2025.calificaciones.entity.Materia;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
 
@@ -20,10 +19,6 @@ public class EvaluacionResponseDto {
 	private Comision comision;
 
 	private Long version;
-
-	private Evaluacion.Estado estado;
-
-	public Long total;
 
 	public EvaluacionResponseDto() {
 	}
@@ -84,22 +79,6 @@ public class EvaluacionResponseDto {
 
 	public void setVersion(Long version) {
 		this.version = version;
-	}
-
-	public Evaluacion.Estado getEstado() {
-		return estado;
-	}
-
-	public void setEstado(Evaluacion.Estado estado) {
-		this.estado = estado;
-	}
-
-	public long getTotal() {
-		return total;
-	}
-
-	public void setTotal(long total) {
-		this.total = total;
 	}
 
 }

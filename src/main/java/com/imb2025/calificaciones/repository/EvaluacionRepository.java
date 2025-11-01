@@ -16,5 +16,4 @@ public interface EvaluacionRepository extends JpaRepository<Evaluacion, Long> {
 
 	long countByMateriaIdAndComisionId(long materiaId, long comisionId);
 
-	long countByEstado(Evaluacion.Estado estado);
 }

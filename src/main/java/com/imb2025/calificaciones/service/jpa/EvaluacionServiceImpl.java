@@ -86,8 +86,4 @@ public class EvaluacionServiceImpl implements IEvaluacionService {
         return evaluacionRepository.findByFechaBetween(fechaInicio, fechaFin);
     }
 
-    @Override
-    public long countByEstado(Evaluacion.Estado estado) {
-        return evaluacionRepository.countByEstado(estado);
-    }
 }
