@@ -40,10 +40,6 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
         repo.deleteById(id);
     }
 
-    @Override
-    public NivelMateria fromDto(NivelMateriaRequestDto dto) throws Exception {
-        return NivelMateriaMapper.fromDto(dto);
-    }
     
     @Override
     public NivelMateria findById(Long id) {
@@ -75,7 +71,15 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
         return repo.countByNombreContainingIgnoreCase(nombre.trim());
     }
     
-   
+    @Override
+    public List<NivelMateria> findByActivoTrue() {
+        return repo.findByActivoTrue();
+    }
+
+    @Override
+    public List<NivelMateria> findByActivoFalse() {
+        return repo.findByActivoFalse();
+    }
 }
    
 

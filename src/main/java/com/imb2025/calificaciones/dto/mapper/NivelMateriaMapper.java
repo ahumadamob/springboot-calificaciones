@@ -10,11 +10,12 @@ public class NivelMateriaMapper {
         if (dto == null) {
             throw new Exception("El dto de nivel materia no puede ser nulo");
         }
-        
+
         NivelMateria nivelMateria = new NivelMateria();
         nivelMateria.setNombre(dto.getNombre());
         nivelMateria.setDescripcion(dto.getDescripcion());
-        
+        nivelMateria.setActivo(dto.getActivo());
+
         return nivelMateria;
     }
 
@@ -22,13 +23,14 @@ public class NivelMateriaMapper {
         if (entidad == null) {
             return null;
         }
-        
+
         NivelMateriaResponseDto dto = new NivelMateriaResponseDto();
         dto.setId(entidad.getId());
         dto.setNombre(entidad.getNombre());
         dto.setDescripcion(entidad.getDescripcion());
+        dto.setActivo(entidad.getActivo());
         dto.setVersion(entidad.getVersion());
-        
+
         return dto;
     }
 }
