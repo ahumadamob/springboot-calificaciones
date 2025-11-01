@@ -10,7 +10,6 @@ public class EstadoCursadaMapper {
         EstadoCursada estadoCursada = new EstadoCursada();
         estadoCursada.setNombre(estadoCursadaRequestDto.getNombre());
         estadoCursada.setDescripcion(estadoCursadaRequestDto.getDescripcion());
-        estadoCursada.setIdentificadorLegible(estadoCursadaRequestDto.getIdentificadorLegible());
         return estadoCursada;
     }
     
@@ -19,7 +18,6 @@ public class EstadoCursadaMapper {
     	dto.setId(estadoCursada.getId());
     	dto.setNombre(estadoCursada.getNombre());
     	dto.setDescipcion(estadoCursada.getDescripcion());
-    	dto.setIdentificadorLegible(estadoCursada.getIdentificadorLegible());
     	
     	return dto;
     }

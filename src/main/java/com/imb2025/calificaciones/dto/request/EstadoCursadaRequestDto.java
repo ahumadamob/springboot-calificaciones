@@ -10,7 +10,6 @@ public class EstadoCursadaRequestDto {
     @Size(min = 2, max = 50, message = "El nombre debe tener entre 2 y 50 caracteres")
     private String nombre;
     private String descripcion;
-    private String identificadorLegible;
 
     public String getNombre() {
         return nombre;
@@ -26,13 +25,5 @@ public class EstadoCursadaRequestDto {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-    
-    public String getIdentificadorLegible() {
-        return identificadorLegible;
-    }
-
-    public void setIdentificadorLegible(String identificadorLegible) {
-        this.identificadorLegible = identificadorLegible;
     }
 }

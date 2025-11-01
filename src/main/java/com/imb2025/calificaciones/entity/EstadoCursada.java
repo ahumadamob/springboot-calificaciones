@@ -10,7 +10,6 @@ public class EstadoCursada extends BaseEntity{
 
     private String nombre;
     private String descripcion;
-    private String identificadorLegible;
 
     public EstadoCursada() {
     }
@@ -31,12 +30,5 @@ public class EstadoCursada extends BaseEntity{
     }
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-    public String getIdentificadorLegible() {
-        return identificadorLegible;
-    }
-
-    public void setIdentificadorLegible(String identificadorLegible) {
-        this.identificadorLegible = identificadorLegible;
     }
 }

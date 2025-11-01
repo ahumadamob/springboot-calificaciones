@@ -4,7 +4,6 @@ public class EstadoCursadaResponseDto {
 	private long id;
 	private String nombre;
 	private String descipcion;
-	private String identificadorLegible;
 	
 	public long getId() {
 		return id;
@@ -25,11 +24,4 @@ public class EstadoCursadaResponseDto {
 		this.descipcion = descipcion;
 	}
 	
-	public String getIdentificadorLegible() {
-        return identificadorLegible;
-    }
-
-    public void setIdentificadorLegible(String identificadorLegible) {
-        this.identificadorLegible = identificadorLegible;
-    }
 }

@@ -31,13 +31,6 @@ public class EstadoCursadaServiceImpl implements IEstadoCursadaService {
 
     @Override
     public EstadoCursada create(EstadoCursada estadoCursada) {
-    	boolean existeDuplicado = repository
-    	        .findByIdentificadorLegibleIgnoreCase(estadoCursada.getIdentificadorLegible())
-    	        .isPresent();
-    	    
-    	    if (existeDuplicado) {
-    	        throw new RuntimeException("identificadorLegible duplicado"); 
-    	    }
         return repository.save(estadoCursada);
     }
 
@@ -60,7 +53,6 @@ public class EstadoCursadaServiceImpl implements IEstadoCursadaService {
         repository.deleteById(id);
     }
 
-
     @Override
     public List<EstadoCursada> findByNombreIgnoreCase(String nombre) {
         return repository.findByNombreIgnoreCase(nombre);
@@ -70,5 +62,4 @@ public class EstadoCursadaServiceImpl implements IEstadoCursadaService {
     public long countByDescripcionIgnoreCase(String descripcion) {
         return repository.countByDescripcionIgnoreCase(descripcion);
     }
-
 }
