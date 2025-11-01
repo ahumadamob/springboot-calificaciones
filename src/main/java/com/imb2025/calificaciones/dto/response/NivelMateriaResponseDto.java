@@ -1,19 +1,22 @@
 package com.imb2025.calificaciones.dto.response;
 
+
 public class NivelMateriaResponseDto {
 
     private Long id;
     private String nombre;
     private String descripcion;
+    private Boolean activo;
     private Long version;
 
     public NivelMateriaResponseDto() {
     }
 
-    public NivelMateriaResponseDto(Long id, String nombre, String descripcion, Long version) {
+    public NivelMateriaResponseDto(Long id, String nombre, String descripcion, Boolean activo, Long version) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.activo = activo;
         this.version = version;
     }
 
@@ -39,6 +42,14 @@ public class NivelMateriaResponseDto {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     public Long getVersion() {

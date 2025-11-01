@@ -26,6 +26,7 @@ import com.imb2025.calificaciones.dto.mapper.NivelMateriaMapper;
 import java.util.stream.Collectors;
 
 
+
 @RestController
 public class NivelMateriaController {
 @Autowired
@@ -106,20 +107,25 @@ public ResponseEntity<ApiResponseSuccessDto<NivelMateriaResponseDto>> createNive
 @PutMapping("/api/nivelmateria/{id}")
 public ResponseEntity<ApiResponseSuccessDto<NivelMateriaResponseDto>> updateNivelMateria(@PathVariable Long id, @RequestBody @Valid NivelMateriaRequestDto nivelDto) {
     try {
-        NivelMateria nivel = nivelMateriaService.fromDto(nivelDto);
+        // Conversión dto -> entity usando el mapper (no debe hacerse por el service)
+        NivelMateria nivel = NivelMateriaMapper.fromDto(nivelDto);
+
+        // Llamamos al service para que actualice la entidad en la base
         NivelMateria updated = nivelMateriaService.update(nivel, id);
-        
+
+        // Convertimos la entidad actualizada a dto de respuesta
         NivelMateriaResponseDto responseDto = NivelMateriaMapper.toResponseDto(updated);
-        
+
         ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>(true, "NivelMateria actualizada exitosamente", responseDto);
         return ResponseEntity.ok(response);
     } catch (Exception e) {
-    	ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>();
+        ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>();
         response.setSuccess(false);
         response.setMessage("Error al actualizar: " + e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }
+
 
 @DeleteMapping("/api/nivelmateria/{id}")
 public ResponseEntity<ApiResponseSuccessDto<Void>> deleteNivelMateria(@PathVariable Long id) {
@@ -135,6 +141,35 @@ public ResponseEntity<ApiResponseSuccessDto<Void>> deleteNivelMateria(@PathVaria
         response.setMessage("Error al eliminar: " + e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+}
+@GetMapping("/api/nivelmateria/activos")
+public ResponseEntity<ApiResponseSuccessDto<List<NivelMateriaResponseDto>>> getNivelMateriaActivos() {
+    List<NivelMateria> nivelMaterias = nivelMateriaService.findByActivoTrue();
+    
+    List<NivelMateriaResponseDto> dtos = nivelMaterias.stream()
+            .map(NivelMateriaMapper::toResponseDto)
+            .collect(Collectors.toList());
+    
+    ApiResponseSuccessDto<List<NivelMateriaResponseDto>> response = new ApiResponseSuccessDto<>();
+    response.setSuccess(true);
+    response.setData(dtos);
+    response.setMessage("Lista de NivelMateria activos (activo = true)");
+    return ResponseEntity.ok(response);
+}
+
+@GetMapping("/api/nivelmateria/inactivos")
+public ResponseEntity<ApiResponseSuccessDto<List<NivelMateriaResponseDto>>> getNivelMateriaInactivos() {
+    List<NivelMateria> nivelMaterias = nivelMateriaService.findByActivoFalse();
+    
+    List<NivelMateriaResponseDto> dtos = nivelMaterias.stream()
+            .map(NivelMateriaMapper::toResponseDto)
+            .collect(Collectors.toList());
+    
+    ApiResponseSuccessDto<List<NivelMateriaResponseDto>> response = new ApiResponseSuccessDto<>();
+    response.setSuccess(true);
+    response.setData(dtos);
+    response.setMessage("Lista de NivelMateria inactivos (activo = false)");
+    return ResponseEntity.ok(response);
 }
 }
 
