@@ -14,12 +14,6 @@ public interface INivelMateriaService {
     // Nuevo: contar por nombre
     long countByNombre(String nombre);
 
-    // Nuevo: buscar por nombre (filtro)
-    List<NivelMateria> findAllByNombre(String nombre);
-
-    // Nuevo: contar por nombre
-    long countByNombre(String nombre);
-
     // Nuevos: filtrar por activo
     List<NivelMateria> findByActivoTrue();
     
