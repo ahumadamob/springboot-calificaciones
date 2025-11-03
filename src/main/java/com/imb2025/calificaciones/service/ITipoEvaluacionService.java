@@ -16,5 +16,5 @@ public interface ITipoEvaluacionService {
 
     List<TipoEvaluacion> buscarNombre(String q);
     long contarNombre(String q);
-
+    
 }

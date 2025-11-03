@@ -73,5 +73,5 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     public long contarNombre(String q) {
         return repo.countByNombreContainingIgnoreCase(q);
     }
-
+    
 }

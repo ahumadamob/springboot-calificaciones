@@ -1,7 +1,9 @@
-package com.imb2025.calificaciones.dto;
+package com.imb2025.calificaciones.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Positive;
 
 public class SedeRequestDto {
 
@@ -15,6 +17,8 @@ public class SedeRequestDto {
 
     @NotBlank(message = "Debe indicar la localidad")
     private String localidad;
+
+    private Boolean activa = Boolean.TRUE;
 
     public String getNombre() {
         return nombre;
@@ -38,5 +42,13 @@ public class SedeRequestDto {
 
     public void setLocalidad(String localidad) {
         this.localidad = localidad;
+    }
+
+    public Boolean getActiva() {
+        return activa;
+    }
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
     }
 }
