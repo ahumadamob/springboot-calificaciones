@@ -6,7 +6,7 @@ import com.imb2025.calificaciones.dto.request.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.dto.response.PlanEstudioResponseDto;
 import com.imb2025.calificaciones.entity.PlanEstudio;
 import com.imb2025.calificaciones.service.IPlanEstudioService;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,49 +22,54 @@ public class PlanEstudioController {
 
     @Autowired
     private IPlanEstudioService planEstudioService;
-
-   
+    
     
     @GetMapping
     public ResponseEntity<ApiResponseSuccessDto<List<PlanEstudioResponseDto>>> getAllPlanesEstudio() {
-        List<PlanEstudio> resultados = planEstudioService.findAll(); 
-        List<PlanEstudioResponseDto> planesDto = resultados.stream().map(p -> PlanEstudioMapper.toResponseDto(p)).toList();
+        List<PlanEstudio> resultados = planEstudioService.findAll();
+        List<PlanEstudioResponseDto> planesDto = resultados.stream()
+                .map(PlanEstudioMapper::toResponseDto)
+                .toList();
 
-        
-        ApiResponseSuccessDto<List<PlanEstudioResponseDto>> response = 
+        ApiResponseSuccessDto<List<PlanEstudioResponseDto>> response =
                 new ApiResponseSuccessDto<>(true, "Listado de planes de estudio obtenido con éxito", planesDto);
 
-        
-        return planesDto.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
-    }
-    
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> getPlanEstudioById(@PathVariable Long id) {
-    	PlanEstudio plan = planEstudioService.findById(id);
-    	ApiResponseSuccessDto<PlanEstudio> response = new 
-    	ApiResponseSuccessDto<>();
-    	response.setMessage("Plan de estudio encontrado con éxito");
-    	        response.setData(plan);
-
-        return ResponseEntity.ok(response);
-    }
-    
-    
-    @GetMapping("/buscar")
-    public ResponseEntity<ApiResponseSuccessDto<List<PlanEstudio>>>  getByNombre(
-    		@RequestParam (required = true) String nombre) {
-        List<PlanEstudio> planes = planEstudioService.findAllByNombre(nombre);
-       
-        
-        ApiResponseSuccessDto<List<PlanEstudio>> response = new ApiResponseSuccessDto<List<PlanEstudio>>(true, "Plan Estudio con nombre "+ nombre +" encontrados con éxito", planes);
-        response.setMessage("Resultado del filtro por nombre");
-        response.setData(planes);
-
-        return planes.isEmpty()
+        return planesDto.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(response);
     }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<PlanEstudioResponseDto>> getPlanEstudioById(@PathVariable Long id) {
+        PlanEstudio plan = planEstudioService.findById(id);
+        PlanEstudioResponseDto planDto = PlanEstudioMapper.toResponseDto(plan);
 
+        ApiResponseSuccessDto<PlanEstudioResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Plan de estudio encontrado con éxito");
+        response.setData(planDto);
+
+        return ResponseEntity.ok(response);
+    }
+
+
+    
+    
+    @GetMapping("/buscar")
+    public ResponseEntity<ApiResponseSuccessDto<List<PlanEstudioResponseDto>>> getByNombre(
+            @RequestParam(required = true) String nombre) {
+        List<PlanEstudio> planes = planEstudioService.findAllByNombre(nombre);
+        List<PlanEstudioResponseDto> planesDto = planes.stream()
+                .map(PlanEstudioMapper::toResponseDto)
+                .toList();
+
+        ApiResponseSuccessDto<List<PlanEstudioResponseDto>> response =
+                new ApiResponseSuccessDto<>(true, "Planes de estudio con nombre '" + nombre + "' encontrados con éxito", planesDto);
+
+        return planesDto.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(response);
+    }
+    
     
     @GetMapping("/count")
     public ResponseEntity<ApiResponseSuccessDto<Long>> countByCarrera(@PathVariable Long carreraId) {
@@ -76,37 +81,42 @@ public class PlanEstudioController {
 
         return ResponseEntity.ok(response);
     }
-
    
+    
+    
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> createPlanEstudio( @Valid @RequestBody PlanEstudioRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<PlanEstudioResponseDto>> createPlanEstudio(
+            @Valid @RequestBody PlanEstudioRequestDto dto) throws Exception {
         PlanEstudio nuevo = planEstudioService.fromDto(dto);
         PlanEstudio saved = planEstudioService.create(nuevo);
-               
-        ApiResponseSuccessDto<PlanEstudio> response = new ApiResponseSuccessDto<>();
+        PlanEstudioResponseDto savedDto = PlanEstudioMapper.toResponseDto(saved);
+
+        ApiResponseSuccessDto<PlanEstudioResponseDto> response = new ApiResponseSuccessDto<>();
         response.setMessage("Plan de estudio creado con éxito");
-        response.setData(saved);
+        response.setData(savedDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     
     
+    
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<PlanEstudio>> updatePlanEstudio(
+    
+    public ResponseEntity<ApiResponseSuccessDto<PlanEstudioResponseDto>> updatePlanEstudio(
             @PathVariable Long id,
             @Valid @RequestBody PlanEstudioRequestDto dto) throws Exception {
 
-    	PlanEstudio actualizado = planEstudioService.update
-    			(PlanEstudioMapper.fromDto(dto), id);
-    	ApiResponseSuccessDto<PlanEstudio> response = new 
-    	ApiResponseSuccessDto<>();
-    	response.setMessage("Plan de estudio actualizado con éxito");
-        
-    
+        PlanEstudio actualizado = planEstudioService.update(PlanEstudioMapper.fromDto(dto), id);
+        PlanEstudioResponseDto actualizadoDto = PlanEstudioMapper.toResponseDto(actualizado);
+
+        ApiResponseSuccessDto<PlanEstudioResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setMessage("Plan de estudio actualizado con éxito");
+        response.setData(actualizadoDto);
 
         return ResponseEntity.ok(response);
     }
 
+    
     
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponseSuccessDto<Void>> deletePlanEstudio(@PathVariable Long id) {
