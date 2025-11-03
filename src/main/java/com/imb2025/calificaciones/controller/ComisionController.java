@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.dto.ComisionRequestDto;
+import com.imb2025.calificaciones.dto.request.ComisionRequestDto;
+import com.imb2025.calificaciones.dto.response.ComisionResponseDto;
+import com.imb2025.calificaciones.dto.mapper.ComisionMapper;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.service.IComisionService;
 
@@ -21,6 +23,9 @@ public class ComisionController {
 
     @Autowired
     private IComisionService service;
+
+    @Autowired
+    private ComisionMapper mapper;
 
     @GetMapping
     public ResponseEntity<ApiResponseSuccessDto<List<Comision>>> getAll() {
@@ -33,11 +38,12 @@ public class ComisionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<Comision>> getById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponseSuccessDto<ComisionResponseDto>> getById(@PathVariable Long id) {
         Comision c = service.findById(id);
-        ApiResponseSuccessDto<Comision> resp = new ApiResponseSuccessDto<>();
+        ComisionResponseDto body = mapper.toResponseDto(c);
+        ApiResponseSuccessDto<ComisionResponseDto> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
-        resp.setData(c);
+        resp.setData(body);
         resp.setMessage("Comision encontrada con éxito");
         return ResponseEntity.ok(resp);
     }
@@ -64,29 +70,29 @@ public class ComisionController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<Comision>> create(@Valid @RequestBody ComisionRequestDto dto) throws Exception {
-        Comision c = service.fromDto(dto);
-        c = service.create(c);
-        ApiResponseSuccessDto<Comision> resp = new ApiResponseSuccessDto<>();
+    public ResponseEntity<ApiResponseSuccessDto<ComisionResponseDto>> create(@Valid @RequestBody ComisionRequestDto dto) throws Exception {
+        Comision c = service.create(dto);
+        ComisionResponseDto body = mapper.toResponseDto(c);
+        ApiResponseSuccessDto<ComisionResponseDto> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
-        resp.setData(c);
+        resp.setData(body);
         resp.setMessage("Comision creada con éxito");
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<Comision>> update(@PathVariable Long id, @Valid @RequestBody ComisionRequestDto dto) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<ComisionResponseDto>> update(@PathVariable Long id, @Valid @RequestBody ComisionRequestDto dto) throws Exception {
         if (!service.existsById(id)) {
-            ApiResponseSuccessDto<Comision> notFound = new ApiResponseSuccessDto<>();
+            ApiResponseSuccessDto<ComisionResponseDto> notFound = new ApiResponseSuccessDto<>();
             notFound.setSuccess(false);
             notFound.setMessage("No se encontró Comision con id " + id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFound);
         }
-        Comision c = service.fromDto(dto);
-        c = service.update(c, id);
-        ApiResponseSuccessDto<Comision> resp = new ApiResponseSuccessDto<>();
+        Comision c = service.update(dto, id);
+        ComisionResponseDto body = mapper.toResponseDto(c);
+        ApiResponseSuccessDto<ComisionResponseDto> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
-        resp.setData(c);
+        resp.setData(body);
         resp.setMessage("Comision actualizada con éxito");
         return ResponseEntity.ok(resp);
     }

@@ -5,13 +5,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Version;
 
 @Entity
 public class Comision {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private Long id;
 	
 	private String nombre;
@@ -21,6 +21,10 @@ public class Comision {
 
         @ManyToOne
         private Sede sede;
+
+        // Versión para optimistic locking / respuesta DTO
+        @Version
+        private Long version;
 
         public Comision() {
         }
@@ -69,6 +73,14 @@ public class Comision {
 
         public void setSede(Sede sede) {
                 this.sede = sede;
+        }
+
+        public Long getVersion() {
+                return version;
+        }
+
+        public void setVersion(Long version) {
+                this.version = version;
         }
 	
 }

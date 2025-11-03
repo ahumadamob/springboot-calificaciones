@@ -1,6 +1,7 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.ComisionRequestDto;
+import com.imb2025.calificaciones.dto.request.ComisionRequestDto;
+import com.imb2025.calificaciones.dto.mapper.ComisionMapper;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.ComisionRepository;
@@ -23,6 +24,9 @@ public class ComisionServiceImpl implements IComisionService {
     @Autowired
     private SedeRepository sedeRepository;
 
+    @Autowired
+    private ComisionMapper mapper;
+
     @Override
     public List<Comision> findAll() {
         return repo.findAll();
@@ -40,15 +44,17 @@ public class ComisionServiceImpl implements IComisionService {
     }
 
     @Override
-    public Comision create(Comision comision) {
+    public Comision create(ComisionRequestDto dto) throws Exception {
+        Comision comision = mapper.fromDto(dto);
         return repo.save(comision);
     }
 
     @Override
-    public Comision update(Comision comision, Long id) throws Exception {
+    public Comision update(ComisionRequestDto dto, Long id) throws Exception {
         if (!repo.existsById(id)) {
             throw new ResourceNotFoundException("Comision con id " + id + " no existe");
         }
+        Comision comision = mapper.fromDto(dto);
         comision.setId(id);
         return repo.save(comision);
     }
@@ -59,24 +65,6 @@ public class ComisionServiceImpl implements IComisionService {
             throw new ResourceNotFoundException("No se puede eliminar el id: " + id + " porque no existe");
         }
         repo.deleteById(id);
-    }
-
-    @Override
-    public Comision fromDto(ComisionRequestDto dto) throws Exception {
-        if (dto == null) {
-            throw new IllegalArgumentException("DTO no puede ser nulo");
-        }
-        Comision c = new Comision();
-        c.setNombre(dto.getNombre());
-        if (dto.getTurnoId() != null) {
-            c.setTurno(turnoRepository.findById(dto.getTurnoId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Turno con id " + dto.getTurnoId() + " no encontrado")));
-        }
-        if (dto.getSedeId() != null) {
-            c.setSede(sedeRepository.findById(dto.getSedeId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Sede con id " + dto.getSedeId() + " no encontrada")));
-        }
-        return c;
     }
 
     @Override
