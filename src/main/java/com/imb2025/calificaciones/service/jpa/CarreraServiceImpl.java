@@ -13,21 +13,19 @@ import com.imb2025.calificaciones.service.ICarreraService;
 @Service
 public class CarreraServiceImpl implements ICarreraService {
 
-     @Autowired
-        private CarreraRepository repo;
+    @Autowired
+    private CarreraRepository repo;
 
     @Override
     public List<Carrera> findAll() {
-
-    return repo.findAll();
-
+        return repo.findAll();
     }
 
     @Override
     public Carrera findById(Long id) {
         return repo.findById(id)
-        	    .orElseThrow(() -> new ResourceNotFoundException(
-        	        "Carrera no encontrada con id " + id));
+            .orElseThrow(() -> new ResourceNotFoundException(
+                "Carrera no encontrada con id " + id));
     }
 
     @Override
@@ -40,10 +38,9 @@ public class CarreraServiceImpl implements ICarreraService {
         if(repo.existsById(id)) {
             carrera.setId(id);
             return repo.save(carrera);
-        }else {
-            throw new Exception("No se encontró jugador con id" + id);
+        } else {
+            throw new Exception("No se encontró carrera con id " + id);
         }
-
     }
 
     @Override
@@ -64,27 +61,20 @@ public class CarreraServiceImpl implements ICarreraService {
         carrera.setTituloOtorgado(dto.getTituloOtorgado());
         return carrera;
     }
-    
+
+
     @Override
     public List<Carrera> buscarPorNombre(String nombre) {
-        // Usa el método del repo para búsqueda exacta
         return repo.findByNombre(nombre);
     }
 
-    /**
-     * Busca carreras por un FRAGMENTO de nombre (ignora mayúsculas/minúsculas).*/
     @Override
     public List<Carrera> buscarPorFragmentoNombre(String fragmento) {
         return repo.findByNombreContainingIgnoreCase(fragmento);
-    
     }
 
-    /**
-     * Verifica si una carrera ya existe por su nombre (ignora mayúsculas/minúsculas).*/
     @Override
     public boolean existePorNombre(String nombre) {
         return repo.existsByNombreIgnoreCase(nombre);
     }
-   
 }
-
