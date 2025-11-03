@@ -1,33 +1,44 @@
-package com.imb2025.calificaciones.entity;
+package com.imb2025.calificaciones.dto.response;
 
-import jakarta.persistence.ManyToOne;
 import java.util.Date;
 
-import jakarta.persistence.Entity;
+import com.imb2025.calificaciones.entity.Comision;
+import com.imb2025.calificaciones.entity.Materia;
+import com.imb2025.calificaciones.entity.TipoEvaluacion;
 
-@Entity
-public class Evaluacion extends BaseEntity {
+public class EvaluacionResponseDto {
+
+	private Long id;
 
 	private Date fecha;
 
-	@ManyToOne
 	private TipoEvaluacion tipoEvaluacion;
 
-	@ManyToOne
 	private Materia materia;
 
-	@ManyToOne
 	private Comision comision;
 
-	public Evaluacion() {
-		super();
+	private Long version;
+
+	public EvaluacionResponseDto() {
 	}
 
-	public Evaluacion(Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia, Comision comision) {
+	public EvaluacionResponseDto(Long id, Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia,
+			Comision comision, Long version) {
+		this.id = id;
 		this.fecha = fecha;
 		this.tipoEvaluacion = tipoEvaluacion;
 		this.materia = materia;
 		this.comision = comision;
+		this.version = version;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Date getFecha() {
@@ -61,5 +72,13 @@ public class Evaluacion extends BaseEntity {
 	public void setComision(Comision comision) {
 		this.comision = comision;
 	}
-}
 
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+}

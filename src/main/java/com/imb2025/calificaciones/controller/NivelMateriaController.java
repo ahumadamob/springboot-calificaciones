@@ -17,6 +17,7 @@ import jakarta.validation.Valid;
 import com.imb2025.calificaciones.entity.NivelMateria;
 import com.imb2025.calificaciones.service.INivelMateriaService;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.request.NivelMateriaRequestDto;
@@ -35,6 +36,12 @@ public ResponseEntity<ApiResponseSuccessDto<List<NivelMateria>>> getAllNivelMate
     response.setData(nivelMaterias);
     response.setMessage("Lista de NivelMateria");
     return ResponseEntity.ok(response);
+}
+@GetMapping("/count")
+public ResponseEntity<Long> contar(@RequestParam(required = false) String nombre) {
+    long cantidad = nivelMateriaService.countByNombre(nombre);
+    return ResponseEntity.ok(cantidad);
+    
 }
 @PostMapping("/api/nivelmateria")
 public ResponseEntity<ApiResponseSuccessDto<NivelMateria>> createNivelMateria(@RequestBody @Valid NivelMateriaRequestDto nivelDto) {
@@ -81,3 +88,4 @@ public ResponseEntity<ApiResponseSuccessDto<Void>> deleteNivelMateria(@PathVaria
     }
 }
 }
+

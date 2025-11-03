@@ -1,21 +1,14 @@
-package com.imb2025.calificaciones.entity;
+package com.imb2025.calificaciones.dto.request;
 
-import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
 
-@Entity
-public class EstadoEvaluacion extends BaseEntity {
+public class EstadoEvaluacionRequestDto {
 
+    @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;
-
+    
+    @NotBlank(message = "La descripción no puede estar vacía")
     private String descripcion;
-
-    public EstadoEvaluacion() {
-    }
-
-    public EstadoEvaluacion(String nombre, String descripcion) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-    }
 
     public String getNombre() {
         return nombre;
