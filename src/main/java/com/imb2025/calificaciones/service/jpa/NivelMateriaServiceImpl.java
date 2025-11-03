@@ -11,6 +11,9 @@ import com.imb2025.calificaciones.repository.NivelMateriaRepository;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.service.INivelMateriaService;
 
+import com.imb2025.calificaciones.dto.mapper.NivelMateriaMapper;
+
+
 @Service
 public class NivelMateriaServiceImpl implements INivelMateriaService {
 
@@ -37,16 +40,7 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
         repo.deleteById(id);
     }
 
-    @Override
-    public NivelMateria fromDto(NivelMateriaRequestDto dto) throws Exception {
-        if (dto == null) {
-            throw new Exception("El dto de nivel materia no puede ser nulo");
-        }
-        NivelMateria nivelMateria = new NivelMateria();
-        nivelMateria.setNombre(dto.getNombre());
-        nivelMateria.setDescripcion(dto.getDescripcion());
-        return nivelMateria;
-    }
+    
     @Override
     public NivelMateria findById(Long id) {
         return repo.findById(id)
@@ -77,7 +71,15 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
         return repo.countByNombreContainingIgnoreCase(nombre.trim());
     }
     
-   
+    @Override
+    public List<NivelMateria> findByActivoTrue() {
+        return repo.findByActivoTrue();
+    }
+
+    @Override
+    public List<NivelMateria> findByActivoFalse() {
+        return repo.findByActivoFalse();
+    }
 }
    
 

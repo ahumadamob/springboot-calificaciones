@@ -14,13 +14,17 @@ public interface INivelMateriaService {
     // Nuevo: contar por nombre
     long countByNombre(String nombre);
 
+    // Nuevos: filtrar por activo
+    List<NivelMateria> findByActivoTrue();
+    
+    List<NivelMateria> findByActivoFalse();
+    
+    public void deleteById(Long id) throws Exception;
+    
     public NivelMateria create(NivelMateria nivelMateria);
 
     public NivelMateria update(NivelMateria nivelMateria, Long id) throws Exception;
 
     public NivelMateria findById(Long id);
 
-    public void deleteById(Long id) throws Exception;
-
-    public NivelMateria fromDto(NivelMateriaRequestDto dto) throws Exception;
 }

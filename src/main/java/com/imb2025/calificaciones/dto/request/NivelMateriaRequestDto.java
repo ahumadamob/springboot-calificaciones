@@ -1,63 +1,51 @@
 package com.imb2025.calificaciones.dto.request;
 
-
-import java.time.LocalDate;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
 
 public class NivelMateriaRequestDto {
 
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(min = 2, max = 100, message = "El nombre debe tener entre {min} y {max} caracteres")
+    private String nombre;
 
-@NotBlank(message = "El nombre es obligatorio")
-@Size(min = 2, max = 100, message = "El nombre debe tener entre {min} y {max} caracteres")
-private String nombre;
+    @Size(max = 250, message = "La descripción no puede superar {max} caracteres")
+    private String descripcion;
 
+    @NotNull(message = "El campo activo es obligatorio")
+    private Boolean activo;
 
-@Size(max = 250, message = "La descripción no puede superar {max} caracteres")
-private String descripcion;
+    public NivelMateriaRequestDto() {
+    }
 
-@Pattern(regexp = "^[a-zA-Z0-9]{3,10}$", message = "El código debe tener entre 3 y 10 caracteres alfanuméricos")
-private String codigo;
+    public NivelMateriaRequestDto(String nombre, String descripcion, Boolean activo) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.activo = activo;
+    }
 
-@Positive(message = "El valor debe ser positivo")
-private int cantidad;
+    public String getNombre() {
+        return nombre;
+    }
 
-@Min(value = 0, message = "El valor no puede ser negativo")
-private int stockDisponible;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-@Email(message = "El correo electrónico debe ser válido")
-private String email;
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-@PastOrPresent(message = "La fecha no puede ser futura")
-private LocalDate fechaCreacion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-public NivelMateriaRequestDto() {
-}
+    public Boolean getActivo() {
+        return activo;
+    }
 
-
-public String getNombre() {
-return nombre;
-}
-
-
-public void setNombre(String nombre) {
-this.nombre = nombre;
-}
-
-
-public String getDescripcion() {
-return descripcion;
-}
-
-
-public void setDescripcion(String descripcion) {
-this.descripcion = descripcion;
-}
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
 }
