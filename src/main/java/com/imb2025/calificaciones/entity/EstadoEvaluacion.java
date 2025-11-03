@@ -1,17 +1,9 @@
 package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
 
 @Entity
-public class EstadoEvaluacion {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class EstadoEvaluacion extends BaseEntity {
 
     private String nombre;
 
@@ -23,20 +15,6 @@ public class EstadoEvaluacion {
     public EstadoEvaluacion(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-    }
-
-    public EstadoEvaluacion(Long id, String nombre, String descripcion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNombre() {

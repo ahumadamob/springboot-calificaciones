@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.CalendarioMateriaRequestDto;
+import com.imb2025.calificaciones.dto.request.CalendarioMateriaRequestDto;
 import com.imb2025.calificaciones.entity.CalendarioMateria;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.entity.Materia;
@@ -70,27 +70,5 @@ public class CalendarioMateriaServiceImpl implements ICalendarioMateriaService {
                 "materias para la comision: " + comisionId));
     }
 
-
-    @Override
-    public CalendarioMateria fromDto(CalendarioMateriaRequestDto calMatDto) throws Exception {
-
-        CalendarioMateria calendarioMateria = new CalendarioMateria();
-
-        if (calMatDto.getFechaInicio().isAfter(calMatDto.getFechaFin())){
-            throw new Exception("La fecha de inicio no puede ser posterior a la fecha de fin");
-        }
-        Materia materia = materiaRepository.findById(calMatDto.getMateriaId())
-                .orElseThrow(() -> new Exception ("Materia no encontrada con el id: " + calMatDto.getMateriaId()));
-
-        Comision comision = comisionRepository.findById(calMatDto.getComisionId())
-                .orElseThrow(() -> new Exception ("Comision no encontrada con el id: " + calMatDto.getComisionId()));
-
-        calendarioMateria.setFechaInicio(calMatDto.getFechaInicio());
-        calendarioMateria.setFechaFin(calMatDto.getFechaFin());
-        calendarioMateria.setMateria(materia);
-        calendarioMateria.setComision(comision);
-
-        return calendarioMateria;
-    }
 
 }

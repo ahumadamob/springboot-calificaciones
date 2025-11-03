@@ -4,8 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.SedeRequestDto;
 import com.imb2025.calificaciones.entity.Sede;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.SedeRepository;
 import com.imb2025.calificaciones.service.ISedeService;
 
@@ -22,7 +22,13 @@ public class SedeServiceImpl implements ISedeService {
 
     @Override
     public Sede findById(Long id) {
-        return repo.findById(id).orElse(null);
+        return repo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Entidad no encontrada con id " + id));
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return repo.existsById(id);
     }
 
     @Override
@@ -32,30 +38,38 @@ public class SedeServiceImpl implements ISedeService {
 
     @Override
     public Sede update(Sede sede, Long id) throws Exception {
-        if (repo.existsById(id)) {
-            sede.setId(id);
-            return repo.save(sede);
-        } else {
-            throw new Exception("Sede con ID " + id + " no encontrada.");
+        if (!repo.existsById(id)) {
+            throw new ResourceNotFoundException("Sede con ID " + id + " no encontrada.");
         }
+        sede.setId(id);
+        return repo.save(sede);
     }
 
     @Override
     public void deleteById(Long id) throws Exception {
         if (!repo.existsById(id)) {
-            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+            throw new ResourceNotFoundException("No se puede eliminar el id: " + id + " porque no existe");
         }
         repo.deleteById(id);
     }
 
     @Override
-    public Sede fromDto(SedeRequestDto dto) throws Exception {
-        if (dto == null) {
-            throw new Exception("El dto de sede no puede ser nulo");
-        }
-        Sede sede = new Sede();
-        sede.setNombre(dto.getNombre());
-        sede.setDireccion(dto.getDireccion());
-        return sede;
+    public List<Sede> findByNombreIgnoreCase(String nombre) {
+        return repo.findByNombreIgnoreCase(nombre);
+    }
+
+    @Override
+    public long countByDireccionIgnoreCase(String direccion) {
+        return repo.countByDireccionIgnoreCase(direccion);
+    }
+
+    @Override
+    public List<Sede> findByActivaTrue() {
+        return repo.findByActivaTrue();
+    }
+
+    @Override
+    public List<Sede> findByActivaFalse() {
+        return repo.findByActivaFalse();
     }
 }

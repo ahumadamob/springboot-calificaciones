@@ -9,11 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class CalendarioMateria {
+public class CalendarioMateria extends BaseEntity{
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+
         private LocalDate fechaInicio;
         private LocalDate fechaFin;
 
@@ -28,14 +26,6 @@ public class CalendarioMateria {
         public CalendarioMateria() {
         }
 
-        public CalendarioMateria(Long id, LocalDate fechaInicio, LocalDate fechaFin, Materia materia, Comision comision) {
-                this.id = id;
-                this.fechaInicio = fechaInicio;
-                this.fechaFin = fechaFin;
-                this.materia = materia;
-                this.comision = comision;
-        }
-
         public CalendarioMateria(LocalDate fechaInicio, LocalDate fechaFin, Materia materia, Comision comision) {
                 this.fechaInicio = fechaInicio;
                 this.fechaFin = fechaFin;
@@ -44,13 +34,6 @@ public class CalendarioMateria {
         }
 
         // GETTERS & SETTERS
-
-        public Long getId() {
-                return id;
-        }
-        public void setId(Long id) {
-                this.id = id;
-        }
 
         public LocalDate getFechaInicio() {
                 return fechaInicio;

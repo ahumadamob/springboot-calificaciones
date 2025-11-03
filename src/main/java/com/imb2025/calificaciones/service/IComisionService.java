@@ -17,4 +17,11 @@ public interface IComisionService {
     public void deleteById(Long id) throws Exception;
 
     public Comision fromDto(ComisionRequestDto dto) throws Exception;
+
+    public boolean existsById(Long id);
+
+    // Métodos
+    public List<Comision> findByNombreContainingIgnoreCase(String nombre);
+
+    public long countBySedeId(Long sedeId);
 }

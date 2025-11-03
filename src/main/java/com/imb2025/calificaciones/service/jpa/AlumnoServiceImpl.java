@@ -48,6 +48,16 @@ public class AlumnoServiceImpl implements IAlumnoService {
         }
         alumnoRepository.deleteById(id);
     }
+    
+    @Override
+    public List<Alumno> findByApellido(String apellido) {
+        return alumnoRepository.findByApellido(apellido);
+    }
+
+    @Override
+    public long countByEmail(String email) {
+        return alumnoRepository.countByEmail(email);
+    }
 
     @Override
     public boolean existsById(Long id) {

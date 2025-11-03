@@ -1,66 +1,108 @@
 package com.imb2025.calificaciones.controller;
 
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.ComisionRequestDto;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.service.IComisionService;
 
 @RestController
-@RequestMapping("api/v1/Comision")
+@RequestMapping("/api/comision")
 public class ComisionController {
 
-	@Autowired
-	private IComisionService ComisionService;
-	
-	
-        @GetMapping
-        public ResponseEntity<List<Comision>> getAll() {
-                List<Comision> comisiones = ComisionService.findAll();
-                return comisiones.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(comisiones);
-        }
+    @Autowired
+    private IComisionService service;
 
-        @GetMapping("/{id}")
-        public ResponseEntity<Comision> getById(@PathVariable Long id) {
-                Comision comision = ComisionService.findById(id);
-                return comision == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(comision);
-        }
+    @GetMapping
+    public ResponseEntity<ApiResponseSuccessDto<List<Comision>>> getAll() {
+        List<Comision> list = service.findAll();
+        ApiResponseSuccessDto<List<Comision>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(list);
+        resp.setMessage("Comisiones encontradas con éxito");
+        return list.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
+    }
 
-        @PostMapping
-        public ResponseEntity<Comision> create(@RequestBody ComisionRequestDto dto) throws Exception {
-                Comision comision = ComisionService.fromDto(dto);
-                return ResponseEntity.ok(ComisionService.create(comision));
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<Comision>> getById(@PathVariable Long id) {
+        Comision c = service.findById(id);
+        ApiResponseSuccessDto<Comision> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(c);
+        resp.setMessage("Comision encontrada con éxito");
+        return ResponseEntity.ok(resp);
+    }
 
-        @PutMapping("/{id}")
-        public ResponseEntity<Comision> update(@PathVariable Long id,
-                @RequestBody ComisionRequestDto dto) throws Exception {
-                Comision comision = ComisionService.fromDto(dto);
-                return ResponseEntity.ok(ComisionService.update(comision, id));
-        }
+    // filtrar por nombre (TP07)
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<ApiResponseSuccessDto<List<Comision>>> getByNombre(@PathVariable String nombre) {
+        List<Comision> lista = service.findByNombreContainingIgnoreCase(nombre);
+        ApiResponseSuccessDto<List<Comision>> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(lista);
+        resp.setMessage("Comisiones filtradas por nombre: " + nombre);
+        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
+    }
 
-        @DeleteMapping("/{id}")
-        public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
-                ComisionService.deleteById(id);
-                return ResponseEntity.noContent().build();
-        }
+    @GetMapping("/count/sede/{sedeId}")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countBySede(@PathVariable Long sedeId) {
+        long cantidad = service.countBySedeId(sedeId);
+        ApiResponseSuccessDto<Long> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(cantidad);
+        resp.setMessage("Cantidad de comisiones en la sede: " + sedeId);
+        return ResponseEntity.ok(resp);
+    }
 
-        @ExceptionHandler(Exception.class)
-        public ResponseEntity<String> handleException(Exception ex) {
-                return ResponseEntity.badRequest().body(ex.getMessage());
+    @PostMapping
+    public ResponseEntity<ApiResponseSuccessDto<Comision>> create(@Valid @RequestBody ComisionRequestDto dto) throws Exception {
+        Comision c = service.fromDto(dto);
+        c = service.create(c);
+        ApiResponseSuccessDto<Comision> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(c);
+        resp.setMessage("Comision creada con éxito");
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<Comision>> update(@PathVariable Long id, @Valid @RequestBody ComisionRequestDto dto) throws Exception {
+        if (!service.existsById(id)) {
+            ApiResponseSuccessDto<Comision> notFound = new ApiResponseSuccessDto<>();
+            notFound.setSuccess(false);
+            notFound.setMessage("No se encontró Comision con id " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFound);
         }
+        Comision c = service.fromDto(dto);
+        c = service.update(c, id);
+        ApiResponseSuccessDto<Comision> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(c);
+        resp.setMessage("Comision actualizada con éxito");
+        return ResponseEntity.ok(resp);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponseSuccessDto<Void>> delete(@PathVariable Long id) throws Exception {
+        service.deleteById(id);
+        ApiResponseSuccessDto<Void> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(null);
+        resp.setMessage("Comision con id " + id + " eliminada con éxito");
+        return ResponseEntity.ok(resp);
+    }
+
+    // Eliminado el manejador local de excepciones para que GlobalExceptionHandler procese
+    // los errores de validación y devuelva ApiResponseErrorDto con la lista completa.
 }
+
+

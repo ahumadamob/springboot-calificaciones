@@ -7,6 +7,12 @@ import java.util.List;
 public interface INivelMateriaService {
 
     public List<NivelMateria> findAll();
+   
+    // Nuevo: buscar por nombre (filtro)
+    List<NivelMateria> findAllByNombre(String nombre);
+
+    // Nuevo: contar por nombre
+    long countByNombre(String nombre);
 
     // Nuevo: buscar por nombre (filtro)
     List<NivelMateria> findAllByNombre(String nombre);

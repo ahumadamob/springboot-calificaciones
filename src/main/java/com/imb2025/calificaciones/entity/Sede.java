@@ -1,39 +1,31 @@
 package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
-public class Sede {
+public class Sede extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String nombre;
     private String direccion;
+    private String localidad;
+    private Boolean activa = Boolean.TRUE;
 
     public Sede() {
     }
 
-    public Sede(Long id, String nombre, String direccion) {
-        this.id = id;
+    public Sede(Long id, String nombre, String direccion, String localidad, Boolean activa) {
+        this.setId(id);
         this.nombre = nombre;
         this.direccion = direccion;
+        this.localidad = localidad;
+        this.activa = activa;
     }
 
-    public Sede(String nombre, String direccion) {
+    public Sede(String nombre, String direccion, String localidad, Boolean activa) {
         this.nombre = nombre;
         this.direccion = direccion;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.localidad = localidad;
+        this.activa = activa;
     }
 
     public String getNombre() {
@@ -51,5 +43,22 @@ public class Sede {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+
+    public String getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
+    }
+
+    public Boolean getActiva() {
+        return activa;
+    }
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
+    }
 }
+
 

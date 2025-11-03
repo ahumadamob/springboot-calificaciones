@@ -4,18 +4,11 @@ import jakarta.persistence.ManyToOne;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
-public class Evaluacion {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-    private Date fecha;
+public class Evaluacion extends BaseEntity {
+
+	private Date fecha;
 
 	@ManyToOne
 	private TipoEvaluacion tipoEvaluacion;
@@ -26,41 +19,24 @@ public class Evaluacion {
 	@ManyToOne
 	private Comision comision;
 
-	
-        public Evaluacion() {
-                super();
-        }
-
-        public Evaluacion(Long id, Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia, Comision comision) {
-                this.id = id;
-                this.fecha = fecha;
-                this.tipoEvaluacion = tipoEvaluacion;
-                this.materia = materia;
-                this.comision = comision;
-        }
-
-        public Evaluacion(Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia, Comision comision) {
-                this.fecha = fecha;
-                this.tipoEvaluacion = tipoEvaluacion;
-                this.materia = materia;
-                this.comision = comision;
-        }
-
-	public Long getId() {
-		return id;
+	public Evaluacion() {
+		super();
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Evaluacion(Date fecha, TipoEvaluacion tipoEvaluacion, Materia materia, Comision comision) {
+		this.fecha = fecha;
+		this.tipoEvaluacion = tipoEvaluacion;
+		this.materia = materia;
+		this.comision = comision;
 	}
 
-        public Date getFecha() {
-                return fecha;
-        }
+	public Date getFecha() {
+		return fecha;
+	}
 
-        public void setFecha(Date fecha) {
-                this.fecha = fecha;
-        }
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 
 	public TipoEvaluacion getTipoEvaluacion() {
 		return tipoEvaluacion;
@@ -86,3 +62,4 @@ public class Evaluacion {
 		this.comision = comision;
 	}
 }
+
