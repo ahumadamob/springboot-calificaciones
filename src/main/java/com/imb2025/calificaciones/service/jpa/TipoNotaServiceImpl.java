@@ -3,7 +3,6 @@ package com.imb2025.calificaciones.service.jpa;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.imb2025.calificaciones.dto.TipoNotaRequestDto;
 import com.imb2025.calificaciones.entity.TipoNota;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.TipoNotaRepository;
@@ -52,16 +51,6 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
         tipoNotaRepository.deleteById(id);
     }
 
-    @Override
-    public TipoNota fromDto(TipoNotaRequestDto dto) {
-        if (dto == null) {
-            throw new IllegalArgumentException("El dto de tipo nota no puede ser nulo");
-        }
-        TipoNota tipoNota = new TipoNota();
-        tipoNota.setNombre(dto.getNombre());
-        tipoNota.setDescripcion(dto.getDescripcion());
-        return tipoNota;
-    }
 
 	@Override
 	public List<TipoNota> findAllOrder() {

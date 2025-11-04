@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.TurnoRequestDto;
+import com.imb2025.calificaciones.dto.request.TurnoRequestDto;
 import com.imb2025.calificaciones.entity.Turno;
 
 import java.time.LocalTime;
@@ -22,5 +22,4 @@ public interface ITurnoService {
 
     public void deleteById(Long id) throws Exception;
 
-    public Turno fromDto(TurnoRequestDto dto) throws Exception;
 }

@@ -1,29 +1,17 @@
 package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 
 @Entity 
-public class Materia {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String nombre;
+public class Materia extends BaseEntity {
+
+	    private String nombre;
         private String codigo;
         private Integer cargaHoraria;
         private String nivel;
 
         public Materia() {
-        }
-
-        public Materia(Long id, String nombre, String codigo, Integer cargaHoraria, String nivel) {
-                this.id = id;
-                this.nombre = nombre;
-                this.codigo = codigo;
-                this.cargaHoraria = cargaHoraria;
-                this.nivel = nivel;
         }
 
         public Materia(String nombre, String codigo, Integer cargaHoraria, String nivel) {
@@ -33,9 +21,6 @@ public class Materia {
                 this.nivel = nivel;
         }
 	
-	public Long getId() {
-		return id;
-	}
 	
 	public String getNivel() {
 		return nivel;
@@ -64,9 +49,7 @@ public class Materia {
 	public void setCargaHoraria(Integer cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 	
 	
 

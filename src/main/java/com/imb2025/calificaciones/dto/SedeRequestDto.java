@@ -1,10 +1,7 @@
 package com.imb2025.calificaciones.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
 
 public class SedeRequestDto {
 
@@ -16,9 +13,8 @@ public class SedeRequestDto {
     @Size(min = 5, max = 150, message = "La dirección debe tener entre 5 y 150 caracteres")
     private String direccion;
 
-    @NotNull(message = "Debe indicar la localidad")
-    @Positive(message = "El id de localidad debe ser positivo")
-    private Long localidadId;
+    @NotBlank(message = "Debe indicar la localidad")
+    private String localidad;
 
     public String getNombre() {
         return nombre;
@@ -36,11 +32,11 @@ public class SedeRequestDto {
         this.direccion = direccion;
     }
 
-    public Long getLocalidadId() {
-        return localidadId;
+    public String getLocalidad() {
+        return localidad;
     }
 
-    public void setLocalidadId(Long localidadId) {
-        this.localidadId = localidadId;
+    public void setLocalidad(String localidad) {
+        this.localidad = localidad;
     }
 }
