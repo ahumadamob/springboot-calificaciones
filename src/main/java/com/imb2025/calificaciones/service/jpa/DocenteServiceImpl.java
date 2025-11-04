@@ -41,7 +41,7 @@ public class DocenteServiceImpl implements IDocenteService {
 
     @Override
     public DocenteResponseDto update(Long id, DocenteRequestDto docenteDTO) throws Exception {
-        if (!repo.existsById(id)) {
+        if (id == null || !repo.existsById(id)) {
             throw new Exception("Docente con ID " + id + " no encontrado.");
         }
         Docente docente = mapper.fromDto(docenteDTO);
@@ -52,7 +52,7 @@ public class DocenteServiceImpl implements IDocenteService {
 
     @Override
     public void deleteById(Long id) throws Exception {
-        if (!repo.existsById(id)) {
+        if (id == null || !repo.existsById(id)) {
             throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
         }
         repo.deleteById(id);
@@ -73,21 +73,4 @@ public class DocenteServiceImpl implements IDocenteService {
         return repo.countByTitulo(titulo);
     }
 
-    @Override
-    public Docente create(Docente docente) {
-
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
-    }
-
-    @Override
-    public Docente update(Docente docente, Long id) throws Exception {
-
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
-
-    @Override
-    public Docente fromDto(DocenteRequestDto dto) throws Exception {
-
-        throw new UnsupportedOperationException("Unimplemented method 'fromDto'");
-    }
 }

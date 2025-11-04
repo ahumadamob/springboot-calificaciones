@@ -26,6 +26,8 @@ public class Docente extends BaseEntity {
 		return nombre;
 	}
 
+	private boolean activo;
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
@@ -60,6 +62,14 @@ public class Docente extends BaseEntity {
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+
+	public boolean isActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 
 }

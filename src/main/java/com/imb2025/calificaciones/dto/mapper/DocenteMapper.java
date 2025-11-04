@@ -17,6 +17,7 @@ public class DocenteMapper {
         docente.setEmail(dto.getEmail());
         docente.setLegajo(dto.getLegajo());
         docente.setTitulo(dto.getTitulo());
+        docente.setActivo(dto.isActivo());
         return docente;
     }
 

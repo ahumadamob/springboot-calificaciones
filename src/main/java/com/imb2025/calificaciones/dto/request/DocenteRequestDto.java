@@ -32,6 +32,16 @@ public class DocenteRequestDto {
     public DocenteRequestDto() {
     }
 
+    private boolean activo;
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
     public String getNombre() {
         return nombre;
     }
