@@ -8,20 +8,28 @@ public class AlumnoResponseDto {
     private int dni;
     // Campo requerido en la consigna
     private Long version;
+    private Boolean atributoBooleano;
 
     public AlumnoResponseDto() {}
 
-    public AlumnoResponseDto(Long id, String nombre, String apellido, String email, int dni, Long version) {
+    public AlumnoResponseDto(Long id, String nombre, String apellido, String email, int dni, Long version, Boolean atributoBooleano) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.dni = dni;
         this.version = version;
+        this.atributoBooleano = atributoBooleano;
     }
 
     // Getters y Setters
+    public Boolean getAtributoBooleano() {
+        return atributoBooleano;
+    }
 
+    public void setAtributoBooleano(Boolean atributoBooleano) {
+        this.atributoBooleano = atributoBooleano;
+    }
     public Long getId() {
         return id;
     }

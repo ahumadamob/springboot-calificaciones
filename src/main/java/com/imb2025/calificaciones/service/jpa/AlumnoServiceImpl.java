@@ -1,7 +1,5 @@
 package com.imb2025.calificaciones.service.jpa;
 
-
-
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
@@ -21,17 +19,27 @@ public class AlumnoServiceImpl implements IAlumnoService {
 
     @Override
     @Transactional
-    public Alumno update(Alumno alumnoDto, Long id) {
+    public Alumno update(Alumno alumnoParaActualizar, Long id) {
         Alumno alumnoExistente = alumnoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Alumno no encontrado con id " + id));
 
-        alumnoExistente.setNombre(alumnoDto.getNombre());
-        alumnoExistente.setApellido(alumnoDto.getApellido());
-        alumnoExistente.setEmail(alumnoDto.getEmail());
-        alumnoExistente.setDni(alumnoDto.getDni());
-        alumnoExistente.setFechaNacimiento(alumnoDto.getFechaNacimiento());
-
+        alumnoExistente.setNombre(alumnoParaActualizar.getNombre());
+        alumnoExistente.setApellido(alumnoParaActualizar.getApellido());
+        alumnoExistente.setEmail(alumnoParaActualizar.getEmail());
+        alumnoExistente.setDni(alumnoParaActualizar.getDni());
+        alumnoExistente.setFechaNacimiento(alumnoParaActualizar.getFechaNacimiento());
+        alumnoExistente.setAtributoBooleano(alumnoParaActualizar.getAtributoBooleano());
         return alumnoRepository.save(alumnoExistente);
+    }
+
+    @Override
+    public List<Alumno> findByAtributoBooleanoTrue() {
+        return alumnoRepository.findByAtributoBooleanoTrue();
+    }
+
+    @Override
+    public List<Alumno> findByAtributoBooleanoFalse() {
+        return alumnoRepository.findByAtributoBooleanoFalse();
     }
 
     @Override
@@ -72,6 +80,4 @@ public class AlumnoServiceImpl implements IAlumnoService {
     public boolean existsById(Long id) {
         return alumnoRepository.existsById(id);
     }
-
-
 }

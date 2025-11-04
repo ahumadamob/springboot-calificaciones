@@ -23,16 +23,18 @@ public class AlumnoRequestDto {
     @NotBlank(message = "La fecha de nacimiento es obligatoria")
     private String fechaNacimiento;
 
+    private Boolean atributoBooleano;
 
     public AlumnoRequestDto() {
     }
 
-    public AlumnoRequestDto(String nombre, String apellido, String email, int dni, String fechaNacimiento) {
+    public AlumnoRequestDto(String nombre, String apellido, String email, int dni, String fechaNacimiento, Boolean atributoBooleano) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.dni = dni;
         this.fechaNacimiento = fechaNacimiento;
+        this.atributoBooleano = atributoBooleano;
     }
 
     public String getNombre() {
@@ -73,5 +75,13 @@ public class AlumnoRequestDto {
 
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Boolean getAtributoBooleano() {
+        return atributoBooleano;
+    }
+
+    public void setAtributoBooleano(Boolean atributoBooleano) {
+        this.atributoBooleano = atributoBooleano;
     }
 }

@@ -8,6 +8,8 @@ import java.util.List;
 public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
     List<Alumno> findByApellido(String apellido);
 
-    long countByEmail(String email);
-}
+    long countByEmail(String email); 
+    List<Alumno> findByAtributoBooleanoTrue();
 
+    List<Alumno> findByAtributoBooleanoFalse();
+}

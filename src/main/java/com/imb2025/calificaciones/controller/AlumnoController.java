@@ -1,21 +1,17 @@
 package com.imb2025.calificaciones.controller;
 
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import com.imb2025.calificaciones.dto.mapper.AlumnoMapper;
+import com.imb2025.calificaciones.dto.request.AlumnoRequestDto;
+import com.imb2025.calificaciones.dto.response.AlumnoResponseDto;
+import com.imb2025.calificaciones.entity.Alumno;
+import com.imb2025.calificaciones.service.IAlumnoService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.imb2025.calificaciones.service.IAlumnoService;
-
-import io.swagger.v3.oas.annotations.Operation;
-
-import com.imb2025.calificaciones.dto.request.AlumnoRequestDto;
-import com.imb2025.calificaciones.dto.response.AlumnoResponseDto;
-import com.imb2025.calificaciones.dto.mapper.AlumnoMapper;
-import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.entity.Alumno;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -55,11 +51,12 @@ public class AlumnoController {
     public ResponseEntity<ApiResponseSuccessDto<AlumnoResponseDto>> crear(@Valid @RequestBody AlumnoRequestDto dto)
             throws Exception {
 
+        // La validación de DTO (@Valid) ocurre antes de esta línea.
+        // El mapper convierte y lanza RuntimeException si el formato de fecha es incorrecto.
         Alumno alumnoToCreate = alumnoMapper.fromDto(dto);
 
         Alumno createdAlumno = alumnoService.create(alumnoToCreate);
 
-        // 4.2) El controller debe retornar EntidadResponseDto
         AlumnoResponseDto responseDto = alumnoMapper.toResponseDto(createdAlumno);
 
         ApiResponseSuccessDto<AlumnoResponseDto> response = new ApiResponseSuccessDto<>(
@@ -111,9 +108,28 @@ public class AlumnoController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Obtiene alumnos donde el atributoBooleano es TRUE")
+    @GetMapping("/listado/true")
+    public ResponseEntity<List<AlumnoResponseDto>> obtenerListadoTrue() {
+        List<Alumno> alumnos = alumnoService.findByAtributoBooleanoTrue();
+
+        List<AlumnoResponseDto> responseDtos = alumnoMapper.toResponseDtoList(alumnos);
+
+        return ResponseEntity.ok(responseDtos);
+    }
+
+    @Operation(summary = "Obtiene alumnos donde el atributoBooleano es FALSE")
+    @GetMapping("/listado/false")
+    public ResponseEntity<List<AlumnoResponseDto>> obtenerListadoFalse() {
+        List<Alumno> alumnos = alumnoService.findByAtributoBooleanoFalse();
+
+        List<AlumnoResponseDto> responseDtos = alumnoMapper.toResponseDtoList(alumnos);
+
+        return ResponseEntity.ok(responseDtos);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception ex) {
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
-
 }

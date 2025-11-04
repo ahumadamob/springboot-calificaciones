@@ -20,5 +20,7 @@ public interface IAlumnoService {
     List<Alumno> findByApellido(String apellido);
 
     long countByEmail(String email);
+    List<Alumno> findByAtributoBooleanoTrue();
 
+    List<Alumno> findByAtributoBooleanoFalse();
 }
