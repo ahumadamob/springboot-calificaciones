@@ -38,7 +38,7 @@ public class CursadaMapper {
 	        CondicionFinal condicionFinal = condicionFinalRepository.findById(dto.getCondicionFinalId())
 	                .orElseThrow(() -> new Exception("Condición final no encontrada con id: " + dto.getCondicionFinalId()));
 
-	        return new Cursada(null, alumno, materia, anioLectivo, condicionFinal);
+	        return new Cursada(alumno, materia, anioLectivo, condicionFinal);
 	    }
 
 	    public CursadaResponseDto toResponseDto(Cursada cursada) {
