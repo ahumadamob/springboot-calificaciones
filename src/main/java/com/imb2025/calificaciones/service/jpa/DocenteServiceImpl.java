@@ -5,9 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.mapper.DocenteMapper;
-import com.imb2025.calificaciones.dto.request.DocenteRequestDto;
-import com.imb2025.calificaciones.dto.response.DocenteResponseDto;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.repository.DocenteRepository;
 import com.imb2025.calificaciones.service.IDocenteService;
@@ -17,9 +14,6 @@ public class DocenteServiceImpl implements IDocenteService {
 
     @Autowired
     private DocenteRepository repo;
-
-    @Autowired
-    private DocenteMapper mapper;
 
     @Override
     public List<Docente> findAll() {
@@ -33,21 +27,18 @@ public class DocenteServiceImpl implements IDocenteService {
     }
 
     @Override
-    public DocenteResponseDto create(DocenteRequestDto docenteDTO) {
-        Docente docente = mapper.fromDto(docenteDTO);
-        Docente saved = repo.save(docente);
-        return mapper.toResponseDto(saved);
+    public Docente create(Docente docente) {
+        return repo.save(docente);
     }
 
     @Override
-    public DocenteResponseDto update(Long id, DocenteRequestDto docenteDTO) throws Exception {
-        if (id == null || !repo.existsById(id)) {
+    public Docente update(Docente docente, Long id) throws Exception {
+        if (repo.existsById(id)) {
+            docente.setId(id);
+            return repo.save(docente);
+        } else {
             throw new Exception("Docente con ID " + id + " no encontrado.");
         }
-        Docente docente = mapper.fromDto(docenteDTO);
-        docente.setId(id);
-        Docente updated = repo.save(docente);
-        return mapper.toResponseDto(updated);
     }
 
     @Override

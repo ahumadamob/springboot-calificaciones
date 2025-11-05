@@ -17,6 +17,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import com.imb2025.calificaciones.dto.mapper.DocenteMapper;
 import com.imb2025.calificaciones.dto.request.DocenteRequestDto;
 import com.imb2025.calificaciones.dto.response.DocenteResponseDto;
 import com.imb2025.calificaciones.entity.Docente;
@@ -31,6 +32,9 @@ public class DocenteController {
 
     @Autowired
     private IDocenteService docenteService;
+
+    @Autowired
+    private DocenteMapper docenteMapper;
 
     @GetMapping
     public ResponseEntity<List<Docente>> getAllDocente() {
@@ -70,16 +74,22 @@ public class DocenteController {
 
         return ResponseEntity.ok(response);
     }
+   
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<DocenteResponseDto>> crear(@Valid @RequestBody DocenteRequestDto dto)
-            throws Exception {
-        DocenteResponseDto createdDocente = docenteService.create(dto);
-        ApiResponseSuccessDto<DocenteResponseDto> response = new ApiResponseSuccessDto<>(true,
-                "Docente creado con éxito", createdDocente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
+    public ResponseEntity<ApiResponseSuccessDto<DocenteResponseDto>> createDocente(
+            @Valid @RequestBody DocenteRequestDto dto) throws Exception {
 
+        Docente docente = docenteMapper.fromDto(dto);
+        Docente createdDocente = docenteService.create(docente);
+
+        ApiResponseSuccessDto<DocenteResponseDto> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(docenteMapper.toResponseDto(createdDocente));
+        resp.setMessage("Docente creado exitosamente");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDocente(@PathVariable("id") Long id) {
@@ -90,20 +100,23 @@ public class DocenteController {
             return ResponseEntity.badRequest().build();
         }
     }
-   
+ 
+
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<DocenteResponseDto>> actualizar(
+    public ResponseEntity<ApiResponseSuccessDto<DocenteResponseDto>> updateDocente(
             @PathVariable Long id,
             @Valid @RequestBody DocenteRequestDto dto) throws Exception {
 
-        DocenteResponseDto updatedDocente = docenteService.update(id, dto);
-        ApiResponseSuccessDto<DocenteResponseDto> response = new ApiResponseSuccessDto<>(true,
-                "Docente actualizado con éxito", updatedDocente);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        Docente docente = docenteMapper.fromDto(dto);
+        Docente updatedDocente = docenteService.update(docente, id);
+
+        ApiResponseSuccessDto<DocenteResponseDto> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(docenteMapper.toResponseDto(updatedDocente));
+        resp.setMessage("Docente actualizado exitosamente");
+
+        return ResponseEntity.ok(resp);
     }
-
-
-
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception ex) {
