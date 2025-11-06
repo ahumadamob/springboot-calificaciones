@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.ComisionRequestDto;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.ComisionRepository;
@@ -40,7 +39,8 @@ public class ComisionServiceImpl implements IComisionService {
     }
 
     @Override
-    public Comision create(Comision comision) {
+    public Comision create(Comision comision) throws Exception {
+        // la validación y conversión DTO->Entidad se hace en el controlador (mapper)
         return repo.save(comision);
     }
 
@@ -59,24 +59,6 @@ public class ComisionServiceImpl implements IComisionService {
             throw new ResourceNotFoundException("No se puede eliminar el id: " + id + " porque no existe");
         }
         repo.deleteById(id);
-    }
-
-    @Override
-    public Comision fromDto(ComisionRequestDto dto) throws Exception {
-        if (dto == null) {
-            throw new IllegalArgumentException("DTO no puede ser nulo");
-        }
-        Comision c = new Comision();
-        c.setNombre(dto.getNombre());
-        if (dto.getTurnoId() != null) {
-            c.setTurno(turnoRepository.findById(dto.getTurnoId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Turno con id " + dto.getTurnoId() + " no encontrado")));
-        }
-        if (dto.getSedeId() != null) {
-            c.setSede(sedeRepository.findById(dto.getSedeId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Sede con id " + dto.getSedeId() + " no encontrada")));
-        }
-        return c;
     }
 
     @Override

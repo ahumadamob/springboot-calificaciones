@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.ComisionRequestDto;
 import com.imb2025.calificaciones.entity.Comision;
 import java.util.List;
 
@@ -8,7 +7,8 @@ public interface IComisionService {
 
     public List<Comision> findAll();
 
-    public Comision create(Comision comision);
+    // services trabajan con entidades, no con DTOs
+    public Comision create(Comision comision) throws Exception;
 
     public Comision update(Comision comision, Long id) throws Exception;
 
@@ -16,11 +16,9 @@ public interface IComisionService {
 
     public void deleteById(Long id) throws Exception;
 
-    public Comision fromDto(ComisionRequestDto dto) throws Exception;
-
     public boolean existsById(Long id);
 
-    // Métodos
+    // Métodos añadidos para TP07
     public List<Comision> findByNombreContainingIgnoreCase(String nombre);
 
     public long countBySedeId(Long sedeId);
