@@ -1,5 +1,5 @@
 
-package com.imb2025.calificaciones.dto;
+package com.imb2025.calificaciones.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -30,6 +30,16 @@ public class DocenteRequestDto {
     private String titulo;
 
     public DocenteRequestDto() {
+    }
+
+    private boolean activo;
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public String getNombre() {
