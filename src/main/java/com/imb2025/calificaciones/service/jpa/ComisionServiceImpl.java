@@ -70,4 +70,9 @@ public class ComisionServiceImpl implements IComisionService {
     public long countBySedeId(Long sedeId) {
         return repo.countBySedeId(sedeId);
     }
+
+    @Override
+    public long countByEstado(Comision.Estado estado) {
+        return repo.countByEstado(estado);
+    }
 }

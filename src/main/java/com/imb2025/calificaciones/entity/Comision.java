@@ -2,6 +2,8 @@ package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import com.imb2025.calificaciones.entity.BaseEntity;
 
 @Entity
@@ -14,6 +16,9 @@ public class Comision extends BaseEntity {
 
         @ManyToOne
         private Sede sede;
+
+        @Enumerated(EnumType.STRING)
+        private Estado estado = Estado.ACTIVO;
 
         public Comision() {
         }
@@ -54,5 +59,18 @@ public class Comision extends BaseEntity {
 
         public void setSede(Sede sede) {
                 this.sede = sede;
+        }
+
+        public Estado getEstado() {
+            return estado;
+        }
+
+        public void setEstado(Estado estado) {
+            this.estado = estado;
+        }
+
+        public static enum Estado {
+            ACTIVO,
+            INACTIVO
         }
 }

@@ -1,5 +1,7 @@
 package com.imb2025.calificaciones.dto.response;
 
+import com.imb2025.calificaciones.entity.Comision;
+
 public class ComisionResponseDto {
 
     private Long id;
@@ -7,15 +9,17 @@ public class ComisionResponseDto {
     private Long turnoId;
     private Long sedeId;
     private Long version;
+    private Comision.Estado estado;
 
     public ComisionResponseDto() {}
 
-    public ComisionResponseDto(Long id, String nombre, Long turnoId, Long sedeId, Long version) {
+    public ComisionResponseDto(Long id, String nombre, Long turnoId, Long sedeId, Long version, Comision.Estado estado) {
         this.id = id;
         this.nombre = nombre;
         this.turnoId = turnoId;
         this.sedeId = sedeId;
         this.version = version;
+        this.estado = estado;
     }
 
     public Long getId() {
@@ -38,6 +42,10 @@ public class ComisionResponseDto {
         return version;
     }
 
+    public Comision.Estado getEstado() {
+        return estado;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -56,5 +64,9 @@ public class ComisionResponseDto {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public void setEstado(Comision.Estado estado) {
+        this.estado = estado;
     }
 }

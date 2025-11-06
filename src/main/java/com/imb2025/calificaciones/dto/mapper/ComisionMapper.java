@@ -41,6 +41,11 @@ public class ComisionMapper {
             c.setSede(s);
         }
 
+        // Mapear estado (si viene nulo, se mantiene el valor por defecto en la entidad)
+        if (dto.getEstado() != null) {
+            c.setEstado(dto.getEstado());
+        }
+
         return c;
     }
 
@@ -50,6 +55,7 @@ public class ComisionMapper {
         Long turnoId = c.getTurno() != null ? c.getTurno().getId() : null;
         Long sedeId = c.getSede() != null ? c.getSede().getId() : null;
         Long version = c.getVersion(); // puede ser null si no existe
-        return new ComisionResponseDto(c.getId(), c.getNombre(), turnoId, sedeId, version);
+        ComisionResponseDto dto = new ComisionResponseDto(c.getId(), c.getNombre(), turnoId, sedeId, version, c.getEstado());
+        return dto;
     }
 }

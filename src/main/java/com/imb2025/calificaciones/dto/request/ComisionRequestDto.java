@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+// importar el enum anidado de Comision
+import com.imb2025.calificaciones.entity.Comision;
 
 public class ComisionRequestDto {
 
@@ -18,6 +20,9 @@ public class ComisionRequestDto {
     @NotNull(message = "El id de la sede es obligatorio")
     @Positive(message = "El id de la sede debe ser un número positivo")
     private Long sedeId;
+
+    @NotNull(message = "El estado es obligatorio")
+    private Comision.Estado estado;
 
     public String getNombre() {
         return nombre;
@@ -41,5 +46,13 @@ public class ComisionRequestDto {
 
     public void setSedeId(Long sedeId) {
         this.sedeId = sedeId;
+    }
+
+    public Comision.Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Comision.Estado estado) {
+        this.estado = estado;
     }
 }

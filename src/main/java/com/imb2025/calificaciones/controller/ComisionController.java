@@ -2,6 +2,7 @@ package com.imb2025.calificaciones.controller;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
@@ -117,6 +118,18 @@ public class ComisionController {
         resp.setData(null);
         resp.setMessage("Comision con id " + id + " eliminada con éxito");
         return ResponseEntity.ok(resp);
+    }
+
+    @GetMapping("/stats/activos")
+    public ResponseEntity<Map<String, Long>> statsActivos() {
+        long total = service.countByEstado(Comision.Estado.ACTIVO);
+        return ResponseEntity.ok(Map.of("total", total));
+    }
+
+    @GetMapping("/stats/inactivos")
+    public ResponseEntity<Map<String, Long>> statsInactivos() {
+        long total = service.countByEstado(Comision.Estado.INACTIVO);
+        return ResponseEntity.ok(Map.of("total", total));
     }
 
     // No hay handler local: GlobalExceptionHandler centralizará errores

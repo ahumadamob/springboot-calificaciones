@@ -22,4 +22,7 @@ public interface IComisionService {
     public List<Comision> findByNombreContainingIgnoreCase(String nombre);
 
     public long countBySedeId(Long sedeId);
+
+    // Nuevo: contar por estado
+    public long countByEstado(Comision.Estado estado);
 }

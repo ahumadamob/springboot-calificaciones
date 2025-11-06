@@ -13,5 +13,8 @@ public interface ComisionRepository extends JpaRepository<Comision, Long> {
 
     // Cuenta comisiones que pertenecen a una sede (por id de sede)
     long countBySedeId(Long sedeId);
+
+    // Nuevo: contar por estado
+    long countByEstado(Comision.Estado estado);
 }
 
