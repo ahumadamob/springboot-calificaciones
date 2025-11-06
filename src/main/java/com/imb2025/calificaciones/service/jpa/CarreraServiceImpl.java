@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.CarreraRequestDto;
 import com.imb2025.calificaciones.entity.Carrera;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.CarreraRepository;
@@ -13,21 +12,19 @@ import com.imb2025.calificaciones.service.ICarreraService;
 @Service
 public class CarreraServiceImpl implements ICarreraService {
 
-     @Autowired
-        private CarreraRepository repo;
+    @Autowired
+    private CarreraRepository repo;
 
     @Override
     public List<Carrera> findAll() {
-
-    return repo.findAll();
-
+        return repo.findAll();
     }
 
     @Override
     public Carrera findById(Long id) {
         return repo.findById(id)
-        	    .orElseThrow(() -> new ResourceNotFoundException(
-        	        "Carrera no encontrada con id " + id));
+            .orElseThrow(() -> new ResourceNotFoundException(
+                "Carrera no encontrada con id " + id));
     }
 
     @Override
@@ -40,10 +37,9 @@ public class CarreraServiceImpl implements ICarreraService {
         if(repo.existsById(id)) {
             carrera.setId(id);
             return repo.save(carrera);
-        }else {
-            throw new Exception("No se encontró jugador con id" + id);
+        } else {
+            throw new Exception("No se encontró carrera con id " + id);
         }
-
     }
 
     @Override
@@ -55,14 +51,17 @@ public class CarreraServiceImpl implements ICarreraService {
     }
 
     @Override
-    public Carrera fromDto(CarreraRequestDto dto) throws Exception {
-        if (dto == null) {
-            return null;
-        }
-        Carrera carrera = new Carrera();
-        carrera.setNombre(dto.getNombre());
-        carrera.setTituloOtorgado(dto.getTituloOtorgado());
-        return carrera;
+    public List<Carrera> buscarPorNombre(String nombre) {
+        return repo.findByNombre(nombre);
     }
 
+    @Override
+    public List<Carrera> buscarPorFragmentoNombre(String fragmento) {
+        return repo.findByNombreContainingIgnoreCase(fragmento);
+    }
+
+    @Override
+    public boolean existePorNombre(String nombre) {
+        return repo.existsByNombreIgnoreCase(nombre);
+    }
 }

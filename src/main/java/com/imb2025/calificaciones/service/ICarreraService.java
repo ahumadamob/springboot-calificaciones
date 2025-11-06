@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.CarreraRequestDto;
 import com.imb2025.calificaciones.entity.Carrera;
 import java.util.List;
 
@@ -16,5 +15,11 @@ public interface ICarreraService {
 
     public void deleteById(Long id) throws Exception;
 
-    public Carrera fromDto(CarreraRequestDto dto) throws Exception;
+    // Métodos de búsqueda
+    List<Carrera> buscarPorNombre(String nombre);
+    
+    List<Carrera> buscarPorFragmentoNombre(String fragmento);
+
+    // Validación de duplicados
+    boolean existePorNombre(String nombre);
 }
