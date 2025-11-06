@@ -18,13 +18,13 @@ public interface IPlanEstudioService {
     PlanEstudio findById(Long id) throws ResourceNotFoundException;
 
     void deleteById(Long id) throws ResourceNotFoundException;
-
-    PlanEstudio fromDto(PlanEstudioRequestDto dto) throws Exception;
     
     public List<PlanEstudio> findAllByNombre(String nombre);
     
     public long countByCarrera(Long carreraId);
     
+    PlanEstudio fromDto(PlanEstudioRequestDto dto);
+
     
     
 }
