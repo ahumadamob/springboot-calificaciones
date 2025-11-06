@@ -2,6 +2,10 @@ package com.imb2025.calificaciones.controller;
 
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
+import com.imb2025.calificaciones.dto.mapper.EstadoCursadaMapper;
+import com.imb2025.calificaciones.dto.request.EstadoCursadaRequestDto;
+import com.imb2025.calificaciones.dto.response.EstadoCursadaResponseDto;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.service.IEstadoCursadaService;
 
@@ -24,6 +27,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,28 +39,47 @@ public class EstadoCursadaController {
 
 
     @GetMapping
-    public ResponseEntity<List<EstadoCursada>> getAll() {
+    public ResponseEntity<ApiResponseSuccessDto<List<EstadoCursadaResponseDto>>> getAll() {
         List<EstadoCursada> estados = service.findAll();
-        return estados.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(estados);
+        List<EstadoCursadaResponseDto> estadoCursadaDtoList= new ArrayList<EstadoCursadaResponseDto>();
+        EstadoCursadaMapper mapper = new EstadoCursadaMapper();
+        for(EstadoCursada n : estados) {
+        	estadoCursadaDtoList.add(mapper.toResponseDto(n));
+        }
+        ApiResponseSuccessDto<List<EstadoCursadaResponseDto>> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(estadoCursadaDtoList);
+        response.setMessage("Listado de Estados de Cursada");
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto <EstadoCursada>> getEstadoCursadabyId(@PathVariable Long id) {
+    public ResponseEntity<ApiResponseSuccessDto <EstadoCursadaResponseDto>> getEstadoCursadabyId(@PathVariable Long id) {
         EstadoCursada estado = service.findById(id);
-        ApiResponseSuccessDto<EstadoCursada> response = new ApiResponseSuccessDto<>();
+        ApiResponseSuccessDto<EstadoCursadaResponseDto> response = new ApiResponseSuccessDto<>();
+        
+        EstadoCursadaMapper mapper = new EstadoCursadaMapper();
+        EstadoCursadaResponseDto estadoDto = mapper.toResponseDto(estado);
+        
     	response.setMessage("Estado de la Materia fue encontrada con exito");
-    	response.setData(estado);
+    	response.setData(estadoDto);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<ApiResponseSuccessDto<List<EstadoCursada>>> findByNombre(@RequestParam String nombre) {
+    public ResponseEntity<ApiResponseSuccessDto<List<EstadoCursadaResponseDto>>> findByNombre(@RequestParam String nombre) {
         List<EstadoCursada> estados = service.findByNombreIgnoreCase(nombre);
-        ApiResponseSuccessDto<List<EstadoCursada>> response = new ApiResponseSuccessDto<>(
+        EstadoCursadaMapper mapper = new EstadoCursadaMapper();
+        
+        List<EstadoCursadaResponseDto> estadoDtoList = estados.stream()
+                .map(mapper::toResponseDto)
+                .collect(java.util.stream.Collectors.toList());
+        
+        ApiResponseSuccessDto<List<EstadoCursadaResponseDto>> response = new ApiResponseSuccessDto<>(
             true,
             "Estados encontrados con nombre: " + nombre,
-            estados
+            estadoDtoList
         );
         return estados.isEmpty()
             ? ResponseEntity.noContent().build()
@@ -75,28 +98,32 @@ public class EstadoCursadaController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<EstadoCursada>> create(
+    public ResponseEntity<ApiResponseSuccessDto<EstadoCursadaResponseDto>> create(
             @Valid @RequestBody EstadoCursadaRequestDto dto) throws Exception {
+    	EstadoCursadaMapper mapper = new EstadoCursadaMapper();
+        EstadoCursada estadoCursada = service.create(mapper.fromDto(dto));
+        
+        EstadoCursadaResponseDto estadoDto = mapper.toResponseDto(estadoCursada);
 
-        EstadoCursada estadoCursada = service.create(service.fromDto(dto));
-
-        ApiResponseSuccessDto<EstadoCursada> response = new ApiResponseSuccessDto<EstadoCursada>(
+        ApiResponseSuccessDto<EstadoCursadaResponseDto> response = new ApiResponseSuccessDto<>(
             true,
             "Estado de cursada creado exitosamente",
-            estadoCursada
+            estadoDto
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EstadoCursada> update(@RequestBody EstadoCursadaRequestDto dto, @Valid @PathVariable Long id) throws Exception {
-        EstadoCursada existente = service.findById(id);
+    public ResponseEntity<EstadoCursadaResponseDto> update(@RequestBody EstadoCursadaRequestDto dto, @Valid @PathVariable Long id) throws Exception {
+        EstadoCursadaMapper mapper = new EstadoCursadaMapper();
+    	EstadoCursada existente = service.findById(id);
         if (existente == null) {
             return ResponseEntity.badRequest().build();
         }
-        EstadoCursada estadoCursada = service.fromDto(dto);
-        return ResponseEntity.ok(service.update(estadoCursada, id));
+        EstadoCursada estadoCursada = mapper.fromDto(dto);
+        EstadoCursada updatedEntity = service.update(estadoCursada, id);
+        return ResponseEntity.ok(mapper.toResponseDto(updatedEntity));
     }
 
     @DeleteMapping("/{id}")
