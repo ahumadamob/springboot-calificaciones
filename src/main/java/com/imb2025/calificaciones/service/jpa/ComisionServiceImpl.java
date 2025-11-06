@@ -1,7 +1,5 @@
 package com.imb2025.calificaciones.service.jpa;
 
-import com.imb2025.calificaciones.dto.request.ComisionRequestDto;
-import com.imb2025.calificaciones.dto.mapper.ComisionMapper;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.ComisionRepository;
@@ -24,9 +22,6 @@ public class ComisionServiceImpl implements IComisionService {
     @Autowired
     private SedeRepository sedeRepository;
 
-    @Autowired
-    private ComisionMapper mapper;
-
     @Override
     public List<Comision> findAll() {
         return repo.findAll();
@@ -44,17 +39,16 @@ public class ComisionServiceImpl implements IComisionService {
     }
 
     @Override
-    public Comision create(ComisionRequestDto dto) throws Exception {
-        Comision comision = mapper.fromDto(dto);
+    public Comision create(Comision comision) throws Exception {
+        // la validación y conversión DTO->Entidad se hace en el controlador (mapper)
         return repo.save(comision);
     }
 
     @Override
-    public Comision update(ComisionRequestDto dto, Long id) throws Exception {
+    public Comision update(Comision comision, Long id) throws Exception {
         if (!repo.existsById(id)) {
             throw new ResourceNotFoundException("Comision con id " + id + " no existe");
         }
-        Comision comision = mapper.fromDto(dto);
         comision.setId(id);
         return repo.save(comision);
     }

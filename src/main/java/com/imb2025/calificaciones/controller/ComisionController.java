@@ -2,6 +2,7 @@ package com.imb2025.calificaciones.controller;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
 
@@ -28,13 +29,17 @@ public class ComisionController {
     private ComisionMapper mapper;
 
     @GetMapping
-    public ResponseEntity<ApiResponseSuccessDto<List<Comision>>> getAll() {
+    public ResponseEntity<ApiResponseSuccessDto<List<ComisionResponseDto>>> getAll() {
         List<Comision> list = service.findAll();
-        ApiResponseSuccessDto<List<Comision>> resp = new ApiResponseSuccessDto<>();
+        List<ComisionResponseDto> dtoList = list.stream()
+                .map(mapper::toResponseDto)
+                .collect(Collectors.toList());
+
+        ApiResponseSuccessDto<List<ComisionResponseDto>> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
-        resp.setData(list);
+        resp.setData(dtoList);
         resp.setMessage("Comisiones encontradas con éxito");
-        return list.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
+        return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
     }
 
     @GetMapping("/{id}")
@@ -50,13 +55,17 @@ public class ComisionController {
 
     // filtrar por nombre (TP07)
     @GetMapping("/nombre/{nombre}")
-    public ResponseEntity<ApiResponseSuccessDto<List<Comision>>> getByNombre(@PathVariable String nombre) {
+    public ResponseEntity<ApiResponseSuccessDto<List<ComisionResponseDto>>> getByNombre(@PathVariable String nombre) {
         List<Comision> lista = service.findByNombreContainingIgnoreCase(nombre);
-        ApiResponseSuccessDto<List<Comision>> resp = new ApiResponseSuccessDto<>();
+        List<ComisionResponseDto> dtoList = lista.stream()
+                .map(mapper::toResponseDto)
+                .collect(Collectors.toList());
+
+        ApiResponseSuccessDto<List<ComisionResponseDto>> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
-        resp.setData(lista);
+        resp.setData(dtoList);
         resp.setMessage("Comisiones filtradas por nombre: " + nombre);
-        return lista.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
+        return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(resp);
     }
 
     @GetMapping("/count/sede/{sedeId}")
@@ -71,7 +80,9 @@ public class ComisionController {
 
     @PostMapping
     public ResponseEntity<ApiResponseSuccessDto<ComisionResponseDto>> create(@Valid @RequestBody ComisionRequestDto dto) throws Exception {
-        Comision c = service.create(dto);
+        // mapper convierte DTO -> entidad
+        Comision entidad = mapper.fromDto(dto);
+        Comision c = service.create(entidad);
         ComisionResponseDto body = mapper.toResponseDto(c);
         ApiResponseSuccessDto<ComisionResponseDto> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
@@ -88,7 +99,8 @@ public class ComisionController {
             notFound.setMessage("No se encontró Comision con id " + id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(notFound);
         }
-        Comision c = service.update(dto, id);
+        Comision entidad = mapper.fromDto(dto);
+        Comision c = service.update(entidad, id);
         ComisionResponseDto body = mapper.toResponseDto(c);
         ApiResponseSuccessDto<ComisionResponseDto> resp = new ApiResponseSuccessDto<>();
         resp.setSuccess(true);
@@ -107,8 +119,7 @@ public class ComisionController {
         return ResponseEntity.ok(resp);
     }
 
-    // Eliminado el manejador local de excepciones para que GlobalExceptionHandler procese
-    // los errores de validación y devuelva ApiResponseErrorDto con la lista completa.
+    // No hay handler local: GlobalExceptionHandler centralizará errores
 }
 
 
