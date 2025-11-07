@@ -15,7 +15,7 @@ public class NivelMateriaMapper {
         nivelMateria.setNombre(dto.getNombre());
         nivelMateria.setDescripcion(dto.getDescripcion());
         nivelMateria.setActivo(dto.getActivo());
-
+        nivelMateria.setIdentificadorLegible(dto.getIdentificadorLegible());
         return nivelMateria;
     }
 
@@ -30,7 +30,7 @@ public class NivelMateriaMapper {
         dto.setDescripcion(entidad.getDescripcion());
         dto.setActivo(entidad.getActivo());
         dto.setVersion(entidad.getVersion());
-
+        dto.setIdentificadorLegible(entidad.getIdentificadorLegible());
         return dto;
     }
 }

@@ -16,36 +16,21 @@ public class NivelMateriaRequestDto {
     @NotNull(message = "El campo activo es obligatorio")
     private Boolean activo;
 
-    public NivelMateriaRequestDto() {
-    }
+    @NotBlank(message = "El identificadorLegible es obligatorio")
+    @Size(min = 2, max = 50, message = "El identificadorLegible debe tener entre {min} y {max} caracteres")
+    private String identificadorLegible;
 
-    public NivelMateriaRequestDto(String nombre, String descripcion, Boolean activo) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.activo = activo;
-    }
+    public NivelMateriaRequestDto() { }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+    public Boolean getActivo() { return activo; }
+    public void setActivo(Boolean activo) { this.activo = activo; }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
-    }
+    public String getIdentificadorLegible() { return identificadorLegible; }
+    public void setIdentificadorLegible(String identificadorLegible) { this.identificadorLegible = identificadorLegible; }
 }

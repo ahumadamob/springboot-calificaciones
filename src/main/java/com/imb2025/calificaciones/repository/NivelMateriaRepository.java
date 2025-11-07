@@ -6,7 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.imb2025.calificaciones.entity.NivelMateria;
 
+import java.util.Optional;
+
 public interface NivelMateriaRepository extends JpaRepository<NivelMateria, Long> {
+    // ... otros métodos ...
+
+    Optional<NivelMateria> findByIdentificadorLegibleIgnoreCase(String identificadorLegible);
+    boolean existsByIdentificadorLegibleIgnoreCase(String identificadorLegible);
 
     // findBy...: filtra por nombre (contiene, ignore case)
     List<NivelMateria> findByNombreContainingIgnoreCase(String nombre);

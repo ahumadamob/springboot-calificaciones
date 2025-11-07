@@ -25,11 +25,15 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
             return repo.findAll();
 
     }
-
-
     @Override
     public NivelMateria create(NivelMateria nivelMateria) {
-         return repo.save(nivelMateria);
+        // normalizar identificador (por ejemplo trim)
+        String idLegible = nivelMateria.getIdentificadorLegible() != null ? nivelMateria.getIdentificadorLegible().trim() : null;
+        if (idLegible != null && repo.existsByIdentificadorLegibleIgnoreCase(idLegible)) {
+            throw new com.imb2025.calificaciones.exception.DuplicateResourceException("identificadorLegible duplicado");
+        }
+        nivelMateria.setIdentificadorLegible(idLegible);
+        return repo.save(nivelMateria);
     }
 
     @Override
@@ -79,6 +83,8 @@ public class NivelMateriaServiceImpl implements INivelMateriaService {
     @Override
     public List<NivelMateria> findByActivoFalse() {
         return repo.findByActivoFalse();
+          
+        
     }
 }
    

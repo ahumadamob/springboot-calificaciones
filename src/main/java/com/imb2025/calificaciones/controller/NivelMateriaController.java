@@ -21,10 +21,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.request.NivelMateriaRequestDto;
+import com.imb2025.calificaciones.dto.response.ErrorsDto;
 import com.imb2025.calificaciones.dto.response.NivelMateriaResponseDto;
 import com.imb2025.calificaciones.dto.mapper.NivelMateriaMapper;
 import java.util.stream.Collectors;
 
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import com.imb2025.calificaciones.exception.DuplicateResourceException;
 
 
 @RestController
@@ -83,20 +87,28 @@ public ResponseEntity<Long> contar(@RequestParam(required = false) String nombre
     
 }
 @PostMapping("/api/nivelmateria")
-public ResponseEntity<ApiResponseSuccessDto<NivelMateriaResponseDto>> createNivelMateria(@RequestBody @Valid NivelMateriaRequestDto nivelDto) {
+public ResponseEntity<?> createNivelMateria(@RequestBody @Valid NivelMateriaRequestDto nivelDto, BindingResult bindingResult) {
+    // 1) validaciones de campo acumuladas
+    if (bindingResult.hasErrors()) {
+        List<String> errors = bindingResult.getFieldErrors()
+            .stream()
+            .map(fe -> fe.getDefaultMessage())
+            .collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorsDto(errors));
+    }
+
     try {
         NivelMateria nivel = NivelMateriaMapper.fromDto(nivelDto);
-        
         NivelMateria created = nivelMateriaService.create(nivel);
-
         NivelMateriaResponseDto responseDto = NivelMateriaMapper.toResponseDto(created);
-        
         ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>();
         response.setSuccess(true);
         response.setData(responseDto);
         response.setMessage("NivelMateria creada exitosamente");
-
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    } catch (com.imb2025.calificaciones.exception.DuplicateResourceException dre) {
+        // mensaje exacto pedido por la consigna
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorsDto(List.of("identificadorLegible duplicado")));
     } catch (Exception e) {
         ApiResponseSuccessDto<NivelMateriaResponseDto> responseError = new ApiResponseSuccessDto<>();
         responseError.setSuccess(false);
