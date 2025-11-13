@@ -1,51 +1,39 @@
 package com.imb2025.calificaciones.entity;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
+
 @Entity
-public class Alumno {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+public class Alumno extends BaseEntity {
+
     private String nombre;
     private String apellido;
     private int dni;
     private String email;
-    private Date fechaNacimiento ;
+    private Date fechaNacimiento ; // Tipo Date para recibir el resultado del Mapper
+    private Boolean atributoBooleano = false;
 
     public Alumno() {
     }
 
-    public Alumno(String nombre, String apellido, int dni, String email, Date fechaNacimiento) {
+    public Alumno(String nombre, String apellido, int dni, String email, Date fechaNacimiento, Boolean atributoBooleano) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.email = email;
         this.fechaNacimiento = fechaNacimiento;
+        this.atributoBooleano = atributoBooleano;
     }
 
-    public Alumno(Long id, String nombre, String apellido, int dni, String email, Date fechaNacimiento) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.email = email;
-        this.fechaNacimiento = fechaNacimiento;
+    // Getters y Setters
+
+    public Boolean getAtributoBooleano() {
+        return atributoBooleano;
     }
 
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public void setAtributoBooleano(Boolean atributoBooleano) {
+        this.atributoBooleano = atributoBooleano;
     }
 
     public String getNombre() {

@@ -1,6 +1,6 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.EstadoCursadaRequestDto;
+import com.imb2025.calificaciones.dto.request.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import java.util.List;
 
@@ -15,8 +15,6 @@ public interface IEstadoCursadaService {
     public EstadoCursada findById(Long id);
 
     public void deleteById(Long id) throws Exception;
-
-    public EstadoCursada fromDto(EstadoCursadaRequestDto dto) throws Exception;
     
     List<EstadoCursada> findByNombreIgnoreCase(String nombre);
     long countByDescripcionIgnoreCase(String descripcion);
