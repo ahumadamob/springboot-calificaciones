@@ -10,7 +10,7 @@ import com.imb2025.calificaciones.dto.request.PlanEstudioRequestDto;
 import com.imb2025.calificaciones.entity.PlanEstudio;
 import com.imb2025.calificaciones.repository.PlanEstudioRepository;
 import com.imb2025.calificaciones.service.IPlanEstudioService;
-import com.imb2025.calificaciones.exception.ResourceNotFoundException;
+import com.imb2025.calificaciones.exception.ResourceNotFoundException; 
 
 @Service
 public class PlanEstudioServiceImpl implements IPlanEstudioService {
