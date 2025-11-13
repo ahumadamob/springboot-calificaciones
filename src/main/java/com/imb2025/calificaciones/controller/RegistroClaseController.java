@@ -1,9 +1,9 @@
 package com.imb2025.calificaciones.controller;
 
-
-
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -48,6 +48,37 @@ public class RegistroClaseController {
 
         ApiResponseSuccessDto<RegistroClase> resp =
                 new ApiResponseSuccessDto<>(true, "Registro encontrado", registro);
+        return ResponseEntity.ok(resp);
+    }
+
+    
+    @GetMapping("/buscar")
+    public ResponseEntity<?> getByTema(@RequestParam String tema) {
+
+        List<RegistroClase> registros = iregistroClase.findByTema(tema);
+
+        if (registros.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        ApiResponseSuccessDto<List<RegistroClase>> resp =
+                new ApiResponseSuccessDto<>(true, "Registros filtrados por tema", registros);
+
+        return ResponseEntity.ok(resp);
+    }
+
+    
+    @GetMapping("/count")
+    public ResponseEntity<?> countByFecha(
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate fecha
+    ) {
+        Long cantidad = iregistroClase.countByFecha(fecha);
+
+        ApiResponseSuccessDto<Long> resp =
+                new ApiResponseSuccessDto<>(true, "Cantidad de registros en la fecha " + fecha, cantidad);
+
         return ResponseEntity.ok(resp);
     }
 

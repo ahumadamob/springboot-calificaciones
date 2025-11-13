@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -32,6 +33,16 @@ public class RegistroClaseServiceImpl implements IRegistroClaseService {
     @Override
     public List<RegistroClase> findAll() {
         return registroClaseRepository.findAll();
+    }
+    
+    @Override
+    public List<RegistroClase> findByTema(String tema) {
+        return registroClaseRepository.findByTemaContainingIgnoreCase(tema);
+    }
+
+    @Override
+    public Long countByFecha(LocalDate fecha) {
+        return registroClaseRepository.countByFecha(fecha);
     }
 
     @Override
