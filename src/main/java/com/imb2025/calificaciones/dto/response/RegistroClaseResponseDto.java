@@ -1,27 +1,23 @@
-package com.imb2025.calificaciones.dto;
+package com.imb2025.calificaciones.dto.response;
 
-import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
-public class RegistroClaseRequestDto {
+public class RegistroClaseResponseDto {
 
-    @NotNull(message = "La fecha es obligatoria")
-    @PastOrPresent(message = "La fecha debe ser pasada o la actual")
+    private Long id;
     private LocalDate fecha;
-
-    @NotBlank(message = "El tema no puede estar vacío")
-    @Size(min = 3, max = 100, message = "El tema debe tener entre 3 y 100 caracteres")
     private String tema;
-
-    @NotNull(message = "El docenteId es obligatorio")
-    @Positive(message = "El docenteId debe ser un número positivo")
     private Long docenteId;
-
-    @NotNull(message = "El comisionId es obligatorio")
-    @Positive(message = "El comisionId debe ser un número positivo")
     private Long comisionId;
+    private Long version;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public LocalDate getFecha() {
         return fecha;
@@ -54,5 +50,12 @@ public class RegistroClaseRequestDto {
     public void setComisionId(Long comisionId) {
         this.comisionId = comisionId;
     }
-}
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+}
