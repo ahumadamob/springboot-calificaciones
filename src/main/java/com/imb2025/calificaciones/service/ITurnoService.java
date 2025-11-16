@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.request.TurnoRequestDto;
 import com.imb2025.calificaciones.entity.Turno;
 
 import java.time.LocalTime;

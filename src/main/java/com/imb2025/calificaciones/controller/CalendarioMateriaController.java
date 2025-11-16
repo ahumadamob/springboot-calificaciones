@@ -3,8 +3,12 @@ package com.imb2025.calificaciones.controller;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 import com.imb2025.calificaciones.dto.mapper.CalendarioMateriaMapper;
+import com.imb2025.calificaciones.dto.request.CalendarioMateriaRequestDto;
 import com.imb2025.calificaciones.dto.response.CalendarioMateriaResponseDto;
+import com.imb2025.calificaciones.entity.CalendarioMateria;
+import com.imb2025.calificaciones.service.ICalendarioMateriaService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,12 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.imb2025.calificaciones.dto.request.CalendarioMateriaRequestDto;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.imb2025.calificaciones.entity.CalendarioMateria;
-import com.imb2025.calificaciones.service.ICalendarioMateriaService;
-
 @RestController
 @RequestMapping("/api/calendario-materia")
 public class CalendarioMateriaController {
@@ -35,7 +33,7 @@ public class CalendarioMateriaController {
     private CalendarioMateriaMapper mapper;
 
     @GetMapping
-    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateriaResponseDto>> getAll (){
+    public ResponseEntity<ApiResponseSuccessDto<List<CalendarioMateriaResponseDto>>> getAll (){
         List<CalendarioMateria> calendarios = calMatSer.findAll();
         List<CalendarioMateriaResponseDto> calMatResponseDto= new ArrayList<>();
 
@@ -43,13 +41,16 @@ public class CalendarioMateriaController {
             calMatResponseDto.add(mapper.toResponseDto(n));
         }
 
-        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+        ApiResponseSuccessDto<List<CalendarioMateriaResponseDto>> response = new ApiResponseSuccessDto<>();
 
         response.setSuccess(true);
         response.setData(calMatResponseDto);
         response.setMessage("Calendarios Materias encontrados con éxito");
 
-        return calendarios.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+        if (calendarios.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
@@ -57,7 +58,7 @@ public class CalendarioMateriaController {
 
         CalendarioMateria calendario = calMatSer.findById(id);
         CalendarioMateriaResponseDto calendarioDto = mapper.toResponseDto(calendario);
-        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+        ApiResponseSuccessDto<CalendarioMateriaResponseDto> response = new ApiResponseSuccessDto<>();
 
         response.setSuccess(true);
         response.setData(calendarioDto);
@@ -67,7 +68,7 @@ public class CalendarioMateriaController {
     }
 
     @GetMapping("/materia/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateriaResponseDto>> getCalendarioMateriaByMateriaId(@PathVariable Long id){
+    public ResponseEntity<ApiResponseSuccessDto<List<CalendarioMateriaResponseDto>>> getCalendarioMateriaByMateriaId(@PathVariable Long id){
         List<CalendarioMateria> calendarioMaterias = calMatSer.findByMateriaId(id);
 
         List<CalendarioMateriaResponseDto> calendarioDto = new ArrayList<>();
@@ -76,7 +77,7 @@ public class CalendarioMateriaController {
             calendarioDto.add(mapper.toResponseDto(n));
         }
 
-        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+        ApiResponseSuccessDto<List<CalendarioMateriaResponseDto>> response = new ApiResponseSuccessDto<>();
 
         response.setSuccess(true);
         response.setData(calendarioDto);
@@ -86,11 +87,11 @@ public class CalendarioMateriaController {
     }
 
     @GetMapping("/comision/{comisionId}")
-    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateriaResponseDto>> countByComisionId(@PathVariable Long comisionId){
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countByComisionId(@PathVariable Long comisionId){
 
         Long result = calMatSer.countByComisionId(comisionId);
 
-        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
 
         response.setSuccess(true);
         response.setData(result);
@@ -100,14 +101,14 @@ public class CalendarioMateriaController {
     }
 	
 	@PostMapping
-	public ResponseEntity<ApiResponseSuccessDto<CalendarioMateriaResponseDto>> create(@Valid @RequestBody CalendarioMateriaRequestDto calendarioMateriaDto) throws Exception {
+        public ResponseEntity<ApiResponseSuccessDto<CalendarioMateriaResponseDto>> create(@Valid @RequestBody CalendarioMateriaRequestDto calendarioMateriaDto) throws Exception {
 
         CalendarioMateria calendarioMateria;
         calendarioMateria = mapper.fromDto(calendarioMateriaDto);
         calendarioMateria = calMatSer.create(calendarioMateria);
         CalendarioMateriaResponseDto responseDto = mapper.toResponseDto(calendarioMateria);
 
-        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+        ApiResponseSuccessDto<CalendarioMateriaResponseDto> response = new ApiResponseSuccessDto<>();
         response.setSuccess(true);
         response.setData(responseDto);
         response.setMessage("Calendario Materia creado con éxito");
@@ -122,7 +123,7 @@ public class CalendarioMateriaController {
         calendarioMateria = calMatSer.update(calendarioMateria, id);
         CalendarioMateriaResponseDto responseDto = mapper.toResponseDto(calendarioMateria);
 
-        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+        ApiResponseSuccessDto<CalendarioMateriaResponseDto> response = new ApiResponseSuccessDto<>();
         response.setSuccess(true);
         response.setData(responseDto);
         response.setMessage("Calendario Materia actualizado con éxito");
@@ -132,14 +133,15 @@ public class CalendarioMateriaController {
 	}
 	
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<CalendarioMateriaResponseDto>> delete(@PathVariable Long id) throws Exception {
+    public ResponseEntity<ApiResponseSuccessDto<Void>> delete(@PathVariable Long id) throws Exception {
         calMatSer.deleteById(id);
-        ApiResponseSuccessDto response = new ApiResponseSuccessDto<>();
+        ApiResponseSuccessDto<Void> response = new ApiResponseSuccessDto<>();
         response.setMessage("Calendario Materia con id: " + id + " eliminado con éxito");
         response.setSuccess(true);
+        response.setData(null);
         return ResponseEntity.ok(response);
     }
-	
+
 }
 
 

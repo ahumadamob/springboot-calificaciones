@@ -5,13 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.request.NivelMateriaRequestDto;
 import com.imb2025.calificaciones.entity.NivelMateria;
 import com.imb2025.calificaciones.repository.NivelMateriaRepository;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.service.INivelMateriaService;
-
-import com.imb2025.calificaciones.dto.mapper.NivelMateriaMapper;
 
 
 @Service
