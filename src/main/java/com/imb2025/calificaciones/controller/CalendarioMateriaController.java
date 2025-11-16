@@ -48,8 +48,7 @@ public class CalendarioMateriaController {
         response.setMessage("Calendarios Materias encontrados con éxito");
 
         if (calendarios.isEmpty()) {
-            return ResponseEntity.<ApiResponseSuccessDto<List<CalendarioMateriaResponseDto>>>status(HttpStatus.NO_CONTENT)
-                    .build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.ok(response);
     }
