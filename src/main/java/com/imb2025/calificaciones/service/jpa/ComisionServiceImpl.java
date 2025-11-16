@@ -3,8 +3,6 @@ package com.imb2025.calificaciones.service.jpa;
 import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.ComisionRepository;
-import com.imb2025.calificaciones.repository.SedeRepository;
-import com.imb2025.calificaciones.repository.TurnoRepository;
 import com.imb2025.calificaciones.service.IComisionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +13,6 @@ public class ComisionServiceImpl implements IComisionService {
 
     @Autowired
     private ComisionRepository repo;
-
-    @Autowired
-    private TurnoRepository turnoRepository;
-
-    @Autowired
-    private SedeRepository sedeRepository;
 
     @Override
     public List<Comision> findAll() {

@@ -4,7 +4,6 @@ package com.imb2025.calificaciones.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,18 +70,18 @@ public class TipoEvaluacionController {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<ApiResponseSuccessDto<List<TipoEvaluacion>>> search(@PathVariable String q) {
-        
-    	var lista = tipoEvaluacionService.buscarNombre(q);
-    	
-    	
+    public ResponseEntity<ApiResponseSuccessDto<List<TipoEvaluacion>>> search(@RequestParam String q) {
+
+        var lista = tipoEvaluacionService.buscarNombre(q);
+
+
         return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "se realizo la busqueda correctamente", lista));
     }
 
     @GetMapping("/contar")
-    public ResponseEntity<ApiResponseSuccessDto<Long>> count(@PathVariable String q) {
-       
-    	long total = tipoEvaluacionService.contarNombre(q);
+    public ResponseEntity<ApiResponseSuccessDto<Long>> count(@RequestParam String q) {
+
+        long total = tipoEvaluacionService.contarNombre(q);
         return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "Total: ", total));
     }
     

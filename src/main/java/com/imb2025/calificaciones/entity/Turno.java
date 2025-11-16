@@ -3,9 +3,6 @@ package com.imb2025.calificaciones.entity;
 import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @Entity
 public class Turno extends BaseEntity {
