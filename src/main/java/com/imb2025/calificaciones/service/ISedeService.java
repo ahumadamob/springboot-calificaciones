@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.SedeRequestDto;
 import com.imb2025.calificaciones.entity.Sede;
 import java.util.List;
 
@@ -16,9 +15,13 @@ public interface ISedeService {
 
     void deleteById(Long id) throws Exception;
 
-    Sede fromDto(SedeRequestDto dto) throws Exception;
-
-    Sede createFromDto(SedeRequestDto dto) throws Exception;
-
     boolean existsById(Long id);
+
+    List<Sede> findByNombreIgnoreCase(String nombre);
+
+    long countByDireccionIgnoreCase(String direccion);
+
+    // Nuevos para listar sedes activas e inactivas
+    List<Sede> findByActivaTrue();
+    List<Sede> findByActivaFalse();
 }

@@ -17,9 +17,14 @@ import jakarta.validation.Valid;
 import com.imb2025.calificaciones.entity.NivelMateria;
 import com.imb2025.calificaciones.service.INivelMateriaService;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.dto.NivelMateriaRequestDto;
+import com.imb2025.calificaciones.dto.request.NivelMateriaRequestDto;
+import com.imb2025.calificaciones.dto.response.NivelMateriaResponseDto;
+import com.imb2025.calificaciones.dto.mapper.NivelMateriaMapper;
+import java.util.stream.Collectors;
+
 
 
 @RestController
@@ -28,42 +33,99 @@ public class NivelMateriaController {
 private INivelMateriaService nivelMateriaService;
 
 @GetMapping("/api/nivelmateria")
-public ResponseEntity<ApiResponseSuccessDto<List<NivelMateria>>> getAllNivelMateria() {
+public ResponseEntity<ApiResponseSuccessDto<List<NivelMateriaResponseDto>>> getAllNivelMateria() {
     List<NivelMateria> nivelMaterias = nivelMateriaService.findAll();
-    ApiResponseSuccessDto<List<NivelMateria>> response = new ApiResponseSuccessDto<>();
+    
+    List<NivelMateriaResponseDto> dtos = nivelMaterias.stream()
+            .map(NivelMateriaMapper::toResponseDto)
+            .collect(Collectors.toList());
+    
+    ApiResponseSuccessDto<List<NivelMateriaResponseDto>> response = new ApiResponseSuccessDto<>();
     response.setSuccess(true);
-    response.setData(nivelMaterias);
+    response.setData(dtos);
     response.setMessage("Lista de NivelMateria");
     return ResponseEntity.ok(response);
 }
-@PostMapping("/api/nivelmateria")
-public ResponseEntity<ApiResponseSuccessDto<NivelMateria>> createNivelMateria(@RequestBody @Valid NivelMateriaRequestDto nivelDto) {
-    NivelMateria nivel = new NivelMateria();
-    nivel.setNombre(nivelDto.getNombre());
-    nivel.setDescripcion(nivelDto.getDescripcion());
 
-    NivelMateria created = nivelMateriaService.create(nivel);
 
-    ApiResponseSuccessDto<NivelMateria> response = new ApiResponseSuccessDto<>();
-    response.setSuccess(true);
-    response.setData(created);
-    response.setMessage("NivelMateria creada exitosamente");
-
-    return ResponseEntity.status(HttpStatus.CREATED).body(response);
-}
-
-@PutMapping("/api/nivelmateria/{id}")
-public ResponseEntity<ApiResponseSuccessDto<NivelMateria>> updateNivelMateria(@PathVariable Long id, @RequestBody @Valid NivelMateriaRequestDto nivelDto) {
+@GetMapping("/api/nivelmateria/{id}")
+public ResponseEntity<ApiResponseSuccessDto<NivelMateriaResponseDto>> getNivelMateriaById(@PathVariable Long id) {
     try {
-        NivelMateria nivel = nivelMateriaService.fromDto(nivelDto);
-        NivelMateria updated = nivelMateriaService.update(nivel, id);
-        ApiResponseSuccessDto<NivelMateria> response = new ApiResponseSuccessDto<NivelMateria>(true, "NivelMateria actualizada exitosamente", updated);
+        NivelMateria nivel = nivelMateriaService.findById(id); 
+
+        if (nivel == null) {
+            ApiResponseSuccessDto<NivelMateriaResponseDto> responseNotFound = new ApiResponseSuccessDto<>();
+            responseNotFound.setSuccess(false);
+            responseNotFound.setMessage("NivelMateria no encontrada con id: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseNotFound);
+        }
+
+        NivelMateriaResponseDto dto = NivelMateriaMapper.toResponseDto(nivel);
+        
+        ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(dto);
+        response.setMessage("NivelMateria encontrada");
         return ResponseEntity.ok(response);
     } catch (Exception e) {
-    	ApiResponseSuccessDto<NivelMateria> response = new ApiResponseSuccessDto<NivelMateria>();
+        ApiResponseSuccessDto<NivelMateriaResponseDto> responseError = new ApiResponseSuccessDto<>();
+        responseError.setSuccess(false);
+        responseError.setMessage("Error al obtener NivelMateria: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError);
+    }
+}
+
+
+@GetMapping("/count")
+public ResponseEntity<Long> contar(@RequestParam(required = false) String nombre) {
+    long cantidad = nivelMateriaService.countByNombre(nombre);
+    return ResponseEntity.ok(cantidad);
+    
+}
+@PostMapping("/api/nivelmateria")
+public ResponseEntity<ApiResponseSuccessDto<NivelMateriaResponseDto>> createNivelMateria(@RequestBody @Valid NivelMateriaRequestDto nivelDto) {
+    try {
+        NivelMateria nivel = NivelMateriaMapper.fromDto(nivelDto);
+        
+        NivelMateria created = nivelMateriaService.create(nivel);
+
+        NivelMateriaResponseDto responseDto = NivelMateriaMapper.toResponseDto(created);
+        
+        ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(responseDto);
+        response.setMessage("NivelMateria creada exitosamente");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    } catch (Exception e) {
+        ApiResponseSuccessDto<NivelMateriaResponseDto> responseError = new ApiResponseSuccessDto<>();
+        responseError.setSuccess(false);
+        responseError.setMessage("Error al crear NivelMateria: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError);
+    }
+}
+@PutMapping("/api/nivelmateria/{id}")
+public ResponseEntity<ApiResponseSuccessDto<NivelMateriaResponseDto>> updateNivelMateria(@PathVariable Long id, @RequestBody @Valid NivelMateriaRequestDto nivelDto) {
+    try {
+        // Conversión dto -> entity usando el mapper (no debe hacerse por el service)
+        NivelMateria nivel = NivelMateriaMapper.fromDto(nivelDto);
+
+        // Llamamos al service para que actualice la entidad en la base
+        NivelMateria updated = nivelMateriaService.update(nivel, id);
+
+        // Convertimos la entidad actualizada a dto de respuesta
+        NivelMateriaResponseDto responseDto = NivelMateriaMapper.toResponseDto(updated);
+
+        ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>(true, "NivelMateria actualizada exitosamente", responseDto);
+        return ResponseEntity.ok(response);
+    } catch (Exception e) {
+        ApiResponseSuccessDto<NivelMateriaResponseDto> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(false);
+        response.setMessage("Error al actualizar: " + e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }
+
 
 @DeleteMapping("/api/nivelmateria/{id}")
 public ResponseEntity<ApiResponseSuccessDto<Void>> deleteNivelMateria(@PathVariable Long id) {
@@ -80,4 +142,34 @@ public ResponseEntity<ApiResponseSuccessDto<Void>> deleteNivelMateria(@PathVaria
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }
+@GetMapping("/api/nivelmateria/activos")
+public ResponseEntity<ApiResponseSuccessDto<List<NivelMateriaResponseDto>>> getNivelMateriaActivos() {
+    List<NivelMateria> nivelMaterias = nivelMateriaService.findByActivoTrue();
+    
+    List<NivelMateriaResponseDto> dtos = nivelMaterias.stream()
+            .map(NivelMateriaMapper::toResponseDto)
+            .collect(Collectors.toList());
+    
+    ApiResponseSuccessDto<List<NivelMateriaResponseDto>> response = new ApiResponseSuccessDto<>();
+    response.setSuccess(true);
+    response.setData(dtos);
+    response.setMessage("Lista de NivelMateria activos (activo = true)");
+    return ResponseEntity.ok(response);
 }
+
+@GetMapping("/api/nivelmateria/inactivos")
+public ResponseEntity<ApiResponseSuccessDto<List<NivelMateriaResponseDto>>> getNivelMateriaInactivos() {
+    List<NivelMateria> nivelMaterias = nivelMateriaService.findByActivoFalse();
+    
+    List<NivelMateriaResponseDto> dtos = nivelMaterias.stream()
+            .map(NivelMateriaMapper::toResponseDto)
+            .collect(Collectors.toList());
+    
+    ApiResponseSuccessDto<List<NivelMateriaResponseDto>> response = new ApiResponseSuccessDto<>();
+    response.setSuccess(true);
+    response.setData(dtos);
+    response.setMessage("Lista de NivelMateria inactivos (activo = false)");
+    return ResponseEntity.ok(response);
+}
+}
+

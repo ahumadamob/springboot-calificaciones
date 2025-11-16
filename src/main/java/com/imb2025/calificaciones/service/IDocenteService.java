@@ -1,10 +1,8 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.DocenteRequestDto;
 import com.imb2025.calificaciones.entity.Docente;
+
 import java.util.List;
-
-
 
 public interface IDocenteService {
 
@@ -18,8 +16,10 @@ public interface IDocenteService {
 
     public void deleteById(Long id) throws Exception;
 
-    public Docente fromDto(DocenteRequestDto dto) throws Exception;
-
     public boolean existsById(Long id);
+
+    List<Docente> findByApellido(String apellido);
+
+    Long countByTitulo(String titulo);
 
 }

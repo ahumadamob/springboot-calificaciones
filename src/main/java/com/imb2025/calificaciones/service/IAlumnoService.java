@@ -1,6 +1,5 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.AlumnoRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
 import java.util.List;
 
@@ -18,5 +17,10 @@ public interface IAlumnoService {
 
     public boolean existsById(Long id);
 
-    public Alumno fromDto(AlumnoRequestDto dto) throws Exception;
+    List<Alumno> findByApellido(String apellido);
+
+    long countByEmail(String email);
+    List<Alumno> findByAtributoBooleanoTrue();
+
+    List<Alumno> findByAtributoBooleanoFalse();
 }

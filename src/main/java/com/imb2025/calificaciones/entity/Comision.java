@@ -1,19 +1,12 @@
 package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import com.imb2025.calificaciones.entity.BaseEntity;
 
 @Entity
-public class Comision {
+public class Comision extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	private Long id;
-	
 	private String nombre;
 	
         @ManyToOne
@@ -26,7 +19,7 @@ public class Comision {
         }
 
         public Comision(Long id, String nombre, Turno turno, Sede sede) {
-                this.id = id;
+                this.setId(id); // id viene de BaseEntity
                 this.nombre = nombre;
                 this.turno = turno;
                 this.sede = sede;
@@ -38,14 +31,6 @@ public class Comision {
                 this.sede = sede;
         }
 	
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getNombre() {
 		return nombre;
@@ -70,5 +55,4 @@ public class Comision {
         public void setSede(Sede sede) {
                 this.sede = sede;
         }
-	
 }

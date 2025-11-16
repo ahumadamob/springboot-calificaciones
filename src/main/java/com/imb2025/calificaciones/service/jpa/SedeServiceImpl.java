@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.SedeRequestDto;
 import com.imb2025.calificaciones.entity.Sede;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.SedeRepository;
@@ -40,7 +39,7 @@ public class SedeServiceImpl implements ISedeService {
     @Override
     public Sede update(Sede sede, Long id) throws Exception {
         if (!repo.existsById(id)) {
-            throw new Exception("Sede con ID " + id + " no encontrada.");
+            throw new ResourceNotFoundException("Sede con ID " + id + " no encontrada.");
         }
         sede.setId(id);
         return repo.save(sede);
@@ -49,29 +48,28 @@ public class SedeServiceImpl implements ISedeService {
     @Override
     public void deleteById(Long id) throws Exception {
         if (!repo.existsById(id)) {
-            throw new Exception("No se puede eliminar el id: " + id + " porque no existe");
+            throw new ResourceNotFoundException("No se puede eliminar el id: " + id + " porque no existe");
         }
         repo.deleteById(id);
     }
 
     @Override
-    public Sede fromDto(SedeRequestDto dto) throws Exception {
-        if (dto == null) {
-            throw new Exception("El dto de sede no puede ser nulo");
-        }
-        Sede sede = new Sede();
-        sede.setNombre(dto.getNombre());
-        sede.setDireccion(dto.getDireccion());
-        return sede;
+    public List<Sede> findByNombreIgnoreCase(String nombre) {
+        return repo.findByNombreIgnoreCase(nombre);
     }
 
     @Override
-    public Sede createFromDto(SedeRequestDto dto) throws Exception {
-        try {
-            Sede sede = fromDto(dto);
-            return create(sede);
-        } catch (Exception ex) {
-            throw new Exception("Error creando Sede desde DTO: " + ex.getMessage(), ex);
-        }
+    public long countByDireccionIgnoreCase(String direccion) {
+        return repo.countByDireccionIgnoreCase(direccion);
+    }
+
+    @Override
+    public List<Sede> findByActivaTrue() {
+        return repo.findByActivaTrue();
+    }
+
+    @Override
+    public List<Sede> findByActivaFalse() {
+        return repo.findByActivaFalse();
     }
 }

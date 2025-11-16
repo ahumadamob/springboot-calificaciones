@@ -1,41 +1,32 @@
 package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 
 @Entity
-public class NivelMateria {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class NivelMateria extends BaseEntity {
 
     private String nombre;
 
     private String descripcion;
 
-    public NivelMateria() {
-    }
+    @Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+    private Boolean activo;
 
-    public NivelMateria(Long id, String nombre, String descripcion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
+    public NivelMateria() {
+        this.activo = true; // Por defecto true
     }
 
     public NivelMateria(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.activo = true; // Por defecto true
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public NivelMateria(String nombre, String descripcion, Boolean activo) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.activo = activo;
     }
 
     public String getNombre() {
@@ -52,5 +43,13 @@ public class NivelMateria {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 }

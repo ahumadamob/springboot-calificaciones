@@ -1,12 +1,15 @@
 package com.imb2025.calificaciones.service;
 
-import com.imb2025.calificaciones.dto.InscripcionMateriaRequestDto;
 import com.imb2025.calificaciones.entity.InscripcionMateria;
 import java.util.List;
 
 public interface IInscripcionMateriaService {
 
     public List<InscripcionMateria> findAll();
+
+    public List<InscripcionMateria> findByAlumno_Id(Long idAlumno);
+
+    public long countByAlumno_Id(Long idAlumno);
 
     public InscripcionMateria create(InscripcionMateria inscripcionMateria);
 
@@ -16,5 +19,4 @@ public interface IInscripcionMateriaService {
 
     public void deleteById(Long id) throws Exception;
 
-    public InscripcionMateria fromDto(InscripcionMateriaRequestDto dto) throws Exception;
 }

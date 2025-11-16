@@ -17,7 +17,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
-import com.imb2025.calificaciones.dto.DocenteRequestDto;
+import com.imb2025.calificaciones.dto.mapper.DocenteMapper;
+import com.imb2025.calificaciones.dto.request.DocenteRequestDto;
+import com.imb2025.calificaciones.dto.response.DocenteResponseDto;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.service.IDocenteService;
 
@@ -30,6 +32,9 @@ public class DocenteController {
 
     @Autowired
     private IDocenteService docenteService;
+
+    @Autowired
+    private DocenteMapper docenteMapper;
 
     @GetMapping
     public ResponseEntity<List<Docente>> getAllDocente() {
@@ -46,13 +51,44 @@ public class DocenteController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/apellido/{apellido}")
+    public ResponseEntity<ApiResponseSuccessDto<List<Docente>>> getDocentesByApellido(@PathVariable String apellido) {
+        List<Docente> docentes = docenteService.findByApellido(apellido);
+
+        ApiResponseSuccessDto<List<Docente>> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(docentes);
+        response.setMessage("Búsqueda de docentes por apellido realizada con éxito");
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/titulo/{titulo}/count")
+    public ResponseEntity<ApiResponseSuccessDto<Long>> countDocentesByTitulo(@PathVariable String titulo) {
+        long cantidad = docenteService.countByTitulo(titulo);
+
+        ApiResponseSuccessDto<Long> response = new ApiResponseSuccessDto<>();
+        response.setSuccess(true);
+        response.setData(cantidad);
+        response.setMessage("Conteo de docentes por título realizado con éxito");
+
+        return ResponseEntity.ok(response);
+    }
+   
+
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<Docente>> crear(@Valid @RequestBody DocenteRequestDto dto)
-            throws Exception {
-        Docente createdDocente = docenteService.create(docenteService.fromDto(dto));
-        ApiResponseSuccessDto<Docente> response = new ApiResponseSuccessDto<>(true,
-                "Alumno creado con éxito", createdDocente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    public ResponseEntity<ApiResponseSuccessDto<DocenteResponseDto>> createDocente(
+            @Valid @RequestBody DocenteRequestDto dto) throws Exception {
+
+        Docente docente = docenteMapper.fromDto(dto);
+        Docente createdDocente = docenteService.create(docente);
+
+        ApiResponseSuccessDto<DocenteResponseDto> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(docenteMapper.toResponseDto(createdDocente));
+        resp.setMessage("Docente creado exitosamente");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @DeleteMapping("/{id}")
@@ -64,14 +100,22 @@ public class DocenteController {
             return ResponseEntity.badRequest().build();
         }
     }
+ 
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<Docente>> actualizar(@PathVariable Long id,
+    public ResponseEntity<ApiResponseSuccessDto<DocenteResponseDto>> updateDocente(
+            @PathVariable Long id,
             @Valid @RequestBody DocenteRequestDto dto) throws Exception {
-        Docente updatedDocente = docenteService.update(docenteService.fromDto(dto), id);
-        ApiResponseSuccessDto<Docente> response = new ApiResponseSuccessDto<>(true,
-                "Docente actualizado con éxito", updatedDocente);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+        Docente docente = docenteMapper.fromDto(dto);
+        Docente updatedDocente = docenteService.update(docente, id);
+
+        ApiResponseSuccessDto<DocenteResponseDto> resp = new ApiResponseSuccessDto<>();
+        resp.setSuccess(true);
+        resp.setData(docenteMapper.toResponseDto(updatedDocente));
+        resp.setMessage("Docente actualizado exitosamente");
+
+        return ResponseEntity.ok(resp);
     }
 
     @ExceptionHandler(Exception.class)
