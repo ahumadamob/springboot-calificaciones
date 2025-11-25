@@ -10,7 +10,7 @@ import com.imb2025.calificaciones.entity.Turno;
 public class TurnoMapper {
 	
 	
-	public Turno fromDto(TurnoRequestDto turnoRequestDto) throws Exception {
+	public Turno fromDto(TurnoRequestDto turnoRequestDto)  {
         Turno turno = new Turno();
         turno.setNombre(turnoRequestDto.getNombre());
         turno.setHoraInicio(turnoRequestDto.getHoraInicio());
@@ -18,7 +18,7 @@ public class TurnoMapper {
         return turno;
     }
 	
-	public TurnoResponseDto toResponseDto(Turno turno) throws Exception {
+	public TurnoResponseDto toResponseDto(Turno turno)  {
        TurnoResponseDto dto = new TurnoResponseDto();
 		
        dto.setId(turno.getId());

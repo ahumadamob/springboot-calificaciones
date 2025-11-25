@@ -55,7 +55,7 @@ public class TurnoServiceImpl implements ITurnoService {
    
 
 	@Override
-	public List<Turno> mostrarTurnosPorNombre(String nombre) {
+	public List<Turno> findByNombre(String nombre) {
 		
 		return turnoRepository.findByNombre(nombre);
 	}

@@ -9,7 +9,7 @@ public interface ITurnoService {
 
     public List<Turno> findAll();
     
-    public List<Turno> mostrarTurnosPorNombre(String nombre);
+    public List<Turno> findByNombre(String nombre);
     
     Long contarTurnosQueTerminanDespuesDe(LocalTime hora);
 
