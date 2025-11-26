@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.imb2025.calificaciones.dto.TipoEvaluacionRequestDto;
+import com.imb2025.calificaciones.dto.mapper.TipoEvaluacionMapper;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.TipoEvaluacionRepository;
@@ -16,6 +16,9 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
 
     @Autowired
     private TipoEvaluacionRepository repo;
+    
+    @Autowired
+    private TipoEvaluacionMapper mapper;
 
     @Override
     public List<TipoEvaluacion> findAll() {
@@ -53,18 +56,6 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     }
 
     @Override
-    public TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto) {
-        if (dto == null) {
-            throw new IllegalArgumentException("El  DATO de tipo evaluación no puede ser nulo");
-        }
-
-        TipoEvaluacion tipo = new TipoEvaluacion();
-        tipo.setNombre(dto.getNombre());
-        tipo.setDescripcion(dto.getDescripcion());
-        return tipo;
-    }
-
-    @Override
     public List<TipoEvaluacion> buscarNombre(String q) {
         return repo.findByNombreContainingIgnoreCase(q);
     }
@@ -73,5 +64,4 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     public long contarNombre(String q) {
         return repo.countByNombreContainingIgnoreCase(q);
     }
-    
 }
