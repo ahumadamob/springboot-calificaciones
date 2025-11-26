@@ -66,7 +66,7 @@ public class TipoEvaluacionController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponseSuccessDto<TipoEvaluacionResponseDto>> updateTipoEvaluacion(
-            @PathVariable Long id, @Valid @RequestBody TipoEvaluacionRequestDto dto) {
+            @PathVariable Long id, @Valid @RequestBody TipoEvaluacionRequestDto dto) throws Exception {
 
         var entidad = mapper.fromRequest(dto);
         var actualizado = tipoEvaluacionService.update(entidad, id);
@@ -76,7 +76,7 @@ public class TipoEvaluacionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<Void>> deleteTipoEvaluacion(@PathVariable Long id) {
+    public ResponseEntity<ApiResponseSuccessDto<Void>> deleteTipoEvaluacion(@PathVariable Long id) throws Exception {
         tipoEvaluacionService.deleteById(id);
         return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "Tipo de Evaluacion eliminada correctamente", null));
     }

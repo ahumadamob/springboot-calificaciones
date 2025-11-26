@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.mapper.TipoEvaluacionMapper;
-import com.imb2025.calificaciones.dto.request.TipoEvaluacionRequestDto;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.TipoEvaluacionRepository;
@@ -57,18 +56,6 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     }
 
     @Override
-    public TipoEvaluacion fromDto(TipoEvaluacionRequestDto dto) {
-        if (dto == null) {
-            throw new IllegalArgumentException("El  DATO de tipo evaluación no puede ser nulo");
-        }
-
-        TipoEvaluacion tipo = new TipoEvaluacion();
-        tipo.setNombre(dto.getNombre());
-        tipo.setDescripcion(dto.getDescripcion());
-        return tipo;
-    }
-
-    @Override
     public List<TipoEvaluacion> buscarNombre(String q) {
         return repo.findByNombreContainingIgnoreCase(q);
     }
@@ -77,19 +64,4 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     public long contarNombre(String q) {
         return repo.countByNombreContainingIgnoreCase(q);
     }
-    
-    @Override
-    public TipoEvaluacion createFromDto(TipoEvaluacionRequestDto dto) {
-        var entidad = mapper.fromRequest(dto);
-        return repo.save(entidad);
-    }
-
-    @Override
-    public TipoEvaluacion updateFromDto(Long id, TipoEvaluacionRequestDto dto) {
-        var existente = repo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("TipoEvaluacion no encontrada con ID " + id));
-        mapper.copyToEntity(dto, existente);
-        return repo.save(existente);
-    }
-
 }

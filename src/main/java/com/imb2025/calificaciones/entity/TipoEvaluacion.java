@@ -13,7 +13,6 @@ public class TipoEvaluacion extends BaseEntity{
         }
 
 		public TipoEvaluacion(String nombre, String descripcion) {
-			super();
 			this.nombre = nombre;
 			this.descripcion = descripcion;
 		}
@@ -33,5 +32,4 @@ public class TipoEvaluacion extends BaseEntity{
 		public void setDescripcion(String descripcion) {
 			this.descripcion = descripcion;
 		}
-		
 }
