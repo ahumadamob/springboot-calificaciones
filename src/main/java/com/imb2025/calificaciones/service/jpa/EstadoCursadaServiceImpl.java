@@ -1,7 +1,6 @@
 package com.imb2025.calificaciones.service.jpa;
 
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
-import com.imb2025.calificaciones.dto.request.EstadoCursadaRequestDto;
 import com.imb2025.calificaciones.entity.EstadoCursada;
 import com.imb2025.calificaciones.repository.EstadoCursadaRepository;
 import com.imb2025.calificaciones.service.IEstadoCursadaService;

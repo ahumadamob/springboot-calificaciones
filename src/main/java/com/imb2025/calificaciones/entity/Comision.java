@@ -2,7 +2,6 @@ package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
-import com.imb2025.calificaciones.entity.BaseEntity;
 
 @Entity
 public class Comision extends BaseEntity {
