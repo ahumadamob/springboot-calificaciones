@@ -13,6 +13,7 @@ public class ObservacionAlumnoMapper {
 	        ObservacionAlumno observacion = new ObservacionAlumno();
 	        observacion.setFecha(dto.getFecha());
 	        observacion.setTexto(dto.getTexto());
+	        observacion.setCategoria(dto.getCategoria());
 	        return observacion;
 	    }
 	
@@ -24,6 +25,7 @@ public class ObservacionAlumnoMapper {
 		response.setTexto(observacionAlumno.getTexto());
 		response.setFecha(observacionAlumno.getFecha());
 		response.setVersion(observacionAlumno.getVersion());
+		response.setCategoria(observacionAlumno.getCategoria());
 		
 		return response;
 

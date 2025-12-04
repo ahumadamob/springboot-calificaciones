@@ -19,15 +19,39 @@ public class ObservacionAlumno extends BaseEntity{
 
     public ObservacionAlumno() {
     }
-
-
-    public ObservacionAlumno(String texto, Date fecha, Docente docente, Alumno alumno) {
-        this.texto = texto;
-        this.fecha = fecha;
-        this.docente = docente;
-        this.alumno = alumno;
+    
+    private Categoria categoria;
+    
+    public enum Categoria {
+    	ALTA,
+    	MEDIA,
+    	BAJA
     }
+    
+   
+
+	public ObservacionAlumno(String texto, Date fecha, Docente docente, Alumno alumno, Categoria categoria) {
+		super();
+		this.texto = texto;
+		this.fecha = fecha;
+		this.docente = docente;
+		this.alumno = alumno;
+		this.categoria = categoria;
+	}
 	
+	
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+
 
 	public String getTexto() {
 		return texto;

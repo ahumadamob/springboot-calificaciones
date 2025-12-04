@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
+import com.imb2025.calificaciones.entity.ObservacionAlumno.Categoria;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.repository.DocenteRepository;
@@ -17,7 +18,8 @@ import com.imb2025.calificaciones.service.IObservacionAlumnoService;
 @Service
 public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 
-    @Autowired
+    private static final boolean List = false;
+	@Autowired
     private ObservacionAlumnoRepository observacionAlumnoRepository;
 	@Autowired
 	private AlumnoRepository alumnoRepository;
@@ -94,6 +96,21 @@ public class ObservacionAlumnoServiceImpl implements IObservacionAlumnoService{
 	@Override
 	public Long countByAlumno(Alumno alumno) {
 		return observacionAlumnoRepository.countByAlumno(alumno);
+	}
+
+
+	@Override
+	public List<ObservacionAlumno> findByCategoria(Categoria categoria) {
+		
+		List<ObservacionAlumno> observacion = 
+				observacionAlumnoRepository.findByCategoria(categoria);		
+	
+
+
+		return observacion;
+			
+		
+
 	}
 
 }

@@ -142,5 +142,64 @@ public class ObservacionAlumnoController {
 	}
 	
 	
+	@GetMapping("recurso/categoria/alta")
+    public ResponseEntity<ApiResponseSuccessDto<List<ObservacionAlumnoResponseDto>>> findByCategoriaAlta(){
+		
+        List<ObservacionAlumno> categoriaAlta = observacionAlumnoService.findByCategoria(ObservacionAlumno.Categoria.ALTA);
+		
+		List<ObservacionAlumnoResponseDto> lista = categoriaAlta.stream()
+				.map(mapper::toResponseDto)
+				.collect(Collectors.toList());
+		
+		ApiResponseSuccessDto<List<ObservacionAlumnoResponseDto>> response = new ApiResponseSuccessDto<>();
+		response.setSuccess(true);
+		response.setMessage("Observaciones con categoria alta obtenidas correctamente");
+		response.setData(lista);
+		
+		return ResponseEntity.ok(response);
+		
+	}
+	
+	@GetMapping("recurso/categoria/media")
+    public ResponseEntity<ApiResponseSuccessDto<List<ObservacionAlumnoResponseDto>>> findByCategoriaMedia(){
+		
+        List<ObservacionAlumno> categoriaMedia = observacionAlumnoService.findByCategoria(ObservacionAlumno.Categoria.MEDIA);
+		
+		List<ObservacionAlumnoResponseDto> lista = categoriaMedia.stream()
+				.map(mapper::toResponseDto)
+				.collect(Collectors.toList());
+		
+		ApiResponseSuccessDto<List<ObservacionAlumnoResponseDto>> response = new ApiResponseSuccessDto<>();
+		response.setSuccess(true);
+		response.setMessage("Observaciones con categoria media obtenidas correctamente");
+		response.setData(lista);
+		
+		return ResponseEntity.ok(response);
+		
+	}
+	
+	@GetMapping("recurso/categoria/baja")
+    public ResponseEntity<ApiResponseSuccessDto<List<ObservacionAlumnoResponseDto>>> findByCategoriaBaja(){
+		
+        List<ObservacionAlumno> categoriaBaja = observacionAlumnoService.findByCategoria(ObservacionAlumno.Categoria.BAJA);
+		
+		List<ObservacionAlumnoResponseDto> lista = categoriaBaja.stream()
+				.map(mapper::toResponseDto)
+				.collect(Collectors.toList());
+		
+		ApiResponseSuccessDto<List<ObservacionAlumnoResponseDto>> response = new ApiResponseSuccessDto<>();
+		response.setSuccess(true);
+		response.setMessage("Observaciones con categoria baja obtenidas correctamente");
+		response.setData(lista);
+		
+		return ResponseEntity.ok(response);
+		
+	}
+	
+	
+	
+
+	
+	
 }
 	
