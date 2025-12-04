@@ -8,16 +8,18 @@ public class PeriodoLectivoResponseDto {
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
     private Long version;
+    private String descripcionCorta;
     
     public PeriodoLectivoResponseDto() {
     }
     
-	public PeriodoLectivoResponseDto(Long id, String nombre, LocalDate fechaInicio, LocalDate fechaFin, Long version) {
+	public PeriodoLectivoResponseDto(Long id, String nombre, LocalDate fechaInicio, LocalDate fechaFin, Long version, String descripcionCorta) {
 		this.id = id;
 		this.nombre = nombre;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.version = version;
+		this.descripcionCorta = descripcionCorta;
 	}
 	
 	public Long getId() {
@@ -58,6 +60,14 @@ public class PeriodoLectivoResponseDto {
 	
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+	public String getDescripcionCorta() {
+		return descripcionCorta;
+	}
+
+	public void setDescripcionCorta(String descripcionCorta) {
+		this.descripcionCorta = descripcionCorta;
 	}
     
 }

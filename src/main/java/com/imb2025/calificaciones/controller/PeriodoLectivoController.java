@@ -3,7 +3,6 @@ package com.imb2025.calificaciones.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,6 +67,17 @@ public class PeriodoLectivoController {
  		ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>> response = new ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>(true, "Periodos Lectivos con el nombre "+ nombre +" encontrados con éxito", periodos);
         return periodos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
     }
+	
+	@GetMapping("/buscar")
+	public ResponseEntity<ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>> getByDescripcion(
+			@RequestParam(required = true) String texto) throws Exception {
+        List<PeriodoLectivo> resultados = service.findByDescripcionCorta(texto);
+        
+		List<PeriodoLectivoResponseDto> periodos = resultados.stream().map(p -> mapper.toResponse(p)).toList();
+        
+ 		ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>> response = new ApiResponseSuccessDto<List<PeriodoLectivoResponseDto>>(true, "Periodos Lectivos encontrados con éxito", periodos);
+        return ResponseEntity.ok(response);
+    }
     
     @GetMapping("/count")
     public ResponseEntity<ApiResponseSuccessDto<HashMap<String, Long>>> countByIncioAndFin(
@@ -109,9 +119,9 @@ public class PeriodoLectivoController {
     	return ResponseEntity.noContent().build();
     }
 	
-	@ExceptionHandler(Exception.class)
+	/*@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> handleException(Exception ex) {
 		return ResponseEntity.badRequest().body(ex.getMessage());
 	}
-	
+	*/
 }

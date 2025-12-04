@@ -54,10 +54,19 @@ public class PeriodoLectivoServiceImpl implements IPeriodoLectivoService{
         }
         repository.deleteById(id);
     }
+    
 
 	@Override
 	public long countByFechaInicioAndFechaFin(LocalDate inicio, LocalDate fin) {
 		return repository.countByFechaInicioAfterAndFechaFinBefore(inicio, fin);
+	}
+
+	@Override
+	public List<PeriodoLectivo> findByDescripcionCorta(String text) throws Exception {
+		if (text == null || text.equals("")) {
+			throw new Exception("texto de busqueda obligatorio");
+		}
+		return repository.findByDescripcionCortaContainingIgnoreCase(text);
 	}
 
 }

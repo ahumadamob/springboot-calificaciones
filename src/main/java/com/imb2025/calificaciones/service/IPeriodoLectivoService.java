@@ -18,6 +18,8 @@ public interface IPeriodoLectivoService {
     public PeriodoLectivo update(PeriodoLectivo periodoLectivo, Long id) throws Exception;
 
     public PeriodoLectivo findById(Long id);
+    
+    public List<PeriodoLectivo> findByDescripcionCorta(String text) throws Exception;
 
     public void deleteById(Long id) throws Exception;
 }

@@ -12,5 +12,6 @@ import com.imb2025.calificaciones.entity.PeriodoLectivo;
 public interface PeriodoLectivoRepository extends JpaRepository<PeriodoLectivo, Long> {
 	List<PeriodoLectivo> findByNombreIgnoreCase(String nombre);
 	long countByFechaInicioAfterAndFechaFinBefore(LocalDate fechaInicio, LocalDate fechaFin);
+	List<PeriodoLectivo> findByDescripcionCortaContainingIgnoreCase(String texto);
 }
 
