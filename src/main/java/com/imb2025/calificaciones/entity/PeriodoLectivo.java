@@ -9,13 +9,15 @@ public class PeriodoLectivo extends BaseEntity {
 	private String nombre;
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
+	private String descripcionCorta;
 
 	public PeriodoLectivo() {}
 
-	public PeriodoLectivo(String nombre, LocalDate fechaInicio, LocalDate fechaFin) {
+	public PeriodoLectivo(String nombre, LocalDate fechaInicio, LocalDate fechaFin, String descripcionCorta) {
 		this.nombre = nombre;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
+		this.descripcionCorta = descripcionCorta;	
 	}
 
 	public String getNombre() {
@@ -40,6 +42,14 @@ public class PeriodoLectivo extends BaseEntity {
 
 	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
+	}
+
+	public String getDescripcionCorta() {
+		return descripcionCorta;
+	}
+
+	public void setDescripcionCorta(String descripcionCorta) {
+		this.descripcionCorta = descripcionCorta;
 	}
 	
 }

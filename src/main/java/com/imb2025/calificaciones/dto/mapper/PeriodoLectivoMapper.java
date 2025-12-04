@@ -15,6 +15,7 @@ public class PeriodoLectivoMapper {
         periodoLectivo.setNombre(requestDTO.getNombre());
         periodoLectivo.setFechaInicio(requestDTO.getFechaInicio());
         periodoLectivo.setFechaFin(requestDTO.getFechaFin());
+        periodoLectivo.setDescripcionCorta(requestDTO.getDescripcionCorta());
 
         return periodoLectivo;
     }
@@ -27,6 +28,7 @@ public class PeriodoLectivoMapper {
 		dto.setFechaInicio(periodo.getFechaInicio());
 		dto.setFechaFin(periodo.getFechaFin());
 		dto.setVersion(periodo.getVersion());
+		dto.setDescripcionCorta(periodo.getDescripcionCorta());
 		
 		return dto;
 	}
