@@ -2,6 +2,8 @@ package com.imb2025.calificaciones.dto.request;
 
 import java.util.Date;
 
+import com.imb2025.calificaciones.entity.ObservacionAlumno.Categoria;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -16,8 +18,20 @@ public class ObservacionAlumnoRequestDto {
     private String texto;
 	@PastOrPresent
     private Date fecha;
+	
+	private Categoria categoria;
+	
+	
 
-    public Long getAlumnoId() {
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public Long getAlumnoId() {
         return alumnoId;
     }
 

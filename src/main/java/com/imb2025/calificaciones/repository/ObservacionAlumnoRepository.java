@@ -8,11 +8,13 @@ import org.springframework.stereotype.Repository;
 import com.imb2025.calificaciones.entity.Alumno;
 import com.imb2025.calificaciones.entity.Docente;
 import com.imb2025.calificaciones.entity.ObservacionAlumno;
+import com.imb2025.calificaciones.entity.ObservacionAlumno.Categoria;
 
 @Repository
 public interface ObservacionAlumnoRepository extends JpaRepository<ObservacionAlumno, Long> {
 	
 		List<ObservacionAlumno> findByDocente(Docente docente);
 		Long countByAlumno(Alumno alumno);
+		List<ObservacionAlumno> findByCategoria(Categoria categoria);
 }
 
