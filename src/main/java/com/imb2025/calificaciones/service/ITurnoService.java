@@ -20,5 +20,10 @@ public interface ITurnoService {
     public Turno findById(Long id);
 
     public void deleteById(Long id) throws Exception;
+    
+    public List<Turno> mostrarPrioridadMayorQue(int prioridad);
+    
+    public List<Turno> mostrarPrioridadMenorQue(int prioridad);
+    
 
 }

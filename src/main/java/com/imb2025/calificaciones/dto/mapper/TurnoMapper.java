@@ -15,6 +15,7 @@ public class TurnoMapper {
         turno.setNombre(turnoRequestDto.getNombre());
         turno.setHoraInicio(turnoRequestDto.getHoraInicio());
         turno.setHoraFin(turnoRequestDto.getHoraFin());
+        turno.setPrioridad(turnoRequestDto.getPrioridad());
         return turno;
     }
 	
@@ -26,6 +27,7 @@ public class TurnoMapper {
        dto.setHoraInicio(turno.getHoraInicio());
        dto.setHoraFin(turno.getHoraFin());
       dto.setVersion(turno.getVersion());
+      dto.setPrioridad(turno.getPrioridad());
         return dto;
     }
 

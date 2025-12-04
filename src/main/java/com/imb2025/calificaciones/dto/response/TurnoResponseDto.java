@@ -9,20 +9,46 @@ public class TurnoResponseDto {
 	private LocalTime horaInicio;
     private LocalTime horaFin;
     private Long version;
+    private int prioridad;
+    
     
 	public TurnoResponseDto() {
 		
 	}
 
 	
-	public TurnoResponseDto(Long id, String nombre, LocalTime horaInicio, LocalTime horaFin, Long version) {
+	
+
+
+	public TurnoResponseDto(Long id, String nombre, LocalTime horaInicio, LocalTime horaFin, Long version,
+			int prioridad) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
 		this.version = version;
+		this.prioridad = prioridad;
 	}
+
+
+
+
+
+	public int getPrioridad() {
+		return prioridad;
+	}
+
+
+
+
+
+	public void setPrioridad(int prioridad) {
+		this.prioridad = prioridad;
+	}
+
+
+
 
 
 	public Long getId() {

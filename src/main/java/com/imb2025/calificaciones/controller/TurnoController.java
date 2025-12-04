@@ -104,9 +104,60 @@ public class TurnoController {
             return ResponseEntity.ok(response);
         }
 
+        @GetMapping("/recurso/alta-prioridad")
+        public ResponseEntity<ApiResponseSuccessDto<List<TurnoResponseDto>>> mostrarPrioridadMayorQue(@PathVariable int prioridad){
+        	List<Turno> turnos = turnoService.mostrarPrioridadMayorQue(prioridad);
+        	
+            List<TurnoResponseDto> turnosDto = turnos.stream()
+                    .map(t -> {
+                        try {
+                            return turnoMapper.toResponseDto(t);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .toList();
+        	
+            ApiResponseSuccessDto<List<TurnoResponseDto>> response = new ApiResponseSuccessDto<>();
+            response.setSuccess(true);
+                response.setMessage("Turno encontrado con la prioridad: " + prioridad);
+                response.setData(turnosDto);
+        	
+                return ResponseEntity.ok(response);
+        	
+        }
+        
+        
+        
+        @GetMapping("/recurso/baja-prioridad")
+        public ResponseEntity<ApiResponseSuccessDto<List<TurnoResponseDto>>> mostrarPrioridaMenorQue(@PathVariable int prioridad){
+        	List<Turno> turnos = turnoService.mostrarPrioridadMenorQue(prioridad);
+        	
+            List<TurnoResponseDto> turnosDto = turnos.stream()
+                    .map(t -> {
+                        try {
+                            return turnoMapper.toResponseDto(t);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .toList(); 
+
+            ApiResponseSuccessDto<List<TurnoResponseDto>> response = new ApiResponseSuccessDto<>();
+            response.setSuccess(true);
+                response.setMessage("Turno encontrado con la prioridad: " + prioridad);
+                response.setData(turnosDto);
+                
+                return ResponseEntity.ok(response);
+        }
+        
          @PostMapping
           public ResponseEntity<ApiResponseSuccessDto<TurnoResponseDto>> createTurno(@Valid @RequestBody TurnoRequestDto turnoRequestDto) throws Exception {
                  Turno turno = turnoMapper.fromDto(turnoRequestDto);
+                 int prioridad = turnoRequestDto.getPrioridad();
+                 if (prioridad >= 6) {
+                	 return ResponseEntity.badRequest().build();
+                 } else {
                  Turno turnoCreado = turnoService.create(turno);
                  
                  TurnoResponseDto turnoDto = turnoMapper.toResponseDto(turnoCreado);
@@ -115,12 +166,13 @@ public class TurnoController {
                  response.setData(turnoDto);
                  response.setMessage("El turno ha sido creado con éxito");
                  
-                 return ResponseEntity.status(HttpStatus.CREATED).body(response);
+                 return ResponseEntity.status(HttpStatus.CREATED).body(response);}
             }
 
          @PutMapping("/{id}")
             public ResponseEntity<ApiResponseSuccessDto<TurnoResponseDto>> updateTurno(@Valid @RequestBody TurnoRequestDto turnoRequestDto, @PathVariable Long id) throws Exception {
                  Turno existente = turnoService.findById(id);
+                 
                  if(existente == null){
                         return ResponseEntity.badRequest().build();
                  }

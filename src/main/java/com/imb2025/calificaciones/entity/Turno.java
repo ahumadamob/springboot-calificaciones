@@ -9,7 +9,7 @@ public class Turno extends BaseEntity {
 	
         private String nombre;
 
-        
+        private int prioridad;
         private LocalTime horaInicio;
 
         private LocalTime horaFin;
@@ -17,13 +17,33 @@ public class Turno extends BaseEntity {
         public Turno() {
         }
 
-        public Turno(String nombre, LocalTime horaInicio, LocalTime horaFin) {
-                
-                this.nombre = nombre;
-                this.horaInicio = horaInicio;
-                this.horaFin = horaFin;
-        }
+       
 	
+
+	public Turno(String nombre, int prioridad, LocalTime horaInicio, LocalTime horaFin) {
+			super();
+			this.nombre = nombre;
+			this.prioridad = prioridad;
+			this.horaInicio = horaInicio;
+			this.horaFin = horaFin;
+		}
+
+
+
+
+	public int getPrioridad() {
+		return prioridad;
+	}
+
+
+
+
+	public void setPrioridad(int prioridad) {
+		this.prioridad = prioridad;
+	}
+
+
+
 
 	public String getNombre() {
 		return nombre;

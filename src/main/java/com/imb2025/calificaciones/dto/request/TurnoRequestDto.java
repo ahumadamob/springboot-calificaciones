@@ -3,6 +3,7 @@ package com.imb2025.calificaciones.dto.request;
 import java.time.LocalTime;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class TurnoRequestDto {
 
@@ -11,8 +12,20 @@ public class TurnoRequestDto {
 	
     private LocalTime horaInicio;
     private LocalTime horaFin;
+    @NotNull
+    private int prioridad;
+    
+    
 
-    public String getNombre() {
+    public int getPrioridad() {
+		return prioridad;
+	}
+
+	public void setPrioridad(int prioridad) {
+		this.prioridad = prioridad;
+	}
+
+	public String getNombre() {
         return nombre;
     }
 

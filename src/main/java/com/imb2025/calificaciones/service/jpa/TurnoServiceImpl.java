@@ -30,6 +30,7 @@ public class TurnoServiceImpl implements ITurnoService {
 
     @Override
     public Turno create (Turno turno) {
+    	
         return turnoRepository.save(turno);
 
     }
@@ -65,6 +66,19 @@ public class TurnoServiceImpl implements ITurnoService {
 		
 		return turnoRepository.countByHoraFinAfter(hora);
 	}
+
+	@Override
+	public List<Turno> mostrarPrioridadMayorQue(int prioridad) {
+		
+		return turnoRepository.findByPrioridadGreaterThanEqual(prioridad);
+	}
+
+	@Override
+	public List<Turno> mostrarPrioridadMenorQue(int prioridad) {
+		
+		return turnoRepository.findByPrioridadLessThanEqual(prioridad);
+	}
+	
 	
 
 }
