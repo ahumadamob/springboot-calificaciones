@@ -2,6 +2,7 @@ package com.imb2025.calificaciones.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -13,17 +14,19 @@ public class Alumno extends BaseEntity {
     private String email;
     private Date fechaNacimiento ; // Tipo Date para recibir el resultado del Mapper
     private Boolean atributoBooleano = false;
+    private LocalDate fechaBaja;
 
     public Alumno() {
     }
 
-    public Alumno(String nombre, String apellido, int dni, String email, Date fechaNacimiento, Boolean atributoBooleano) {
+    public Alumno(String nombre, String apellido, int dni, String email, Date fechaNacimiento, Boolean atributoBooleano, LocalDate fechaBaja) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
         this.email = email;
         this.fechaNacimiento = fechaNacimiento;
         this.atributoBooleano = atributoBooleano;
+        this.fechaBaja= fechaBaja;
     }
 
     // Getters y Setters
@@ -74,5 +77,12 @@ public class Alumno extends BaseEntity {
 
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+    public LocalDate getFechaBaja() {
+        return fechaBaja;
+    }
+
+    public void setFechaBaja(LocalDate fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
 }

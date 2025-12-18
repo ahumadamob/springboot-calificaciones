@@ -5,6 +5,7 @@ import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.AlumnoRepository;
 import com.imb2025.calificaciones.service.IAlumnoService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class AlumnoServiceImpl implements IAlumnoService {
         alumnoExistente.setAtributoBooleano(alumnoParaActualizar.getAtributoBooleano());
         return alumnoRepository.save(alumnoExistente);
     }
+    
 
     @Override
     public List<Alumno> findByAtributoBooleanoTrue() {
@@ -58,12 +60,21 @@ public class AlumnoServiceImpl implements IAlumnoService {
         return alumnoRepository.save(alumno);
     }
 
-    @Override
-    public void deleteById(Long id) {
+    public Alumno deleteById(Alumno alumnoParaActualizar, Long id) {
         if (!alumnoRepository.existsById(id)) {
             throw new ResourceNotFoundException("Entidad no encontrada con id " + id);
         }
-        alumnoRepository.deleteById(id);
+        Alumno alumnoExistente = alumnoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Alumno no encontrado con id " + id));
+
+        alumnoExistente.setNombre(alumnoParaActualizar.getNombre());
+        alumnoExistente.setApellido(alumnoParaActualizar.getApellido());
+        alumnoExistente.setEmail(alumnoParaActualizar.getEmail());
+        alumnoExistente.setDni(alumnoParaActualizar.getDni());
+        alumnoExistente.setFechaNacimiento(alumnoParaActualizar.getFechaNacimiento());
+        alumnoExistente.setAtributoBooleano(alumnoParaActualizar.getAtributoBooleano());
+        alumnoExistente.setFechaBaja(alumnoParaActualizar.getFechaBaja());
+        return alumnoRepository.save(alumnoExistente);
     }
 
     @Override
@@ -80,4 +91,17 @@ public class AlumnoServiceImpl implements IAlumnoService {
     public boolean existsById(Long id) {
         return alumnoRepository.existsById(id);
     }
+
+
+	@Override
+	public List<Alumno> findByFechaBajaNotNull(LocalDate fechaBaja) {
+		return alumnoRepository.findByFechaBajaNotNull(fechaBaja);
+	}
+
+
+	@Override
+	public List<Alumno> findByFechaBajasIsNull(LocalDate fechaBaja) {
+		return alumnoRepository.findByFechaBajaIsNull(fechaBaja);
+
+	}
 }

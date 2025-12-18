@@ -1,5 +1,7 @@
 package com.imb2025.calificaciones.dto.response;
 
+import java.time.LocalDate;
+
 public class AlumnoResponseDto {
     private Long id;
     private String nombre;
@@ -9,10 +11,11 @@ public class AlumnoResponseDto {
     // Campo requerido en la consigna
     private Long version;
     private Boolean atributoBooleano;
+    private LocalDate fechaBaja;
 
     public AlumnoResponseDto() {}
 
-    public AlumnoResponseDto(Long id, String nombre, String apellido, String email, int dni, Long version, Boolean atributoBooleano) {
+    public AlumnoResponseDto(Long id, String nombre, String apellido, String email, int dni, Long version, Boolean atributoBooleano, LocalDate fechaBaja) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -20,6 +23,7 @@ public class AlumnoResponseDto {
         this.dni = dni;
         this.version = version;
         this.atributoBooleano = atributoBooleano;
+        this.fechaBaja= fechaBaja;
     }
 
     // Getters y Setters
@@ -76,5 +80,12 @@ public class AlumnoResponseDto {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+    public LocalDate getFechaBaja() {
+        return fechaBaja;
+    }
+
+    public void setFechaBaja(LocalDate fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
 }
