@@ -40,6 +40,10 @@ public class ComisionMapper {
                     .orElseThrow(() -> new ResourceNotFoundException("Sede con id " + dto.getSedeId() + " no encontrada"));
             c.setSede(s);
         }
+        
+        if (dto.getDestacado() != null) {
+        	c.setDestacado(Boolean.TRUE.equals(dto.getDestacado()));
+        }
 
         return c;
     }
@@ -50,6 +54,8 @@ public class ComisionMapper {
         Long turnoId = c.getTurno() != null ? c.getTurno().getId() : null;
         Long sedeId = c.getSede() != null ? c.getSede().getId() : null;
         Long version = c.getVersion(); // puede ser null si no existe
-        return new ComisionResponseDto(c.getId(), c.getNombre(), turnoId, sedeId, version);
+        Boolean destacado = c.getDestacado();
+        return new ComisionResponseDto(c.getId(), c.getNombre(), turnoId, sedeId, version,destacado);
+        
     }
 }

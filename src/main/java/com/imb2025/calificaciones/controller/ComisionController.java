@@ -19,15 +19,17 @@ import com.imb2025.calificaciones.entity.Comision;
 import com.imb2025.calificaciones.service.IComisionService;
 
 @RestController
+//Indica que esta clase maneja peticiones REST y devuelve JSON.
 @RequestMapping("/api/comision")
+//URL Base: localhost:8080/api/comision
 public class ComisionController {
 
-    @Autowired
+    @Autowired 
     private IComisionService service;
-
+ // Inyecta el Servicio (Lógica de Negocio).
     @Autowired
     private ComisionMapper mapper;
-
+ // Inyecta el Mapper (Convertidor Entidad <-> DTO).
     @GetMapping
     public ResponseEntity<ApiResponseSuccessDto<List<ComisionResponseDto>>> getAll() {
         List<Comision> list = service.findAll();
@@ -109,6 +111,32 @@ public class ComisionController {
         return ResponseEntity.ok(resp);
     }
 
+    @PutMapping("/{id}/destacar")
+    public ResponseEntity<ApiResponseSuccessDto<ComisionResponseDto>> destacar(@PathVariable Long id) throws Exception {
+        Comision entidad = service.updateDestacadoState(id, true);
+        ComisionResponseDto response = mapper.toResponseDto(entidad);
+        
+        ApiResponseSuccessDto<ComisionResponseDto> res = new ApiResponseSuccessDto<>();
+        res.setSuccess(true);
+        res.setData(response);
+        res.setMessage("Destacar");
+        
+        return ResponseEntity.ok(res);
+    }
+
+    @PutMapping("/{id}/destacado")
+    public ResponseEntity<ApiResponseSuccessDto<ComisionResponseDto>> quitarDestacado(@PathVariable Long id) throws Exception {
+        Comision entidad = service.updateDestacadoState(id, false);
+        ComisionResponseDto response = mapper.toResponseDto(entidad);
+        
+        ApiResponseSuccessDto<ComisionResponseDto> res = new ApiResponseSuccessDto<>();
+        res.setSuccess(true);
+        res.setData(response);
+        res.setMessage("destacado");
+        
+        return ResponseEntity.ok(res);
+    }
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponseSuccessDto<Void>> delete(@PathVariable Long id) throws Exception {
         service.deleteById(id);

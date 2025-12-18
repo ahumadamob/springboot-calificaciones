@@ -7,15 +7,17 @@ public class ComisionResponseDto {
     private Long turnoId;
     private Long sedeId;
     private Long version;
+    private Boolean destacado;
 
     public ComisionResponseDto() {}
-
-    public ComisionResponseDto(Long id, String nombre, Long turnoId, Long sedeId, Long version) {
+//costructor vacio
+    public ComisionResponseDto(Long id, String nombre, Long turnoId, Long sedeId, Long version, Boolean destacado) {
         this.id = id;
         this.nombre = nombre;
         this.turnoId = turnoId;
         this.sedeId = sedeId;
         this.version = version;
+        this.destacado = destacado;
     }
 
     public Long getId() {
@@ -57,4 +59,12 @@ public class ComisionResponseDto {
     public void setVersion(Long version) {
         this.version = version;
     }
+	public Boolean getDestacado() {
+		return destacado;
+	}
+	public void setDestacado(Boolean destacado) {
+		this.destacado = destacado;
+	}
+	
+    
 }

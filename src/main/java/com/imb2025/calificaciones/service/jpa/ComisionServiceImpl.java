@@ -62,4 +62,28 @@ public class ComisionServiceImpl implements IComisionService {
     public long countBySedeId(Long sedeId) {
         return repo.countBySedeId(sedeId);
     }
+    
+    @Override 
+    
+    public java.util.List<Comision> findByDestacadoTrue(){
+    	return repo.findByDestacadoTrue();
+    }
+    
+    @Override
+    
+    public java.util.List<Comision> findByDestacadoFalse(){
+    	return repo.findByDestacadoTrue();
+    }
+
+	@Override
+	public boolean updateDestacadoState(Long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Comision updateDestacadoState(Long id, boolean b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
