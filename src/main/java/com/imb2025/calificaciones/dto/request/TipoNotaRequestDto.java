@@ -11,7 +11,12 @@ public class TipoNotaRequestDto {
 	@NotBlank(message = "La descripción no puede estar vacía")
     @Size(min = 5, max = 200, message = "La descripción debe tener entre 5 y 200 caracteres")
     private String descripcion;
-
+	
+	@NotBlank(message = "La descripción corta no puede ser nula")
+	@Size(min = 5, message = "Longitud minima de 5 caracteres")
+	private String descripcionCorta;
+	
+	
     public String getNombre() {
         return nombre;
     }
@@ -27,4 +32,14 @@ public class TipoNotaRequestDto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+	public String getDescripcionCorta() {
+		return descripcionCorta;
+	}
+
+	public void setDescripcionCorta(String descripcionCorta) {
+		this.descripcionCorta = descripcionCorta;
+	}
+    
+    
 }

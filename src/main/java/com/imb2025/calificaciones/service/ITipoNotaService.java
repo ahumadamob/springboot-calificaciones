@@ -9,6 +9,8 @@ public interface ITipoNotaService {
     
     public List<TipoNota>findAllOrder();
     
+    public List<TipoNota> descriCorta(String texto);
+    
     public long countByNombre(String nombre);
 
     public TipoNota create(TipoNota tipoNota);

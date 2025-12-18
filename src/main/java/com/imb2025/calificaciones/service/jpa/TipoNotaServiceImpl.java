@@ -62,5 +62,12 @@ public class TipoNotaServiceImpl implements ITipoNotaService {
 		
 		return tipoNotaRepository.countByNombre(nombre);
 	}
+	
+	
+	@Override
+	public List<TipoNota> descriCorta (String texto) {
+		
+		return tipoNotaRepository.findByDescripcionCortaContainingIgnoreCase(texto);
+	}
 
 }

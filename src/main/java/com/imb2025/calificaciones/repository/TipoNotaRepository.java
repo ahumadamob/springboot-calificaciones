@@ -9,7 +9,12 @@ import com.imb2025.calificaciones.entity.TipoNota;
 public interface TipoNotaRepository extends JpaRepository<TipoNota, Long> {
 	
 	public List<TipoNota>findByOrderByNombreAscDescripcion();
+	
 	public long countByNombre(String nombre);
+	
+	
+	public List<TipoNota> findByDescripcionCortaContainingIgnoreCase(String texto);
+	
 	
 }
 

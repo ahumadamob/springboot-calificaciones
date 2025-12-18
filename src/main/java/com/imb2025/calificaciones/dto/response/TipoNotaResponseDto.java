@@ -5,6 +5,8 @@ public class TipoNotaResponseDto {
 	private Long id;
 	private String nombre;
 	private Long version;
+	private String descripcionCorta;
+	
 	
 	
 	public Long getId() {
@@ -25,6 +27,15 @@ public class TipoNotaResponseDto {
 	public void setVersion(Long version) {
 		this.version = version;
 	}
+	
+	public String getDescripcionCorta() {
+		return descripcionCorta;
+	}
+	public void setDescripcionCorta(String descripcionCorta) {
+		this.descripcionCorta = descripcionCorta;
+	}
+	
+	
 	
 	
 }

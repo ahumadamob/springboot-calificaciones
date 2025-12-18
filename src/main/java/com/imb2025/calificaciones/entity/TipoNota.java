@@ -6,6 +6,7 @@ public class TipoNota extends BaseEntity {
 
     private String nombre;
     private String descripcion;
+    private String descripcionCorta;
 
     
     public TipoNota() {}
@@ -13,6 +14,7 @@ public class TipoNota extends BaseEntity {
     public TipoNota(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
+        //this.descripcionCorta = descripcionCorta;
     }
 
 
@@ -31,4 +33,14 @@ public class TipoNota extends BaseEntity {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+	public String getDescripcionCorta() {
+		return descripcionCorta;
+	}
+
+	public void setDescripcionCorta(String descripcionCorta) {
+		this.descripcionCorta = descripcionCorta;
+	}
+    
+    
 }

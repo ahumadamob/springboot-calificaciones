@@ -146,5 +146,27 @@ public class TipoNotaController {
         );
         return ResponseEntity.ok(resp);
     }
+    
+    @GetMapping("/descripCorta")
+    public ResponseEntity<ApiResponseSuccessDto<List<TipoNotaResponseDto>>> descriCorta(@PathVariable String texto) {
+        
+    	List<TipoNota> listaDescrCor = tipoNotaService.descriCorta(texto);
+       
+        List<TipoNotaResponseDto> descripcionCorta = new ArrayList<>();
+        for (TipoNota n : listaDescrCor) {
+            descripcionCorta.add(tipoNotaMapper.toResponse(n));
+        }
+        
+        ApiResponseSuccessDto<List<TipoNotaResponseDto>> resp = new ApiResponseSuccessDto<>(
+                true,
+                "Listado de descripcionCorta",
+                descripcionCorta
+        );
+        return ResponseEntity.ok(resp);
+    }
+    
+    
+
+    
 }
 
