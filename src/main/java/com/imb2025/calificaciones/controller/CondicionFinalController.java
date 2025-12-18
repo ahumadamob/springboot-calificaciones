@@ -1,5 +1,6 @@
 package com.imb2025.calificaciones.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.imb2025.calificaciones.dto.ApiResponseSuccessDto;
 // Import corregido: se asume que moviste CondicionFinalRequestDto a este paquete
 import com.imb2025.calificaciones.dto.request.CondicionFinalRequestDto; 
 import com.imb2025.calificaciones.dto.response.CondicionFinalResponseDto; // Nuevo: DTO de respuesta
@@ -21,6 +24,7 @@ import com.imb2025.calificaciones.mapper.CondicionFinalMapper; // Nuevo: Importa
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors; // Nuevo: Para mapear listas
 
 @RestController
@@ -105,6 +109,18 @@ public class CondicionFinalController {
         Long cantidad = service.countByNombre(nombre);
         return ResponseEntity.ok(cantidad);
     }
+    
+    @GetMapping("/buscar")
+	public ResponseEntity<ApiResponseSuccessDto<List<CondicionFinalResponseDto>>> getByDescripcionCorta(
+			@RequestParam(required = true) String texto) throws Exception {
+        List<CondicionFinal> resultados = service.findByDescripcionCorta(texto);
+
+		List<CondicionFinalResponseDto> condiciones = resultados.stream().map(p -> mapper.toResponseDto(p)).toList();
+
+ 		ApiResponseSuccessDto<List<CondicionFinalResponseDto>> response = new ApiResponseSuccessDto<List<CondicionFinalResponseDto>>(true, "Condicion Final encontrados con éxito", condiciones);
+ 		  return ResponseEntity.ok(response);
+    }
+    
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception ex) {

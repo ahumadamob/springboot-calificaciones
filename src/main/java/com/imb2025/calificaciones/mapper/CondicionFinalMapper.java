@@ -15,6 +15,7 @@ public class CondicionFinalMapper {
         }
         CondicionFinal entity = new CondicionFinal();
         entity.setNombre(dto.getNombre());
+        entity.setDescripcionCorta(dto.getDescripcionCorta());
         return entity;
     }
 
@@ -28,6 +29,7 @@ public class CondicionFinalMapper {
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setUpdatedAt(entity.getUpdatedAt());
         dto.setVersion(entity.getVersion());
+        dto.setDescripcionCorta(entity.getDescripcionCorta());
         return dto;
     }
 }

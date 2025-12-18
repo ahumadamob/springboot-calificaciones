@@ -13,4 +13,6 @@ public interface CondicionFinalRepository extends JpaRepository<CondicionFinal, 
 
     // 2) Contar cuántas condiciones finales existen con ese nombre
     long countByNombre(String nombre);
+    
+    List<CondicionFinal>findByDescripcionCortaContainingIgnoreCase(String texto);
 }

@@ -6,14 +6,26 @@ import jakarta.persistence.Entity;
 public class CondicionFinal extends BaseEntity {
 
     private String nombre;
+    
+    private String descripcionCorta;
 
     public CondicionFinal() {}
 
-    public CondicionFinal(String nombre) {
+    public CondicionFinal(String nombre, String descripcionCorta) {
         this.nombre = nombre;
+        this.descripcionCorta = descripcionCorta;
     }
+    
+    
+    public String getDescripcionCorta() {
+		return descripcionCorta;
+	}
 
-    public String getNombre() {
+	public void setDescripcionCorta(String descripcionCorta) {
+		this.descripcionCorta = descripcionCorta;
+	}
+
+	public String getNombre() {
         return nombre;
     }
 
