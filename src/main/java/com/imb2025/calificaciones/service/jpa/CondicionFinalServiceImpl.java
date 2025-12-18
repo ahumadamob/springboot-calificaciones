@@ -49,7 +49,14 @@ public class CondicionFinalServiceImpl implements ICondicionFinalService {
     public List<CondicionFinal> findByNombre(String nombre) {
         return repository.findByNombre(nombre);
     }
-
+    
+    @Override
+	public List<CondicionFinal> findByDescripcionCorta(String text) throws Exception {
+		if (text == null || text.equals("")) {
+			throw new Exception("texto de busqueda obligatorio");
+		}
+		return repository.findByDescripcionCortaContainingIgnoreCase(text);
+	}
     @Override
     public Long countByNombre(String nombre) {
         return repository.countByNombre(nombre);

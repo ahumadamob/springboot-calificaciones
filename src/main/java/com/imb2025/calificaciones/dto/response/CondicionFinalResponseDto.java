@@ -9,18 +9,29 @@ public class CondicionFinalResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Long version;
+    private String descripcionCorta;
 
     public CondicionFinalResponseDto() {}
 
-    public CondicionFinalResponseDto(Long id, String nombre, LocalDateTime createdAt, LocalDateTime updatedAt, Long version) {
+    public CondicionFinalResponseDto(Long id, String nombre, LocalDateTime createdAt, LocalDateTime updatedAt, Long version, String descripcionCorta) {
         this.id = id;
         this.nombre = nombre;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.version = version;
+        this.descripcionCorta = descripcionCorta;
+        
     }
 
-    public Long getId() {
+    public String getDescripcionCorta() {
+		return descripcionCorta;
+	}
+
+	public void setDescripcionCorta(String descripcionCorta) {
+		this.descripcionCorta = descripcionCorta;
+	}
+
+	public Long getId() {
         return id;
     }
 
