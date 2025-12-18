@@ -93,4 +93,31 @@ public class TipoEvaluacionController {
         long total = tipoEvaluacionService.contarNombre(q);
         return ResponseEntity.ok(new ApiResponseSuccessDto<>(true, "Total", total));
     }
+    
+    @GetMapping("/categoria/alta")
+	public ResponseEntity<ApiResponseSuccessDto<List<TipoEvaluacionResponseDto>>> listarAlta() {
+	   	List<TipoEvaluacion> lista = tipoEvaluacionService.listarCategoriaAlta();
+    	List<TipoEvaluacionResponseDto> data = lista .stream() .map(mapper::toResponse).toList();
+    	ApiResponseSuccessDto<List<TipoEvaluacionResponseDto>> response = 
+    			new ApiResponseSuccessDto<>(true, "Lista de TipoEvaluacion con categoria ALTA", data);
+    	return ResponseEntity.ok(response);
+	}
+    
+	@GetMapping("/categoria/media")
+	public ResponseEntity<ApiResponseSuccessDto<List<TipoEvaluacionResponseDto>>> listarMedia() {
+		List<TipoEvaluacion> lista = tipoEvaluacionService.listarCategoriaMedia();
+	    List<TipoEvaluacionResponseDto> data = lista.stream().map(mapper::toResponse).toList();
+	    ApiResponseSuccessDto<List<TipoEvaluacionResponseDto>> response = 
+	    		new ApiResponseSuccessDto<>(true, "Lista de TipoEvaluacion con categoria MEDIA", data);
+	    return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("/categoria/baja")
+	public ResponseEntity<ApiResponseSuccessDto<List<TipoEvaluacionResponseDto>>> listarBaja() { 
+		List<TipoEvaluacion> lista = tipoEvaluacionService.listarCategoriaBaja();
+	    List<TipoEvaluacionResponseDto> data = lista.stream().map(mapper::toResponse).toList();
+	    ApiResponseSuccessDto<List<TipoEvaluacionResponseDto>> response = 
+	    		new ApiResponseSuccessDto<>(true, "Lista de TipoEvaluacion con categoria BAJA", data);
+	    return ResponseEntity.ok(response);
+	}
 }

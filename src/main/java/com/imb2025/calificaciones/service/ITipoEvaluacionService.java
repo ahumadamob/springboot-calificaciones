@@ -17,4 +17,8 @@ public interface ITipoEvaluacionService {
 
     List<TipoEvaluacion> buscarNombre(String q);
     long contarNombre(String q);
+    
+	List<TipoEvaluacion> listarCategoriaAlta();
+	List<TipoEvaluacion> listarCategoriaMedia();
+	List<TipoEvaluacion> listarCategoriaBaja();    
 }

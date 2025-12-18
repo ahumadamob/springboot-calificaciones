@@ -3,6 +3,8 @@ package com.imb2025.calificaciones.repository;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
+import com.imb2025.calificaciones.entity.TipoEvaluacionEnum;
+
 
 public interface TipoEvaluacionRepository extends JpaRepository<TipoEvaluacion, Long> {
 
@@ -10,5 +12,7 @@ public interface TipoEvaluacionRepository extends JpaRepository<TipoEvaluacion, 
     List<TipoEvaluacion> findByNombreContainingIgnoreCase(String nombre);
 
     long countByNombreContainingIgnoreCase(String nombre);
+    
+    List<TipoEvaluacion> findByCategoria(TipoEvaluacionEnum categoria);
     
 }

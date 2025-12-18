@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.imb2025.calificaciones.dto.mapper.TipoEvaluacionMapper;
 import com.imb2025.calificaciones.entity.TipoEvaluacion;
+import com.imb2025.calificaciones.entity.TipoEvaluacionEnum;
 import com.imb2025.calificaciones.exception.ResourceNotFoundException;
 import com.imb2025.calificaciones.repository.TipoEvaluacionRepository;
 import com.imb2025.calificaciones.service.ITipoEvaluacionService;
+
 
 @Service
 public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
@@ -64,4 +66,19 @@ public class TipoEvaluacionServiceImpl implements ITipoEvaluacionService {
     public long contarNombre(String q) {
         return repo.countByNombreContainingIgnoreCase(q);
     }
+    
+    @Override
+    public List<TipoEvaluacion> listarCategoriaAlta() {
+	    return repo.findByCategoria(TipoEvaluacionEnum.ALTA);
+	}
+
+    @Override
+	public List<TipoEvaluacion> listarCategoriaMedia() {
+	    return repo.findByCategoria(TipoEvaluacionEnum.MEDIA);
+	}
+
+    @Override
+	public List<TipoEvaluacion> listarCategoriaBaja() {
+	    return repo.findByCategoria(TipoEvaluacionEnum.BAJA);
+	}
 }

@@ -1,12 +1,17 @@
 package com.imb2025.calificaciones.dto.response;
 
+import com.imb2025.calificaciones.entity.TipoEvaluacionEnum;
+
 public class TipoEvaluacionResponseDto {
 	
 	private Long id;
     private String nombre;
     private String descripcion;
     private Long version;
-	
+    private TipoEvaluacionEnum categoria;
+
+    //Getter and Setters
+    
     public Long getId() {
 		return id;
 	}
@@ -31,4 +36,10 @@ public class TipoEvaluacionResponseDto {
 	public void setVersion(Long version) {
 		this.version = version;
 	}
+	public TipoEvaluacionEnum getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(TipoEvaluacionEnum categoria) {
+		this.categoria = categoria;
+	}    
 }

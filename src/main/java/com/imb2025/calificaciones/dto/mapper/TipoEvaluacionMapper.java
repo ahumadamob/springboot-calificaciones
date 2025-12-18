@@ -14,6 +14,7 @@ import com.imb2025.calificaciones.entity.TipoEvaluacion;
 	        var e = new TipoEvaluacion();
 	        e.setNombre(dto.getNombre());
 	        e.setDescripcion(dto.getDescripcion());
+	    	e.setCategoria(dto.getCategoria());	        
 	        return e;
 	    }
 
@@ -24,11 +25,13 @@ import com.imb2025.calificaciones.entity.TipoEvaluacion;
 	        dto.setNombre(e.getNombre());
 	        dto.setDescripcion(e.getDescripcion());
 	        dto.setVersion(e.getVersion());
+	    	dto.setCategoria(e.getCategoria());
 	        return dto;
 	    }
 
 	    public void copyToEntity(TipoEvaluacionRequestDto dto, TipoEvaluacion target) {
 	        target.setNombre(dto.getNombre());
 	        target.setDescripcion(dto.getDescripcion());
+	    	target.setCategoria(dto.getCategoria());
 	    }
 }
