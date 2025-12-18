@@ -127,6 +127,34 @@ public class AlumnoController {
 
         return ResponseEntity.ok(responseDtos);
     }
+    @DeleteMapping(value= "/{id}")
+    public ResponseEntity<AlumnoResponseDto> eliminarAlumnoPorId (@PathVariable Long id,
+            @Valid @RequestBody AlumnoRequestDto dto) throws Exception{
+    	
+    	Alumno alumno = alumnoService.deleteById(dto, id);
+    	
+
+        AlumnoResponseDto responseDto = alumnoMapper.toResponseDto(alumno);
+
+        return ResponseEntity.ok(responseDto);
+    	
+    }
+    @GetMapping("/recursos/bajas")
+    public ResponseEntity<List<AlumnoResponseDto>> ListaDeFechasBajas() {
+    	List<Alumno> alumnos = alumnoService.findAll();
+    	List<Alumno> alumnosNotNull = alumnoService.findByFechaBajaNotNull(((AlumnoResponseDto) alumnos).getFechaBaja());
+        List<AlumnoResponseDto> responseDtos = alumnoMapper.toResponseDtoList(alumnos);
+
+        return ResponseEntity.ok(responseDtos);
+    }
+    @GetMapping("/recursos")
+    public ResponseEntity<List<AlumnoResponseDto>> ListaDeFechasBajasSonNull() {
+    	List<Alumno> alumnos = alumnoService.findAll();
+    	List<Alumno> alumnosNotNull = alumnoService.findByFechaBajasIsNull(((AlumnoResponseDto) alumnos).getFechaBaja());
+        List<AlumnoResponseDto> responseDtos = alumnoMapper.toResponseDtoList(alumnos);
+
+        return ResponseEntity.ok(responseDtos);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception ex) {

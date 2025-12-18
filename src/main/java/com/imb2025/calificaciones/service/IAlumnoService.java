@@ -1,6 +1,11 @@
 package com.imb2025.calificaciones.service;
 
+import com.imb2025.calificaciones.dto.request.AlumnoRequestDto;
 import com.imb2025.calificaciones.entity.Alumno;
+
+import jakarta.validation.Valid;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IAlumnoService {
@@ -13,7 +18,7 @@ public interface IAlumnoService {
 
     public Alumno findById(Long id);
 
-    public void deleteById(Long id) throws Exception;
+    public Alumno deleteById(@Valid AlumnoRequestDto dto, Long id) throws Exception;
 
     public boolean existsById(Long id);
 
@@ -23,4 +28,8 @@ public interface IAlumnoService {
     List<Alumno> findByAtributoBooleanoTrue();
 
     List<Alumno> findByAtributoBooleanoFalse();
+
+	public List<Alumno> findByFechaBajaNotNull(LocalDate fechaBaja);
+
+	public List<Alumno> findByFechaBajasIsNull(LocalDate fechaBaja);
 }
