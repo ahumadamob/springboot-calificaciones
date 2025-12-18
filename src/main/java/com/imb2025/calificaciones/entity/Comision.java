@@ -8,6 +8,8 @@ public class Comision extends BaseEntity {
 
 	private String nombre;
 	
+	private Boolean destacado = false;
+	
         @ManyToOne
         private Turno turno;
 
@@ -17,17 +19,19 @@ public class Comision extends BaseEntity {
         public Comision() {
         }
 
-        public Comision(Long id, String nombre, Turno turno, Sede sede) {
+        public Comision(Long id, String nombre, Turno turno, Sede sede, Boolean destacado) {
                 this.setId(id); // id viene de BaseEntity
                 this.nombre = nombre;
                 this.turno = turno;
                 this.sede = sede;
+                this.destacado = destacado;
         }
 
-        public Comision(String nombre, Turno turno, Sede sede) {
+        public Comision(String nombre, Turno turno, Sede sede, Boolean destacado) {
                 this.nombre = nombre;
                 this.turno = turno;
                 this.sede = sede;
+                this.destacado = destacado;
         }
 	
 
@@ -54,4 +58,15 @@ public class Comision extends BaseEntity {
         public void setSede(Sede sede) {
                 this.sede = sede;
         }
+
+		public Boolean getDestacado() {
+			return destacado;
+		}
+
+		public void setDestacado(Boolean destacado) {
+			this.destacado = destacado;
+		}
+
+		
 }
+
