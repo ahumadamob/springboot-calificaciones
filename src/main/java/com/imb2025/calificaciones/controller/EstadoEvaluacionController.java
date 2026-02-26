@@ -3,6 +3,7 @@ package com.imb2025.calificaciones.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -77,7 +79,18 @@ public class EstadoEvaluacionController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiResponseSuccessDto<EstadoEvaluacionResponseDto>> create(@Valid @RequestBody EstadoEvaluacionRequestDto requestDto) {
+    public ResponseEntity<?> create(@Valid @RequestBody EstadoEvaluacionRequestDto requestDto, BindingResult result) {
+        
+        if (result.hasErrors()) {
+            List<String> errors = result.getAllErrors().stream()
+                    .map(err -> err.getDefaultMessage())
+                    .collect(Collectors.toList());
+            
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("errors", errors);
+            
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
         EstadoEvaluacion estadoEvaluacion = mapper.fromDto(requestDto);
         EstadoEvaluacion creado = service.create(estadoEvaluacion);
         EstadoEvaluacionResponseDto dto = mapper.toResponse(creado);
@@ -86,13 +99,22 @@ public class EstadoEvaluacionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponseSuccessDto<EstadoEvaluacionResponseDto>> update(@PathVariable Long id, @Valid @RequestBody EstadoEvaluacionRequestDto requestDto) throws Exception {
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody EstadoEvaluacionRequestDto requestDto, BindingResult result) throws Exception {
+        
+        if (result.hasErrors()) {
+            List<String> errors = result.getAllErrors().stream()
+                    .map(err -> err.getDefaultMessage())
+                    .collect(Collectors.toList());
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("errors", errors);
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
         EstadoEvaluacion estadoEvaluacion = mapper.fromDto(requestDto);
         EstadoEvaluacion actualizado = service.update(estadoEvaluacion, id);
         EstadoEvaluacionResponseDto dto = mapper.toResponse(actualizado);
         ApiResponseSuccessDto<EstadoEvaluacionResponseDto> response = new ApiResponseSuccessDto<>(true, "Registro actualizado exitosamente", dto);
         return ResponseEntity.ok(response);
-    }
+    } 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponseSuccessDto<Void>> delete(@PathVariable Long id) throws Exception {
